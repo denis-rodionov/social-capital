@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+			 x:Class="SocialCapital.ContactListPage"
+			 Title = "Список контактов">
+	<ContentPage.Content>
+		<ListView x:Name="contactListView">
+			<ListView.ItemTemplate>
+
+				<DataTemplate>
+
+					<ViewCell>
+						<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" >
+							<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
+
+							<StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
+								
+								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
+								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
+
+							</StackLayout>
+						</StackLayout>
+					</ViewCell>
+
+				</DataTemplate>
+
+			</ListView.ItemTemplate>
+		</ListView>
+	</ContentPage.Content>
+</ContentPage>
