@@ -2,24 +2,19 @@
 
 using Xamarin.Forms;
 
-namespace SocialCapital
+namespace SocialCapital 
 {
 	public class App : Application
 	{
+		//public DataContext context {get; set;}
+
 		public App ()
 		{
-			// The root page of your application
-			MainPage = new ContentPage {
-				Content = new StackLayout {
-					VerticalOptions = LayoutOptions.Center,
-					Children = {
-						new Label {
-							XAlign = TextAlignment.Center,
-							Text = "Welcome to Xamarin Forms!"
-						}
-					}
-				}
-			};
+			Log.GetLogger ().Log ("Application starting...");
+
+			new ContactManager ().Init ();
+
+			MainPage = new NavigationPage (new ContactListPage ());
 		}
 
 		protected override void OnStart ()
