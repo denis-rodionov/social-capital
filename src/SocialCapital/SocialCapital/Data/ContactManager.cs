@@ -25,11 +25,14 @@ namespace SocialCapital
 					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
 					Log.GetLogger ().Log (string.Format ("{0} bytes readed from stream", tempImage.Length));
 
-					db.Connection.Insert (new Contact () {
+					var ivanovId = db.Connection.Insert (new Contact () {
 						FullName = "Иванов",
 						WorkPlace = "Яндекс",
 						Photo = tempImage
 					});
+					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
+					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
+
 					db.Connection.Insert (new Contact () {
 						FullName = "Петров",
 						WorkPlace = "Google",
@@ -47,14 +50,40 @@ namespace SocialCapital
 		public IEnumerable<Contact> Contacts { 
 			get { 
 				using (var db = new DataContext ()) {
-					return db.Connection.Table<Contact> ();
+					return db.Connection.Table<Contact> ();						
 				}
 			}
 		}
 
-		public List<Contact> GetFullContactsList()
+		public List<Contact> GetContactListPreview()
 		{
-			return new List<Contact> (Contacts);
+			var res = new List<Contact> ();
+
+			foreach (var contact in Contacts)
+				res.Add (GetContactPreview (contact));
+
+			return res;
+		}
+
+		public Contact GetContactPreview(Contact contact)
+		{
+			var res = new Contact () {
+				Id = contact.Id,
+				FullName = contact.FullName,
+				WorkPlace = contact.WorkPlace,
+				Photo = contact.Photo
+			};
+
+			using (var db = new DataContext ()) {
+				res.Tags = 
+					db.Connection.Query<Tag> (
+					"select t.Id, t.Name " +
+					"from Tag t " +
+					"join ContactTag ct on ct.TagId = t.Id " +
+						"where ct.ContactId = ?", res.Id);
+			}
+
+			return res;
 		}
 	}
 }

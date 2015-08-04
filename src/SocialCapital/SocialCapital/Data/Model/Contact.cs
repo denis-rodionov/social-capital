@@ -2,6 +2,8 @@
 using SQLite.Net.Attributes;
 using Xamarin.Forms;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SocialCapital
 {
@@ -10,7 +12,7 @@ namespace SocialCapital
 		#region Database
 
 		[PrimaryKey, AutoIncrement]
-		public int ID { get; set; }
+		public int Id { get; set; }
 
 		public string FullName { get; set; }
 
@@ -19,6 +21,8 @@ namespace SocialCapital
 		public byte[] Photo { get; set; }
 
 		#endregion
+
+		#region AccessFields
 
 		[Ignore]
 		public ImageSource PhotoImage {
@@ -32,7 +36,14 @@ namespace SocialCapital
 			}
 		}
 
+		[Ignore]
+		public IEnumerable<Tag> Tags { get; set; }
 
+		[Ignore]
+		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ());
+			} }
+
+		#endregion
 	}
 }
 

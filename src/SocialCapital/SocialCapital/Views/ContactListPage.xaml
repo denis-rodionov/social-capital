@@ -16,7 +16,8 @@
 							<StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
 								
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
-								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
+								<!--<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />-->
+								<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" />
 
 							</StackLayout>
 						</StackLayout>

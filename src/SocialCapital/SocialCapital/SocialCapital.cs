@@ -12,7 +12,9 @@ namespace SocialCapital
 		{
 			Log.GetLogger ().Log ("Application starting...");
 
+			new TagManager ().Init ();
 			new ContactManager ().Init ();
+
 
 			MainPage = new NavigationPage (new ContactListPage ());
 		}

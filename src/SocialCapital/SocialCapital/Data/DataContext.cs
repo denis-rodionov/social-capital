@@ -36,6 +36,8 @@ namespace SocialCapital
 		{
 			Log.GetLogger ().Log ("Creating tables...");
 			connection.CreateTable<Contact> ();
+			connection.CreateTable<Tag> ();
+			connection.CreateTable<ContactTag> ();
 		}
 
 		#endregion

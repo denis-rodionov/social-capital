@@ -16,7 +16,7 @@ namespace SocialCapital
 		{
 			base.OnAppearing ();
 
-			var contacts = new ContactManager ().GetFullContactsList ();
+			var contacts = new ContactManager ().GetContactListPreview ();
 
 			//foreach (var c in contacts)
 			//	c.Photo = ImageSource.FromFile ("generic_avatar.png");
