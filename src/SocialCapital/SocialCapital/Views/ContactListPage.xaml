@@ -9,15 +9,21 @@
 
 				<DataTemplate>
 
-					<ViewCell>
-						<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" >
+					<ViewCell Height="70">
+						<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" >
 							<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
 
-							<StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
+							<StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical">
 								
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
-								<!--<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />-->
-								<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" />
+								<!--<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" /> -->
+								<!--<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" /> -->
+								<Label Text="{Binding FrequencyId}" YAlign="Center" Font="Micro" />
+
+								<StackLayout Orientation="Horizontal" >
+								</StackLayout>
+
+
 
 							</StackLayout>
 						</StackLayout>

@@ -19,25 +19,34 @@ namespace SocialCapital
 			
 
 			using (var db = new DataContext ()) {
-				if (db.Connection.Table<Contact> ().Count () == 0)
+				//if (db.Connection.Table<Contact> ().Count () == 0)
 				{
 					Log.GetLogger ().Log ("Creating default databas...");
 					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
-					Log.GetLogger ().Log (string.Format ("{0} bytes readed from stream", tempImage.Length));
+
+					// contact #1
+					var freq1 = db.Connection.Insert (new Frequency () { Period = PeriodValues.Month, Count = 2 });
+					//Log.GetLogger ().Log ("Inserted frequency id = " + freq1);
 
 					var ivanovId = db.Connection.Insert (new Contact () {
 						FullName = "Иванов",
 						WorkPlace = "Яндекс",
-						Photo = tempImage
+						Photo = tempImage,
+						FrequencyId = freq1
 					});
 					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
 					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
 
+
+
+					// contact #2
 					db.Connection.Insert (new Contact () {
 						FullName = "Петров",
 						WorkPlace = "Google",
 						Photo = tempImage
 					});
+
+					// contact #3
 					db.Connection.Insert (new Contact () {
 						FullName = "Сидоров",
 						WorkPlace = "Mail.ru",
@@ -71,7 +80,8 @@ namespace SocialCapital
 				Id = contact.Id,
 				FullName = contact.FullName,
 				WorkPlace = contact.WorkPlace,
-				Photo = contact.Photo
+				Photo = contact.Photo,
+				FrequencyId = contact.FrequencyId
 			};
 
 			using (var db = new DataContext ()) {

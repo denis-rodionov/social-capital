@@ -38,6 +38,7 @@ namespace SocialCapital
 			connection.CreateTable<Contact> ();
 			connection.CreateTable<Tag> ();
 			connection.CreateTable<ContactTag> ();
+			connection.CreateTable<Frequency> ();
 		}
 
 		#endregion
