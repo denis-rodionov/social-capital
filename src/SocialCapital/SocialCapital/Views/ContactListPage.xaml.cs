@@ -10,18 +10,19 @@ namespace SocialCapital
 		public ContactListPage ()
 		{
 			InitializeComponent ();
+
+			this.BindingContext = new ContactListViewModel ();
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing ();
 
-			var contacts = new ContactManager ().GetContactListPreview ();
+
 
 			//foreach (var c in contacts)
 			//	c.Photo = ImageSource.FromFile ("generic_avatar.png");
-			
-			contactListView.ItemsSource = contacts;
+
 		}
 	}
 }

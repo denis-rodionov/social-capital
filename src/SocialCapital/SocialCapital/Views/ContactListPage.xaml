@@ -2,26 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 			 x:Class="SocialCapital.ContactListPage"
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 Title = "Список контактов">
 	<ContentPage.Content>
-		<ListView x:Name="contactListView">
+		<ListView x:Name="contactListView" 
+			      ItemsSource = "{Binding Contacts}"
+			      RowHeight="80">
 			<ListView.ItemTemplate>
 
 				<DataTemplate>
 
-					<ViewCell Height="70">
+					<ViewCell>
 						<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" >
 							<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
 
-							<StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical">
+							<StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical" HeightRequest="200">
 								
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
-								<!--<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" /> -->
+								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
+
+								<controls:TagList />
+
 								<!--<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" /> -->
 								<Label Text="{Binding FrequencyId}" YAlign="Center" Font="Micro" />
-
-								<StackLayout Orientation="Horizontal" >
-								</StackLayout>
 
 
 

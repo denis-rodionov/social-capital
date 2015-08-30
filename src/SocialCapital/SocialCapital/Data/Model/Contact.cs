@@ -37,11 +37,14 @@ namespace SocialCapital
 		[Ignore]
 		public ImageSource PhotoImage {
 			get {
+				Log.GetLogger ().Log ("=== PhotoImage request ===");
 				if (Photo == null || Photo.Length == 0)
 					return null;
-				
-				var stream = new MemoryStream(Photo);
-				var res = ImageSource.FromStream(() => stream);
+				 
+				var res = ImageSource.FromStream(() => 
+					{
+						return new MemoryStream(Photo);
+					});
 				return res;
 			}
 		}

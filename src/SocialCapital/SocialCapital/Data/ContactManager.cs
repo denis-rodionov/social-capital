@@ -19,7 +19,7 @@ namespace SocialCapital
 			
 
 			using (var db = new DataContext ()) {
-				//if (db.Connection.Table<Contact> ().Count () == 0)
+				if (db.Connection.Table<Contact> ().Count () == 0)
 				{
 					Log.GetLogger ().Log ("Creating default databas...");
 					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
@@ -36,8 +36,6 @@ namespace SocialCapital
 					});
 					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
 					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
-
-
 
 					// contact #2
 					db.Connection.Insert (new Contact () {
