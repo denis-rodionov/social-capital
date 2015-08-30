@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			x:Class="SocialCapital.Views.Controls.TagList">
+
+			<StackLayout Orientation="Horizontal">
+									<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+										<Label Text="Волейбол" TextColor="Black"/>
+									</ContentView>
+									<!--
+									<ContentView  Padding="5,5,5,5"  BackgroundColor="Yellow">
+										<Label Text="Лыжи"  TextColor="Black"/>
+									</ContentView>
+
+
+									<BoxView BackgroundColor="Yellow">
+										<Label Text="Футбол" />
+									</BoxView>
+									
+									<BoxView BackgroundColor="Yellow" >
+										<Label Text="Лыжи" />
+									</BoxView>
+									-->
+			</StackLayout>
+</ContentView>
