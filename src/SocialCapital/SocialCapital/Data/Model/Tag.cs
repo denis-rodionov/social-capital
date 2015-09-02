@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite.Net.Attributes;
 
-namespace SocialCapital
+namespace SocialCapital.Data.Model
 {
 	public class Tag
 	{

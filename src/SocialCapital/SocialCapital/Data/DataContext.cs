@@ -2,8 +2,9 @@
 using SQLite;
 using SQLite.Net;
 using Xamarin.Forms;
+using SocialCapital.Data.Model;
 
-namespace SocialCapital
+namespace SocialCapital.Data
 {
 	public class DataContext : IDisposable
 	{

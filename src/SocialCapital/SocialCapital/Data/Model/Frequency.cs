@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite.Net.Attributes;
 
-namespace SocialCapital
+namespace SocialCapital.Data.Model
 {
 	/// <summary>
 	/// Defines how often need to contact with the person in specified period

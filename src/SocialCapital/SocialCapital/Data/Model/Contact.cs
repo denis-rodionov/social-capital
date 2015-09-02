@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace SocialCapital
+namespace SocialCapital.Data.Model
 {
 	public class Contact
 	{

@@ -1,25 +1,95 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+
+<controls:Repeater xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			x:Class="SocialCapital.Views.Controls.TagList">
+			x:Class="SocialCapital.Views.Controls.TagList"
+			xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+			>
+				
+			<controls:Repeater.ItemTemplate>
+				<DataTemplate>
+						<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" Grid.Row="0" Grid.Column="0">
+							<Label Text="Соковыжималка" TextColor="Black"/>
+						</ContentView>
+				</DataTemplate>
+			</controls:Repeater.ItemTemplate>
 
-			<StackLayout Orientation="Horizontal">
-									<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-										<Label Text="Волейбол" TextColor="Black"/>
-									</ContentView>
-									<!--
-									<ContentView  Padding="5,5,5,5"  BackgroundColor="Yellow">
-										<Label Text="Лыжи"  TextColor="Black"/>
-									</ContentView>
+			<Grid x:Name="grid">
+				<Grid.RowDefinitions >
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"  />
+					<ColumnDefinition Width="Auto"  />
+					<ColumnDefinition Width="Auto"  />
+					<ColumnDefinition Width="Auto"  />
+				</Grid.ColumnDefinitions>
 
 
-									<BoxView BackgroundColor="Yellow">
-										<Label Text="Футбол" />
-									</BoxView>
-									
-									<BoxView BackgroundColor="Yellow" >
-										<Label Text="Лыжи" />
-									</BoxView>
-									-->
-			</StackLayout>
-</ContentView>
+
+				<!--
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="1">
+					<Label Text="Кот" TextColor="Black"/>
+				</ContentView>
+
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="2">
+					<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="3">
+					<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				-->
+			</Grid>
+
+			<!--
+		<StackLayout Orientation="Horizontal">
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" >
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+						<Label Text="Гимнастика" TextColor="Black"/>
+				</ContentView>
+		</StackLayout>
+		-->
+</controls:Repeater>
+
+<!--
+<xlab:RepeaterView xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			x:Class="SocialCapital.Views.Controls.TagList"
+			xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+			x:TypeArguments="SocialCapital.Data.Model.Tag"
+			x:ItemsSource="Tags">
+
+	<xlab:RepeaterView.ItemTemplate>
+		<DataTemplate>
+			<ViewCell>
+				<StackLayout Orientation="Horizontal">
+					<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
+							<Label Text="{Binding Name}" TextColor="Black"/>
+					</ContentView>
+				</StackLayout>
+			</ViewCell>
+		</DataTemplate>
+	</xlab:RepeaterView.ItemTemplate>
+</xlab:RepeaterView>
+-->
+
+<!-- xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms" -->

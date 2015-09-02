@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
+using SocialCapital.ViewModels;
 
 namespace SocialCapital
 {
@@ -17,8 +18,6 @@ namespace SocialCapital
 		protected override void OnAppearing()
 		{
 			base.OnAppearing ();
-
-
 
 			//foreach (var c in contacts)
 			//	c.Photo = ImageSource.FromFile ("generic_avatar.png");

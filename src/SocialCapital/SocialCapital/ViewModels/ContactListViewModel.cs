@@ -2,12 +2,16 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using SocialCapital.Data.Model;
+using SocialCapital.Data;
 
-namespace SocialCapital
+namespace SocialCapital.ViewModels
 {
 	public class ContactListViewModel
 	{
 		public ObservableCollection<Contact> Contacts { get; set; }
+
+		public ObservableCollection<Tag> Tags { get; set; }
 			
 		public ContactListViewModel ()
 		{
@@ -16,6 +20,7 @@ namespace SocialCapital
 			var contacts = manager.GetContactListPreview ();
 
 			Contacts = new ObservableCollection<Contact> (contacts);
+			Tags = new ObservableCollection<Tag>() {new Tag() { Name = "Осень" }, new Tag() { Name = "Зима" }};
 		}
 	}
 }

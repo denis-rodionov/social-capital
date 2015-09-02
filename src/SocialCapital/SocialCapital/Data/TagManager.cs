@@ -1,6 +1,7 @@
 ﻿using System;
+using SocialCapital.Data.Model;
 
-namespace SocialCapital
+namespace SocialCapital.Data
 {
 	public class TagManager
 	{

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.IO;
+using SocialCapital.Data.Model;
 
-namespace SocialCapital
+namespace SocialCapital.Data
 {
 	
 
