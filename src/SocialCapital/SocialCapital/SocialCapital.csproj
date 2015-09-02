@@ -54,11 +54,11 @@
     </Compile>
     <Compile Include="ViewModels\TagListVM.cs" />
     <Compile Include="Views\Controls\Repeater.cs" />
-    <Compile Include="Views\Controls\RepeaterView.cs" />
-    <Compile Include="Views\Controls\TemplateSelector.cs" />
     <Compile Include="Views\Controls\Exceptions\NoDataTemplateMatchException.cs" />
     <Compile Include="Views\Controls\Exceptions\InvalidVisualObjectException.cs" />
-    <Compile Include="Views\Controls\CollectionChangedHandle.cs" />
+    <Compile Include="Views\Libs\RepeaterViewLib\RepeaterView.cs" />
+    <Compile Include="Views\Libs\RepeaterViewLib\TemplateSelector.cs" />
+    <Compile Include="Views\Libs\RepeaterViewLib\CollectionChangedHandle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -95,6 +95,8 @@
     <Folder Include="Views\Controls\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Controls\Exceptions\" />
+    <Folder Include="Views\Libs\" />
+    <Folder Include="Views\Libs\RepeaterViewLib\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">
