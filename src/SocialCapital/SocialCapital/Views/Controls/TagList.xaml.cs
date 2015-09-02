@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using SocialCapital.Data.Model;
 using SocialCapital.ViewModels;
+using SocialCapital.Views.Libs;
 
 namespace SocialCapital.Views.Controls
 {
@@ -15,17 +16,21 @@ namespace SocialCapital.Views.Controls
 			InitializeComponent ();
 
 			//BindingContext = new TagListVM ();
-			var newCell = ItemTemplate.CreateContent();
-			grid.Children.Add ((View)newCell, 0, 0);
+			var newView = (View)ItemTemplate.CreateContent();
+			newView.BindingContext = new Tag () { Name = "Рыбалка" };
+			grid.Children.Add (newView, 0, 0);
 
-			newCell = ItemTemplate.CreateContent ();
-			grid.Children.Add ((View)newCell, 1, 0);
+			newView = (View)ItemTemplate.CreateContent ();
+			newView.BindingContext = new Tag () { Name = "Спорт" };
+			grid.Children.Add (newView, 1, 0);
 
-			newCell = ItemTemplate.CreateContent ();
-			grid.Children.Add ((View)newCell, 2, 0);
+			newView = (View)ItemTemplate.CreateContent ();
+			newView.BindingContext = new Tag () { Name = "Игры" };
+			grid.Children.Add (newView, 2, 0);
 
-			newCell = ItemTemplate.CreateContent ();
-			grid.Children.Add ((View)newCell, 3, 0);
+			newView = (View)ItemTemplate.CreateContent ();
+			newView.BindingContext = new Tag () { Name = "Футбол" };
+			grid.Children.Add (newView, 3, 0);
 
 			//grid.Children.Add ((View)newCell);
 
