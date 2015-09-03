@@ -4,9 +4,9 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			x:Class="SocialCapital.Views.Controls.TagList"
 			xmlns:controls="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
-			>
+			x:Name="repeater">
 				
-			<controls:Repeater.ItemTemplate>
+			<controls:Repeater.ItemTemplate BindingContext="{x:Reference repeater}">
 				<DataTemplate>
 						<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" Grid.Row="0" Grid.Column="0">
 							<Label Text="{Binding Name}" TextColor="Black"/>
@@ -19,13 +19,14 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
+				<!--
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"  />
 					<ColumnDefinition Width="Auto"  />
 					<ColumnDefinition Width="Auto"  />
 					<ColumnDefinition Width="Auto"  />
 				</Grid.ColumnDefinitions>
-
+				-->
 
 
 				<!--

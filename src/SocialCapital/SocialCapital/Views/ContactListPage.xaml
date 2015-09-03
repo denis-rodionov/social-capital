@@ -22,7 +22,7 @@
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
 								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
 
-								<controls:TagList />
+								<controls:TagList BindingContext="{Binding Tags}" />
 
 								<!--
 								<xlab:RepeaterView x:TypeArguments="SocialCapital.Data.Model.Tag" ItemsSource="{Binding Tags}">
