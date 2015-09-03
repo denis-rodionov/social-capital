@@ -2,6 +2,7 @@
 
 using Xamarin.Forms;
 using SocialCapital.Data;
+using SocialCapital.Views;
 
 namespace SocialCapital 
 {

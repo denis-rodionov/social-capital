@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-			 x:Class="SocialCapital.ContactListPage"
+			 x:Class="SocialCapital.Views.ContactListPage"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
 			 Title = "Список контактов">
 	<ContentPage.Content>
 		<ListView x:Name="contactListView" 
 			      ItemsSource = "{Binding Contacts}"
-			      RowHeight="85">
+			      RowHeight="85"
+			      ItemSelected="OnItemSelected">
 			<ListView.ItemTemplate>
 
 				<DataTemplate>

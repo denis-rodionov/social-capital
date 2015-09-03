@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Xamarin.Forms;
 using SocialCapital.ViewModels;
+using SocialCapital.Data.Model;
 
-namespace SocialCapital
+namespace SocialCapital.Views
 {
 	public partial class ContactListPage : ContentPage
 	{
@@ -18,10 +18,17 @@ namespace SocialCapital
 		protected override void OnAppearing()
 		{
 			base.OnAppearing ();
+		}
 
-			//foreach (var c in contacts)
-			//	c.Photo = ImageSource.FromFile ("generic_avatar.png");
+		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		{
+			var contact = e.SelectedItem as Contact;
 
+			var contactEditPage = new ContactEditPage () {
+				BindingContext = new ContactVM(contact)
+			};
+
+			Navigation.PushAsync(contactEditPage);
 		}
 	}
 }

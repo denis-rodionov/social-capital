@@ -39,20 +39,6 @@ namespace SocialCapital.Views.Controls
 				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto });
 				grid.Children.Add (view, count++, 0);
 			}
-
-			/*
-			var newView = (View)ItemTemplate.CreateContent ();
-			newView.BindingContext = new Tag () { Name = "Спорт" };
-			grid.Children.Add (newView, 1, 0);
-
-			newView = (View)ItemTemplate.CreateContent ();
-			newView.BindingContext = new Tag () { Name = "Игры" };
-			grid.Children.Add (newView, 2, 0);
-
-			newView = (View)ItemTemplate.CreateContent ();
-			newView.BindingContext = new Tag () { Name = "Футбол" };
-			grid.Children.Add (newView, 3, 0);
-			*/
 		}
 	}
 }

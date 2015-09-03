@@ -18,79 +18,7 @@
 				<Grid.RowDefinitions >
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
-
-				<!--
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"  />
-					<ColumnDefinition Width="Auto"  />
-					<ColumnDefinition Width="Auto"  />
-					<ColumnDefinition Width="Auto"  />
-				</Grid.ColumnDefinitions>
-				-->
-
-
-				<!--
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="1">
-					<Label Text="Кот" TextColor="Black"/>
-				</ContentView>
-
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="2">
-					<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" Grid.Row="0" Grid.Column="3">
-					<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				-->
 			</Grid>
 
-			<!--
-		<StackLayout Orientation="Horizontal">
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow" HorizontalOptions="Fill" >
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-				<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-						<Label Text="Гимнастика" TextColor="Black"/>
-				</ContentView>
-		</StackLayout>
-		-->
 </controls:Repeater>
 
-<!--
-<xlab:RepeaterView xmlns="http://xamarin.com/schemas/2014/forms" 
-			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			x:Class="SocialCapital.Views.Controls.TagList"
-			xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
-			x:TypeArguments="SocialCapital.Data.Model.Tag"
-			x:ItemsSource="Tags">
-
-	<xlab:RepeaterView.ItemTemplate>
-		<DataTemplate>
-			<ViewCell>
-				<StackLayout Orientation="Horizontal">
-					<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-							<Label Text="{Binding Name}" TextColor="Black"/>
-					</ContentView>
-				</StackLayout>
-			</ViewCell>
-		</DataTemplate>
-	</xlab:RepeaterView.ItemTemplate>
-</xlab:RepeaterView>
--->
-
-<!-- xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms" -->

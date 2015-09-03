@@ -94,6 +94,10 @@ namespace SocialCapital.Data
 
 			return res;
 		}
+
+		public void Save(Contact contact)
+		{			
+		}
 	}
 }
 

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+		x:Class="SocialCapital.Views.ContactEditPage">
+	<StackLayout>
+		<TableView x:Name="tableView"
+				   Intent="Form">
+			<TableRoot Title="Редактирование контакта">
+				<TableSection Title="Основная информация">
+					<EntryCell Label="Полное имя:"
+							   Text="{Binding FullName}"
+							   Placeholder="Введите имя"
+							   Keyboard="Text" />
+					<EntryCell Label="Место работы:"
+							   Text="{Binding WorkPlace}"
+							   Placeholder="Введите название компании"
+							   Keyboard="Text" />
+					<ViewCell>
+						<controls:TagList BindingContext="{Binding Tags}" />
+					</ViewCell>
+				</TableSection>
+			</TableRoot>
+		</TableView>
+
+		<Button Text="Сохранить"
+				HorizontalOptions="Center"
+				Clicked="OnSubmitButtonClicked" />
+	</StackLayout>
+</ContentPage>
