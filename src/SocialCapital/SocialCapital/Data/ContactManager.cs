@@ -83,16 +83,19 @@ namespace SocialCapital.Data
 				FrequencyId = contact.FrequencyId
 			};
 
-			using (var db = new DataContext ()) {
-				res.Tags = 
-					db.Connection.Query<Tag> (
-					"select t.Id, t.Name " +
-					"from Tag t " +
-					"join ContactTag ct on ct.TagId = t.Id " +
-						"where ct.ContactId = ?", res.Id);
-			}
-
 			return res;
+		}
+
+		public IEnumerable<Tag> GetContactTags(int countactId)
+		{
+			using (var db = new DataContext ()) {
+				return
+					db.Connection.Query<Tag> (
+						"select t.Id, t.Name " +
+						"from Tag t " +
+						"join ContactTag ct on ct.TagId = t.Id " +
+						"where ct.ContactId = ?", countactId);
+			}
 		}
 
 		public void Save(Contact contact)

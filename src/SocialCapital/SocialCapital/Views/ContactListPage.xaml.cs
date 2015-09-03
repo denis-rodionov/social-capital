@@ -12,7 +12,7 @@ namespace SocialCapital.Views
 		{
 			InitializeComponent ();
 
-			this.BindingContext = new ContactListViewModel ();
+			this.BindingContext = new ContactListVM ();
 		}
 
 		protected override void OnAppearing()
@@ -22,10 +22,10 @@ namespace SocialCapital.Views
 
 		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
 		{
-			var contact = e.SelectedItem as Contact;
+			var contact = e.SelectedItem as ContactVM;
 
 			var contactEditPage = new ContactEditPage () {
-				BindingContext = new ContactVM(contact)
+				BindingContext = contact
 			};
 
 			Navigation.PushAsync(contactEditPage);

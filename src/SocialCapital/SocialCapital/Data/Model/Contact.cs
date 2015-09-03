@@ -9,8 +9,6 @@ namespace SocialCapital.Data.Model
 {
 	public class Contact
 	{
-		#region Database
-
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
@@ -29,34 +27,6 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		/// <value>The frequency identifier.</value>
 		public int FrequencyId { get; set; }
-
-		#endregion
-
-		#region AccessFields
-
-		[Ignore]
-		public ImageSource PhotoImage {
-			get {
-				Log.GetLogger ().Log ("=== PhotoImage request ===");
-				if (Photo == null || Photo.Length == 0)
-					return null;
-				 
-				var res = ImageSource.FromStream(() => 
-					{
-						return new MemoryStream(Photo);
-					});
-				return res;
-			}
-		}
-
-		[Ignore]
-		public IEnumerable<Tag> Tags { get; set; }
-
-		[Ignore]
-		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ());
-			} }
-
-		#endregion
 	}
 }
 
