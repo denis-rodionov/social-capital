@@ -44,17 +44,26 @@ namespace SocialCapital.ViewModels
 			get {
 				return SourceContact.FullName;
 			}
+			set {
+				SourceContact.FullName = value;
+			}
 		}
 
 		public string WorkPlace {
 			get {
 				return SourceContact.WorkPlace;
 			}
+			set {
+				SourceContact.WorkPlace = value;
+			}
 		}
 
+		IEnumerable<Tag> tags = null;
 		public IEnumerable<Tag> Tags {
 			get {
-				return Database.GetContactTags (SourceContact.Id);
+				if (tags == null)
+					tags = Database.GetContactTags (SourceContact.Id);
+				return tags;
 			}
 		}
 
@@ -76,7 +85,8 @@ namespace SocialCapital.ViewModels
 
 		public void Save()
 		{
-			
+			Database.SaveContactInfo (SourceContact);
+			Database.SaveContactTags (Tags, SourceContact.Id);
 		}
 
 		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ()); } }

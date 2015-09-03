@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using System.IO;
 using SocialCapital.Data.Model;
+using System.Linq;
 
 namespace SocialCapital.Data
 {
@@ -98,8 +99,24 @@ namespace SocialCapital.Data
 			}
 		}
 
-		public void Save(Contact contact)
-		{			
+		public int SaveContactInfo(Contact contact)
+		{
+			using (var db = new DataContext ()) {
+				if (contact.Id == 0)
+					return db.Connection.Insert (contact);
+				else
+					return db.Connection.Update (contact);
+			}
+		}
+
+		public void SaveContactTags(IEnumerable<Tag> tags, int contactId)
+		{
+			var contactTags = GetContactTags (contactId);
+			var newTags = tags.Except (contactTags);
+
+			var tagManager = new TagManager ();
+			tagManager.SaveTags (newTags);
+			tagManager.AssignToContact (newTags, contactId);
 		}
 	}
 }
