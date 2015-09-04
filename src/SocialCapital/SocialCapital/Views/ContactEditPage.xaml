@@ -17,7 +17,7 @@
 							   Text="{Binding WorkPlace}"
 							   Placeholder="Введите название компании"
 							   Keyboard="Text" />
-					<ViewCell>
+					<ViewCell Tapped="OnTagsTaped">
 						<controls:TagList LayoutType="Wrap" BindingContext="{Binding Tags}" />
 					</ViewCell>
 				</TableSection>

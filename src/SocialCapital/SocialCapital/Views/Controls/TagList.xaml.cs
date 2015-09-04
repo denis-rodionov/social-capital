@@ -20,7 +20,12 @@ namespace SocialCapital.Views.Controls
 		/// One-row grid of elements.
 		/// Fixed Height.
 		/// </summary>
-		Grid,
+		HorizontalGrid,
+
+		/// <summary>
+		/// One-column grid of elements
+		/// </summary>
+		VerticalGrid,
 
 		/// <summary>
 		/// Wraps to show all the elements.
@@ -51,17 +56,24 @@ namespace SocialCapital.Views.Controls
 		public LayoutTypes LayoutType { 
 			get { return layoutType; }
 			set {
-				if (value == LayoutTypes.Grid) {
-					CreateGrid ();
-				} else if (value == LayoutTypes.Wrap) {
-					CreateWrap ();
-				} else
-					throw new Exception ("Unsupported layout type");
+				switch (value) {
+					case LayoutTypes.HorizontalGrid:
+						CreateHorizontalGrid ();
+						break;
+					case LayoutTypes.VerticalGrid:
+						CreateVerticalGrid ();
+						break;
+					case LayoutTypes.Wrap:
+						CreateWrap ();
+						break;
+					default:
+						throw new Exception ("Unsupported layout type");
+				}					
 
 				layoutType = value;
 
-				if (BindingContext != null && BindingContext is IEnumerable<Tag>)
-					Fill (BindingContext as IEnumerable<Tag>);
+				if (BindingContext != null && BindingContext is TagsVM)
+					Fill (BindingContext as TagsVM);
 			}
 		}
 
@@ -70,41 +82,50 @@ namespace SocialCapital.Views.Controls
 			if (BindingContext == null)
 				return;
 
-			if (!(BindingContext is IEnumerable<Tag>))
-				throw new ArgumentException ("Component TagList must have context of type IEnumerable<Tag>");
+			if (!(BindingContext is TagsVM))
+				throw new ArgumentException ("Component TagList must have context of type TagsVM");
 
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
 			
-			Fill (BindingContext as IEnumerable<Tag>);
+			Fill (BindingContext as TagsVM);
 		}
 
 		#region Implementation
 
-		void CreateGrid()
+		void CreateHorizontalGrid()
 		{
 			gridContainer = new Grid ();
 			gridContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength(1, GridUnitType.Star) });
-			Children.Add (gridContainer);
+			Content = gridContainer;
+		}
+
+		void CreateVerticalGrid()
+		{
+			gridContainer = new Grid ();
+			gridContainer.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+			Content = gridContainer;
 		}
 
 		void CreateWrap()
 		{
 			wrapContainer = new WrapLayout () { Orientation = StackOrientation.Horizontal };
-			Children.Add (wrapContainer);
+			Content = wrapContainer;
 		}
 
-		void Fill (IEnumerable<Tag> tagList)
+		void Fill (TagsVM tagList)
 		{
 			int count = 0;
-			foreach (var tag in tagList) {
+			foreach (var tag in tagList.Tags) {
 				var view = (View)ItemTemplate.CreateContent ();
 				view.BindingContext = tag;
 
-				if (LayoutType == LayoutTypes.Grid)
-					AddElementToGrid (view, count++);
+				if (LayoutType == LayoutTypes.HorizontalGrid)
+					AddElementToHorizontalGrid (view, count++);
 				else if (LayoutType == LayoutTypes.Wrap)
 					AddElementToWrap (view);
+				else if (LayoutType == LayoutTypes.VerticalGrid)
+					AddElementToVerticalGrid (view, count++);
 				else
 					throw new Exception ("Uncknown LayoutType");
 			}
@@ -115,12 +136,20 @@ namespace SocialCapital.Views.Controls
 			wrapContainer.Children.Add (view);
 		}
 
-		void AddElementToGrid (View view, int number)
+		void AddElementToHorizontalGrid (View view, int number)
 		{
 			gridContainer.ColumnDefinitions.Add (new ColumnDefinition () {
 				Width = GridLength.Auto
 			});
 			gridContainer.Children.Add (view, number, 0);
+		}
+
+		void AddElementToVerticalGrid (View view, int number)
+		{
+			gridContainer.RowDefinitions.Add (new RowDefinition () {
+				Height = GridLength.Auto
+			});
+			gridContainer.Children.Add (view, 0, number);
 		}
 
 		#endregion

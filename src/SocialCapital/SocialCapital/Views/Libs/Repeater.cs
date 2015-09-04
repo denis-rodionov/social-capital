@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace SocialCapital.Views.Libs
 {
-	public class Repeater : StackLayout
+	public class Repeater : ContentView
 	{
 		public Repeater ()
 		{

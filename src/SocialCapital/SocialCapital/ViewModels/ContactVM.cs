@@ -58,11 +58,11 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		IEnumerable<Tag> tags = null;
-		public IEnumerable<Tag> Tags {
+		TagsVM tags = null;
+		public TagsVM Tags {
 			get {
 				if (tags == null)
-					tags = Database.GetContactTags (SourceContact.Id);
+					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
 				return tags;
 			}
 		}
@@ -81,14 +81,14 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ()); } }
+		public string TagList { get { return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); } }
 
 		#endregion
 
 		public void Save()
 		{
 			Database.SaveContactInfo (SourceContact);
-			Database.SaveContactTags (Tags, SourceContact.Id);
+			Database.SaveContactTags (Tags.Tags, SourceContact.Id);
 		}
 
 

@@ -20,6 +20,13 @@ namespace SocialCapital.Views
 
 			Navigation.PopAsync ();
 		}
+
+		protected void OnTagsTaped(object sender, EventArgs args)
+		{
+			var tags = (BindingContext as ContactVM).Tags;
+
+			Navigation.PushAsync (new TagsSelectPage () { BindingContext = tags });
+		}
 	}
 }
 
