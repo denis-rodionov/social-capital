@@ -81,6 +81,8 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ()); } }
+
 		#endregion
 
 		public void Save()
@@ -89,7 +91,7 @@ namespace SocialCapital.ViewModels
 			Database.SaveContactTags (Tags, SourceContact.Id);
 		}
 
-		public string TagList { get { return string.Join (",", Tags.Select(t => t.Name).ToArray ()); } }
+
 	}
 }
 

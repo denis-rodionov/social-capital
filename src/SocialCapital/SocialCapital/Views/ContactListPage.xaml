@@ -23,30 +23,11 @@
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
 								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
 
-								<controls:TagList BindingContext="{Binding Tags}" />
-
-								<!--
-								<xlab:RepeaterView x:TypeArguments="SocialCapital.Data.Model.Tag" ItemsSource="{Binding Tags}">
-									<xlab:RepeaterView.ItemTemplate>
-										<DataTemplate>
-											<ViewCell>
-												<StackLayout Orientation="Horizontal">
-													<ContentView Padding="5,0,5,0"  BackgroundColor="Yellow">
-															<Label Text="{Binding Name}" TextColor="Black"/>
-														</ContentView>
-												</StackLayout>
-											</ViewCell>
-										</DataTemplate>
-									</xlab:RepeaterView.ItemTemplate>
-								</xlab:RepeaterView>
-								-->
+								<controls:TagList BindingContext="{Binding Tags}" LayoutType="Grid" />
 
 								<!--<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" /> -->
 
 								<Label Text="{Binding FrequencyId}" YAlign="Center" Font="Micro" />
-
-
-
 							</StackLayout>
 						</StackLayout>
 					</ViewCell>

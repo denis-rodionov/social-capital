@@ -7,18 +7,62 @@ using SocialCapital.Views.Libs;
 
 namespace SocialCapital.Views.Controls
 {
+	/// <summary>
+	/// 
+	/// </summary>
+	public enum LayoutTypes {
+		/// <summary>
+		/// Need to set the property
+		/// </summary>
+		Undefined,
+
+		/// <summary>
+		/// One-row grid of elements.
+		/// Fixed Height.
+		/// </summary>
+		Grid,
+
+		/// <summary>
+		/// Wraps to show all the elements.
+		/// Variable height.
+		/// </summary>
+		Wrap
+	}
+
+	/// <summary>
+	/// Component for visualizing contact tag list
+	/// </summary>
 	public partial class TagList : Repeater //: XLabs.Forms.Controls.RepeaterView<Tag>
 	{
+		private LayoutTypes layoutType = LayoutTypes.Undefined;
+		private Grid gridContainer = null;
+		private WrapLayout wrapContainer = null;
 
-
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public TagList ()
 		{
 			InitializeComponent ();
 
 			BindingContextChanged += (object sender, EventArgs e) => BindingContextChangedHandler(sender, e);
-			Log.GetLogger ().Log ("BindingContext={0}", BindingContext);
+		}
 
+		public LayoutTypes LayoutType { 
+			get { return layoutType; }
+			set {
+				if (value == LayoutTypes.Grid) {
+					CreateGrid ();
+				} else if (value == LayoutTypes.Wrap) {
+					CreateWrap ();
+				} else
+					throw new Exception ("Unsupported layout type");
 
+				layoutType = value;
+
+				if (BindingContext != null && BindingContext is IEnumerable<Tag>)
+					Fill (BindingContext as IEnumerable<Tag>);
+			}
 		}
 
 		public void BindingContextChangedHandler(object sender, EventArgs e)
@@ -28,18 +72,58 @@ namespace SocialCapital.Views.Controls
 
 			if (!(BindingContext is IEnumerable<Tag>))
 				throw new ArgumentException ("Component TagList must have context of type IEnumerable<Tag>");
-			
-			var tagList = (IEnumerable<Tag>)BindingContext;
 
+			if (LayoutType == LayoutTypes.Undefined)
+				throw new ArgumentException ("LayoutType is Undefined. Set value");
+			
+			Fill (BindingContext as IEnumerable<Tag>);
+		}
+
+		#region Implementation
+
+		void CreateGrid()
+		{
+			gridContainer = new Grid ();
+			gridContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength(1, GridUnitType.Star) });
+			Children.Add (gridContainer);
+		}
+
+		void CreateWrap()
+		{
+			wrapContainer = new WrapLayout () { Orientation = StackOrientation.Horizontal };
+			Children.Add (wrapContainer);
+		}
+
+		void Fill (IEnumerable<Tag> tagList)
+		{
 			int count = 0;
-			foreach (var tag in tagList)
-			{
-				var view = (View)ItemTemplate.CreateContent();
+			foreach (var tag in tagList) {
+				var view = (View)ItemTemplate.CreateContent ();
 				view.BindingContext = tag;
-				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto });
-				grid.Children.Add (view, count++, 0);
+
+				if (LayoutType == LayoutTypes.Grid)
+					AddElementToGrid (view, count++);
+				else if (LayoutType == LayoutTypes.Wrap)
+					AddElementToWrap (view);
+				else
+					throw new Exception ("Uncknown LayoutType");
 			}
 		}
+
+		void AddElementToWrap (View view)
+		{
+			wrapContainer.Children.Add (view);
+		}
+
+		void AddElementToGrid (View view, int number)
+		{
+			gridContainer.ColumnDefinitions.Add (new ColumnDefinition () {
+				Width = GridLength.Auto
+			});
+			gridContainer.Children.Add (view, number, 0);
+		}
+
+		#endregion
 	}
 }
 

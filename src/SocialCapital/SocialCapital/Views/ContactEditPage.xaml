@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+		xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
 		x:Class="SocialCapital.Views.ContactEditPage">
 	<StackLayout>
 		<TableView x:Name="tableView"
@@ -17,7 +18,7 @@
 							   Placeholder="Введите название компании"
 							   Keyboard="Text" />
 					<ViewCell>
-						<controls:TagList BindingContext="{Binding Tags}" />
+						<controls:TagList LayoutType="Wrap" BindingContext="{Binding Tags}" />
 					</ViewCell>
 				</TableSection>
 			</TableRoot>

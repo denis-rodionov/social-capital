@@ -14,11 +14,16 @@
 				</DataTemplate>
 			</controls:Repeater.ItemTemplate>
 
+			<!--
+			<libs:WrapLayout Orientation="Horizontal">
+							
+			</libs:WrapLayout>
+
 			<Grid x:Name="grid">
 				<Grid.RowDefinitions >
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 			</Grid>
-
+			-->
 </controls:Repeater>
 
