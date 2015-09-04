@@ -6,7 +6,8 @@
 		x:Class="SocialCapital.Views.ContactEditPage">
 	<StackLayout>
 		<TableView x:Name="tableView"
-				   Intent="Form">
+				   Intent="Form"
+				   HasUnevenRows="true">
 			<TableRoot Title="Редактирование контакта">
 				<TableSection Title="Основная информация">
 					<EntryCell Label="Полное имя:"

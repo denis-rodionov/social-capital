@@ -42,6 +42,18 @@ namespace SocialCapital.Data
 				}
 			}
 		}
+
+		public void RemoveFromContact(IEnumerable<Tag> tags, int contactId)
+		{
+			using (var db = new DataContext ()) {
+				foreach (var tag in tags) {
+					if (tag.Id == 0)
+						throw new ArgumentException ("Delete ContactTags before delete tags");
+
+					db.Connection.Execute ("DELETE FROM ContactTag WHERE TagId=? AND ContactId=?", tag.Id, contactId);
+				}
+			}
+		}
 	}
 }
 

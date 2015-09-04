@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using SocialCapital.Data.Model;
 using SocialCapital.ViewModels;
 using SocialCapital.Views.Libs;
+using System.Collections.Specialized;
 
 namespace SocialCapital.Views.Controls
 {
@@ -56,19 +57,7 @@ namespace SocialCapital.Views.Controls
 		public LayoutTypes LayoutType { 
 			get { return layoutType; }
 			set {
-				switch (value) {
-					case LayoutTypes.HorizontalGrid:
-						CreateHorizontalGrid ();
-						break;
-					case LayoutTypes.VerticalGrid:
-						CreateVerticalGrid ();
-						break;
-					case LayoutTypes.Wrap:
-						CreateWrap ();
-						break;
-					default:
-						throw new Exception ("Unsupported layout type");
-				}					
+				InitLayout (value);					
 
 				layoutType = value;
 
@@ -87,11 +76,35 @@ namespace SocialCapital.Views.Controls
 
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
-			
-			Fill (BindingContext as TagsVM);
+
+			var context = BindingContext as TagsVM;
+			context.Tags.CollectionChanged += (s, ev) => {
+				InitLayout (LayoutType);
+				Fill (context);
+			};
+
+
+			Fill (context);
 		}
 
 		#region Implementation
+
+		void InitLayout (LayoutTypes value)
+		{
+			switch (value) {
+			case LayoutTypes.HorizontalGrid:
+				CreateHorizontalGrid ();
+				break;
+			case LayoutTypes.VerticalGrid:
+				CreateVerticalGrid ();
+				break;
+			case LayoutTypes.Wrap:
+				CreateWrap ();
+				break;
+			default:
+				throw new Exception ("Unsupported layout type");
+			}
+		}
 
 		void CreateHorizontalGrid()
 		{

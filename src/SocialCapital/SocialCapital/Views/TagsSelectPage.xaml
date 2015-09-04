@@ -7,6 +7,21 @@
 	Title = "Выбор тегов">
 
 	<ContentPage.Content>
-		<controls:TagList LayoutType="VerticalGrid" />
+		<StackLayout>
+			<SearchBar Placeholder="Введите название">
+			</SearchBar>
+
+			<ListView ItemsSource="{Binding Tags}">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextCell Text="{Binding Name}" >
+							<TextCell.ContextActions>
+								<MenuItem Text="Удалить" Clicked="OnDeleteItem" IsDestructive="true" CommandParameter="{Binding .}" />
+							</TextCell.ContextActions>
+						</TextCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

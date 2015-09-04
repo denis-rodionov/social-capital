@@ -27,6 +27,11 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		/// <value>The frequency identifier.</value>
 		public int FrequencyId { get; set; }
+
+		public override string ToString ()
+		{
+			return string.Format ("[Contact: Id={0}, FullName={1}, WorkPlace={2}, Photo={3}, FrequencyId={4}]", Id, FullName, WorkPlace, Photo, FrequencyId);
+		}
 	}
 }
 

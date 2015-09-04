@@ -112,11 +112,13 @@ namespace SocialCapital.Data
 		public void SaveContactTags(IEnumerable<Tag> tags, int contactId)
 		{
 			var contactTags = GetContactTags (contactId);
-			var newTags = tags.Except (contactTags);
+			var newTags = tags.Except (contactTags).ToList ();
+			var removeTags = contactTags.Except (tags).ToList ();
 
 			var tagManager = new TagManager ();
 			tagManager.SaveTags (newTags);
 			tagManager.AssignToContact (newTags, contactId);
+			tagManager.RemoveFromContact (removeTags, contactId);
 		}
 	}
 }
