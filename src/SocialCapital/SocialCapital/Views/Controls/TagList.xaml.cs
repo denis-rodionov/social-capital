@@ -35,6 +35,8 @@ namespace SocialCapital.Views.Controls
 		Wrap
 	}
 
+
+
 	/// <summary>
 	/// Component for visualizing contact tag list
 	/// </summary>
@@ -43,6 +45,17 @@ namespace SocialCapital.Views.Controls
 		private LayoutTypes layoutType = LayoutTypes.Undefined;
 		private Grid gridContainer = null;
 		private WrapLayout wrapContainer = null;
+		private string placeholder = null;
+
+
+
+		public static readonly BindableProperty TagsProperty =
+			BindableProperty.Create<TagList, TagsVM>(
+				(tagList) => tagList.Tags,
+				null,
+				propertyChanged: (bindable, oldValue, newValue) => {
+					(bindable as TagList).OnTagsModelChanged(oldValue, newValue);
+				});
 
 		/// <summary>
 		/// Constructor
@@ -51,7 +64,12 @@ namespace SocialCapital.Views.Controls
 		{
 			InitializeComponent ();
 
-			BindingContextChanged += (object sender, EventArgs e) => BindingContextChangedHandler(sender, e);
+			//BindingContextChanged += (object sender, EventArgs e) => BindingContextChangedHandler(sender, e);
+		}
+
+		public TagsVM Tags { 
+			set { SetValue (TagsProperty, value); }
+			get { return (TagsVM)GetValue (TagsProperty); }
 		}
 
 		public LayoutTypes LayoutType { 
@@ -66,25 +84,31 @@ namespace SocialCapital.Views.Controls
 			}
 		}
 
-		public void BindingContextChangedHandler(object sender, EventArgs e)
+		public string Placeholder {
+			get { return placeholder; }
+			set {
+				placeholder = value;
+				placeholderLabel.Text = placeholder;
+			}
+		}
+
+		public void OnTagsModelChanged(TagsVM oldTags, TagsVM newTags)
 		{
-			if (BindingContext == null)
+			if (newTags == null)
 				return;
 
-			if (!(BindingContext is TagsVM))
-				throw new ArgumentException ("Component TagList must have context of type TagsVM");
+			if (oldTags == newTags)
+				throw new ArgumentException("Stange behaviour of bindable property");
 
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
-
-			var context = BindingContext as TagsVM;
-			context.Tags.CollectionChanged += (s, ev) => {
+			
+			newTags.Tags.CollectionChanged += (s, ev) => {
 				InitLayout (LayoutType);
-				Fill (context);
+				Fill (newTags);
 			};
 
-
-			Fill (context);
+			Fill (newTags);
 		}
 
 		#region Implementation
@@ -126,9 +150,18 @@ namespace SocialCapital.Views.Controls
 			Content = wrapContainer;
 		}
 
+		void ShowPlaceholder ()
+		{
+			Content = placeHolderContaineer;
+		}
+
 		void Fill (TagsVM tagList)
 		{
 			int count = 0;
+
+			if (tagList.Tags.Count == 0 && Placeholder != null)
+				ShowPlaceholder ();
+
 			foreach (var tag in tagList.Tags) {
 				var view = (View)ItemTemplate.CreateContent ();
 				view.BindingContext = tag;

@@ -23,7 +23,7 @@
 								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
 								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
 
-								<controls:TagList LayoutType="HorizontalGrid" BindingContext="{Binding Tags}" />
+								<controls:TagList LayoutType="HorizontalGrid" Tags="{Binding Tags}" />
 
 								<!--<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" /> -->
 

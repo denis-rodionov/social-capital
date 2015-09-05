@@ -4,19 +4,35 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 	x:Class="SocialCapital.Views.TagsSelectPage"
-	Title = "Выбор тегов">
-
+	Title = "Выбор тегов"
+	x:Name = "page">
 	<ContentPage.Content>
 		<StackLayout>
-			<SearchBar Placeholder="Введите название">
-			</SearchBar>
+			<StackLayout Orientation="Horizontal">
+				<Entry  x:Name = "searchTagEntry"
+						Text = "{Binding SearchTag}"
+						HorizontalOptions="FillAndExpand" 
+						Placeholder="Введите название тэга" />
+				<Button Text = "Добавить" Command="{Binding Add}" CommandParameter="{x:Reference Name=searchTagEntry}" >
+					<Button.Image>
+						<OnPlatform x:TypeArguments="FileImageSource"
+									iOS = ""
+									Android = "ic_add_box_white_36dp.png"
+									WinPhone = "" />
+					</Button.Image>
+				</Button>
+			</StackLayout>
 
-			<ListView ItemsSource="{Binding Tags}">
+			<ListView x:Name="listview" ItemsSource="{Binding Tags}" VerticalOptions="FillAndExpand">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<TextCell Text="{Binding Name}" >
 							<TextCell.ContextActions>
-								<MenuItem Text="Удалить" Clicked="OnDeleteItem" IsDestructive="true" CommandParameter="{Binding .}" />
+								<MenuItem Text="Удалить" 
+											Command="{Binding Source={x:Reference Name=page},
+														      Path=BindingContext.Delete}"
+											IsDestructive="true" 
+											CommandParameter="{Binding}" />
 							</TextCell.ContextActions>
 						</TextCell>
 					</DataTemplate>

@@ -174,10 +174,16 @@ namespace SocialCapital.Droid
 			public const int calendar_bg_selector = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int icon = 2130837506;
+			public const int ic_add_box_black_24dp = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int monoandroidsplash = 2130837507;
+			public const int ic_add_box_white_36dp = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int icon = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int monoandroidsplash = 2130837509;
 			
 			static Drawable()
 			{

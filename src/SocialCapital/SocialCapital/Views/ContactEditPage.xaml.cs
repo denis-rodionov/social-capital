@@ -27,6 +27,13 @@ namespace SocialCapital.Views
 
 			Navigation.PushAsync (new TagsSelectPage () { BindingContext = tags });
 		}
+
+		protected void OnDisappearing(object sender, EventArgs args)
+		{
+			var contact = (BindingContext as ContactVM);
+
+			contact.Reload ();
+		}
 	}
 }
 

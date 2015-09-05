@@ -25,8 +25,10 @@ namespace SocialCapital.Views
 			var contact = e.SelectedItem as ContactVM;
 
 			var contactEditPage = new ContactEditPage () {
-				BindingContext = contact
+				//BindingContext = contact
 			};
+
+			contactEditPage.BindingContext = contact;
 
 			Navigation.PushAsync(contactEditPage);
 		}

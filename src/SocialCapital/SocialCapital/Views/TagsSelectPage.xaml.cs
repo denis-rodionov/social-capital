@@ -15,14 +15,6 @@ namespace SocialCapital.Views
 		{
 			InitializeComponent ();
 		}
-
-		public async void OnDeleteItem(object sender, EventArgs args)
-		{
-			var vm = BindingContext as TagsVM;
-			var tag = (sender as MenuItem).CommandParameter as Tag;
-
-			vm.Tags.Remove (tag);
-		}
 	}
 }
 

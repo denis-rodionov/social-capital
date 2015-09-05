@@ -91,7 +91,10 @@ namespace SocialCapital.ViewModels
 			Database.SaveContactTags (Tags.Tags, SourceContact.Id);
 		}
 
-
+		public void Reload()
+		{
+			//Database.Get
+		}
 	}
 }
 

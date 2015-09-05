@@ -64,6 +64,7 @@ namespace SocialCapital.Data
 			}
 		}
 
+		/*
 		public List<Contact> GetContactListPreview()
 		{
 			var res = new List<Contact> ();
@@ -86,16 +87,18 @@ namespace SocialCapital.Data
 
 			return res;
 		}
+		*/
 
 		public IEnumerable<Tag> GetContactTags(int countactId)
 		{
 			using (var db = new DataContext ()) {
-				return
+				var tags = 
 					db.Connection.Query<Tag> (
 						"select t.Id, t.Name " +
 						"from Tag t " +
 						"join ContactTag ct on ct.TagId = t.Id " +
 						"where ct.ContactId = ?", countactId);
+				return tags;
 			}
 		}
 

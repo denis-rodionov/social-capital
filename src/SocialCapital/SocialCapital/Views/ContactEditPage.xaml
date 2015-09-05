@@ -3,7 +3,8 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 		xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
-		x:Class="SocialCapital.Views.ContactEditPage">
+		x:Class="SocialCapital.Views.ContactEditPage"
+		Disappearing="OnDisappearing">
 	<StackLayout>
 		<TableView x:Name="tableView"
 				   Intent="Form"
@@ -19,7 +20,9 @@
 							   Placeholder="Введите название компании"
 							   Keyboard="Text" />
 					<ViewCell Tapped="OnTagsTaped">
-						<controls:TagList LayoutType="Wrap" BindingContext="{Binding Tags}" />
+						<ContentView Padding="5, 25, 5, 25">
+							<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="Теги отсутствуют"/>
+						</ContentView>
 					</ViewCell>
 				</TableSection>
 			</TableRoot>

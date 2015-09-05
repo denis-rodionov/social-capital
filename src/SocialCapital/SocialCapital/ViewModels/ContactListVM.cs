@@ -16,7 +16,7 @@ namespace SocialCapital.ViewModels
 		public ContactListVM ()
 		{
 			var manager = new ContactManager ();
-			var contacts = manager.GetContactListPreview ();
+			var contacts = manager.Contacts .ToList ();
 
 			Contacts = new ObservableCollection<ContactVM> (contacts.Select(c => new ContactVM(c)));
 		}
