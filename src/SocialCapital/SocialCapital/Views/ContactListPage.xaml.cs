@@ -13,7 +13,6 @@ namespace SocialCapital.Views
 			InitializeComponent ();
 
 			this.BindingContext = new ContactListVM ();
-			Title = AppResources.ContactListTitle;
 		}
 
 		protected override void OnAppearing()
