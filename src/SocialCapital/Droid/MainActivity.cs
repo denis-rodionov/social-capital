@@ -10,7 +10,10 @@ using Android.OS;
 
 namespace SocialCapital.Droid
 {
-	[Activity (Label = "SocialCapital.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (Label = "@string/app_name", 
+			   Icon = "@drawable/icon", 
+			   MainLauncher = true, 
+			   ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
 		protected override void OnCreate (Bundle bundle)

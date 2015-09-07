@@ -260,6 +260,9 @@ namespace SocialCapital.Droid
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
 			
+			// aapt resource value: 0x7f040007
+			public const int app_name = 2130968583;
+			
 			// aapt resource value: 0x7f040003
 			public const int day_name_format = 2130968579;
 			
