@@ -16,6 +16,11 @@ namespace SocialCapital
 			var assembly = typeof(App).GetTypeInfo().Assembly;
 			foreach (var res in assembly.GetManifestResourceNames())
 				System.Diagnostics.Debug.WriteLine("found resource: " + res);
+
+			if (Device.OS != TargetPlatform.WinPhone) {
+				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+				//Resx.AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+			}
 			
 			Log.GetLogger ().Log ("Application starting...");
 
