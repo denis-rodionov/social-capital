@@ -3,8 +3,7 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 		xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
-		x:Class="SocialCapital.Views.ContactEditPage"
-		Disappearing="OnDisappearing">
+		x:Class="SocialCapital.Views.ContactEditPage">
 	<StackLayout>
 		<TableView x:Name="tableView"
 				   Intent="Form"

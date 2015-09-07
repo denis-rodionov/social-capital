@@ -13,6 +13,7 @@ namespace SocialCapital.Views
 			InitializeComponent ();
 
 			this.BindingContext = new ContactListVM ();
+			Title = AppResources.ContactListTitle;
 		}
 
 		protected override void OnAppearing()
@@ -20,7 +21,7 @@ namespace SocialCapital.Views
 			base.OnAppearing ();
 		}
 
-		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		public async void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
 		{
 			var contact = e.SelectedItem as ContactVM;
 
@@ -30,7 +31,9 @@ namespace SocialCapital.Views
 
 			contactEditPage.BindingContext = contact;
 
-			Navigation.PushAsync(contactEditPage);
+			await Navigation.PushAsync(contactEditPage);
+
+			contact.Reload ();
 		}
 	}
 }

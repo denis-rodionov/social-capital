@@ -28,11 +28,12 @@ namespace SocialCapital.Views
 			Navigation.PushAsync (new TagsSelectPage () { BindingContext = tags });
 		}
 
-		protected void OnDisappearing(object sender, EventArgs args)
+		protected override bool OnBackButtonPressed ()
 		{
 			var contact = (BindingContext as ContactVM);
-
 			contact.Reload ();
+			
+			return base.OnBackButtonPressed ();
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Reflection;
 using Xamarin.Forms;
 using SocialCapital.Data;
 using SocialCapital.Views;
@@ -12,6 +12,11 @@ namespace SocialCapital
 
 		public App ()
 		{
+			// NOTE: use for debugging, not in released app code!
+			var assembly = typeof(App).GetTypeInfo().Assembly;
+			foreach (var res in assembly.GetManifestResourceNames())
+				System.Diagnostics.Debug.WriteLine("found resource: " + res);
+			
 			Log.GetLogger ().Log ("Application starting...");
 
 			new TagManager ().Init ();

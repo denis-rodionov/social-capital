@@ -64,6 +64,11 @@ namespace SocialCapital.Data
 			}
 		}
 
+		public Contact GetContact(int contactId)
+		{
+			return Contacts.Single (c => c.Id == contactId);
+		}
+
 		/*
 		public List<Contact> GetContactListPreview()
 		{

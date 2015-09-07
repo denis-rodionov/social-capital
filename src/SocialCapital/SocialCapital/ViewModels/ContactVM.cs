@@ -65,6 +65,7 @@ namespace SocialCapital.ViewModels
 					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
 				return tags;
 			}
+			set { tags = value; }
 		}
 
 		public ImageSource PhotoImage {
@@ -93,7 +94,8 @@ namespace SocialCapital.ViewModels
 
 		public void Reload()
 		{
-			//Database.Get
+			SourceContact = Database.GetContact (SourceContact.Id);
+			Tags = null;
 		}
 	}
 }
