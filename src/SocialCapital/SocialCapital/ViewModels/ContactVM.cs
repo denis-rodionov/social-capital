@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using System.IO;
+using System.ComponentModel;
 
 namespace SocialCapital.ViewModels
 {
-	public class ContactVM 
+	public class ContactVM : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		/// <summary>
 		/// Manager class for accessing database
 		/// </summary>
@@ -46,6 +49,7 @@ namespace SocialCapital.ViewModels
 			}
 			set {
 				SourceContact.FullName = value;
+				RaicePropertyChenged ("FullName");
 			}
 		}
 
@@ -55,6 +59,7 @@ namespace SocialCapital.ViewModels
 			}
 			set {
 				SourceContact.WorkPlace = value;
+				RaicePropertyChenged ("WorkPlace");
 			}
 		}
 
@@ -65,7 +70,11 @@ namespace SocialCapital.ViewModels
 					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
 				return tags;
 			}
-			set { tags = value; }
+			set 
+			{ 
+				tags = value; 
+				RaicePropertyChenged ("Tags");
+			}
 		}
 
 		public ImageSource PhotoImage {
@@ -83,6 +92,18 @@ namespace SocialCapital.ViewModels
 		}
 
 		public string TagList { get { return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); } }
+
+		#endregion
+
+		#region NotifyPropertyChanged 
+
+		private void RaicePropertyChenged(string property)
+		{
+			var p = PropertyChanged;
+
+			if (p != null)
+				p (this, new PropertyChangedEventArgs (property));
+		}
 
 		#endregion
 

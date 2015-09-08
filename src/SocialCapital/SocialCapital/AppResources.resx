@@ -17,7 +17,7 @@
 		<value>Базовая информация</value>
 	</data>
 	<data name="FullNameLabel" xml:space="preserve">
-		<value>Фамилия, Имя</value>
+		<value>Имя</value>
 	</data>
 	<data name="InputFullNamePlaceholder" xml:space="preserve">
 		<value>Введите имя контакта</value>
@@ -32,7 +32,24 @@
 		<value>Теги отсутствуют</value>
 	</data>
 	<data name="SaveButton" xml:space="preserve">
-		<value>Запомнить</value>
+		<value>Сохранить</value>
 	</data>
-
+	<data name="CancelButton" xml:space="preserve">
+		<value>Отменить</value>
+	</data>
+	<data name="TagSelectTitle" xml:space="preserve">
+		<value>Сохранить</value>
+	</data>
+	<data name="InputSelectTagPlaceholder" xml:space="preserve">
+		<value>Введите название</value>
+	</data>
+	<data name="AddButtonText" xml:space="preserve">
+		<value>Добавить</value>
+	</data>
+	<data name="DeleteButtonText" xml:space="preserve">
+		<value>Удалить</value>
+	</data>
+	<data name="EditContactTitle" xml:space="preserve">
+		<value>Редактирование контакта</value>
+	</data>
 </root>

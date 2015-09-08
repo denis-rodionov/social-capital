@@ -20,19 +20,17 @@ namespace SocialCapital.Views
 			base.OnAppearing ();
 		}
 
-		public async void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
 		{
 			var contact = e.SelectedItem as ContactVM;
 
-			var contactEditPage = new ContactEditPage () {
-				//BindingContext = contact
+			var detailsContactPage = new ContactDetailsPage () {
+				BindingContext = contact
 			};
 
-			contactEditPage.BindingContext = contact;
+			Navigation.PushAsync(detailsContactPage);
 
-			await Navigation.PushAsync(contactEditPage);
-
-			contact.Reload ();
+			// contact.Reload ();
 		}
 	}
 }

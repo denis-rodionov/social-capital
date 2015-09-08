@@ -21,19 +21,19 @@ namespace SocialCapital.Views
 			Navigation.PopAsync ();
 		}
 
+		private void OnCancelButtonClicked(object sender, EventArgs args)
+		{
+			var contact = (ContactVM)BindingContext;
+			contact.Reload ();
+
+			Navigation.PopModalAsync ();
+		}
+
 		protected void OnTagsTaped(object sender, EventArgs args)
 		{
 			var tags = (BindingContext as ContactVM).Tags;
 
 			Navigation.PushAsync (new TagsSelectPage () { BindingContext = tags });
-		}
-
-		protected override bool OnBackButtonPressed ()
-		{
-			var contact = (BindingContext as ContactVM);
-			contact.Reload ();
-			
-			return base.OnBackButtonPressed ();
 		}
 	}
 }

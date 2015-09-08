@@ -3,8 +3,9 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 		xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
+		xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 		x:Class="SocialCapital.Views.ContactEditPage"
-		xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital">
+		Title="{i18n:Translate EditContactTitle}">
 	<StackLayout>
 
 		<TableView x:Name="tableView"
@@ -13,7 +14,7 @@
 
 			<TableRoot Title="{i18n:Translate ContactEditTitle}">
 				<TableSection Title="{i18n:Translate BaseContactInfo}">
-					<EntryCell Label="{i18n:Translate Text=FullNameLabel, Format='{0}::'}"
+					<EntryCell Label="{i18n:Translate Text=FullNameLabel, Format='{0}:'}"
 							   Text="{Binding FullName}"
 							   Placeholder="{i18n:Translate InputFullNamePlaceholder}"
 							   Keyboard="Text" />
@@ -30,8 +31,14 @@
 			</TableRoot>
 		</TableView>
 
-		<Button Text="{i18n:Translate SaveButton}"
-				HorizontalOptions="Center"
-				Clicked="OnSubmitButtonClicked" />
+		<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+			<Button Text="{i18n:Translate SaveButton}"
+					HorizontalOptions="Center"
+					Clicked="OnSubmitButtonClicked" />
+
+			<Button Text="{i18n:Translate CancelButton}"
+					HorizontalOptions="Center"
+					Clicked="OnCancelButtonClicked" />
+		</StackLayout>
 	</StackLayout>
 </ContentPage>

@@ -62,11 +62,29 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить.
+        /// </summary>
+        internal static string AddButtonText {
+            get {
+                return ResourceManager.GetString("AddButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Базовая информация.
         /// </summary>
         internal static string BaseContactInfo {
             get {
                 return ResourceManager.GetString("BaseContactInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отменить.
+        /// </summary>
+        internal static string CancelButton {
+            get {
+                return ResourceManager.GetString("CancelButton", resourceCulture);
             }
         }
         
@@ -89,7 +107,25 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Фамилия, Имя.
+        ///   Ищет локализованную строку, похожую на Удалить.
+        /// </summary>
+        internal static string DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактирование контакта.
+        /// </summary>
+        internal static string EditContactTitle {
+            get {
+                return ResourceManager.GetString("EditContactTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         internal static string FullNameLabel {
             get {
@@ -103,6 +139,15 @@ namespace SocialCapital {
         internal static string InputFullNamePlaceholder {
             get {
                 return ResourceManager.GetString("InputFullNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите название.
+        /// </summary>
+        internal static string InputSelectTagPlaceholder {
+            get {
+                return ResourceManager.GetString("InputSelectTagPlaceholder", resourceCulture);
             }
         }
         
@@ -125,7 +170,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Запомнить.
+        ///   Ищет локализованную строку, похожую на Сохранить.
         /// </summary>
         internal static string SaveButton {
             get {
@@ -134,7 +179,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Выбор тегов.
+        ///   Ищет локализованную строку, похожую на Сохранить.
         /// </summary>
         internal static string TagSelectTitle {
             get {

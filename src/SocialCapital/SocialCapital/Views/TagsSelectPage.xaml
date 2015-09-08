@@ -5,7 +5,7 @@
 	xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 	x:Class="SocialCapital.Views.TagsSelectPage"
 	xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-	Title = "{i18n:Translate TagSeletTitle}"
+	Title = "{i18n:Translate TagSelectTitle}"
 	x:Name = "page">
 	<ContentPage.Content>
 		<StackLayout>
@@ -13,8 +13,10 @@
 				<Entry  x:Name = "searchTagEntry"
 						Text = "{Binding SearchTag}"
 						HorizontalOptions="FillAndExpand" 
-						Placeholder="Введите название тэга" />
-				<Button Text = "Добавить" Command="{Binding Add}" CommandParameter="{x:Reference Name=searchTagEntry}" >
+						Placeholder="{i18n:Translate InputSelectTagPlaceholder}" />
+				<Button Text = "{i18n:Translate AddButtonText}" 
+						Command="{Binding Add}" 
+						CommandParameter="{x:Reference Name=searchTagEntry}" >
 					<Button.Image>
 						<OnPlatform x:TypeArguments="FileImageSource"
 									iOS = ""
@@ -29,7 +31,7 @@
 					<DataTemplate>
 						<TextCell Text="{Binding Name}" >
 							<TextCell.ContextActions>
-								<MenuItem Text="Удалить" 
+								<MenuItem Text="{i18n:Translate DeleteButtonText}" 
 											Command="{Binding Source={x:Reference Name=page},
 														      Path=BindingContext.Delete}"
 											IsDestructive="true" 
