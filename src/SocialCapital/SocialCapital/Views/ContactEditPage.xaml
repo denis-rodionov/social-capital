@@ -6,16 +6,18 @@
 		x:Class="SocialCapital.Views.ContactEditPage"
 		xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital">
 	<StackLayout>
+
 		<TableView x:Name="tableView"
 				   Intent="Form"
 				   HasUnevenRows="true">
+
 			<TableRoot Title="{i18n:Translate ContactEditTitle}">
 				<TableSection Title="{i18n:Translate BaseContactInfo}">
-					<EntryCell Label="{i18n:Translate Text=FullNameLabel Format={0}::"
+					<EntryCell Label="{i18n:Translate Text=FullNameLabel, Format='{0}::'}"
 							   Text="{Binding FullName}"
 							   Placeholder="{i18n:Translate InputFullNamePlaceholder}"
 							   Keyboard="Text" />
-					<EntryCell Label="{i18n:Translate Text=WorkplaceLabel Format={0}:"
+					<EntryCell Label="{i18n:Translate Text=WorkplaceLabel, Format='{0}:'}"
 							   Text="{Binding WorkPlace}"
 							   Placeholder="{i18n:Translate InputWorkplacePlaceholder}"
 							   Keyboard="Text" />

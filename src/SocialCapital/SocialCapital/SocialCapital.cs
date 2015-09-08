@@ -12,6 +12,8 @@ namespace SocialCapital
 
 		public App ()
 		{
+			Log.GetLogger ().Log ("Application starting......");
+
 			// NOTE: use for debugging, not in released app code!
 			var assembly = typeof(App).GetTypeInfo().Assembly;
 			foreach (var res in assembly.GetManifestResourceNames())
@@ -21,8 +23,6 @@ namespace SocialCapital
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 				//Resx.AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
-			
-			Log.GetLogger ().Log ("Application starting...");
 
 			new TagManager ().Init ();
 			new ContactManager ().Init ();

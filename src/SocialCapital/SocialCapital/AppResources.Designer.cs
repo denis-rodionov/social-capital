@@ -62,7 +62,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Основная информация.
+        ///   Ищет локализованную строку, похожую на Базовая информация.
         /// </summary>
         internal static string BaseContactInfo {
             get {
@@ -80,7 +80,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Список контактов.
+        ///   Ищет локализованную строку, похожую на Список людей.
         /// </summary>
         internal static string ContactListTitle {
             get {
@@ -89,7 +89,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Имя.
+        ///   Ищет локализованную строку, похожую на Фамилия, Имя.
         /// </summary>
         internal static string FullNameLabel {
             get {
@@ -125,7 +125,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Сохранить.
+        ///   Ищет локализованную строку, похожую на Запомнить.
         /// </summary>
         internal static string SaveButton {
             get {
