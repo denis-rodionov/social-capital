@@ -5,7 +5,7 @@
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			 Title = "i18n:Translate ContactListTitle">
+			 Title = "{i18n:Translate ContactListTitle}">
 	<ContentPage.Content>
 		<ListView x:Name="contactListView" 
 			      ItemsSource = "{Binding Contacts}"

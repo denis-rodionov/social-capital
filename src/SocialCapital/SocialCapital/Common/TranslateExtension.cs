@@ -20,6 +20,8 @@ namespace SocialCapital.Common
 
 		public string Text { get; set; }
 
+		public string Format { get; set; }
+
 		public object ProvideValue (IServiceProvider serviceProvider)
 		{
 			if (Text == null)
@@ -30,7 +32,13 @@ namespace SocialCapital.Common
 
 			var translation = temp.GetString (Text, ci);
 
-			if (translation == null) {
+			if (translation != null)
+			{
+				if (Format != null)
+					translation = string.Format(Format, translation);
+			}
+			else 	// translation not found
+			{
 				#if DEBUG
 				throw new ArgumentException (
 					String.Format ("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, ci.Name),

@@ -3,31 +3,32 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 		xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
-		x:Class="SocialCapital.Views.ContactEditPage">
+		x:Class="SocialCapital.Views.ContactEditPage"
+		xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital">
 	<StackLayout>
 		<TableView x:Name="tableView"
 				   Intent="Form"
 				   HasUnevenRows="true">
-			<TableRoot Title="Редактирование контакта">
-				<TableSection Title="Основная информация">
-					<EntryCell Label="Полное имя:"
+			<TableRoot Title="{i18n:Translate ContactEditTitle}">
+				<TableSection Title="{i18n:Translate BaseContactInfo}">
+					<EntryCell Label="{i18n:Translate Text=FullNameLabel Format={0}::"
 							   Text="{Binding FullName}"
-							   Placeholder="Введите имя"
+							   Placeholder="{i18n:Translate InputFullNamePlaceholder}"
 							   Keyboard="Text" />
-					<EntryCell Label="Место работы:"
+					<EntryCell Label="{i18n:Translate Text=WorkplaceLabel Format={0}:"
 							   Text="{Binding WorkPlace}"
-							   Placeholder="Введите название компании"
+							   Placeholder="{i18n:Translate InputWorkplacePlaceholder}"
 							   Keyboard="Text" />
 					<ViewCell Tapped="OnTagsTaped">
 						<ContentView Padding="5, 25, 5, 25">
-							<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="Теги отсутствуют"/>
+							<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="{i18n:Translate NoTagsPlaceholder}"/>
 						</ContentView>
 					</ViewCell>
 				</TableSection>
 			</TableRoot>
 		</TableView>
 
-		<Button Text="Сохранить"
+		<Button Text="{i18n:Translate SaveButton}"
 				HorizontalOptions="Center"
 				Clicked="OnSubmitButtonClicked" />
 	</StackLayout>

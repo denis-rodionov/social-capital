@@ -7,4 +7,32 @@
 	<data name="ContactListTitle" xml:space="preserve">
 		<value>Список контактов</value>
 	</data>
+	<data name="ContactEditTitle" xml:space="preserve">
+		<value>Редактирование контакта</value>
+	</data>
+	<data name="TagSelectTitle" xml:space="preserve">
+		<value>Выбор тегов</value>
+	</data>
+	<data name="BaseContactInfo" xml:space="preserve">
+		<value>Основная информация</value>
+	</data>
+	<data name="FullNameLabel" xml:space="preserve">
+		<value>Имя</value>
+	</data>
+	<data name="InputFullNamePlaceholder" xml:space="preserve">
+		<value>Введите имя контакта</value>
+	</data>
+	<data name="WorkplaceLabel" xml:space="preserve">
+		<value>Место работы</value>
+	</data>
+	<data name="InputWorkplacePlaceholder" xml:space="preserve">
+		<value>Введите название компании</value>
+	</data>
+	<data name="NoTagsPlaceholder" xml:space="preserve">
+		<value>Теги отсутствуют</value>
+	</data>
+	<data name="SaveButton" xml:space="preserve">
+		<value>Сохранить</value>
+	</data>
+
 </root>

@@ -62,11 +62,92 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Основная информация.
+        /// </summary>
+        internal static string BaseContactInfo {
+            get {
+                return ResourceManager.GetString("BaseContactInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактирование контакта.
+        /// </summary>
+        internal static string ContactEditTitle {
+            get {
+                return ResourceManager.GetString("ContactEditTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Список контактов.
         /// </summary>
         internal static string ContactListTitle {
             get {
                 return ResourceManager.GetString("ContactListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя.
+        /// </summary>
+        internal static string FullNameLabel {
+            get {
+                return ResourceManager.GetString("FullNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите имя контакта.
+        /// </summary>
+        internal static string InputFullNamePlaceholder {
+            get {
+                return ResourceManager.GetString("InputFullNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите название компании.
+        /// </summary>
+        internal static string InputWorkplacePlaceholder {
+            get {
+                return ResourceManager.GetString("InputWorkplacePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Теги отсутствуют.
+        /// </summary>
+        internal static string NoTagsPlaceholder {
+            get {
+                return ResourceManager.GetString("NoTagsPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сохранить.
+        /// </summary>
+        internal static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выбор тегов.
+        /// </summary>
+        internal static string TagSelectTitle {
+            get {
+                return ResourceManager.GetString("TagSelectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Место работы.
+        /// </summary>
+        internal static string WorkplaceLabel {
+            get {
+                return ResourceManager.GetString("WorkplaceLabel", resourceCulture);
             }
         }
     }

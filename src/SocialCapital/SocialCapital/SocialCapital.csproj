@@ -111,7 +111,6 @@
     <Folder Include="Views\Libs\" />
     <Folder Include="Views\Libs\RepeaterViewLib\" />
     <Folder Include="Common\" />
-    <Folder Include="Resx\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">

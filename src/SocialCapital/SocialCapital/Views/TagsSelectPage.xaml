@@ -4,7 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 	x:Class="SocialCapital.Views.TagsSelectPage"
-	Title = "Выбор тегов"
+	xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+	Title = "{i18n:Translate TagSeletTitle}"
 	x:Name = "page">
 	<ContentPage.Content>
 		<StackLayout>
