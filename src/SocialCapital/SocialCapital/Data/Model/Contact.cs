@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using SocialCapital.AddressBookImport;
 
 namespace SocialCapital.Data.Model
 {
@@ -27,6 +28,9 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		/// <value>The frequency identifier.</value>
 		public int FrequencyId { get; set; }
+
+		[Ignore]
+		public AddressBookContact AbContact { get; set; }
 
 		public override string ToString ()
 		{

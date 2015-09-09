@@ -9,13 +9,12 @@
 	<ContentPage.Content>
 		<ListView x:Name="contactListView" 
 			      ItemsSource = "{Binding Contacts}"
-			      RowHeight="85"
-			      ItemSelected="OnItemSelected">
+			      RowHeight="85">
 			<ListView.ItemTemplate>
 
 				<DataTemplate>
 
-					<ViewCell>
+					<ViewCell Tapped="OnItemSelected">
 						<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" >
 							<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
 

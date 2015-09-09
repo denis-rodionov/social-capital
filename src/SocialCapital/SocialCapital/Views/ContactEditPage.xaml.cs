@@ -18,7 +18,7 @@ namespace SocialCapital.Views
 			var contact = (ContactVM)BindingContext;
 			contact.Save ();
 
-			Navigation.PopAsync ();
+			Navigation.PopModalAsync ();
 		}
 
 		private void OnCancelButtonClicked(object sender, EventArgs args)

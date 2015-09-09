@@ -29,7 +29,7 @@
 			<ListView x:Name="listview" ItemsSource="{Binding Tags}" VerticalOptions="FillAndExpand">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<TextCell Text="{Binding Name}" >
+						<TextCell Text="{Binding Name}">
 							<TextCell.ContextActions>
 								<MenuItem Text="{i18n:Translate DeleteButtonText}" 
 											Command="{Binding Source={x:Reference Name=page},

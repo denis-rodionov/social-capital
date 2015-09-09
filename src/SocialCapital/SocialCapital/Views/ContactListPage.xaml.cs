@@ -20,9 +20,10 @@ namespace SocialCapital.Views
 			base.OnAppearing ();
 		}
 
-		public void OnItemSelected (object sender, SelectedItemChangedEventArgs e)
+		public void OnItemSelected (object sender,  EventArgs args)
 		{
-			var contact = e.SelectedItem as ContactVM;
+			var cell = (Cell)sender;
+			var contact = cell.BindingContext as ContactVM;
 
 			var detailsContactPage = new ContactDetailsPage () {
 				BindingContext = contact

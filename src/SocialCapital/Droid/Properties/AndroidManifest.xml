@@ -2,4 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.denis-rodionov.socialcapital">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
 	<application android:label="SocialCapital" android:icon="@drawable/icon"></application>
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
 </manifest>

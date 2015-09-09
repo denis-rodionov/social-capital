@@ -66,8 +66,8 @@ namespace SocialCapital.ViewModels
 		TagsVM tags = null;
 		public TagsVM Tags {
 			get {
-				if (tags == null)
-					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
+				//if (tags == null)
+				//	tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
 				return tags;
 			}
 			set 
@@ -90,6 +90,8 @@ namespace SocialCapital.ViewModels
 				return res;
 			}
 		}
+
+		public string AbContact { get { return SourceContact.AbContact.ToString (); } }
 
 		public string TagList { get { return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); } }
 
@@ -117,6 +119,11 @@ namespace SocialCapital.ViewModels
 		{
 			SourceContact = Database.GetContact (SourceContact.Id);
 			Tags = null;
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[ContactVM: {0}]", SourceContact);
 		}
 	}
 }

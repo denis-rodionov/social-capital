@@ -13,7 +13,7 @@
 		<StackLayout Orientation="Horizontal">
 			<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
 			<StackLayout Orientation="Vertical">
-				<Label Text="{Binding WorkPlace}" />
+				<Label Text="{Binding AbContact}" />
 				<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="{i18n:Translate NoTagsPlaceholder}" />
 			</StackLayout>
 		</StackLayout>
