@@ -34,6 +34,8 @@ namespace SocialCapital.AddressBookImport
 
 		public IEnumerable<Note> Notes { get; set; }
 
+		public IEnumerable<Address> Addresses { get; set; }
+
 		public AddressBookContact ()
 		{
 		}

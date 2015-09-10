@@ -28,7 +28,8 @@ namespace SocialCapital
 			new ContactManager ().Init ();
 
 
-			MainPage = new NavigationPage (new ContactListPage ());
+			//MainPage = new NavigationPage (new ContactListPage ());
+			MainPage = new RootPage();
 		}
 
 		protected override void OnStart ()

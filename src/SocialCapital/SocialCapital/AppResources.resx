@@ -12,44 +12,78 @@
 	</data>
 	<data name="TagSelectTitle" xml:space="preserve">
 		<value>Выбор тегов</value>
+		<comment>Заголовко страницы на которой пользователь выбирает находит, добавляет и удаляет теги для выбранного контакта</comment>
 	</data>
 	<data name="BaseContactInfo" xml:space="preserve">
 		<value>Базовая информация</value>
+		<comment>Заголовок для раздела основной информации о контакте (вся информация о контакте при редактировании делится на разделы)</comment>
 	</data>
 	<data name="FullNameLabel" xml:space="preserve">
 		<value>Имя</value>
+		<comment>Полное имя контакта при просмотре, редактировании и в списке контактов</comment>
 	</data>
 	<data name="InputFullNamePlaceholder" xml:space="preserve">
 		<value>Введите имя контакта</value>
+		<comment>Предложение ввести имя контакта в строку ввода</comment>
 	</data>
 	<data name="WorkplaceLabel" xml:space="preserve">
 		<value>Место работы</value>
+		<comment>Место работы или название компании с которой связан контакт (может быть несколько компаний)</comment>
 	</data>
 	<data name="InputWorkplacePlaceholder" xml:space="preserve">
 		<value>Введите название компании</value>
+		<comment>Предложение ввести название компании</comment>
 	</data>
 	<data name="NoTagsPlaceholder" xml:space="preserve">
 		<value>Теги отсутствуют</value>
+		<comment>В случае, если у контакта отсутствуют теги, отображается эта строка</comment>
 	</data>
 	<data name="SaveButton" xml:space="preserve">
 		<value>Сохранить</value>
+		<comment>Название для любой кнопки сохранения информации</comment>
 	</data>
 	<data name="CancelButton" xml:space="preserve">
 		<value>Отменить</value>
-	</data>
-	<data name="TagSelectTitle" xml:space="preserve">
-		<value>Сохранить</value>
+		<comment>Название для любой кнопки отмены сделанных изменений</comment>
 	</data>
 	<data name="InputSelectTagPlaceholder" xml:space="preserve">
 		<value>Введите название</value>
+		<comment>Предложение ввести навазение тега, или часть названия для поиска тега</comment>
 	</data>
 	<data name="AddButtonText" xml:space="preserve">
 		<value>Добавить</value>
+		<comment>Название всех действий добавить что-либо</comment>
 	</data>
 	<data name="DeleteButtonText" xml:space="preserve">
 		<value>Удалить</value>
+		<comment>Название всех действий удалить что-либо</comment>
 	</data>
 	<data name="EditContactTitle" xml:space="preserve">
-		<value>Редактирование контакта</value>
+		<value>Изменить</value>
+		<comment>Название действия (кнопки) для изменения контакта</comment>
+	</data>
+	<data name="MainMenuTitle" xml:space="preserve">
+		<value>Меню</value>
+		<comment>Главное меню сбоку</comment>
+	</data>
+	<data name="AllContactsMenuItemTitle" xml:space="preserve">
+		<value>Все контакты</value>
+		<comment>Название меню для доступа к полноме списку контактов</comment>
+	</data>
+	<data name="AddressBookMenuItemTitle" xml:space="preserve">
+		<value>Импорт адресной книги</value>
+		<comment>Название меню для импорта из адресной книги</comment>
+	</data>
+	<data name="SettingsMenuItemTitle" xml:space="preserve">
+		<value>Настройки</value>
+		<comment>Название меню для доступа настройкам приложения</comment>
+	</data>
+	<data name="SummaryMenuItemTitle" xml:space="preserve">
+		<value>Сводка</value>
+		<comment>Название меню для отображения страницы-сводки</comment>
+	</data>
+	<data name="SynchAddressBook" xml:space="preserve">
+		<value>Импортировать контакты</value>
+		<comment>Дейсткие: запуск импорта контактов</comment>
 	</data>
 </root>

@@ -71,6 +71,24 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Импорт адресной книги.
+        /// </summary>
+        internal static string AddressBookMenuItemTitle {
+            get {
+                return ResourceManager.GetString("AddressBookMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Все контакты.
+        /// </summary>
+        internal static string AllContactsMenuItemTitle {
+            get {
+                return ResourceManager.GetString("AllContactsMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Базовая информация.
         /// </summary>
         internal static string BaseContactInfo {
@@ -116,7 +134,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Редактирование контакта.
+        ///   Ищет локализованную строку, похожую на Изменить.
         /// </summary>
         internal static string EditContactTitle {
             get {
@@ -161,6 +179,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Меню.
+        /// </summary>
+        internal static string MainMenuTitle {
+            get {
+                return ResourceManager.GetString("MainMenuTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Теги отсутствуют.
         /// </summary>
         internal static string NoTagsPlaceholder {
@@ -179,7 +206,34 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Сохранить.
+        ///   Ищет локализованную строку, похожую на Настройки.
+        /// </summary>
+        internal static string SettingsMenuItemTitle {
+            get {
+                return ResourceManager.GetString("SettingsMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сводка.
+        /// </summary>
+        internal static string SummaryMenuItemTitle {
+            get {
+                return ResourceManager.GetString("SummaryMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Импортировать контакты.
+        /// </summary>
+        internal static string SynchAddressBook {
+            get {
+                return ResourceManager.GetString("SynchAddressBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выбор тегов.
         /// </summary>
         internal static string TagSelectTitle {
             get {

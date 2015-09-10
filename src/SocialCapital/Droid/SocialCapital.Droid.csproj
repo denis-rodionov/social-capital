@@ -121,6 +121,7 @@
     <Folder Include="Resources\values\" />
     <Folder Include="Resources\drawable-mdpi\" />
     <Folder Include="Resources\values-en\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -138,6 +139,37 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_edit_white_36dp.png" />
     <AndroidResource Include="Resources\drawable-mdpi\ic_edit_white_36dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_edit_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_contact_phone_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_insert_chart_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_people_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_settings_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_contact_phone_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_insert_chart_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_people_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_settings_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_contact_phone_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_insert_chart_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_people_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_settings_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_contact_phone_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_insert_chart_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_people_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_settings_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_menu_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_menu_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_menu_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_menu_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_contact_phone_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_edit_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_insert_chart_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_menu_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_people_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_settings_white_36dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

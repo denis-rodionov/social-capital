@@ -4,16 +4,17 @@ using Xamarin.Forms;
 using System.IO;
 using SocialCapital.Data.Model;
 using System.Linq;
+using System.Linq.Expressions;
+using SocialCapital.AddressBookImport;
 
 namespace SocialCapital.Data
 {
 	
 
-	public class ContactManager
+	public class ContactManager : IDisposable
 	{
 		public ContactManager ()
 		{
-			//Init ();
 		}
 
 		public void Init()	
@@ -59,8 +60,15 @@ namespace SocialCapital.Data
 		public IEnumerable<Contact> Contacts { 
 			get { 
 				using (var db = new DataContext ()) {
-					return db.Connection.Table<Contact> ();						
+					return db.Connection.Table<Contact> ();					
 				}
+			}
+		}
+
+		public IEnumerable<Contact> GetContacts(Expression<Func<Contact, bool>> whereClause)
+		{
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<Contact> ().Where (whereClause);
 			}
 		}
 
@@ -128,6 +136,23 @@ namespace SocialCapital.Data
 			tagManager.AssignToContact (newTags, contactId);
 			tagManager.RemoveFromContact (removeTags, contactId);
 		}
+
+		public void SaveContact(AddressBookContact contact)
+		{
+		}
+
+		public void UpdateContact(Contact contact, AddressBookContact bookContact)
+		{
+		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
 	}
 }
 

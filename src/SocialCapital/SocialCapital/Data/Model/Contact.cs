@@ -29,8 +29,23 @@ namespace SocialCapital.Data.Model
 		/// <value>The frequency identifier.</value>
 		public int FrequencyId { get; set; }
 
-		[Ignore]
-		public AddressBookContact AbContact { get; set; }
+		/// <summary>
+		/// Unique Id in device address book
+		/// </summary>
+		public string AddressBookId { get; set; }
+
+		/// <summary>
+		/// Time of the last update from device address book (or create)
+		/// </summary>
+		public DateTime AddressBookUpdateTime { get; set; }
+
+		/// <summary>
+		/// CreateTime
+		/// </summary>
+		public DateTime CreateTime { get; set; } 
+
+		//[Ignore]
+		//public AddressBookContact AbContact { get; set; }
 
 		public override string ToString ()
 		{

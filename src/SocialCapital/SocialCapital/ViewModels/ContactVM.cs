@@ -66,8 +66,8 @@ namespace SocialCapital.ViewModels
 		TagsVM tags = null;
 		public TagsVM Tags {
 			get {
-				//if (tags == null)
-				//	tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
+				if (tags == null)
+					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
 				return tags;
 			}
 			set 

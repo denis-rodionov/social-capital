@@ -28,7 +28,7 @@ namespace SocialCapital.Droid
 			this.book = new AddressBook(Forms.Context.ApplicationContext);
 		}
 
-		public async Task<List<AddressBookContact>> GetContacts ()
+		public Task<List<AddressBookContact>> GetContacts ()
 		{
 			var contacts = new List<AddressBookContact> ();
 
@@ -43,45 +43,52 @@ namespace SocialCapital.Droid
 				}
 
 				Log.GetLogger().Log("Start geting contacts...");
-				foreach (Contact contact in book.Where(x => x.Phones.Count() != 0).OrderBy(c => c.LastName))
-				{
-					// Note: on certain android device(Htc for example) it show name in DisplayName Field
-					contacts.Add (new AddressBookContact () { 
-						Id = contact.Id,
-						FirstName = contact.FirstName, 
-						LastName = contact.LastName,
-						MiddleName = contact.MiddleName,
-						DisplayName = contact.DisplayName,
-						NickName = contact.Nickname,
-						Thumbnail = GetImageArray (contact.GetThumbnail ()),
-						IsAggregate = contact.IsAggregate,
-						Prefix = contact.Prefix,
-						Suffix = contact.Suffix,
-						Organizations = contact.Organizations.Select (o => new SocialCapital.Data.Model.Organization () {
-							ContactTitle = o.ContactTitle,
-							Label = o.Label,
-							Name = o.Name
-						}),
-						Phones = contact.Phones.Select (p => new SocialCapital.Data.Model.Phone () {
-							Label = p.Label,
-							Number = p.Number,
-							Type = ToPhoneType (p.Type)
-						}),
-						Emails = contact.Emails.Select (e => new SocialCapital.Data.Model.Email () {
-							Address = e.Address,
-							Label = e.Label,
-							Type = ToEmailType (e.Type)
-						}),
-						Notes = contact.Notes.Select (n => new SocialCapital.Data.Model.Note () {
-							Contents = n.Contents,
-						})
-					});
-				}
+				var bookContacts = book;	//.Where (x => x.Phones.Count () != 0);
 
-				Log.GetLogger().Log("Contacts impoted count: {0}", contacts.Count);
+				//foreach (Contact contact in bookContacts)
+				//{
+					// Note: on certain android device(Htc for example) it show name in DisplayName Field
+				//	contacts.Add( ConvertToContact (contact));
+				//}
+
+				Log.GetLogger().Log("Contacts impoted count: {0}", bookContacts.Count());
 			}
 
-			return contacts;
+			return null;
+		}
+
+		private AddressBookContact ConvertToContact (Contact contact)
+		{
+			return new AddressBookContact () {
+				Id = contact.Id,
+				FirstName = contact.FirstName,
+				LastName = contact.LastName,
+				MiddleName = contact.MiddleName,
+				DisplayName = contact.DisplayName,
+				NickName = contact.Nickname,
+				Thumbnail = GetImageArray (contact.GetThumbnail ()),
+				IsAggregate = contact.IsAggregate,
+				Prefix = contact.Prefix,
+				Suffix = contact.Suffix,
+				Organizations = contact.Organizations.Select (o => new SocialCapital.Data.Model.Organization () {
+					ContactTitle = o.ContactTitle,
+					Label = o.Label,
+					Name = o.Name
+				}),
+				Phones = contact.Phones.Select (p => new SocialCapital.Data.Model.Phone () {
+					Label = p.Label,
+					Number = p.Number,
+					Type = ToPhoneType (p.Type)
+				}),
+				Emails = contact.Emails.Select (e => new SocialCapital.Data.Model.Email () {
+					Address = e.Address,
+					Label = e.Label,
+					Type = ToEmailType (e.Type)
+				}),
+				Notes = contact.Notes.Select (n => new SocialCapital.Data.Model.Note () {
+					Contents = n.Contents,
+				})
+			};
 		}
 
 		private SocialCapital.Data.Model.EmailType ToEmailType(EmailType type)

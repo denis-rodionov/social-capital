@@ -85,6 +85,17 @@
     <Compile Include="Data\Model\Note.cs" />
     <Compile Include="Data\Model\Email.cs" />
     <Compile Include="AddressBookImport\AddressBookService.cs" />
+    <Compile Include="Views\RootPage.cs" />
+    <Compile Include="Views\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NavigationVM.cs" />
+    <Compile Include="Views\AddressBookImport.xaml.cs">
+      <DependentUpon>AddressBookImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AddressBookVM.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Common\Timing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.4.6392\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -145,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AppResources.en.resx" />
     <EmbeddedResource Include="Views\ContactDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddressBookImport.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
