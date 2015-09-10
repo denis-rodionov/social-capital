@@ -45,10 +45,10 @@ namespace SocialCapital.ViewModels
 
 		public string FullName {
 			get {
-				return SourceContact.FullName;
+				return SourceContact.DisplayName;
 			}
 			set {
-				SourceContact.FullName = value;
+				SourceContact.DisplayName = value;
 				RaicePropertyChenged ("FullName");
 			}
 		}
@@ -80,12 +80,12 @@ namespace SocialCapital.ViewModels
 		public ImageSource PhotoImage {
 			get {
 				// Log.GetLogger ().Log ("=== PhotoImage request ===");
-				if (SourceContact.Photo == null || SourceContact.Photo.Length == 0)
+				if (SourceContact.Thumbnail == null || SourceContact.Thumbnail.Length == 0)
 					return null;
 
 				var res = ImageSource.FromStream(() => 
 					{
-						return new MemoryStream(SourceContact.Photo);
+						return new MemoryStream(SourceContact.Thumbnail);
 					});
 				return res;
 			}

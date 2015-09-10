@@ -2,14 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			 x:Class = "SocialCapital.AddressBookImport"
+			 x:Class = "SocialCapital.Views.AddressBookImport"
 			 Title = "{i18n:Translate AddressBookMenuItemTitle}">
 	<ContentPage.Content>
 		<Label Text = "{Binding Status}" />
 
 		<StackLayout Orientation="Horizontal">
 			<Button Text="{i18n:Translate SynchAddressBook}"
-					Command="{Binding StartSync}" />
+					Command="{Binding StartImport}" />
 			<ActivityIndicator IsRunning="{Binding IsImportRunning}" />
 		</StackLayout>
 

@@ -40,6 +40,9 @@ namespace SocialCapital.Data
 			connection.CreateTable<Tag> ();
 			connection.CreateTable<ContactTag> ();
 			connection.CreateTable<Frequency> ();
+			connection.CreateTable<Phone> ();
+			connection.CreateTable<Email> ();
+			connection.CreateTable<Address> ();
 		}
 
 		#endregion

@@ -6,6 +6,7 @@ using SocialCapital.Data.Model;
 using System.Linq;
 using System.Linq.Expressions;
 using SocialCapital.AddressBookImport;
+using SocialCapital.Data.Model.Converters;
 
 namespace SocialCapital.Data
 {
@@ -32,9 +33,9 @@ namespace SocialCapital.Data
 					//Log.GetLogger ().Log ("Inserted frequency id = " + freq1);
 
 					var ivanovId = db.Connection.Insert (new Contact () {
-						FullName = "Иванов",
+						DisplayName = "Иванов",
 						WorkPlace = "Яндекс",
-						Photo = tempImage,
+						Thumbnail = tempImage,
 						FrequencyId = freq1
 					});
 					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
@@ -42,16 +43,16 @@ namespace SocialCapital.Data
 
 					// contact #2
 					db.Connection.Insert (new Contact () {
-						FullName = "Петров",
+						DisplayName = "Петров",
 						WorkPlace = "Google",
-						Photo = tempImage
+						Thumbnail = tempImage
 					});
 
 					// contact #3
 					db.Connection.Insert (new Contact () {
-						FullName = "Сидоров",
+						DisplayName = "Сидоров",
 						WorkPlace = "Mail.ru",
-						Photo = tempImage
+						Thumbnail = tempImage
 					});
 				}
 			}
@@ -136,20 +137,45 @@ namespace SocialCapital.Data
 			tagManager.AssignToContact (newTags, contactId);
 			tagManager.RemoveFromContact (removeTags, contactId);
 		}
+			
 
-		public void SaveContact(AddressBookContact contact)
+		/// <summary>
+		/// Saves the or update contact from the device address book
+		/// </summary>
+		/// <param name="bookContact">Book contact.</param>
+		/// <param name="updateTime">Update time.</param>
+		/// <param name="contact">If contact = null, create takes place, otherwise - update</param>
+		public void SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
 		{
+			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
+			using (var db = new DataContext ()) {
+				var contactId = db.Connection.InsertOrReplace (converter.GetContact ());
+				UpdateContactList<Phone> (converter.GetContactPhones (contactId), contactId, db, p => p.ContactId == contactId);
+				UpdateContactList<Email> (converter.GetContactEmails (contactId), contactId, db, p => p.ContactId == contactId);
+				UpdateContactList<Address> (converter.GetContactAddresses (contactId), contactId, db, p => p.ContactId == contactId);
+			}
 		}
 
-		public void UpdateContact(Contact contact, AddressBookContact bookContact)
+
+		#region Implementation
+
+		private void UpdateContactList<T>(IEnumerable<T> actualList, int contactId, DataContext db,
+			Expression<Func<T, bool>> whereClause) 
 		{
+			var existingList = db.Connection.Table<T> ().Where (whereClause);
+			var newList = actualList.Except (existingList);
+			var oldList = existingList.Except (actualList);
+
+			db.Connection.InsertAll (newList);
+			db.Connection.DeleteAll (oldList);
 		}
+
+		#endregion
 
 		#region IDisposable implementation
 
 		public void Dispose ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion

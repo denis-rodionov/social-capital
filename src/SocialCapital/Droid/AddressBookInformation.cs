@@ -87,6 +87,9 @@ namespace SocialCapital.Droid
 				}),
 				Notes = contact.Notes.Select (n => new SocialCapital.Data.Model.Note () {
 					Contents = n.Contents,
+				}),
+				Addresses = contact.Addresses.Select(a => new SocialCapital.Data.Model.Address() {
+					AddressType.
 				})
 			};
 		}

@@ -14,6 +14,23 @@ namespace SocialCapital.ViewModels
 	{
 		public string GroupName { get; set; }
 		public List<AddressBookContact> Contacts { get; set; }
+
+		#region IEnumerable implementation
+
+		public IEnumerator<AddressBookContact> GetEnumerator () {
+			return Contacts;
+		}
+
+		#endregion
+
+		#region IEnumerable implementation
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
 	}
 
 	public class AddressBookVM : ViewModelBase
@@ -48,7 +65,9 @@ namespace SocialCapital.ViewModels
 			IsImportRunning = true;
 
 			await Task.Factory.StartNew (() => {
-				int t = 5;	
+				var service = new AddressBookService();
+				service.LoadContacts();
+				service.
 			});
 
 			IsImportRunning = false;

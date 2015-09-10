@@ -1,4 +1,5 @@
 ﻿using System;
+using SQLite.Net.Attributes;
 
 namespace SocialCapital.Data.Model
 {
@@ -13,15 +14,17 @@ namespace SocialCapital.Data.Model
 	/// </summary>
 	public class Email
 	{
+		[PrimaryKey, AutoIncrement]
+		public int Id { get; set; }
+
 		public string Address { get; set; }
 
 		public string Label { get; set; }
 
-		public EmailType Type { get; set; }
+		public int ContactId { get; set; }
 
-		public Email ()
-		{
-		}
+		[Ignore]
+		public EmailType Type { get; set; }
 
 		public override string ToString ()
 		{

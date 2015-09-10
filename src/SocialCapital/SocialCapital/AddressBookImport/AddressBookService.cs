@@ -44,13 +44,11 @@ namespace SocialCapital.AddressBookImport
 			
 			var timing = Timing.Start ("AddressBookService.FullUpdate");
 			var db = new ContactManager ();
+			var updateTime = DateTime.Now;
 
-			foreach (var abContact in LoadedContacts) {
-				var dbContact = db.GetContacts (c => c.AddressBookId == abContact.Id).SingleOrDefault ();
-				if (dbContact == null)
-					db.SaveContact (abContact);
-				else
-					db.UpdateContact (dbContact, abContact);
+			foreach (var bookContact in LoadedContacts) {
+				var dbContact = db.GetContacts (c => c.AddressBookId == bookContact.Id).SingleOrDefault ();
+				db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
 			}
 
 			timing.Finish ();

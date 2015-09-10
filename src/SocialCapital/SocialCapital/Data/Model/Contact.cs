@@ -13,7 +13,7 @@ namespace SocialCapital.Data.Model
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
-		public string FullName { get; set; }
+		public string DisplayName { get; set; }
 
 		public string WorkPlace { get ; set; }
 
@@ -21,7 +21,7 @@ namespace SocialCapital.Data.Model
 		/// Small photo to display int the list or in previews
 		/// </summary>
 		/// <value>The photo.</value>
-		public byte[] Photo { get; set; }
+		public byte[] Thumbnail { get; set; }
 
 		/// <summary>
 		/// How oftern need to contact with this person
@@ -49,7 +49,7 @@ namespace SocialCapital.Data.Model
 
 		public override string ToString ()
 		{
-			return string.Format ("[Contact: Id={0}, FullName={1}, WorkPlace={2}, Photo={3}, FrequencyId={4}]", Id, FullName, WorkPlace, Photo, FrequencyId);
+			return string.Format ("[Contact: Id={0}, FullName={1}, WorkPlace={2}, Photo={3}, FrequencyId={4}]", Id, DisplayName, WorkPlace, Thumbnail, FrequencyId);
 		}
 	}
 }
