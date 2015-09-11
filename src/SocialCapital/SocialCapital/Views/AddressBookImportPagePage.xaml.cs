@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace SocialCapital.Views
 {
-	public partial class AddressBookImport : ContentPage
+	public partial class AddressBookImportPage : ContentPage
 	{
-		public AddressBookImport ()
+		public AddressBookImportPage ()
 		{
 			InitializeComponent ();
 		}

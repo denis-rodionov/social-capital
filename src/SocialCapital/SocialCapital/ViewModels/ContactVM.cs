@@ -91,8 +91,6 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public string AbContact { get { return SourceContact.AbContact.ToString (); } }
-
 		public string TagList { get { return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); } }
 
 		#endregion

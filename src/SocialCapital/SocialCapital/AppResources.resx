@@ -86,4 +86,12 @@
 		<value>Импортировать контакты</value>
 		<comment>Дейсткие: запуск импорта контактов</comment>
 	</data>
+	<data name="AddressBookSynchStatus" xml:space="preserve">
+		<value>Время последнего импорта контактов устройства</value>
+		<comment>Строка состояния страницы синхронизации телефонной книги устройства</comment>
+	</data>
+	<data name="AddressBookNoSynchStatus" xml:space="preserve">
+		<value>Контакты не синхронизированны</value>
+		<comment>Строка состояния страницы синхронизации телефонной книги устройства</comment>
+	</data>
 </root>

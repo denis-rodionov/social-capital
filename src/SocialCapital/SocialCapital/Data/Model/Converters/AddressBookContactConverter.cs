@@ -74,7 +74,7 @@ namespace SocialCapital.Data.Model.Converters
 		/// </summary>
 		/// <returns>The contact emails.</returns>
 		/// <param name="contactId">Contact id in database.</param>
-		public IEnumerable<Email> GetContactAddress(int contactId)
+		public IEnumerable<Address> GetContactAddresses(int contactId)
 		{
 			foreach (var address in BookContact.Emails)
 				address.ContactId = contactId;

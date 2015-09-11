@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Threading;
+using SocialCapital.Data;
 
 namespace SocialCapital.ViewModels
 {
@@ -17,8 +18,9 @@ namespace SocialCapital.ViewModels
 
 		#region IEnumerable implementation
 
-		public IEnumerator<AddressBookContact> GetEnumerator () {
-			return Contacts;
+		IEnumerator<AddressBookContact> IEnumerable<AddressBookContact>.GetEnumerator ()
+		{
+			return Contacts.GetEnumerator ();
 		}
 
 		#endregion
@@ -27,7 +29,7 @@ namespace SocialCapital.ViewModels
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
 		{
-			throw new NotImplementedException ();
+			return Contacts.GetEnumerator ();
 		}
 
 		#endregion
@@ -37,8 +39,14 @@ namespace SocialCapital.ViewModels
 	{
 		public ICommand StartImport { get; private set; }
 
+		DateTime? lastImportTime = null;
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public AddressBookVM ()
 		{
+			lastImportTime = new Settings ().LastAddressBookImportTime;
 			StartImport = new Command (Import);
 		}
 
@@ -49,9 +57,16 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref isImportRunning, value); }
 		}
 
-		public bool Status {
-			get { return ""; }
+		public string Status {
+			get { 
+				if (lastImportTime.HasValue)
+					return string.Format ("{0}: {1}", AppResources.AddressBookSynchStatus, lastImportTime);
+				else
+					return AppResources.AddressBookNoSynchStatus;
+			}
 		}
+
+		public IEnumerable<AbContactGroup> ContactsGroups { get; set; }
 
 		public ObservableCollection<AbContactGroup> ContactGroups { get; set; }
 
@@ -59,18 +74,32 @@ namespace SocialCapital.ViewModels
 
 		private async void Import()
 		{
-			if (IsImportRunning)
+			if (IsImportRunning) {
+				Log.GetLogger ().Log ("Import is already running...", LogLevel.Error);
 				return;
+			}
 
 			IsImportRunning = true;
+			Log.GetLogger ().Log ("Starting import task...");
 
 			await Task.Factory.StartNew (() => {
+				Log.GetLogger ().Log ("Import started");
 				var service = new AddressBookService();
 				service.LoadContacts();
-				service.
+				service.FullUpdate();
+				Log.GetLogger().Log("Import finished");
 			});
 
+			ImportFinished ();
+
+			Log.GetLogger().Log("Import task exited");
 			IsImportRunning = false;
+		}
+
+		private void ImportFinished()
+		{
+			lastImportTime = DateTime.Now;
+			OnPropertyChanged ("Status");
 		}
 
 		#endregion

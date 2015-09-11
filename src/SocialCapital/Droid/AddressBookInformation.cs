@@ -89,7 +89,12 @@ namespace SocialCapital.Droid
 					Contents = n.Contents,
 				}),
 				Addresses = contact.Addresses.Select(a => new SocialCapital.Data.Model.Address() {
-					AddressType.
+					Country = a.Country,
+					City = a.City,
+					Region = a.Region,
+					PostalCode = a.PostalCode,
+					StreetAddress = a.StreetAddress,
+					Label = a.Label
 				})
 			};
 		}

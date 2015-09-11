@@ -21,6 +21,7 @@ namespace SocialCapital.Common
 		{
 			var res = DateTime.Now - StartTime;
 			Log.GetLogger ().Log (string.Format ("TIMING: operation '{0}' took {1:#.##} sec", OperationName, res.TotalSeconds));
+			return res;
 		}
 	}
 }

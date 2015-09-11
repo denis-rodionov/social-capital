@@ -43,6 +43,7 @@ namespace SocialCapital.Data
 			connection.CreateTable<Phone> ();
 			connection.CreateTable<Email> ();
 			connection.CreateTable<Address> ();
+			connection.CreateTable<Config> ();
 		}
 
 		#endregion

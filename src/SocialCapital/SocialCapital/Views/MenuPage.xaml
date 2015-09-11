@@ -5,7 +5,8 @@
 			 xmlns:vm="clr-namespace:SocialCapital.ViewModels;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.MenuPage"
 			 Title = "{i18n:Translate MainMenuTitle}"
-			 Icon = "ic_menu_white_24dp.png">
+			 Icon = "ic_menu_white_24dp.png"
+			 x:Name = "page">
 	<ContentPage.Content>
 		<ListView>
 			<ListView.ItemsSource>
@@ -28,7 +29,8 @@
 				<DataTemplate>
 					<ImageCell ImageSource="{Binding IconSource}" 
 							   Text="{Binding Title}"
-							   Command="{Binding NavigateCommand}" />
+							   Command="{Binding Path=BindingContext.NavigateCommand, Source={x:Reference Name=page} }"
+							   CommandParameter="{Binding}" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

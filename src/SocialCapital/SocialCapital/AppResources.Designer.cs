@@ -80,6 +80,24 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Контакты не синхронизированны.
+        /// </summary>
+        internal static string AddressBookNoSynchStatus {
+            get {
+                return ResourceManager.GetString("AddressBookNoSynchStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Время последнего импорта контактов устройства.
+        /// </summary>
+        internal static string AddressBookSynchStatus {
+            get {
+                return ResourceManager.GetString("AddressBookSynchStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Все контакты.
         /// </summary>
         internal static string AllContactsMenuItemTitle {

@@ -39,7 +39,7 @@ namespace SocialCapital.AddressBookImport
 
 		public void FullUpdate()
 		{
-			if (LoadContacts == null)
+			if (LoadedContacts == null)
 				throw new Exception ("Load contacts first");
 			
 			var timing = Timing.Start ("AddressBookService.FullUpdate");

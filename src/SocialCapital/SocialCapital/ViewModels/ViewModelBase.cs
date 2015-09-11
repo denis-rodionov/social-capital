@@ -22,7 +22,7 @@ namespace SocialCapital.ViewModels
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;
 			if (handler != null) {
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName);
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 

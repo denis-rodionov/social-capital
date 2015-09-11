@@ -17,6 +17,10 @@ namespace SocialCapital.ViewModels
 
 		public ICommand NavigateCommand { get; set; }
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="navigateTo">Delegate to navigate to details pages</param>
 		public NavigationVM (Action<Page> navigateTo)
 		{
 			NavigateTo = navigateTo;
@@ -24,6 +28,10 @@ namespace SocialCapital.ViewModels
 			NavigateCommand = new Command (MenuItemSelected);
 		}
 
+		/// <summary>
+		/// Menu Selected handler
+		/// </summary>
+		/// <param name="item">Selected item</param>
 		public void MenuItemSelected(object item)
 		{
 			var menuItem = (MenuItem)item;
@@ -37,11 +45,23 @@ namespace SocialCapital.ViewModels
 			get { return new ContactListPage (); }
 		}
 
+		AddressBookVM addressBook;
+		public AddressBookVM AddressBookViewModel {
+			get {
+				if (addressBook == null)
+					addressBook = new AddressBookVM ();
+
+				return addressBook;
+			}
+		}
+
 		private Page GetPageByName(string name)
 		{
 			switch (name) {
 				case "AllContacts":
 					return new ContactListPage ();
+				case "AddressBookImport":
+					return new AddressBookImportPage () { BindingContext = AddressBookViewModel };
 				default:
 					return new ContentPage ();
 			}

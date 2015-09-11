@@ -160,14 +160,16 @@ namespace SocialCapital.Data
 		#region Implementation
 
 		private void UpdateContactList<T>(IEnumerable<T> actualList, int contactId, DataContext db,
-			Expression<Func<T, bool>> whereClause) 
+			Expression<Func<T, bool>> whereClause) where T : class
 		{
 			var existingList = db.Connection.Table<T> ().Where (whereClause);
 			var newList = actualList.Except (existingList);
-			var oldList = existingList.Except (actualList);
+			var deleteList = existingList.Except (actualList);
 
 			db.Connection.InsertAll (newList);
-			db.Connection.DeleteAll (oldList);
+
+			foreach (var item in deleteList)
+				db.Connection.Delete(item);
 		}
 
 		#endregion
