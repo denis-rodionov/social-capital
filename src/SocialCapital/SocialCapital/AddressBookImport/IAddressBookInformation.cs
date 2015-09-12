@@ -11,7 +11,7 @@ namespace SocialCapital.AddressBookImport
 	/// </summary>
 	public interface IAddressBookInformation
 	{
-		Task<List<AddressBookContact>> GetContacts();
+		Task<IEnumerable<AddressBookContact>> GetContacts();
 	}
 }
 

@@ -6,6 +6,9 @@ namespace SocialCapital.Data.Model
 	public class Config
 	{
 		[PrimaryKey, AutoIncrement]
+		public int Id { get; set; }
+
+		[Unique]
 		public string Key { get; set; }
 
 		public string Value { get; set; }
@@ -48,21 +51,21 @@ namespace SocialCapital.Data.Model
 			return new DateTime (GetIntValue ());
 		}
 
-		public void SetValue(DateTime value)
+		public void SetDateTimeValue(DateTime value)
 		{
 			Value = value.Ticks.ToString ();
 		}
 
-		public void SetValue<T>(T value)
+		public void SetValue<T>(T value) 
 		{
 			if (typeof(T) == typeof(int))
-				SetValue (value);
+				SetValue (Convert.ToInt32(value));
 			else if (typeof(T) == typeof(string))
-				Value = (value as object).ToString();
-			else if (typeof(T) == typeof(DateTime))
-				SetValue (value);
+				Value = (value as object).ToString ();
+			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))
+				SetDateTimeValue (Convert.ToDateTime (value));
 			else
-				throw new Exception ("Unknow type of the argument");
+				throw new Exception (string.Format ("Unknow type of the argument '{0}'", value));
 		}
 
 		public T GetValue<T>() 
@@ -71,7 +74,7 @@ namespace SocialCapital.Data.Model
 				return (T)((object)Convert.ToInt32 (GetIntValue ()));
 			else if (typeof(T) == typeof(string))
 				return (T)((object)Convert.ToString(Value));
-			else if (typeof(T) == typeof(DateTime))
+			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime))
 				return (T)((object)Convert.ToDateTime(GetDateTimeValue ()));
 			else
 				throw new Exception ("Unknow type of the argument");

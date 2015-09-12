@@ -215,6 +215,33 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавлен.
+        /// </summary>
+        internal static string PhoneContactImportedStatus {
+            get {
+                return ResourceManager.GetString("PhoneContactImportedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Неизвестно.
+        /// </summary>
+        internal static string PhoneContactUnknownStatus {
+            get {
+                return ResourceManager.GetString("PhoneContactUnknownStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Обновлён.
+        /// </summary>
+        internal static string PhoneContactUpdateStatus {
+            get {
+                return ResourceManager.GetString("PhoneContactUpdateStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сохранить.
         /// </summary>
         internal static string SaveButton {

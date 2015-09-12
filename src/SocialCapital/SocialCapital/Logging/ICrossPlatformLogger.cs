@@ -20,6 +20,8 @@ namespace SocialCapital
 		void Log(string message, Exception ex, LogLevel level = LogLevel.Error);
 
 		void Log(string formattedMessage, params object[] parameters);
+
+		void Log(LogLevel logLevel, string formattedMessage, params object[] parameters);
 	}
 }
 

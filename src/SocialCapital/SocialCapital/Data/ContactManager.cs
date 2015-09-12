@@ -14,94 +14,98 @@ namespace SocialCapital.Data
 
 	public class ContactManager : IDisposable
 	{
+		#region Contact database init
+
 		public ContactManager ()
 		{
 		}
 
 		public void Init()	
 		{
-			
-
-			using (var db = new DataContext ()) {
-				if (db.Connection.Table<Contact> ().Count () == 0)
-				{
-					Log.GetLogger ().Log ("Creating default databas...");
-					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
-
-					// contact #1
-					var freq1 = db.Connection.Insert (new Frequency () { Period = PeriodValues.Month, Count = 2 });
-					//Log.GetLogger ().Log ("Inserted frequency id = " + freq1);
-
-					var ivanovId = db.Connection.Insert (new Contact () {
-						DisplayName = "Иванов",
-						WorkPlace = "Яндекс",
-						Thumbnail = tempImage,
-						FrequencyId = freq1
-					});
-					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
-					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
-
-					// contact #2
-					db.Connection.Insert (new Contact () {
-						DisplayName = "Петров",
-						WorkPlace = "Google",
-						Thumbnail = tempImage
-					});
-
-					// contact #3
-					db.Connection.Insert (new Contact () {
-						DisplayName = "Сидоров",
-						WorkPlace = "Mail.ru",
-						Thumbnail = tempImage
-					});
-				}
-			}
+//			
+//
+//			using (var db = new DataContext ()) {
+//				if (db.Connection.Table<Contact> ().Count () == 0)
+//				{
+//					Log.GetLogger ().Log ("Creating default databas...");
+//					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
+//
+//					// contact #1
+//					var freq1 = db.Connection.Insert (new Frequency () { Period = PeriodValues.Month, Count = 2 });
+//					Log.GetLogger ().Log ("Inserted frequency id = " + freq1);
+//
+//					var ivanovId = db.Connection.Insert (new Contact () {
+//						DisplayName = "Иванов",
+//						WorkPlace = "Яндекс",
+//						Thumbnail = tempImage,
+//						FrequencyId = freq1
+//					});
+//					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
+//					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
+//
+//					// contact #2
+//					db.Connection.Insert (new Contact () {
+//						DisplayName = "Петров",
+//						WorkPlace = "Google",
+//						Thumbnail = tempImage
+//					});
+//
+//					// contact #3
+//					db.Connection.Insert (new Contact () {
+//						DisplayName = "Сидоров",
+//						WorkPlace = "Mail.ru",
+//						Thumbnail = tempImage
+//					});
+//				}
+//			}
 		}
+
+		#endregion
+
+		#region Contact lists
 
 		public IEnumerable<Contact> Contacts { 
 			get { 
 				using (var db = new DataContext ()) {
-					return db.Connection.Table<Contact> ();					
+					return db.Connection.Table<Contact> ().ToList ();				
 				}
 			}
 		}
 
 		public IEnumerable<Contact> GetContacts(Expression<Func<Contact, bool>> whereClause)
 		{
-			using (var db = new DataContext ()) {
-				return db.Connection.Table<Contact> ().Where (whereClause);
+			using (var db = new DataContext ()) {				
+				return db.Connection.Table<Contact> ().Where (whereClause).ToList ();
 			}
 		}
+
+		/// <summary>
+		/// Contact, grouped by specified selector and filtered
+		/// </summary>
+		/// <returns>The contact groups.</returns>
+		/// <param name="groupingSelector">Grouping selector.</param>
+		/// <param name="filter">Filtering expression</param>
+		public IEnumerable<ContactGroup<T>> GetContactGroups<T>(
+			Func<Contact, T> groupingSelector,
+			Expression<Func<Contact, bool>> filter)
+		{
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<Contact> ()
+					.Where (filter)
+					.GroupBy (
+					groupingSelector,
+					(key, list) => new ContactGroup<T> () { GroupName = key, Contacts = list }).ToList ();;
+			}
+		}
+
+		#endregion
+
+		#region Contact Details
 
 		public Contact GetContact(int contactId)
 		{
 			return Contacts.Single (c => c.Id == contactId);
 		}
-
-		/*
-		public List<Contact> GetContactListPreview()
-		{
-			var res = new List<Contact> ();
-
-			foreach (var contact in Contacts)
-				res.Add (GetContactPreview (contact));
-
-			return res;
-		}
-
-		public Contact GetContactPreview(Contact contact)
-		{
-			var res = new Contact () {
-				Id = contact.Id,
-				FullName = contact.FullName,
-				WorkPlace = contact.WorkPlace,
-				Photo = contact.Photo,
-				FrequencyId = contact.FrequencyId
-			};
-
-			return res;
-		}
-		*/
 
 		public IEnumerable<Tag> GetContactTags(int countactId)
 		{
@@ -115,6 +119,10 @@ namespace SocialCapital.Data
 				return tags;
 			}
 		}
+
+		#endregion
+
+		#region Save/Update methods
 
 		public int SaveContactInfo(Contact contact)
 		{
@@ -145,17 +153,28 @@ namespace SocialCapital.Data
 		/// <param name="bookContact">Book contact.</param>
 		/// <param name="updateTime">Update time.</param>
 		/// <param name="contact">If contact = null, create takes place, otherwise - update</param>
-		public void SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
+		/// <returns>Returns saved contact</returns>
+		public Contact SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
 		{
 			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
-			using (var db = new DataContext ()) {
-				var contactId = db.Connection.InsertOrReplace (converter.GetContact ());
+			var contactToSave = converter.GetContact ();
+
+			using (var db = new DataContext ()) {				
+				var contactId = db.Connection.InsertOrReplace (contactToSave);
+
+				contactToSave.Id = contactId;
+				if (contactId == 0)
+					throw new Exception ("InsertOrReplace returned 0");
+
 				UpdateContactList<Phone> (converter.GetContactPhones (contactId), contactId, db, p => p.ContactId == contactId);
 				UpdateContactList<Email> (converter.GetContactEmails (contactId), contactId, db, p => p.ContactId == contactId);
 				UpdateContactList<Address> (converter.GetContactAddresses (contactId), contactId, db, p => p.ContactId == contactId);
 			}
+
+			return contactToSave;
 		}
 
+		#endregion
 
 		#region Implementation
 

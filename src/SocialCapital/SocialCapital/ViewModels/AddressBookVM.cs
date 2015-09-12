@@ -8,47 +8,20 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Threading;
 using SocialCapital.Data;
+using SocialCapital.Data.Model;
 
 namespace SocialCapital.ViewModels
 {
-	public class AbContactGroup : IEnumerable<AddressBookContact>
-	{
-		public string GroupName { get; set; }
-		public List<AddressBookContact> Contacts { get; set; }
-
-		#region IEnumerable implementation
-
-		IEnumerator<AddressBookContact> IEnumerable<AddressBookContact>.GetEnumerator ()
-		{
-			return Contacts.GetEnumerator ();
-		}
-
-		#endregion
-
-		#region IEnumerable implementation
-
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
-		{
-			return Contacts.GetEnumerator ();
-		}
-
-		#endregion
-	}
-
+	/// <summary>
+	/// AddressBook state vime model class
+	/// </summary>
 	public class AddressBookVM : ViewModelBase
 	{
-		public ICommand StartImport { get; private set; }
-
 		DateTime? lastImportTime = null;
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public AddressBookVM ()
-		{
-			lastImportTime = new Settings ().LastAddressBookImportTime;
-			StartImport = new Command (Import);
-		}
+		#region Properties
+
+		public ICommand StartImport { get; private set; }
 
 		// TODO: add threadin safety here
 		bool isImportRunning = false;
@@ -66,9 +39,23 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public IEnumerable<AbContactGroup> ContactsGroups { get; set; }
+		public ObservableCollection<ContactGroup<DateTime>> ContactGroups { get; private set; }
 
-		public ObservableCollection<AbContactGroup> ContactGroups { get; set; }
+		#endregion
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public AddressBookVM ()
+		{
+			lastImportTime = new Settings ().LastAddressBookImportTime;
+			//var t = Test();
+			StartImport = new Command (Import);
+
+			ContactGroups = new ObservableCollection<ContactGroup<DateTime>> (
+				new ContactManager ().GetContactGroups (c => c.AddressBookUpdateTime, c => c.AddressBookUpdateTime != null)
+			);
+		}
 
 		#region Implementation
 
@@ -82,23 +69,35 @@ namespace SocialCapital.ViewModels
 			IsImportRunning = true;
 			Log.GetLogger ().Log ("Starting import task...");
 
-			await Task.Factory.StartNew (() => {
-				Log.GetLogger ().Log ("Import started");
-				var service = new AddressBookService();
-				service.LoadContacts();
-				service.FullUpdate();
-				Log.GetLogger().Log("Import finished");
-			});
+			var imported = await Task.Run<ContactGroup<DateTime>>(() => 
+				{
+					Log.GetLogger ().Log ("Import started");
+					var service = new AddressBookService();
 
-			ImportFinished ();
+					service.LoadContacts();
+					var res = service.FullUpdate();
+					Log.GetLogger().Log("Import finished");
+
+					return res;
+				});
+			
+			ImportFinished (imported);
 
 			Log.GetLogger().Log("Import task exited");
 			IsImportRunning = false;
 		}
 
-		private void ImportFinished()
+		private void ImportFinished(ContactGroup<DateTime> importResult)
+		{
+			UpdateStatus ();
+
+			ContactGroups.Insert (0, importResult);
+		}
+
+		void UpdateStatus ()
 		{
 			lastImportTime = DateTime.Now;
+			new Settings ().LastAddressBookImportTime = lastImportTime;
 			OnPropertyChanged ("Status");
 		}
 

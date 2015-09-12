@@ -94,4 +94,16 @@
 		<value>Контакты не синхронизированны</value>
 		<comment>Строка состояния страницы синхронизации телефонной книги устройства</comment>
 	</data>
+	<data name="PhoneContactImportedStatus" xml:space="preserve">
+		<value>Добавлен</value>
+		<comment>Строка состоянии при загрузке контактов из телефонной книги. Отображается при синхронизации</comment>
+	</data>
+	<data name="PhoneContactUnknownStatus" xml:space="preserve">
+		<value>Неизвестно</value>
+		<comment>Строка состоянии при загрузке контактов из телефонной книги. Отображается при синхронизации</comment>
+	</data>
+	<data name="PhoneContactUpdateStatus" xml:space="preserve">
+		<value>Обновлён</value>
+		<comment>Строка состоянии при загрузке контактов из телефонной книги. Отображается при синхронизации</comment>
+	</data>
 </root>

@@ -2,19 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 xmlns:converters="clr-namespace:SocialCapital.Views.Converters;assembly=SocialCapital"
 			 x:Class = "SocialCapital.Views.AddressBookImportPage"
 			 Title = "{i18n:Translate AddressBookMenuItemTitle}">
+
+	<ContentPage.Resources>
+    	<ResourceDictionary>
+        	<converters:NegateBooleanConverter x:Key="not" />
+        	<converters:ContactToStatusConverter x:Key="StatusConverter" />
+    	</ResourceDictionary>
+	</ContentPage.Resources>
+
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			<Label Text = "{Binding Status}" />
 
 			<StackLayout Orientation="Horizontal">
 				<Button Text="{i18n:Translate SynchAddressBook}"
-						Command="{Binding StartImport}" />
+						Command="{Binding StartImport}"
+						IsEnabled="{Binding IsImportRunning, Converter={StaticResource not}}"/>
 				<ActivityIndicator IsRunning="{Binding IsImportRunning}" />
 			</StackLayout>
 
-			<ListView ItemsSource="{Binding ContactsGroups}" IsGroupingEnabled="true" >
+			<ListView ItemsSource="{Binding ContactGroups}" IsGroupingEnabled="true" >
 				<ListView.GroupHeaderTemplate>
 					<DataTemplate>
 						<TextCell Text="{Binding GroupName}" />
@@ -22,7 +32,14 @@
 				</ListView.GroupHeaderTemplate>
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<TextCell Text="ContactName" Detail="ContactStatus" />
+						<TextCell > 
+							<TextCell.Text>
+								<Binding Path="DisplayName" />
+							</TextCell.Text>
+							<TextCell.Detail >
+								<Binding Path="AddressBookImportStatus" />
+							</TextCell.Detail>
+						</TextCell>
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>

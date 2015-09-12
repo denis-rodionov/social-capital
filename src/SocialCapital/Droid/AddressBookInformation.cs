@@ -28,9 +28,9 @@ namespace SocialCapital.Droid
 			this.book = new AddressBook(Forms.Context.ApplicationContext);
 		}
 
-		public Task<List<AddressBookContact>> GetContacts ()
+		public async Task<IEnumerable<AddressBookContact>> GetContacts ()
 		{
-			var contacts = new List<AddressBookContact> ();
+			IEnumerable<AddressBookContact> contacts;
 
 			// Observation:
 			// On device RequestPermission() returns false sometimes so you can use  this.book.RequestPermission().Result (remove await)
@@ -43,7 +43,7 @@ namespace SocialCapital.Droid
 				}
 
 				Log.GetLogger().Log("Start geting contacts...");
-				var bookContacts = book;	//.Where (x => x.Phones.Count () != 0);
+				contacts = book.Where (x => x.Phones.Count () != 0).Take(2).Select (bc => ConvertToContact (bc));
 
 				//foreach (Contact contact in bookContacts)
 				//{
@@ -51,10 +51,10 @@ namespace SocialCapital.Droid
 				//	contacts.Add( ConvertToContact (contact));
 				//}
 
-				Log.GetLogger().Log("Contacts impoted count: {0}", bookContacts.Count());
+				Log.GetLogger().Log("Contacts impoted count: {0}", contacts.Count());
 			}
 
-			return null;
+			return contacts;
 		}
 
 		private AddressBookContact ConvertToContact (Contact contact)

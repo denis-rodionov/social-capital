@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace SocialCapital
 {
@@ -35,6 +36,13 @@ namespace SocialCapital
 		{
 			var time = DateTime.Now;
 			var log = String.Format ("{0}\t{1}: {2}", time, LogLevel.Info, string.Format(formattedMessage, parameters));
+			Debug (log);
+		}
+
+		public void Log(LogLevel logLevel, string formattedMessage, params object[] parameters)
+		{
+			var time = DateTime.Now;
+			var log = String.Format ("{0}\t{1}: {2}", time, logLevel, string.Format(formattedMessage, parameters));
 			Debug (log);
 		}
 

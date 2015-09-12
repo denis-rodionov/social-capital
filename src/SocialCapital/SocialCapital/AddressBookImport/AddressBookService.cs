@@ -22,11 +22,11 @@ namespace SocialCapital.AddressBookImport
 
 		public IEnumerable<AddressBookContact> LoadContacts()
 		{
-			var timing = Timing.Start ("AddressBookService.GetChanges");
+			var timing = Timing.Start ("AddressBookService.LoadContacts");
 
 			var service = DependencyService.Get<IAddressBookInformation> ();
 			var abContacts = service.GetContacts ().Result;
-			int count = abContacts.Count;
+			//int count = abContacts.Count();
 
 			timing.Finish ();
 
@@ -37,7 +37,11 @@ namespace SocialCapital.AddressBookImport
 			return LoadedContacts;
 		}
 
-		public void FullUpdate()
+		/// <summary>
+		/// Update all contact in database
+		/// </summary>
+		/// <returns>The group of updated contacts</returns>
+		public ContactGroup<DateTime> FullUpdate()
 		{
 			if (LoadedContacts == null)
 				throw new Exception ("Load contacts first");
@@ -45,13 +49,18 @@ namespace SocialCapital.AddressBookImport
 			var timing = Timing.Start ("AddressBookService.FullUpdate");
 			var db = new ContactManager ();
 			var updateTime = DateTime.Now;
+			var resGroup = new ContactGroup<DateTime> () { GroupName = updateTime, Contacts = new List<Contact>() };
 
 			foreach (var bookContact in LoadedContacts) {
 				var dbContact = db.GetContacts (c => c.AddressBookId == bookContact.Id).SingleOrDefault ();
-				db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
+				var savedContact = db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
+
+				(resGroup.Contacts as List<Contact>).Add (savedContact);
 			}
 
 			timing.Finish ();
+
+			return resGroup;
 		}
 
 		void LogStatistics (List<AddressBookContact> abContacts, int count)

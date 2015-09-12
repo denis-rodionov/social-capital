@@ -46,6 +46,18 @@ namespace SocialCapital.Data
 			connection.CreateTable<Config> ();
 		}
 
+		public void ClearDatabase()
+		{
+			connection.DeleteAll<Contact> ();
+			connection.DeleteAll<Tag> ();
+			connection.DeleteAll<ContactTag> ();
+			connection.DeleteAll<Frequency> ();
+			connection.DeleteAll<Phone> ();
+			connection.DeleteAll<Email> ();
+			connection.DeleteAll<Address> ();
+			connection.DeleteAll<Config> ();
+		}
+
 		#endregion
 
 

@@ -24,6 +24,7 @@ namespace SocialCapital
 				//Resx.AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
+			new DataContext ().ClearDatabase ();
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 

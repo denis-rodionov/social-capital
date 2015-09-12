@@ -44,8 +44,20 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		public DateTime CreateTime { get; set; } 
 
-		//[Ignore]
-		//public AddressBookContact AbContact { get; set; }
+		#region No database properties
+
+		public string AddressBookImportStatus {
+			get {
+				if (CreateTime == null || AddressBookUpdateTime == null)
+					return AppResources.PhoneContactUnknownStatus;
+				if (CreateTime == AddressBookUpdateTime)
+					return AppResources.PhoneContactImportedStatus;
+				else
+					return AppResources.PhoneContactUpdateStatus;
+			}
+		}
+
+		#endregion
 
 		public override string ToString ()
 		{
