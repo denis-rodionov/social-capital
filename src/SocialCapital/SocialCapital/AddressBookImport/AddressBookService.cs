@@ -8,6 +8,12 @@ using SocialCapital.Common;
 
 namespace SocialCapital.AddressBookImport
 {
+	public class ProgressValue {
+		public int ContactsRetrieved { get; set; }
+		public int ContactsSync { get; set; }
+		public int TotalContacts { get; set; }
+	}
+
 	public class AddressBookService
 	{
 		public IEnumerable<AddressBookContact> LoadedContacts { get; set; }
@@ -16,8 +22,13 @@ namespace SocialCapital.AddressBookImport
 
 		public IEnumerable<AddressBookContact> NewList { get; set; }
 
+		public event Action<ProgressValue> ProgressEvent;
+
+		ProgressValue CurrentProgressValue { get; set; }
+
 		public AddressBookService ()
 		{
+			CurrentProgressValue = new ProgressValue ();
 		}
 
 		public IEnumerable<AddressBookContact> LoadContacts()
@@ -25,12 +36,19 @@ namespace SocialCapital.AddressBookImport
 			var timing = Timing.Start ("AddressBookService.LoadContacts");
 
 			var service = DependencyService.Get<IAddressBookInformation> ();
-			var abContacts = service.GetContacts ().Result;
-			//int count = abContacts.Count();
+
+			service.ContactsCountCalculated += (int totalCount) => { 
+				CurrentProgressValue.TotalContacts = totalCount; 
+			};
+			service.ContactRetrieved += (int count) => {
+				CurrentProgressValue.ContactsRetrieved = count;
+				RaiseProgress(CurrentProgressValue);
+			};
+
+			var abContacts = service.GetContacts ();
+
 
 			timing.Finish ();
-
-			//LogStatistics (abContacts, count);
 
 			LoadedContacts = abContacts;
 
@@ -52,15 +70,26 @@ namespace SocialCapital.AddressBookImport
 			var resGroup = new ContactGroup<DateTime> () { GroupName = updateTime, Contacts = new List<Contact>() };
 
 			foreach (var bookContact in LoadedContacts) {
-				var dbContact = db.GetContacts (c => c.AddressBookId == bookContact.Id).SingleOrDefault ();
-				var savedContact = db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
+				if (bookContact.Phones.Count () != 0) {
+					var dbContact = db.GetContacts (c => c.AddressBookId == bookContact.Id).SingleOrDefault ();
+					var savedContact = db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
 
-				(resGroup.Contacts as List<Contact>).Add (savedContact);
+					(resGroup.Contacts as List<Contact>).Add (savedContact);
+
+					CurrentProgressValue.ContactsSync++;
+				}
+				RaiseProgress (CurrentProgressValue);
 			}
 
 			timing.Finish ();
 
 			return resGroup;
+		}
+
+		void RaiseProgress(ProgressValue value)
+		{
+			if (ProgressEvent != null)
+				ProgressEvent (value);
 		}
 
 		void LogStatistics (List<AddressBookContact> abContacts, int count)

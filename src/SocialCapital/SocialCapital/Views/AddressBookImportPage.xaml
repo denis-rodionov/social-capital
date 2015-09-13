@@ -21,8 +21,9 @@
 				<Button Text="{i18n:Translate SynchAddressBook}"
 						Command="{Binding StartImport}"
 						IsEnabled="{Binding IsImportRunning, Converter={StaticResource not}}"/>
-				<ActivityIndicator IsRunning="{Binding IsImportRunning}" />
+				<!--<ActivityIndicator IsRunning="{Binding IsImportRunning}" />-->
 			</StackLayout>
+			<ProgressBar x:Name="progressBar" Progress="{Binding ImportProgress}" IsVisible="{Binding IsImportRunning}" />
 
 			<ListView ItemsSource="{Binding ContactGroups}" IsGroupingEnabled="true" >
 				<ListView.GroupHeaderTemplate>

@@ -11,7 +11,17 @@ namespace SocialCapital.AddressBookImport
 	/// </summary>
 	public interface IAddressBookInformation
 	{
-		Task<IEnumerable<AddressBookContact>> GetContacts();
+		IEnumerable<AddressBookContact> GetContacts();
+
+		/// <summary>
+		/// Event of calculation the count of contact in device book
+		/// </summary>
+		event Action<int> ContactsCountCalculated;
+
+		/// <summary>
+		/// Event of the contact retrieve from device book with the count of retrieved contacts
+		/// </summary>
+		event Action<int> ContactRetrieved;
 	}
 }
 

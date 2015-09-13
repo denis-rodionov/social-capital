@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Android.Graphics;
 using System.Drawing;
 using System.IO;
+using System.Linq.Expressions;
 
 [assembly: Dependency(typeof(SocialCapital.Droid.AddressBookInformation))]
 
@@ -15,10 +16,24 @@ namespace SocialCapital.Droid
 {
 	public class AddressBookInformation : IAddressBookInformation
 	{
+		const int ProgressReportFrequency = 2;
+
 		/// <summary>
 		/// The book.
 		/// </summary>
 		private AddressBook book = null;
+
+		private int countRetrieved = 0;
+
+		/// <summary>
+		/// Event of calculation the count of contact in device book
+		/// </summary>
+		public event Action<int> ContactsCountCalculated;
+
+		/// <summary>
+		/// Event of the contact retrieve from device book with the count of retrieved contacts
+		/// </summary>
+		public event Action<int> ContactRetrieved;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AddressBookInformation"/> class.
@@ -28,9 +43,11 @@ namespace SocialCapital.Droid
 			this.book = new AddressBook(Forms.Context.ApplicationContext);
 		}
 
-		public async Task<IEnumerable<AddressBookContact>> GetContacts ()
+		public IEnumerable<AddressBookContact> GetContacts ()
 		{
 			IEnumerable<AddressBookContact> contacts;
+
+			countRetrieved = 0;
 
 			// Observation:
 			// On device RequestPermission() returns false sometimes so you can use  this.book.RequestPermission().Result (remove await)
@@ -43,7 +60,11 @@ namespace SocialCapital.Droid
 				}
 
 				Log.GetLogger().Log("Start geting contacts...");
-				contacts = book.Where (x => x.Phones.Count () != 0).Take(2).Select (bc => ConvertToContact (bc));
+				//var raw = book.Where (GetFilter ()).Take (700).ToList ();
+
+				RaiseCountCalculated (book.Count ());
+
+				contacts = book.Select (bc => ConvertToContact (bc)).ToList ();
 
 				//foreach (Contact contact in bookContacts)
 				//{
@@ -57,9 +78,22 @@ namespace SocialCapital.Droid
 			return contacts;
 		}
 
+		private void RaiseCountCalculated(int count)
+		{
+			var handler = ContactsCountCalculated;
+
+			if (handler != null)
+				handler (count);
+		}
+
+		private Expression<Func<Contact, bool>> GetFilter()
+		{
+			return x => x.Phones.Count () != 0;
+		}
+
 		private AddressBookContact ConvertToContact (Contact contact)
 		{
-			return new AddressBookContact () {
+			var res = new AddressBookContact () {
 				Id = contact.Id,
 				FirstName = contact.FirstName,
 				LastName = contact.LastName,
@@ -97,6 +131,21 @@ namespace SocialCapital.Droid
 					Label = a.Label
 				})
 			};
+
+			RaiseContactRetrieved (countRetrieved++);
+
+			return res;
+		}
+
+		private void RaiseContactRetrieved(int count)
+		{
+			if (count % ProgressReportFrequency == 0) {
+				var handler = ContactRetrieved;
+
+				if (handler != null)
+					handler (count);
+			}
+				
 		}
 
 		private SocialCapital.Data.Model.EmailType ToEmailType(EmailType type)

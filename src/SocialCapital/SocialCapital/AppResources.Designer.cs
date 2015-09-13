@@ -170,6 +170,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Идет обновление.
+        /// </summary>
+        internal static string ImportStatusInProgress {
+            get {
+                return ResourceManager.GetString("ImportStatusInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Введите имя контакта.
         /// </summary>
         internal static string InputFullNamePlaceholder {
