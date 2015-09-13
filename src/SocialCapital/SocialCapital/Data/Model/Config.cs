@@ -36,7 +36,7 @@ namespace SocialCapital.Data.Model
 			var canParse = long.TryParse (Value, out parseRes);
 
 			if (!canParse)
-				throw new Exception (string.Format ("Cannot get int value from string '{0}'", Value));
+				throw new Exception (string.Format ("Cannot get long value from string '{0}'", Value));
 
 			return parseRes;
 		}
@@ -48,7 +48,7 @@ namespace SocialCapital.Data.Model
 
 		public DateTime GetDateTimeValue()
 		{
-			return new DateTime (GetIntValue ());
+			return new DateTime (GetLongValue ());
 		}
 
 		public void SetDateTimeValue(DateTime value)
@@ -74,10 +74,10 @@ namespace SocialCapital.Data.Model
 				return (T)((object)Convert.ToInt32 (GetIntValue ()));
 			else if (typeof(T) == typeof(string))
 				return (T)((object)Convert.ToString(Value));
-			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime))
+			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))
 				return (T)((object)Convert.ToDateTime(GetDateTimeValue ()));
 			else
-				throw new Exception ("Unknow type of the argument");
+				throw new Exception (string.Format("Unknow type of the argument '{0}'", typeof(T)));
 		}
 	}
 }

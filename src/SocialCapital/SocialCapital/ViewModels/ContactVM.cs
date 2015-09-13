@@ -10,8 +10,10 @@ using System.ComponentModel;
 
 namespace SocialCapital.ViewModels
 {
-	public class ContactVM : INotifyPropertyChanged
+	public class ContactVM : ViewModelBase
 	{
+		private ImageSource anonimusPhoto = null;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
@@ -39,27 +41,25 @@ namespace SocialCapital.ViewModels
 			Database = new ContactManager ();
 
 			SourceContact = contact;
+
+			anonimusPhoto = GetAnonimusPhoto ();
 		}
 
 		#region View Properties
 
 		public string FullName {
-			get {
-				return SourceContact.DisplayName;
-			}
-			set {
+			get {return SourceContact.DisplayName;}
+			set {	
 				SourceContact.DisplayName = value;
-				RaicePropertyChenged ("FullName");
+				OnPropertyChanged ();
 			}
 		}
 
 		public string WorkPlace {
-			get {
-				return SourceContact.WorkPlace;
-			}
+			get { return SourceContact.WorkPlace;}
 			set {
 				SourceContact.WorkPlace = value;
-				RaicePropertyChenged ("WorkPlace");
+				OnPropertyChanged ();
 			}
 		}
 
@@ -72,16 +72,15 @@ namespace SocialCapital.ViewModels
 			}
 			set 
 			{ 
-				tags = value; 
-				RaicePropertyChenged ("Tags");
+				SetProperty (ref tags, value);
+				OnPropertyChanged ("TagList");
 			}
 		}
 
 		public ImageSource PhotoImage {
 			get {
-				// Log.GetLogger ().Log ("=== PhotoImage request ===");
 				if (SourceContact.Thumbnail == null || SourceContact.Thumbnail.Length == 0)
-					return null;
+					return anonimusPhoto;
 
 				var res = ImageSource.FromStream(() => 
 					{
@@ -91,18 +90,12 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public string TagList { get { return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); } }
+		public string TagList { 
+			get { 
+				Tags.PropertyChanged += (sender, e) => { OnPropertyChanged(); };
+				return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); 
+			} 
 
-		#endregion
-
-		#region NotifyPropertyChanged 
-
-		private void RaicePropertyChenged(string property)
-		{
-			var p = PropertyChanged;
-
-			if (p != null)
-				p (this, new PropertyChangedEventArgs (property));
 		}
 
 		#endregion
@@ -123,6 +116,18 @@ namespace SocialCapital.ViewModels
 		{
 			return string.Format ("[ContactVM: {0}]", SourceContact);
 		}
+
+		#region implementation
+
+		private ImageSource GetAnonimusPhoto()
+		{
+			var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
+			var res = ImageSource.FromStream (() =>
+				new MemoryStream (tempImage));
+			return res;
+		}
+
+		#endregion
 	}
 }
 

@@ -7,34 +7,41 @@
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			 Title = "{i18n:Translate ContactListTitle}">
 	<ContentPage.Content>
-		<ListView x:Name="contactListView" 
-			      ItemsSource = "{Binding Contacts}"
-			      RowHeight="85">
-			<ListView.ItemTemplate>
+		<StackLayout Orientation="Vertical">
+			<SearchBar Text="{Binding Filter}" />
+			<ListView x:Name="contactListView" 
+				      ItemsSource = "{Binding Contacts}"
+				      RowHeight="85">
+				<ListView.ItemTemplate>
 
-				<DataTemplate>
+					<DataTemplate>
 
-					<ViewCell Tapped="OnItemSelected">
-						<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" >
-							<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
+						<ImageCell  Tapped="OnItemSelected"
+								    ImageSource="{Binding PhotoImage}" 
+								    Text="{Binding FullName}" 
+								    Detail="{Binding TagList}" />
+					<!--
+						<ViewCell>
 
-							<StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical" HeightRequest="200">
-								
-								<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
-								<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
+							<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal" >
+								<Image Source="{Binding PhotoImage}" />
 
-								<controls:TagList LayoutType="HorizontalGrid" Tags="{Binding Tags}" />
+								<StackLayout VerticalOptions="StartAndExpand" Orientation="Vertical">
+									
+									<Label Text="{Binding FullName}" YAlign="Center" Font="Medium" />
+									<Label Text="{Binding WorkPlace}" YAlign="Center" Font="Micro" />
 
-								<!--<Label Text="{Binding TagList}" YAlign="Center" Font="Micro" /> -->
+									<controls:TagList LayoutType="HorizontalGrid" Tags="{Binding Tags}" />
 
-								<Label Text="{Binding FrequencyId}" YAlign="Center" Font="Micro" />
+									<Label Text="{Binding FrequencyId}" YAlign="Center" Font="Micro" />
+								</StackLayout>
 							</StackLayout>
-						</StackLayout>
-					</ViewCell>
+						</ViewCell>-->
 
-				</DataTemplate>
+					</DataTemplate>
 
-			</ListView.ItemTemplate>
-		</ListView>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

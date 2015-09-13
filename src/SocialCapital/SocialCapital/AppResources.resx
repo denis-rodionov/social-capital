@@ -107,7 +107,7 @@
 		<comment>Строка состоянии при загрузке контактов из телефонной книги. Отображается при синхронизации</comment>
 	</data>
 	<data name="ImportStatusInProgress" xml:space="preserve">
-		<value>Идет обновление</value>
+		<value>Идет обновление...</value>
 		<comment>Строка появляется в процессе загрузки адресной книги телефона</comment>
 	</data>
 </root>

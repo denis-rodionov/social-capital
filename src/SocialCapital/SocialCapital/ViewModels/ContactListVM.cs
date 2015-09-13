@@ -9,9 +9,28 @@ using SocialCapital.AddressBookImport;
 
 namespace SocialCapital.ViewModels
 {
-	public class ContactListVM
+	public class ContactListVM : ViewModelBase
 	{
-		public ObservableCollection<ContactVM> Contacts { get; set; }
+		/// <summary>
+		/// Contact list
+		/// </summary>
+		IEnumerable<ContactVM> contacts;
+		public IEnumerable<ContactVM> Contacts { 
+			get { return contacts.Where(c => c.SourceContact.DisplayName.Contains(Filter)); }
+			set { SetProperty (ref contacts, value); }
+		}
+
+		/// <summary>
+		/// String for filtering contact list
+		/// </summary>
+		string filter = "";
+		public string Filter {
+			get { return filter; }
+			set { 
+				SetProperty (ref filter, value); 
+				OnPropertyChanged ("Contacts");
+			}
+		}
 			
 		public ContactListVM ()
 		{

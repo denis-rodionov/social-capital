@@ -170,7 +170,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Идет обновление.
+        ///   Ищет локализованную строку, похожую на Идет обновление....
         /// </summary>
         internal static string ImportStatusInProgress {
             get {

@@ -67,7 +67,8 @@ namespace SocialCapital.Data
 		public IEnumerable<Contact> Contacts { 
 			get { 
 				using (var db = new DataContext ()) {
-					return db.Connection.Table<Contact> ().ToList ();				
+					var res = db.Connection.Table<Contact> ().ToList ();				
+					return res;
 				}
 			}
 		}
@@ -158,11 +159,15 @@ namespace SocialCapital.Data
 		{
 			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
 			var contactToSave = converter.GetContact ();
+			int contactId;
 
-			using (var db = new DataContext ()) {				
-				var contactId = db.Connection.InsertOrReplace (contactToSave);
+			using (var db = new DataContext ()) {	
+				if (contactToSave.Id == 0)
+					contactId = db.Connection.Insert (contactToSave);
+				else
+					contactId = db.Connection.Update (contactToSave);
 
-				contactToSave.Id = contactId;
+				//contactToSave.Id = contactId;
 				if (contactId == 0)
 					throw new Exception ("InsertOrReplace returned 0");
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialCapital.AddressBookImport;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SocialCapital.Data.Model.Converters
 {
@@ -37,7 +38,7 @@ namespace SocialCapital.Data.Model.Converters
 				DisplayName = BookContact.DisplayName,
 				Thumbnail = BookContact.Thumbnail,
 				AddressBookUpdateTime = CurrentTime,
-				WorkPlace = string.Join(", ", BookContact.Organizations),
+				WorkPlace = string.Join(", ", BookContact.Organizations.Select(o => o.Name)),
 				CreateTime = DatabaseContact == null ? CurrentTime : DatabaseContact.CreateTime,
 				FrequencyId = 0
 			};

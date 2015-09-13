@@ -58,10 +58,8 @@ namespace SocialCapital.ViewModels
 		/// </summary>
 		public AddressBookVM ()
 		{
-			InitStatus ();
-			
 			lastImportTime = new Settings ().LastAddressBookImportTime;
-			//var t = Test();
+			InitStatus ();
 			StartImport = new Command (Import);
 
 			ContactGroups = new ObservableCollection<ContactGroup<DateTime>> (
@@ -133,14 +131,14 @@ namespace SocialCapital.ViewModels
 
 		private void ImportFinished(ContactGroup<DateTime> importResult)
 		{
-			UpdateStatus ();
+			UpdateStatus (importResult.GroupName);
 
 			ContactGroups.Insert (0, importResult);
 		}
 
-		void UpdateStatus ()
+		void UpdateStatus (DateTime updateTime)
 		{
-			lastImportTime = DateTime.Now;
+			lastImportTime = updateTime;
 			new Settings ().LastAddressBookImportTime = lastImportTime;
 
 			Status = string.Format ("{0}: {1}", AppResources.AddressBookSynchStatus, lastImportTime);
