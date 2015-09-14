@@ -16,7 +16,7 @@ namespace SocialCapital.ViewModels
 		/// </summary>
 		IEnumerable<ContactVM> contacts;
 		public IEnumerable<ContactVM> Contacts { 
-			get { return contacts.Where(c => c.SourceContact.DisplayName.Contains(Filter)); }
+			get { return contacts.Where(c => c.SourceContact.DisplayName.Contains(Filter.ToLowerInvariant())); }
 			set { SetProperty (ref contacts, value); }
 		}
 

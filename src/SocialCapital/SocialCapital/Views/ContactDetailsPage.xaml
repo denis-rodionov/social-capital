@@ -10,11 +10,23 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>		
-		<StackLayout Orientation="Horizontal">
-			<Image WidthRequest="44" HeightRequest="44" Source="{Binding PhotoImage}" />
-			<StackLayout Orientation="Vertical">
-				<Label Text="{Binding AbContact}" />
-				<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="{i18n:Translate NoTagsPlaceholder}" />
+		<StackLayout Orientation="Vertical" >
+			<!-- Header -->
+			<StackLayout Orientation="Horizontal">
+				<Image WidthRequest="100" Source="{Binding PhotoImage}" />
+				<StackLayout Orientation="Vertical">
+					<Label Text="{Binding WorkPlace}" />
+					<controls:TagList LayoutType="Wrap" 
+									  Tags="{Binding Tags}" 
+									  Placeholder="{i18n:Translate NoTagsPlaceholder}" />
+				</StackLayout>
+			</StackLayout>
+
+			<!-- Action -->
+			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+				<Button Image="ic_phone_white_48dp.png" />
+				<Button Image="ic_textsms_white_48dp.png" />
+				<Button Image="ic_email_white_48dp.png" />
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
