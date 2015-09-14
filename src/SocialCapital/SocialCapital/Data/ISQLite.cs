@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite.Net;
 
-namespace SocialCapital
+namespace SocialCapital.Data
 {
 	public interface ISQLite
 	{

@@ -3,6 +3,7 @@ using SocialCapital;
 using Xamarin.Forms;
 using SocialCapital.Droid;
 using System.IO;
+using SocialCapital.Data;
 
 [assembly:Dependency(typeof (SQLite_Android))]
 

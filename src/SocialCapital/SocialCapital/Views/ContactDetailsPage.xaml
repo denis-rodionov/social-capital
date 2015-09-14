@@ -3,11 +3,19 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+			 xmlns:converters="clr-namespace:SocialCapital.Views.Converters;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.ContactDetailsPage"
-			 Title="{Binding FullName}">
+			 Title="{Binding FullName}"
+			 x:Name="page">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_white_36dp.png" />
 	</ContentPage.ToolbarItems>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<converters:ListToBoolConverter x:Key="ListToBoolConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
 
 	<ContentPage.Content>		
 		<StackLayout Orientation="Vertical" >
@@ -24,7 +32,11 @@
 
 			<!-- Action -->
 			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-				<Button Image="ic_phone_white_48dp.png" />
+				<Button Image="ic_phone_white_48dp.png" 
+						IsEnabled="{Binding Path=Phones, Converter=ListToBoolConverter}"
+						Command="{Binding CallCommand}"
+						CommandParameter="{x:Reference page}" />
+
 				<Button Image="ic_textsms_white_48dp.png" />
 				<Button Image="ic_email_white_48dp.png" />
 			</StackLayout>

@@ -10,9 +10,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq.Expressions;
 
-[assembly: Dependency(typeof(SocialCapital.Droid.AddressBookInformation))]
+[assembly: Dependency(typeof(SocialCapital.Droid.Services.AddressBookInformation))]
 
-namespace SocialCapital.Droid
+namespace SocialCapital.Droid.Services
 {
 	public class AddressBookInformation : IAddressBookInformation
 	{

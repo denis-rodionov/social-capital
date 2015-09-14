@@ -7,14 +7,14 @@ using System.Linq;
 using Xamarin.Forms;
 using System.IO;
 using System.ComponentModel;
+using SocialCapital.PhoneServices;
+using System.Windows.Input;
 
 namespace SocialCapital.ViewModels
 {
 	public class ContactVM : ViewModelBase
 	{
 		private ImageSource anonimusPhoto = null;
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// Manager class for accessing database
@@ -25,6 +25,12 @@ namespace SocialCapital.ViewModels
 		/// Original copy of the contact
 		/// </summary>
 		public Contact SourceContact { get; private set; }
+
+		#region Commands
+
+		public ICommand CallCommand { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// VM Constructor
@@ -43,6 +49,8 @@ namespace SocialCapital.ViewModels
 			SourceContact = contact;
 
 			anonimusPhoto = GetAnonimusPhoto ();
+
+			CallCommand = new Command ((page) => MakeCall ((Page)page));
 		}
 
 		#region View Properties
@@ -98,7 +106,38 @@ namespace SocialCapital.ViewModels
 
 		}
 
+		private IEnumerable<Phone> phones = null;
+		public IEnumerable<Phone> Phones { 
+			get {
+				if (phones == null)
+					phones = Database.GetContactPhones (SourceContact.Id);
+				return phones;
+			}
+		}
+
 		#endregion
+
+
+		public async void MakeCall(Page page)
+		{
+			string number;
+			if (Phones.Count () > 1) {
+				var label = await page.DisplayActionSheet (AppResources.InviteToChoosePhoneNumber, 
+					AppResources.CancelButton, 
+					null,
+					Phones.Select (p => p.Label).ToArray());
+
+				if (label == AppResources.CancelButton)
+					return;
+				
+				number = Phones.Single (p => p.Label == label).Number;
+			} else if (Phones != null || Phones.Count () != 0)
+				number = Phones.Single ().Number;
+			else
+				throw new Exception ("Contact does not have a phone number");
+				
+			DependencyService.Get<IPhoneService> ().Call (number);
+		}
 
 		public void Save()
 		{

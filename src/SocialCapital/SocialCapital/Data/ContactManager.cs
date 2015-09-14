@@ -121,6 +121,13 @@ namespace SocialCapital.Data
 			}
 		}
 
+		public IEnumerable<Phone> GetContactPhones(int contactId)
+		{
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
+			}
+		}
+
 		#endregion
 
 		#region Save/Update methods
