@@ -3,25 +3,22 @@ using System.Reflection;
 using Xamarin.Forms;
 using SocialCapital.Data;
 using SocialCapital.Views;
+using Microsoft.Practices.Unity;
 
 namespace SocialCapital 
 {
 	public class App : Application
 	{
-		//public DataContext context {get; set;}
+		public static Ioc Ioc { get; set; }
 
 		public App ()
 		{
-			Log.GetLogger ().Log ("Application starting......");
+			Ioc = new Ioc ();	// init of Ioc-container
 
-			// NOTE: use for debugging, not in released app code!
-			var assembly = typeof(App).GetTypeInfo().Assembly;
-			foreach (var res in assembly.GetManifestResourceNames())
-				System.Diagnostics.Debug.WriteLine("found resource: " + res);
+			Log.GetLogger ().Log ("Application starting......");
 
 			if (Device.OS != TargetPlatform.WinPhone) {
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
-				//Resx.AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
 			//new DataContext ().ClearDatabase ();

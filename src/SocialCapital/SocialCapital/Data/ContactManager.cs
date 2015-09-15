@@ -108,21 +108,40 @@ namespace SocialCapital.Data
 			return Contacts.Single (c => c.Id == contactId);
 		}
 
-		public IEnumerable<Tag> GetContactTags(int countactId)
+		public IEnumerable<Tag> GetContactTags(int contactId)
 		{
+			if (contactId == 0)
+				throw new ArgumentException ("contactId cannot be 0");
+
 			using (var db = new DataContext ()) {
 				var tags = 
 					db.Connection.Query<Tag> (
 						"select t.Id, t.Name " +
 						"from Tag t " +
 						"join ContactTag ct on ct.TagId = t.Id " +
-						"where ct.ContactId = ?", countactId);
+						"where ct.ContactId = ?", contactId);
 				return tags;
+			}
+		}
+
+		public IEnumerable<ContactModification> GetContactModifications(int contactId)
+		{
+			if (contactId == 0)
+				throw new ArgumentException ("contactId cannot be 0");
+
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<ContactModification> ()
+					.Where (m => m.ContactId == contactId)
+					.OrderByDescending(m => m.ModifiedAt)
+					.ToList ();
 			}
 		}
 
 		public IEnumerable<Phone> GetContactPhones(int contactId)
 		{
+			if (contactId == 0)
+				throw new ArgumentException ("contactId cannot be 0");
+			
 			using (var db = new DataContext ()) {
 				return db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
 			}
