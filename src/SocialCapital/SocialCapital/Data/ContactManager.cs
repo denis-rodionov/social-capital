@@ -170,9 +170,11 @@ namespace SocialCapital.Data
 
 			using (var db = new DataContext ()) {	
 				if (contactToSave.Id == 0)
-					contactId = db.Connection.Insert (contactToSave);
+					db.Connection.Insert (contactToSave);
 				else
-					contactId = db.Connection.Update (contactToSave);
+					db.Connection.Update (contactToSave);
+
+				contactId = contactToSave.Id;
 
 				//contactToSave.Id = contactId;
 				if (contactId == 0)
@@ -197,7 +199,9 @@ namespace SocialCapital.Data
 			var newList = actualList.Except (existingList);
 			var deleteList = existingList.Except (actualList);
 
-			db.Connection.InsertAll (newList);
+			foreach (var item in newList) {
+				db.Connection.Insert (item);
+			}
 
 			foreach (var item in deleteList)
 				db.Connection.Delete(item);

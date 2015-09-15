@@ -56,7 +56,7 @@ namespace SocialCapital.ViewModels
 		#region View Properties
 
 		public string FullName {
-			get {return SourceContact.DisplayName;}
+			get {return string.Format ("{0}: {1}", SourceContact.Id, SourceContact.DisplayName); }
 			set {	
 				SourceContact.DisplayName = value;
 				OnPropertyChanged ();
@@ -120,6 +120,9 @@ namespace SocialCapital.ViewModels
 
 		public async void MakeCall(Page page)
 		{
+			if (Phones == null || Phones.Count () == 0)
+				throw new Exception ("Contact does not have a phone number");
+
 			string number;
 			if (Phones.Count () > 1) {
 				var label = await page.DisplayActionSheet (AppResources.InviteToChoosePhoneNumber, 
@@ -131,10 +134,9 @@ namespace SocialCapital.ViewModels
 					return;
 				
 				number = Phones.Single (p => p.Label == label).Number;
-			} else if (Phones != null || Phones.Count () != 0)
+			} else
 				number = Phones.Single ().Number;
-			else
-				throw new Exception ("Contact does not have a phone number");
+				
 				
 			DependencyService.Get<IPhoneService> ().Call (number);
 		}

@@ -38,7 +38,8 @@
 								<Binding Path="DisplayName" />
 							</TextCell.Text>
 							<TextCell.Detail >
-								<Binding Path="AddressBookImportStatus" />
+								<!--<Binding Path="AddressBookImportStatus" />-->
+								<Binding Path="Id" />
 							</TextCell.Detail>
 						</TextCell>
 					</DataTemplate>

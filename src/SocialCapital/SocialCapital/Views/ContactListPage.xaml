@@ -19,7 +19,7 @@
 						<ImageCell  Tapped="OnItemSelected"
 								    ImageSource="{Binding PhotoImage}" 
 								    Text="{Binding FullName}" 
-								    Detail="{Binding TagList}" />
+								    Detail="{Binding SourceContact.AddressBookId}" />
 					<!--
 						<ViewCell>
 

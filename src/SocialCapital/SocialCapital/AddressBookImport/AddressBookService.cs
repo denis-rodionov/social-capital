@@ -47,6 +47,7 @@ namespace SocialCapital.AddressBookImport
 
 			var abContacts = service.GetContacts ();
 
+			var b = abContacts.Where (c => c.DisplayName == "Баланс").ToList (); 
 
 			timing.Finish ();
 

@@ -33,7 +33,7 @@
 			<!-- Action -->
 			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 				<Button Image="ic_phone_white_48dp.png" 
-						IsEnabled="{Binding Path=Phones, Converter=ListToBoolConverter}"
+						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBoolConverter}}"
 						Command="{Binding CallCommand}"
 						CommandParameter="{x:Reference page}" />
 

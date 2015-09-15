@@ -108,20 +108,20 @@ namespace SocialCapital.Droid.Services
 					ContactTitle = o.ContactTitle,
 					Label = o.Label,
 					Name = o.Name
-				}),
+				}).ToList(),
 				Phones = contact.Phones.Select (p => new SocialCapital.Data.Model.Phone () {
 					Label = p.Label,
 					Number = p.Number,
 					Type = ToPhoneType (p.Type)
-				}),
+				}).ToList(),
 				Emails = contact.Emails.Select (e => new SocialCapital.Data.Model.Email () {
 					Address = e.Address,
 					Label = e.Label,
 					Type = ToEmailType (e.Type)
-				}),
+				}).ToList(),
 				Notes = contact.Notes.Select (n => new SocialCapital.Data.Model.Note () {
 					Contents = n.Contents,
-				}),
+				}).ToList(),
 				Addresses = contact.Addresses.Select(a => new SocialCapital.Data.Model.Address() {
 					Country = a.Country,
 					City = a.City,
@@ -129,7 +129,7 @@ namespace SocialCapital.Droid.Services
 					PostalCode = a.PostalCode,
 					StreetAddress = a.StreetAddress,
 					Label = a.Label
-				})
+				}).ToList()
 			};
 
 			RaiseContactRetrieved (countRetrieved++);
