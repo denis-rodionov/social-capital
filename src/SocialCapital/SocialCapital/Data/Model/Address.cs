@@ -47,6 +47,11 @@ namespace SocialCapital.Data.Model
 					Label == other.Label;
 		}
 
+		public override int GetHashCode ()
+		{
+			return (Country + City + Region + StreetAddress + PostalCode + Label).GetHashCode ();
+		}
+
 		#endregion
 	}
 }

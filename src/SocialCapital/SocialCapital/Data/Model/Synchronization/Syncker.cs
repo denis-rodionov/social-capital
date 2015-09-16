@@ -129,7 +129,7 @@ namespace SocialCapital.Data.Synchronization
 				converter.DatabaseContactId,
 				converter.Source,
 				converter.SyncTime,
-				false,
+				first,
 				fields);
 
 			if (newModification.ContactId == 0)

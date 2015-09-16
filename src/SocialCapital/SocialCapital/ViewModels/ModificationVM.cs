@@ -1,5 +1,6 @@
 ﻿using System;
 using SocialCapital.Data.Model;
+using System.Linq;
 
 namespace SocialCapital.ViewModels
 {
@@ -27,7 +28,9 @@ namespace SocialCapital.ViewModels
 
 		private string GetUpdateStatus()
 		{
-			return string.Format("{0}: {1}", AppResources.PhoneContactUpdateStatus, string.Join(", ", Modification.GetModifiedFields()));
+			var mods = Modification.GetModifiedFields ();
+			return string.Format ("{0}: {1}", AppResources.PhoneContactUpdateStatus, 
+				mods.Count()  < 4 ? string.Join (", ", mods) : mods.Count ().ToString());
 		}
 
 	}

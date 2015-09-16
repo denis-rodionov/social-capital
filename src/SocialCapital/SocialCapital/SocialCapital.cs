@@ -19,7 +19,7 @@ namespace SocialCapital
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
-			new DataContext ().ClearDatabase ();
+			//new DataContext ().ClearDatabase ();
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 

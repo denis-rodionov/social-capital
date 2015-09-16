@@ -45,6 +45,12 @@ namespace SocialCapital.Data.Model
 
 			return Number == other.Number && Label == other.Label;
 		}
+
+		public override int GetHashCode ()
+		{
+			return (Label + Number).GetHashCode ();
+		}
+
 		#endregion
 
 

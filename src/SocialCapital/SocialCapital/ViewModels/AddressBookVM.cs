@@ -146,8 +146,10 @@ namespace SocialCapital.ViewModels
 		private void ImportFinished(GroupVM<DateTime, ModificationVM> importResult)
 		{
 			UpdateStatus (importResult.Group);
+			ImportProgress = 0;
 
-			ModificationGroups.Insert (0, importResult);
+			if (importResult.Elements.Any())
+				ModificationGroups.Insert (0, importResult);
 		}
 
 		void UpdateStatus (DateTime updateTime)

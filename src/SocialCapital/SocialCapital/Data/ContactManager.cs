@@ -149,7 +149,9 @@ namespace SocialCapital.Data
 				throw new ArgumentException ("contactId cannot be 0");
 			
 			using (var db = new DataContext ()) {
-				return db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
+				var res = db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
+				var debug = db.Connection.Table<Phone> ().ToList ();
+				return res;
 			}
 		}
 
@@ -364,11 +366,11 @@ namespace SocialCapital.Data
 		}
 
 		private void UpdateContactList<T>(IEnumerable<T> actualList, DataContext db,
-			Expression<Func<T, bool>> whereClause) where T : class
+			Expression<Func<T, bool>> whereClause) where T : class, IEquatable<T>
 		{
-			var existingList = db.Connection.Table<T> ().Where (whereClause);
-			var newList = actualList.Except (existingList);
-			var deleteList = existingList.Except (actualList);
+			var existingList = db.Connection.Table<T> ().Where (whereClause).ToList();
+			var newList = actualList.Except (existingList).ToList();
+			var deleteList = existingList.Except (actualList).ToList();
 
 			foreach (var item in newList) {
 				db.Connection.Insert (item);

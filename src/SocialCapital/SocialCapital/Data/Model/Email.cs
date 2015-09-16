@@ -12,7 +12,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Class migrated from phone Address book structure
 	/// </summary>
-	public class Email
+	public class Email : IEquatable<Email>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -30,6 +30,21 @@ namespace SocialCapital.Data.Model
 		{
 			return string.Format ("[Address={0}, Label={1}, Type={2}]", Address, Label, Type);
 		}
+
+		#region IEquatable implementation
+		public bool Equals (Email other)
+		{
+			if (other == null)
+				return false;
+
+			return Address == other.Address && Label == other.Label;
+		}
+
+		public override int GetHashCode ()
+		{
+			return (Label + Address).GetHashCode ();
+		}
+		#endregion
 	}
 }
 
