@@ -33,21 +33,30 @@ namespace SocialCapital.AddressBookImport
 			CurrentProgressValue = new ProgressValue ();
 		}
 
+		private void ContactCountCalcylated(int totalCount)
+		{
+			CurrentProgressValue.TotalContacts = totalCount; 
+		}
+
+		private void ContactRetrieved(int count)
+		{
+			CurrentProgressValue.ContactsRetrieved = count;
+			RaiseProgress(CurrentProgressValue);
+		}
+
 		public IEnumerable<AddressBookContact> LoadContacts()
 		{
 			var timing = Timing.Start ("AddressBookService.LoadContacts");
 
 			var service = DependencyService.Get<IAddressBookInformation> ();
 
-			service.ContactsCountCalculated += (int totalCount) => { 
-				CurrentProgressValue.TotalContacts = totalCount; 
-			};
-			service.ContactRetrieved += (int count) => {
-				CurrentProgressValue.ContactsRetrieved = count;
-				RaiseProgress(CurrentProgressValue);
-			};
+			service.ContactsCountCalculated += ContactCountCalcylated;
+			service.ContactRetrieved += ContactRetrieved;
 
 			var abContacts = service.GetContacts ();
+
+			service.ContactsCountCalculated -= ContactCountCalcylated;
+			service.ContactRetrieved -= ContactRetrieved;
 
 			var b = abContacts.Where (c => c.DisplayName == "Баланс").ToList (); 
 
