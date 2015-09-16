@@ -2,6 +2,7 @@
 using SocialCapital.Data.Model.Converters;
 using System.Linq;
 using System.Collections.Generic;
+using SocialCapital.Data.Model;
 
 namespace SocialCapital.Data.Synchronization
 {
@@ -9,26 +10,31 @@ namespace SocialCapital.Data.Synchronization
 
 	public class Syncker
 	{
+		
 
 		/// <summary>
 		/// Import or update the contact from the given source
 		/// </summary>
 		/// <param name="contactConverter">The contact </param>
-		public void SyncContact(BaseContactConverter contactConverter)
+		/// <returns>Returns modification in database.
+		/// Returns null if no modifications made</returns>
+		public ContactModification SyncContact(BaseContactConverter contactConverter)
 		{
-			var dbContact = new ContactManager().GetContacts (contactConverter.Exists()).SingleOrDefault ();
+			ContactModification res;
+
+			var dbContact = new ContactManager().GetContacts (contactConverter.IsContactExistsInDatabase()).SingleOrDefault ();
 
 			if (dbContact == null)
-				SaveNewContact (contactConverter);
+				res = SaveNewContact (contactConverter);
 			else {
-				var fieldsToUpdate = GetFieldsToUpdate (dbContact.Id);
-				UpdateFields (fieldsToUpdate);
+				contactConverter.DatabaseContactId = dbContact.Id;
+
+				var fieldsToUpdate = GetFieldsToUpdate (contactConverter, dbContact);
+
+				res = UpdateFields (contactConverter, fieldsToUpdate);
 			}
 
-
-			(resGroup.Contacts as List<Contact>).Add (savedContact);
-
-			SaveNewContact ();
+			return res;
 		}
 
 		#region Implementation
@@ -37,25 +43,99 @@ namespace SocialCapital.Data.Synchronization
 		/// Updates specified fields of the contact
 		/// </summary>
 		/// <param name="fieldsToUpdate">Fields to update.</param>
-		void UpdateFields(IEnumerable<FieldValue> fieldsToUpdate)
+		private ContactModification UpdateFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fieldsToUpdate)
 		{
+			if (fieldsToUpdate.Count () != 0) {
+				new ContactManager ().SaveOrUpdateContactFields (contactConverter, fieldsToUpdate);
+
+				return SaveModification (contactConverter, fieldsToUpdate, false);
+			} else
+				return null;
 		}
 
-		IEnumerable<FieldValue> GetFieldsToUpdate(int contactId, SyncSource source)
+		private IEnumerable<FieldValue> GetFieldsToUpdate(BaseContactConverter contactConverter, Contact databaseContact)
 		{
-			var modifications = new ContactManager ().GetContactModifications (contactId);
+			var changedFields = GetChangedFields (contactConverter, databaseContact);
 
+			return changedFields;
+		}
+
+		private IEnumerable<FieldValue> GetChangedFields(BaseContactConverter contactConverter, Contact databaseContact)
+		{
+			var sourceContat = contactConverter.GetContactInfo ();
 			var res = new List<FieldValue> ();
-			foreach (var m in modifications)
-				if (m.Source == source)
-					break;
-				else
-					res.AddRange (m.GetModifiedFields ());
+			var db = new ContactManager ();
+
+			if (sourceContat.DisplayName != databaseContact.DisplayName)
+				res.Add (FieldValue.DisplayName);
+			if (sourceContat.Thumbnail != null && databaseContact.Thumbnail == null)
+				res.Add (FieldValue.Thumbnail);
+			if (sourceContat.WorkPlace != databaseContact.WorkPlace)
+				res.Add (FieldValue.WorkPlace);
+			if (!ListEqual (contactConverter.GetPhones (), db.GetContactPhones (contactConverter.DatabaseContactId)))
+				res.Add (FieldValue.Phones);
+			if (!ListEqual (contactConverter.GetEmails (), db.GetContactEmails (contactConverter.DatabaseContactId)))
+				res.Add (FieldValue.Emails);
+			if (contactConverter.GetAddress () != db.GetContactAddress (contactConverter.DatabaseContactId))
+				res.Add (FieldValue.Address);
+
+			return res;
 		}
 
-		void SaveNewContact()
+		private bool ListEqual<T>(IEnumerable<T> list1, IEnumerable<T> list2)
 		{
-			var savedContact = db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
+			var firstNotSecond = list1.Except (list2);
+			var secondNotFirst = list2.Except (list1);
+
+			return !firstNotSecond.Any() && !secondNotFirst.Any ();
+		}
+
+		private ContactModification SaveNewContact(BaseContactConverter contactConverter)
+		{
+			var contactId = new ContactManager ().SaveContactInfo (contactConverter.GetContactInfo ());
+
+			contactConverter.DatabaseContactId = contactId;
+
+			// saving relations for the contact table
+			UpdateFields (contactConverter, GetAllRelationFields());
+
+			return SaveModification (contactConverter, GetAllFields(), true);
+		}
+
+		private IEnumerable<FieldValue> GetAllFields()
+		{
+			return new List<FieldValue> () { 
+				FieldValue.DisplayName,
+				FieldValue.Thumbnail,
+				FieldValue.WorkPlace,
+				FieldValue.Phones,
+				FieldValue.Emails,
+				FieldValue.Address
+			};	
+		}
+
+		private IEnumerable<FieldValue> GetAllRelationFields()
+		{
+			return new List<FieldValue> () { 
+				FieldValue.Phones,
+				FieldValue.Emails,
+				FieldValue.Address
+			};
+		}
+
+		private ContactModification SaveModification(BaseContactConverter converter, IEnumerable<FieldValue> fields, bool first)
+		{
+			var newModification = new ContactModification (
+				converter.DatabaseContactId,
+				converter.Source,
+				converter.SyncTime,
+				false,
+				fields);
+
+			if (newModification.ContactId == 0)
+				throw new ArgumentException ("ContactId cannot be null while creating modification");
+
+			return new ContactManager ().SaveModification (newModification);
 		}
 
 		#endregion

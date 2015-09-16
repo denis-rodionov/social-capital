@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SocialCapital.Data.Synchronization;
+using System.Linq.Expressions;
 
 namespace SocialCapital.Data.Model.Converters
 {
@@ -42,7 +43,7 @@ namespace SocialCapital.Data.Model.Converters
 		/// <summary>
 		/// Delegate which helps to determin if the contact already copied in the device database
 		/// </summary>
-		public abstract Func<Contact, bool> Exists ();
+		public abstract Expression<Func<Contact, bool>> IsContactExistsInDatabase ();
 
 		/// <summary>
 		/// Returns contact information stored in the Contact class
@@ -69,7 +70,7 @@ namespace SocialCapital.Data.Model.Converters
 		/// </summary>
 		/// <exception cref="ConverterException">If DatabaseContactId == 0 throws the exception</exception>
 		/// <returns>The contact address list</returns>
-		public abstract IEnumerable<Address> GetAdresses ();
+		public abstract Address GetAddress ();
 	}
 }
 

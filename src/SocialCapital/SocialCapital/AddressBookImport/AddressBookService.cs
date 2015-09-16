@@ -5,6 +5,8 @@ using System.Linq;
 using SocialCapital.Data.Model;
 using SocialCapital.Data;
 using SocialCapital.Common;
+using SocialCapital.Data.Synchronization;
+using SocialCapital.ViewModels;
 
 namespace SocialCapital.AddressBookImport
 {
@@ -60,7 +62,7 @@ namespace SocialCapital.AddressBookImport
 		/// Update all contact in database
 		/// </summary>
 		/// <returns>The group of updated contacts</returns>
-		public ContactGroup<DateTime> FullUpdate()
+		public GroupVM<DateTime, ModificationVM> FullUpdate()
 		{
 			if (LoadedContacts == null)
 				throw new Exception ("Load contacts first");
@@ -68,14 +70,16 @@ namespace SocialCapital.AddressBookImport
 			var timing = Timing.Start ("AddressBookService.FullUpdate");
 			var db = new ContactManager ();
 			var updateTime = DateTime.Now;
-			var resGroup = new ContactGroup<DateTime> () { GroupName = updateTime, Contacts = new List<Contact>() };
+			var resGroup = new GroupVM<DateTime, ModificationVM> () { Group = updateTime, Elements = new List<ModificationVM>() };
 
 			foreach (var bookContact in LoadedContacts) {
 				if (bookContact.Phones.Count () != 0) {
-					var dbContact = db.GetContacts (c => c.AddressBookId == bookContact.Id).SingleOrDefault ();
-					var savedContact = db.SaveOrUpdateContact (bookContact, updateTime, dbContact);
+				
+					var converter = new AddressBookContactConverter (bookContact, updateTime);
+					var mod = new Syncker ().SyncContact (converter);
 
-					(resGroup.Contacts as List<Contact>).Add (savedContact);
+					if (mod != null)
+						resGroup.Elements.Add (new ModificationVM(mod));
 
 					CurrentProgressValue.ContactsSync++;
 				}

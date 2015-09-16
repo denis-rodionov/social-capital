@@ -28,7 +28,7 @@ namespace SocialCapital.Data.Synchronization
 		Thumbnail = 4,
 		Phones = 8,
 		Emails = 16,
-		Addresses = 32
+		Address = 32
 	}
 }
 

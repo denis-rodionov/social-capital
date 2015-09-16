@@ -66,6 +66,7 @@ namespace SocialCapital.Droid.Services
 
 				contacts = book.Take (100).Select (bc => ConvertToContact (bc)).ToList ();
 
+
 				//foreach (Contact contact in bookContacts)
 				//{
 					// Note: on certain android device(Htc for example) it show name in DisplayName Field

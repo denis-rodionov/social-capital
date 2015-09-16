@@ -25,21 +25,21 @@
 			</StackLayout>
 			<ProgressBar x:Name="progressBar" Progress="{Binding ImportProgress}" IsVisible="{Binding IsImportRunning}" />
 
-			<ListView ItemsSource="{Binding ContactGroups}" IsGroupingEnabled="true" >
+			<ListView ItemsSource="{Binding ModificationGroups}" IsGroupingEnabled="true" >
 				<ListView.GroupHeaderTemplate>
 					<DataTemplate>
-						<TextCell Text="{Binding GroupName}" />
+						<TextCell Text="{Binding Group}" />
 					</DataTemplate>
 				</ListView.GroupHeaderTemplate>
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<TextCell > 
 							<TextCell.Text>
-								<Binding Path="DisplayName" />
+								<Binding Path="ContactName" />
 							</TextCell.Text>
 							<TextCell.Detail >
 								<!--<Binding Path="AddressBookImportStatus" />-->
-								<Binding Path="Id" />
+								<Binding Path="Status" />
 							</TextCell.Detail>
 						</TextCell>
 					</DataTemplate>

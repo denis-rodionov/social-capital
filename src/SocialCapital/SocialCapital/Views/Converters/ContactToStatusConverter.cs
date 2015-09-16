@@ -24,12 +24,14 @@ namespace SocialCapital.Views.Converters
 
 		string ContactToUpdateStatus(Contact contact)
 		{
-			if (contact.CreateTime == null || contact.AddressBookUpdateTime == null)
-				return AppResources.PhoneContactUnknownStatus;
-			if (contact.CreateTime == contact.AddressBookUpdateTime)
-				return AppResources.PhoneContactImportedStatus;
-			else
-				return AppResources.PhoneContactUpdateStatus;
+			return AppResources.PhoneContactUnknownStatus;
+
+//			if (contact.CreateTime == null || contact.AddressBookUpdateTime == null)
+//				return AppResources.PhoneContactUnknownStatus;
+//			if (contact.CreateTime == contact.AddressBookUpdateTime)
+//				return AppResources.PhoneContactImportedStatus;
+//			else
+//				return AppResources.PhoneContactUpdateStatus;
 		}
 	}
 }

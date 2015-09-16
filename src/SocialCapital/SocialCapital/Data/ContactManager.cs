@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using SocialCapital.AddressBookImport;
 using SocialCapital.Data.Model.Converters;
+using SocialCapital.Data.Synchronization;
 
 namespace SocialCapital.Data
 {
@@ -75,7 +76,7 @@ namespace SocialCapital.Data
 
 		public IEnumerable<Contact> GetContacts(Expression<Func<Contact, bool>> whereClause)
 		{
-			using (var db = new DataContext ()) {				
+			using (var db = new DataContext ()) {
 				return db.Connection.Table<Contact> ().Where (whereClause).ToList ();
 			}
 		}
@@ -86,23 +87,28 @@ namespace SocialCapital.Data
 		/// <returns>The contact groups.</returns>
 		/// <param name="groupingSelector">Grouping selector.</param>
 		/// <param name="filter">Filtering expression</param>
-		public IEnumerable<ContactGroup<T>> GetContactGroups<T>(
-			Func<Contact, T> groupingSelector,
-			Expression<Func<Contact, bool>> filter)
-		{
-			using (var db = new DataContext ()) {
-				return db.Connection.Table<Contact> ()
-					.Where (filter)
-					.GroupBy (
-					groupingSelector,
-					(key, list) => new ContactGroup<T> () { GroupName = key, Contacts = list }).ToList ();;
-			}
-		}
+//		public IEnumerable<ContactGroupVM<T>> GetContactGroups<T>(
+//			Func<Contact, T> groupingSelector,
+//			Expression<Func<Contact, bool>> filter)
+//		{
+//			using (var db = new DataContext ()) {
+//				return db.Connection.Table<Contact> ()
+//					.Where (filter)
+//					.GroupBy (
+//					groupingSelector,
+//					(key, list) => new ContactGroupVM<T> () { GroupName = key, Contacts = list }).ToList ();;
+//			}
+//		}
 
 		#endregion
 
 		#region Contact Details
 
+		/// <summary>
+		/// GetContact as it is
+		/// </summary>
+		/// <returns>The contact.</returns>
+		/// <param name="contactId">Contact identifier.</param>
 		public Contact GetContact(int contactId)
 		{
 			return Contacts.Single (c => c.Id == contactId);
@@ -147,17 +153,46 @@ namespace SocialCapital.Data
 			}
 		}
 
+		public IEnumerable<Email> GetContactEmails(int contactId)
+		{
+			if (contactId == 0)
+				throw new ArgumentException ("contactId cannot be 0");
+
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<Email> ().Where (p => p.ContactId == contactId).ToList ();
+			}
+		}
+
+		public Address GetContactAddress(int contactId)
+		{
+			if (contactId == 0)
+				throw new ArgumentException ("contactId cannot be 0");
+
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<Address> ().Where (p => p.ContactId == contactId).FirstOrDefault ();
+			}
+		}
+
+		public IEnumerable<ContactModification> GetContactModifications(Func<ContactModification, bool> filter)
+		{
+			using (var db = new DataContext ()) {
+				return db.Connection.Table<ContactModification> ().Where (filter).ToList ();
+			}
+		}
+
 		#endregion
 
 		#region Save/Update methods
 
+		/// <summary>
+		/// Save or update contact info, stored in the Contact object (no relations)
+		/// </summary>
+		/// <returns>The saved or updater contact Id</returns>
+		/// <param name="contact">Contact to save or update</param>
 		public int SaveContactInfo(Contact contact)
 		{
 			using (var db = new DataContext ()) {
-				if (contact.Id == 0)
-					return db.Connection.Insert (contact);
-				else
-					return db.Connection.Update (contact);
+				return SaveContactInfo (contact, db);
 			}
 		}
 
@@ -181,37 +216,154 @@ namespace SocialCapital.Data
 		/// <param name="updateTime">Update time.</param>
 		/// <param name="contact">If contact = null, create takes place, otherwise - update</param>
 		/// <returns>Returns saved contact</returns>
-		public Contact SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
+//		public Contact SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
+//		{
+//			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
+//			var contactToSave = converter.GetContact ();
+//			int contactId;
+//
+//			using (var db = new DataContext ()) {	
+//				if (contactToSave.Id == 0)
+//					db.Connection.Insert (contactToSave);
+//				else
+//					db.Connection.Update (contactToSave);
+//
+//				contactId = contactToSave.Id;
+//
+//				//contactToSave.Id = contactId;
+//				if (contactId == 0)
+//					throw new ContactManagerException ("InsertOrReplace returned 0");
+//
+//				UpdateContactList<Phone> (converter.GetContactPhones (contactId), contactId, db, p => p.ContactId == contactId);
+//				UpdateContactList<Email> (converter.GetContactEmails (contactId), contactId, db, p => p.ContactId == contactId);
+//				UpdateContactList<Address> (converter.GetContactAddresses (contactId), contactId, db, p => p.ContactId == contactId);
+//			}
+//
+//			return contactToSave;
+//		}
+
+		/// <summary>
+		/// Updates fields and relations of the contact by given list of fields.
+		/// Not specified fields are leaved untouched
+		/// </summary>
+		/// <param name="contactConverter">Contact converter.</param>
+		/// <param name="fields">Fields to update</param>
+		public void SaveOrUpdateContactFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fields)
 		{
-			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
-			var contactToSave = converter.GetContact ();
-			int contactId;
+			if (contactConverter.DatabaseContactId == 0)
+				throw new ArgumentException ("Converter does not have DatabaseContactId set");
 
-			using (var db = new DataContext ()) {	
-				if (contactToSave.Id == 0)
-					db.Connection.Insert (contactToSave);
-				else
-					db.Connection.Update (contactToSave);
+			using (var db = new DataContext ()) {
+				var contactInfoFields = new List<FieldValue> ();
 
-				contactId = contactToSave.Id;
-
-				//contactToSave.Id = contactId;
-				if (contactId == 0)
-					throw new Exception ("InsertOrReplace returned 0");
-
-				UpdateContactList<Phone> (converter.GetContactPhones (contactId), contactId, db, p => p.ContactId == contactId);
-				UpdateContactList<Email> (converter.GetContactEmails (contactId), contactId, db, p => p.ContactId == contactId);
-				UpdateContactList<Address> (converter.GetContactAddresses (contactId), contactId, db, p => p.ContactId == contactId);
+				foreach (var field in fields) {
+					switch (field) {
+						case FieldValue.DisplayName:
+						case FieldValue.Thumbnail:
+						case FieldValue.WorkPlace:
+							contactInfoFields.Add (field);
+							break;
+						case FieldValue.Phones:
+							UpdateContactList<Phone> (contactConverter.GetPhones (), 
+								db, 
+								p => p.ContactId == contactConverter.DatabaseContactId);
+							break;
+						case FieldValue.Emails:
+							UpdateContactList<Email> (contactConverter.GetEmails (), 
+								db, 
+								p => p.ContactId == contactConverter.DatabaseContactId);
+							break;
+					case FieldValue.Address:
+							SaveOrUpdate (contactConverter.GetAddress (), contactConverter.DatabaseContactId, db);
+							break;
+						default: 
+						throw new ContactManagerException (string.Format ("Unknown field '{0}' to update", field));
+					}
+				}
+				UpdateContactInfoFields (contactConverter, contactInfoFields, db);
 			}
+		}
 
-			return contactToSave;
+		public ContactModification SaveModification(ContactModification modification)
+		{
+			using (var db = new DataContext ()) {
+				db.Connection.Insert (modification);
+				if (modification.Id == 0)
+					throw new ContactManagerException ("Inserterd modification cannot has Id=0");
+
+				return modification;
+			}
 		}
 
 		#endregion
 
 		#region Implementation
 
-		private void UpdateContactList<T>(IEnumerable<T> actualList, int contactId, DataContext db,
+		private T SaveOrUpdate<T>(T item, int contactId, DataContext db) where T : class
+		{
+			var dbItem = db.Connection.Table<T> ().SingleOrDefault ();
+			T res;
+
+			if (dbItem == null) {
+				res = item;
+				db.Connection.Insert (res);
+			} else {
+				res = dbItem;
+				db.Connection.Update (res);
+			}
+
+			return res;
+		}
+
+		private int SaveContactInfo(Contact contact, DataContext db)
+		{
+			if (contact.Id == 0) {
+				contact.CreateTime = DateTime.Now;
+				db.Connection.Insert (contact);
+			}
+			else
+				db.Connection.Update (contact);
+
+			if (contact.Id == 0)
+				throw new Exception (string.Format ("Contact {0} saved incorrect: Id = 0", contact.DisplayName));
+
+			return contact.Id;
+		}
+
+		/// <summary>
+		/// Updates only fields which stored in the Contact table
+		/// </summary>
+		/// <param name="contactConverter">Contact converter.</param>
+		/// <param name="fields">Fields.</param>
+		/// <param name="db">Db.</param>
+		private void UpdateContactInfoFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fields, DataContext db)
+		{
+			var newContact = contactConverter.GetContactInfo ();
+			var dbContact = GetContact (contactConverter.DatabaseContactId);
+
+			if (dbContact == null || dbContact.Id == 0)
+				throw new ContactManagerException ("No contact exists in database with such id");
+
+			foreach (var field in fields) {
+				switch (field) {
+					case FieldValue.DisplayName:
+						dbContact.DisplayName = newContact.DisplayName;
+						break;
+					case FieldValue.Thumbnail:
+						dbContact.Thumbnail = newContact.Thumbnail;
+						break;
+					case FieldValue.WorkPlace:
+						dbContact.WorkPlace = newContact.WorkPlace;
+						break;
+					default:
+						throw new ContactManagerException ("Unknown field for the table 'Contact'");
+				}
+			}
+
+			SaveContactInfo (dbContact, db);
+		}
+
+		private void UpdateContactList<T>(IEnumerable<T> actualList, DataContext db,
 			Expression<Func<T, bool>> whereClause) where T : class
 		{
 			var existingList = db.Connection.Table<T> ().Where (whereClause);

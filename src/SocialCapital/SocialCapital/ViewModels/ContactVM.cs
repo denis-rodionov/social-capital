@@ -17,11 +17,6 @@ namespace SocialCapital.ViewModels
 		private ImageSource anonimusPhoto = null;
 
 		/// <summary>
-		/// Manager class for accessing database
-		/// </summary>
-		public ContactManager Database { get; private set; }
-
-		/// <summary>
 		/// Original copy of the contact
 		/// </summary>
 		public Contact SourceContact { get; private set; }
@@ -43,8 +38,6 @@ namespace SocialCapital.ViewModels
 
 			if (contact.Id < 1)
 				throw new ArgumentException ();
-
-			Database = new ContactManager ();
 
 			SourceContact = contact;
 

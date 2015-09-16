@@ -37,7 +37,7 @@ namespace SocialCapital.Data.Model
 		/// <summary>
 		/// Time of the last update from device address book (or create)
 		/// </summary>
-		public DateTime AddressBookUpdateTime { get; set; }
+		//public DateTime AddressBookUpdateTime { get; set; }
 
 		/// <summary>
 		/// CreateTime
@@ -46,16 +46,6 @@ namespace SocialCapital.Data.Model
 
 		#region No database properties
 
-		public string AddressBookImportStatus {
-			get {
-				if (CreateTime == null || AddressBookUpdateTime == null)
-					return AppResources.PhoneContactUnknownStatus;
-				if (CreateTime == AddressBookUpdateTime)
-					return AppResources.PhoneContactImportedStatus;
-				else
-					return AppResources.PhoneContactUpdateStatus;
-			}
-		}
 
 		#endregion
 

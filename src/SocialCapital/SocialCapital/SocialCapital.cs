@@ -3,17 +3,15 @@ using System.Reflection;
 using Xamarin.Forms;
 using SocialCapital.Data;
 using SocialCapital.Views;
-using Microsoft.Practices.Unity;
 
 namespace SocialCapital 
 {
 	public class App : Application
 	{
-		public static Ioc Ioc { get; set; }
+		//public static Ioc Ioc { get; set; }
 
 		public App ()
 		{
-			Ioc = new Ioc ();	// init of Ioc-container
 
 			Log.GetLogger ().Log ("Application starting......");
 
@@ -21,7 +19,7 @@ namespace SocialCapital
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
-			//new DataContext ().ClearDatabase ();
+			new DataContext ().ClearDatabase ();
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 

@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using SocialCapital.Data.Model;
 
-namespace SocialCapital.Data.Model
+namespace SocialCapital.ViewModels
 {
 	/// <summary>
 	/// Secondary view-model class for grouping list view
 	/// </summary>
-	public class ContactGroup<T> : IEnumerable<Contact>
+	public class GroupVM<GroupType, ElementType> : IEnumerable<ElementType>
 	{
-		public T GroupName { get; set; }
-		public IEnumerable<Contact> Contacts { get; set; }
+		public GroupType Group { get; set; }
+		public List<ElementType> Elements { get; set; }
 
 		#region IEnumerable implementation
 
-		IEnumerator<Contact> IEnumerable<Contact>.GetEnumerator ()
+		IEnumerator<ElementType> IEnumerable<ElementType>.GetEnumerator ()
 		{
-			return Contacts.GetEnumerator ();
+			return Elements.GetEnumerator ();
 		}
 
 		#endregion
@@ -25,7 +25,7 @@ namespace SocialCapital.Data.Model
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
 		{
-			return Contacts.GetEnumerator ();
+			return Elements.GetEnumerator ();
 		}
 
 		#endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using SocialCapital.Data;
 
 namespace SocialCapital.ViewModels
 {
@@ -23,6 +24,14 @@ namespace SocialCapital.ViewModels
 			PropertyChangedEventHandler handler = PropertyChanged;
 			if (handler != null) {
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		private ContactManager database = null;
+		protected ContactManager Database { get {
+				if (database == null)
+					database = new ContactManager ();
+				return database;
 			}
 		}
 

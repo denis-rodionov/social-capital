@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using SocialCapital.Data;
 using SocialCapital.Data.Model;
+using SocialCapital.Data.Synchronization;
 
 namespace SocialCapital.ViewModels
 {
@@ -49,9 +50,11 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref progress, value); }
 		}
 
-		public ObservableCollection<ContactGroup<DateTime>> ContactGroups { get; private set; }
+		public ObservableCollection<GroupVM<DateTime, ModificationVM>> ModificationGroups { get; private set; }
 
 		#endregion
+
+		#region Init
 
 		/// <summary>
 		/// Constructor
@@ -62,10 +65,21 @@ namespace SocialCapital.ViewModels
 			InitStatus ();
 			StartImport = new Command (Import);
 
-			ContactGroups = new ObservableCollection<ContactGroup<DateTime>> (
-				new ContactManager ().GetContactGroups (c => c.AddressBookUpdateTime, c => c.AddressBookUpdateTime != null)
-			);
+			InitContactList ();
 		}
+
+		void InitContactList()
+		{
+			var weekAgo = DateTime.Now - TimeSpan.FromDays (7);
+			var modifications = Database.GetContactModifications (m => m.Source == SyncSource.AddressBook && m.ModifiedAt > weekAgo);
+			var collection = modifications.GroupBy (
+				key => key.ModifiedAt,
+				(key, list) => new GroupVM<DateTime, ModificationVM> () { Group = key, Elements = list.Select(m => new ModificationVM(m)).ToList() });
+
+			ModificationGroups = new ObservableCollection<GroupVM<DateTime, ModificationVM>> (collection);
+		}
+
+		#endregion
 
 		#region Implementation
 
@@ -85,7 +99,7 @@ namespace SocialCapital.ViewModels
 			Status = AppResources.ImportStatusInProgress;
 			Log.GetLogger ().Log ("Starting import task...");
 
-			var imported = await Task.Run<ContactGroup<DateTime>>(() => 
+			var imported = await Task.Run<GroupVM<DateTime, ModificationVM>>(() => 
 				{
 					Log.GetLogger ().Log ("Import started");
 					var service = new AddressBookService();
@@ -129,11 +143,11 @@ namespace SocialCapital.ViewModels
 			ImportProgress = res;
 		}
 
-		private void ImportFinished(ContactGroup<DateTime> importResult)
+		private void ImportFinished(GroupVM<DateTime, ModificationVM> importResult)
 		{
-			UpdateStatus (importResult.GroupName);
+			UpdateStatus (importResult.Group);
 
-			ContactGroups.Insert (0, importResult);
+			ModificationGroups.Insert (0, importResult);
 		}
 
 		void UpdateStatus (DateTime updateTime)
