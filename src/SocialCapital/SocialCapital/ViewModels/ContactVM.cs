@@ -9,6 +9,7 @@ using System.IO;
 using System.ComponentModel;
 using SocialCapital.PhoneServices;
 using System.Windows.Input;
+using SocialCapital.ViewModels.Commands;
 
 namespace SocialCapital.ViewModels
 {
@@ -43,7 +44,7 @@ namespace SocialCapital.ViewModels
 
 			anonimusPhoto = GetAnonimusPhoto ();
 
-			CallCommand = new Command ((page) => MakeCall ((Page)page));
+			CallCommand = new MakeCallCommand (Phones);
 		}
 
 		#region View Properties
@@ -108,31 +109,8 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		#endregion
+            		#endregion
 
-
-		public async void MakeCall(Page page)
-		{
-			if (Phones == null || Phones.Count () == 0)
-				throw new Exception ("Contact does not have a phone number");
-
-			string number;
-			if (Phones.Count () > 1) {
-				var label = await page.DisplayActionSheet (AppResources.InviteToChoosePhoneNumber, 
-					AppResources.CancelButton, 
-					null,
-					Phones.Select (p => p.Label).ToArray());
-
-				if (label == AppResources.CancelButton)
-					return;
-				
-				number = Phones.Single (p => p.Label == label).Number;
-			} else
-				number = Phones.Single ().Number;
-				
-				
-			DependencyService.Get<IPhoneService> ().Call (number);
-		}
 
 		public void Save()
 		{

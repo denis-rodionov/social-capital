@@ -31,6 +31,8 @@ namespace SocialCapital.Data.Model
 
 		public int ContactId { get; set; }
 
+		public bool IsFavorite { get; set; }
+
 		/// <summary>
 		/// Also type of the phone, but with enum
 		/// </summary>

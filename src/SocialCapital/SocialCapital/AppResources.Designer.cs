@@ -206,7 +206,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Выберите номер телефона для вызова.
+        ///   Ищет локализованную строку, похожую на Выберите номер телефона.
         /// </summary>
         internal static string InviteToChoosePhoneNumber {
             get {
