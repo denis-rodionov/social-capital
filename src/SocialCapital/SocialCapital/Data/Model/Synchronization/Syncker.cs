@@ -24,14 +24,21 @@ namespace SocialCapital.Data.Synchronization
 
 			var dbContact = new ContactManager().GetContacts (contactConverter.IsContactExistsInDatabase()).SingleOrDefault ();
 
-			if (dbContact == null)
-				res = SaveNewContact (contactConverter);
+			if (dbContact == null) {
+				SaveNewContact (contactConverter);
+				res = SaveModification (contactConverter, GetAllFields(), true);
+			}
 			else {
 				contactConverter.DatabaseContactId = dbContact.Id;
 
 				var fieldsToUpdate = GetFieldsToUpdate (contactConverter, dbContact);
 
-				res = UpdateFields (contactConverter, fieldsToUpdate);
+				if (fieldsToUpdate.Any()) {
+					UpdateFields (contactConverter, fieldsToUpdate);
+					res = SaveModification (contactConverter, fieldsToUpdate, false);
+				}
+				else 
+					res = null;
 			}
 
 			return res;
@@ -43,18 +50,17 @@ namespace SocialCapital.Data.Synchronization
 		/// Updates specified fields of the contact
 		/// </summary>
 		/// <param name="fieldsToUpdate">Fields to update.</param>
-		private ContactModification UpdateFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fieldsToUpdate)
+		private void UpdateFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fieldsToUpdate)
 		{
-			if (fieldsToUpdate.Count () != 0) {
+			if (fieldsToUpdate.Count () != 0) 
 				new ContactManager ().SaveOrUpdateContactFields (contactConverter, fieldsToUpdate);
-
-				return SaveModification (contactConverter, fieldsToUpdate, false);
-			} else
-				return null;
 		}
 
 		private IEnumerable<FieldValue> GetFieldsToUpdate(BaseContactConverter contactConverter, Contact databaseContact)
 		{
+			if (contactConverter.Source != SyncSource.AddressBook)
+				throw new NotImplementedException ("GetFieldsToUpdate implemented only for addressbook");
+
 			var changedFields = GetChangedFields (contactConverter, databaseContact);
 
 			return changedFields;
@@ -90,7 +96,7 @@ namespace SocialCapital.Data.Synchronization
 			return !firstNotSecond.Any() && !secondNotFirst.Any ();
 		}
 
-		private ContactModification SaveNewContact(BaseContactConverter contactConverter)
+		private void SaveNewContact(BaseContactConverter contactConverter)
 		{
 			var contactId = new ContactManager ().SaveContactInfo (contactConverter.GetContactInfo ());
 
@@ -98,8 +104,6 @@ namespace SocialCapital.Data.Synchronization
 
 			// saving relations for the contact table
 			UpdateFields (contactConverter, GetAllRelationFields());
-
-			return SaveModification (contactConverter, GetAllFields(), true);
 		}
 
 		private IEnumerable<FieldValue> GetAllFields()

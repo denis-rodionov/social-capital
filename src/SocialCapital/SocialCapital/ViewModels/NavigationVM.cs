@@ -62,6 +62,8 @@ namespace SocialCapital.ViewModels
 					return new ContactListPage ();
 				case "AddressBookImport":
 					return new AddressBookImportPage () { BindingContext = AddressBookViewModel };
+			case "Settings":
+				return 
 				default:
 					return new ContentPage ();
 			}

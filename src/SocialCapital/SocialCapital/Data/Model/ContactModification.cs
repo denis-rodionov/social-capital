@@ -78,34 +78,12 @@ namespace SocialCapital.Data.Model
 			return res;
 		}
 
-		#endregion
-
-		public static class FlagsHelper
+		public override string ToString ()
 		{
-			public static bool IsSet<T>(T flags, T flag) where T : struct
-			{
-				int flagsValue = (int)(object)flags;
-				int flagValue = (int)(object)flag;
-
-				return (flagsValue & flagValue) != 0;
-			}
-
-			public static void Set<T>(ref T flags, T flag) where T : struct
-			{
-				int flagsValue = (int)(object)flags;
-				int flagValue = (int)(object)flag;
-
-				flags = (T)(object)(flagsValue | flagValue);
-			}
-
-			public static void Unset<T>(ref T flags, T flag) where T : struct
-			{
-				int flagsValue = (int)(object)flags;
-				int flagValue = (int)(object)flag;
-
-				flags = (T)(object)(flagsValue & (~flagValue));
-			}
+			return string.Format ("[ContactModification: Id={0}, ContactId={1}, Source={2}, ModifiedFields={3}, ModifiedAt={4}, IsFirst={5}]", Id, ContactId, Source, ModifiedFields, ModifiedAt, IsFirst);
 		}
+
+		#endregion
 	}
 }
 

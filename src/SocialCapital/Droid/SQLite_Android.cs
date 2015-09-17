@@ -23,7 +23,7 @@ namespace SocialCapital.Droid
 			var path = Path.Combine(documentsPath, sqliteFilename);
 
 			var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid ();
-			var connection = new SQLite.Net.SQLiteConnection (platform, path);
+			var connection = new SQLite.Net.SQLiteConnection (platform, path, false);
 
 			// Return the database connection 
 			return connection;
