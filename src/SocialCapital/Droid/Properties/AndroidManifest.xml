@@ -3,4 +3,5 @@
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
 	<application android:label="SocialCapital" android:icon="@drawable/icon"></application>
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.CALL_PHONE" />
 </manifest>

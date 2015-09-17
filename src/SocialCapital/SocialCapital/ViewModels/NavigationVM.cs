@@ -55,6 +55,16 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		SettingsVM settings;
+		public SettingsVM SettingsViewModel {
+			get {
+				if (settings == null)
+					settings = new SettingsVM ();
+
+				return settings;
+			}
+		}
+
 		private Page GetPageByName(string name)
 		{
 			switch (name) {
@@ -63,7 +73,7 @@ namespace SocialCapital.ViewModels
 				case "AddressBookImport":
 					return new AddressBookImportPage () { BindingContext = AddressBookViewModel };
 			case "Settings":
-				return 
+				return new SettingsPage () { BindingContext = SettingsViewModel };
 				default:
 					return new ContentPage ();
 			}

@@ -89,9 +89,8 @@ namespace SocialCapital.AddressBookImport
 
 					if (mod != null)
 						resGroup.Elements.Add (new ModificationVM(mod));
-
-					CurrentProgressValue.ContactsSync++;
 				}
+				CurrentProgressValue.ContactsSync++;
 				RaiseProgress (CurrentProgressValue);
 			}
 

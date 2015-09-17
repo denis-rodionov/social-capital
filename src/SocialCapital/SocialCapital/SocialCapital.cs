@@ -12,7 +12,6 @@ namespace SocialCapital
 
 		public App ()
 		{
-
 			Log.GetLogger ().Log ("Application starting......");
 
 			if (Device.OS != TargetPlatform.WinPhone) {
@@ -23,8 +22,6 @@ namespace SocialCapital
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 
-
-			//MainPage = new NavigationPage (new ContactListPage ());
 			MainPage = new RootPage();
 		}
 
