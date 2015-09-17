@@ -9,44 +9,21 @@ using System.Threading.Tasks;
 
 namespace SocialCapital.ViewModels.Commands
 {
-	public class MakeCallCommand : PhoneCommand, ICommand
+	public class MakeCallCommand : BaseContactCommand
 	{
-		public MakeCallCommand (IEnumerable<Phone> phones) : base(phones)
+		public MakeCallCommand (IEnumerable<Phone> phones) : base(phones, AppResources.InviteToChoosePhoneNumber)
 		{
 		}
 
-		#region ICommand implementation
 
-		public event EventHandler CanExecuteChanged;
-
-		public bool CanExecute (object parameter)
-		{
-			return Phones.Count () != 0;
-		}
-
-		public async void Execute (object parameter)
-		{
-			Page page = parameter as Page;
-			await MakeCall (page);
-		}
-
-		#endregion
 
 		public async Task MakeCall(Page page)
 		{
-			if (Phones == null || Phones.Count () == 0)
-				throw new Exception ("Contact does not have a phone number");
+			string number = await GetPhoneNumber (page);
 
-			string number;
-			if (Phones.Count () > 1) {
-				var phone = await ChoosePhone (page);
-
-				if (phone == null)	// user canceled operation
-					return;
-				
-				number = phone.Number;
-			} else
-				number = Phones.Single ().Number;
+			// user canceled the operation
+			if (number == string.Empty)
+				return;
 			
 			DependencyService.Get<IPhoneService> ().Call (number);
 		}

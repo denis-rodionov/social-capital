@@ -12,7 +12,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Class migrated from phone Address book structure
 	/// </summary>
-	public class Email : IEquatable<Email>
+	public class Email : IEquatable<Email>, ILabeled
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -44,6 +44,20 @@ namespace SocialCapital.Data.Model
 		{
 			return (Label + Address).GetHashCode ();
 		}
+		#endregion
+
+		#region ILabeled implementation
+
+		public string GetLabel ()
+		{
+			return Label;
+		}
+
+		public string GetValue ()
+		{
+			return Address;
+		}
+
 		#endregion
 	}
 }

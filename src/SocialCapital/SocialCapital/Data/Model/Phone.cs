@@ -16,7 +16,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Database class migrated from phone Address book structure
 	/// </summary>
-	public class Phone : IEquatable<Phone>
+	public class Phone : IEquatable<Phone>, ILabeled
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -51,6 +51,20 @@ namespace SocialCapital.Data.Model
 		public override int GetHashCode ()
 		{
 			return (Label + Number).GetHashCode ();
+		}
+
+		#endregion
+
+		#region ILabeled implementation
+
+		public string GetLabel ()
+		{
+			return Label;
+		}
+
+		public string GetValue ()
+		{
+			return Number;
 		}
 
 		#endregion

@@ -26,6 +26,8 @@ namespace SocialCapital.ViewModels
 
 		public ICommand CallCommand { get; set; }
 
+		public ICommand SmSWriteCommand { get; set; }
+
 		#endregion
 
 		/// <summary>
@@ -45,6 +47,7 @@ namespace SocialCapital.ViewModels
 			anonimusPhoto = GetAnonimusPhoto ();
 
 			CallCommand = new MakeCallCommand (Phones);
+			SmSWriteCommand = new SmsWriteCommand (Phones);
 		}
 
 		#region View Properties
