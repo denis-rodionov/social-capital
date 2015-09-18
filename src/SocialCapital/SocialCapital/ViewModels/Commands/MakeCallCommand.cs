@@ -9,17 +9,15 @@ using System.Threading.Tasks;
 
 namespace SocialCapital.ViewModels.Commands
 {
-	public class MakeCallCommand : BaseContactCommand
+	public class MakeCallCommand : BaseContactCommand<Phone>
 	{
 		public MakeCallCommand (IEnumerable<Phone> phones) : base(phones, AppResources.InviteToChoosePhoneNumber)
 		{
 		}
 
-
-
-		public async Task MakeCall(Page page)
+		protected override async Task CommandAction(Page page)
 		{
-			string number = await GetPhoneNumber (page);
+			string number = await GetValue (page);
 
 			// user canceled the operation
 			if (number == string.Empty)

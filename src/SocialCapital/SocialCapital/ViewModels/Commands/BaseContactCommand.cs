@@ -51,16 +51,16 @@ namespace SocialCapital
 				if (phone == null)	// user canceled operation
 					return string.Empty;
 
-				number = phone.Number;
+				number = phone.GetValue();
 			} else
 				number = Items.Single ().GetValue();
 
 			return number;
 		}
 
-		protected async Task<Phone> ChooseItem(Page page)
+		protected async Task<T> ChooseItem(Page page)
 		{
-			var dict = new Dictionary<string, Phone> ();
+			var dict = new Dictionary<string, T> ();
 
 			foreach (var item in Items)
 				dict.Add (string.Format ("{0} : {1}", item.GetLabel(), item.GetValue()), item);
@@ -71,7 +71,7 @@ namespace SocialCapital
 				dict.Keys.ToArray());
 
 			if (label == AppResources.CancelButton)
-				return null;
+				return default(T);
 			else
 				return dict [label];
 		}

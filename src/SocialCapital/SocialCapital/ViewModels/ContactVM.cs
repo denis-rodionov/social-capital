@@ -28,6 +28,8 @@ namespace SocialCapital.ViewModels
 
 		public ICommand SmSWriteCommand { get; set; }
 
+		public ICommand WriteEmailCommand { get; set; }
+
 		#endregion
 
 		/// <summary>
@@ -48,6 +50,7 @@ namespace SocialCapital.ViewModels
 
 			CallCommand = new MakeCallCommand (Phones);
 			SmSWriteCommand = new SmsWriteCommand (Phones);
+			WriteEmailCommand = new EmailWriteCommand (Emails);
 		}
 
 		#region View Properties
@@ -109,6 +112,15 @@ namespace SocialCapital.ViewModels
 				if (phones == null)
 					phones = Database.GetContactPhones (SourceContact.Id);
 				return phones;
+			}
+		}
+
+		private IEnumerable<Email> emails = null;
+		public IEnumerable<Email> Emails { 
+			get {
+				if (emails == null)
+					emails = Database.GetContactEmails (SourceContact.Id);
+				return emails;
 			}
 		}
 

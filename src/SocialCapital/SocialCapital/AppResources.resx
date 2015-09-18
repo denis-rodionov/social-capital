@@ -114,4 +114,8 @@
 		<value>Выберите номер телефона</value>
 		<comment>В случае, если у контакта больше одного номера телефона, появляется всплывающая подсказка - какой номер выбрать</comment>
 	</data>
+	<data name="InviteToChooseEmail" xml:space="preserve">
+		<value>Выберите email-адрес</value>
+		<comment>В случае, если у email больше одного адреса, появляется всплывающая подсказка - какой email выбрать</comment>
+	</data>
 </root>

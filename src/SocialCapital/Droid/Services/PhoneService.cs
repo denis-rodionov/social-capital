@@ -18,7 +18,7 @@ namespace SocialCapital.Droid.Services
 			var intent = new Intent(Intent.ActionCall);
 			intent.SetData(Android.Net.Uri.Parse("tel:" + number));
 
-			StartIntent (intent);
+			return StartIntent (intent);
 		}
 
 		public bool WriteSmS(string number, string smsBody = "")
@@ -28,12 +28,12 @@ namespace SocialCapital.Droid.Services
 			var smsIntent = new Intent (Intent.ActionSendto, smsUri);
 
 			smsIntent.PutExtra ("sms_body", smsBody);  
-			StartIntent (smsIntent);
+			return StartIntent (smsIntent);
 		}
 
 		#endregion
 
-		static void StartIntent (Intent intent)
+		static bool StartIntent (Intent intent)
 		{
 			var context = Forms.Context;
 			if (context == null) {
