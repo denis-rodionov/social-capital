@@ -72,8 +72,11 @@ namespace SocialCapital.Data.Model
 		public IEnumerable<FieldValue> GetModifiedFields()
 		{
 			var res = new List<FieldValue> ();
-			for (int i = 0; i < 32; i++)
-				res.Add ((FieldValue)((1 << i) & ModifiedFields));
+			for (int i = 0; i < 32; i++) {
+				var field = (FieldValue)((1 << i) & ModifiedFields);
+				if (field != FieldValue.None)
+					res.Add (field);
+			}
 
 			return res;
 		}

@@ -21,7 +21,7 @@ namespace SocialCapital.ViewModels.Commands
 			if (number == string.Empty)
 				return;
 
-			DependencyService.Get<IPhoneService> ().Call (number);
+			DependencyService.Get<IPhoneService> ().WriteSmS (number);
 		}
 	}
 }

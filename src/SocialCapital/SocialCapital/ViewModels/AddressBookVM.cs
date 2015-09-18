@@ -74,7 +74,8 @@ namespace SocialCapital.ViewModels
 			var modifications = Database.GetContactModifications (m => m.Source == SyncSource.AddressBook && m.ModifiedAt > weekAgo);
 			var collection = modifications.GroupBy (
 				key => key.ModifiedAt,
-				(key, list) => new GroupVM<DateTime, ModificationVM> () { Group = key, Elements = list.Select(m => new ModificationVM(m)).ToList() });
+				(key, list) => new GroupVM<DateTime, ModificationVM> () { Group = key, Elements = list.Select(m => new ModificationVM(m)).ToList() })
+				.OrderByDescending(key => key.Group);
 
 			ModificationGroups = new ObservableCollection<GroupVM<DateTime, ModificationVM>> (collection);
 		}

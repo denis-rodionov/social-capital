@@ -12,9 +12,9 @@ namespace SocialCapital.ViewModels.Commands
 		{
 		}
 
-		protected override Task CommandAction(Page page)
+		protected override async Task CommandAction(Page page)
 		{
-			return null;
+			await GetValue (page);
 		}
 	}
 }
