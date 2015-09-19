@@ -11,13 +11,16 @@ using Android.OS;
 namespace SocialCapital.Droid
 {
 	[Activity (Label = "@string/app_name", 
-			   Icon = "@drawable/icon", 
+			   Icon = "@android:color/transparent", //"@drawable/icon", 
+			   Theme = "@android:style/Theme.Holo.Light",
 			   MainLauncher = true, 
 			   ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity :  global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
+			Log.GetLogger ().Log ("Android application starting...");
+
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);

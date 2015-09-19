@@ -8,7 +8,7 @@
 			 Title="{Binding FullName}"
 			 x:Name="page">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_white_36dp.png" />
+		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Resources>
@@ -32,17 +32,17 @@
 
 			<!-- Action -->
 			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-				<Button Image="ic_phone_white_48dp.png"
+				<Button Image="ic_phone_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBoolConverter}}"
 						Command="{Binding CallCommand}"
 						CommandParameter="{x:Reference page}" />
 
-				<Button Image="ic_textsms_white_48dp.png"
+				<Button Image="ic_textsms_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBoolConverter}}"	
 						Command="{Binding SmSWriteCommand}"
 						CommandParameter="{x:Reference page}" />
 
-				<Button Image="ic_email_white_48dp.png" 
+				<Button Image="ic_email_black_36dp.png" 
 						IsVisible="{Binding Path=Emails, Converter={StaticResource ListToBoolConverter}}"
 						Command="{Binding WriteEmailCommand}"
 						CommandParameter="{x:Reference page}" />
