@@ -134,7 +134,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Список людей.
+        ///   Ищет локализованную строку, похожую на Список Контактов.
         /// </summary>
         internal static string ContactListTitle {
             get {

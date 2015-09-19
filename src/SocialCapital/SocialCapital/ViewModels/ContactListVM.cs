@@ -20,6 +20,10 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref contacts, value); }
 		}
 
+		public int ContactsCount {
+			get { return Contacts.Count (); }
+		}
+
 		/// <summary>
 		/// String for filtering contact list
 		/// </summary>

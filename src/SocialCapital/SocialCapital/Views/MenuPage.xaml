@@ -30,17 +30,12 @@
 			</ListView.ItemsSource>
 			<libs:ListViewEx.ItemTemplate>
 				<DataTemplate>
-					<!--<ImageCell ImageSource="{Binding IconSource}" 
-							   Text="{Binding Title}"
-							   Command="{Binding Path=BindingContext.NavigateCommand, Source={x:Reference Name=page} }"
-							   CommandParameter="{Binding}" />-->
 					<ViewCell>
 						<StackLayout Orientation="Horizontal" >
 							<Image Source="{Binding IconSource}" />
 							<Label Text="{Binding Title}" VerticalOptions="Center" />
 						</StackLayout>
-					</ViewCell>
-							  
+					</ViewCell>		  
 				</DataTemplate>
 			</libs:ListViewEx.ItemTemplate>
 		</libs:ListViewEx>

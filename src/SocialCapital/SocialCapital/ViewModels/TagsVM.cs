@@ -46,6 +46,13 @@ namespace SocialCapital.ViewModels
 				});
 		}
 
+		public string TagList { 
+			get { 
+				//Tags.PropertyChanged += (sender, e) => { OnPropertyChanged(); };
+				return string.Join (",", Tags.Select(t => t.Name).ToArray ()); 
+			} 
+		}
+
 		public string SearchTag {
 			get { return searchTag; }
 			set {

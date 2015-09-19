@@ -56,7 +56,7 @@ namespace SocialCapital.ViewModels
 		#region View Properties
 
 		public string FullName {
-			get {return string.Format ("{0}: {1}", SourceContact.Id, SourceContact.DisplayName); }
+			get {return SourceContact.DisplayName; }
 			set {	
 				SourceContact.DisplayName = value;
 				OnPropertyChanged ();
@@ -68,20 +68,6 @@ namespace SocialCapital.ViewModels
 			set {
 				SourceContact.WorkPlace = value;
 				OnPropertyChanged ();
-			}
-		}
-
-		TagsVM tags = null;
-		public TagsVM Tags {
-			get {
-				if (tags == null)
-					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
-				return tags;
-			}
-			set 
-			{ 
-				SetProperty (ref tags, value);
-				OnPropertyChanged ("TagList");
 			}
 		}
 
@@ -98,12 +84,18 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public string TagList { 
-			get { 
-				Tags.PropertyChanged += (sender, e) => { OnPropertyChanged(); };
-				return string.Join (",", Tags.Tags.Select(t => t.Name).ToArray ()); 
-			} 
-
+		TagsVM tags = null;
+		public TagsVM Tags {
+			get {
+				if (tags == null)
+					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
+				return tags;
+			}
+			set 
+			{ 
+				SetProperty (ref tags, value);
+				OnPropertyChanged ("TagList");
+			}
 		}
 
 		private IEnumerable<Phone> phones = null;
@@ -148,7 +140,17 @@ namespace SocialCapital.ViewModels
 
 		private ImageSource GetAnonimusPhoto()
 		{
-			var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
+			return ImageSource.FromFile ("avatar_placeholder.gif");
+		}
+
+		/// <summary>
+		/// Gets the image from resource.
+		/// </summary>
+		/// <returns>The image from resource.</returns>
+		/// <param name="name">Name of resource. For instance: SocialCapital.Resources.generic_avatar.png</param>
+		private ImageSource GetImageFromResource(string name)
+		{
+			var tempImage = ResourceLoader.LoadFileFromResource (name);
 			var res = ImageSource.FromStream (() =>
 				new MemoryStream (tempImage));
 			return res;

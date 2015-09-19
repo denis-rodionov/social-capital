@@ -62,7 +62,7 @@ namespace SocialCapital.Droid.Services
 				Log.GetLogger().Log("Start geting contacts...");
 				//var raw = book.Where (GetFilter ()).Take (700).ToList ();
 
-				var countLimit = 20;
+				var countLimit = 10000;
 				RaiseCountCalculated (countLimit);
 
 				contacts = book.Take (countLimit).Select (bc => ConvertToContact (bc)).ToList ();

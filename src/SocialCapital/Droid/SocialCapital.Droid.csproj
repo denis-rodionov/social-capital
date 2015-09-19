@@ -135,6 +135,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\ic_people_black_36dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_settings_black_36dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_sync_black_36dp.png" />
+    <AndroidResource Include="Resources\drawable\avatar_placeholder.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
