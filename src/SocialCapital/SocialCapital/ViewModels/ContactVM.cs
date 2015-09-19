@@ -10,12 +10,13 @@ using System.ComponentModel;
 using SocialCapital.PhoneServices;
 using System.Windows.Input;
 using SocialCapital.ViewModels.Commands;
+using SocialCapital.Common;
 
 namespace SocialCapital.ViewModels
 {
 	public class ContactVM : ViewModelBase
 	{
-		private ImageSource anonimusPhoto = null;
+		private static ImageSource anonimusPhoto = null;
 
 		/// <summary>
 		/// Original copy of the contact
@@ -38,6 +39,8 @@ namespace SocialCapital.ViewModels
 		/// <param name="contact">Contact model</param>
 		public ContactVM (Contact contact)
 		{
+			//var timing = Timing.Start ("ContactVM.Constructor");
+
 			if (contact == null)
 				throw new ArgumentException ();
 
@@ -46,11 +49,14 @@ namespace SocialCapital.ViewModels
 
 			SourceContact = contact;
 
-			anonimusPhoto = GetAnonimusPhoto ();
+			if (anonimusPhoto == null)
+				anonimusPhoto = GetAnonimusPhoto ();
 
-			CallCommand = new MakeCallCommand (Phones);
-			SmSWriteCommand = new SmsWriteCommand (Phones);
-			WriteEmailCommand = new EmailWriteCommand (Emails);
+			CallCommand = new MakeCallCommand (() => Phones);
+			SmSWriteCommand = new SmsWriteCommand (() => Phones);
+			WriteEmailCommand = new EmailWriteCommand (() => Emails);
+
+			//timing.Finish (LogLevel.Trace);
 		}
 
 		#region View Properties

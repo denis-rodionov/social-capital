@@ -10,13 +10,13 @@ namespace SocialCapital
 {
 	public abstract class BaseContactCommand<T> : ICommand where T : ILabeled
 	{
-		public IEnumerable<T> Items { get; private set; }
+		public Func<IEnumerable<T>> ItemsProvider { get; private set; }
 
 		public string UserInvite { get; private set; }
 
-		public BaseContactCommand (IEnumerable<T> items, string userInviteString)
+		public BaseContactCommand (Func<IEnumerable<T>> itemsProvider, string userInviteString)
 		{
-			Items = items;
+			ItemsProvider = itemsProvider;
 			UserInvite = userInviteString;
 		}
 
@@ -26,7 +26,7 @@ namespace SocialCapital
 
 		public bool CanExecute (object parameter)
 		{
-			return Items.Count () != 0;
+			return ItemsProvider().Count () != 0;
 		}
 
 		public async void Execute (object parameter)
@@ -41,11 +41,13 @@ namespace SocialCapital
 
 		protected async Task<string> GetValue(Page page)
 		{
-			if (Items == null || Items.Count () == 0)
+			var items = ItemsProvider ();
+
+			if (items == null || items.Count () == 0)
 				throw new Exception ("Contact does not have a phone number");
 
 			string number;
-			if (Items.Count () > 1) {
+			if (items.Count () > 1) {
 				var phone = await ChooseItem (page);
 
 				if (phone == null)	// user canceled operation
@@ -53,16 +55,17 @@ namespace SocialCapital
 
 				number = phone.GetValue();
 			} else
-				number = Items.Single ().GetValue();
+				number = items.Single ().GetValue();
 
 			return number;
 		}
 
 		protected async Task<T> ChooseItem(Page page)
 		{
+			var items = ItemsProvider ();
 			var dict = new Dictionary<string, T> ();
 
-			foreach (var item in Items)
+			foreach (var item in items)
 				dict.Add (string.Format ("{0} : {1}", item.GetLabel(), item.GetValue()), item);
 
 			var label = await page.DisplayActionSheet (UserInvite, 

@@ -8,7 +8,7 @@ namespace SocialCapital.ViewModels.Commands
 {
 	public class EmailWriteCommand : BaseContactCommand<Email>
 	{
-		public EmailWriteCommand (IEnumerable<Email> emails) : base(emails, AppResources.InviteToChooseEmail)
+		public EmailWriteCommand (Func<IEnumerable<Email>> emailsProvider) : base(emailsProvider, AppResources.InviteToChooseEmail)
 		{
 		}
 

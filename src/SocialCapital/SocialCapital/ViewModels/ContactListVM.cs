@@ -6,6 +6,7 @@ using SocialCapital.Data.Model;
 using SocialCapital.Data;
 using Xamarin.Forms;
 using SocialCapital.AddressBookImport;
+using SocialCapital.Common;
 
 namespace SocialCapital.ViewModels
 {
@@ -16,7 +17,7 @@ namespace SocialCapital.ViewModels
 		/// </summary>
 		IEnumerable<ContactVM> contacts;
 		public IEnumerable<ContactVM> Contacts { 
-			get { return contacts.Where(c => c.SourceContact.DisplayName.Contains(Filter.ToLowerInvariant())); }
+			get { return contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(Filter.ToLowerInvariant())); }
 			set { SetProperty (ref contacts, value); }
 		}
 
@@ -38,10 +39,14 @@ namespace SocialCapital.ViewModels
 			
 		public ContactListVM ()
 		{
+			var timing = Timing.Start ("ContactListVM constructor");
+
 			var manager = new ContactManager ();
 			var contacts = manager.Contacts .ToList ();
 
 			Contacts = new ObservableCollection<ContactVM> (contacts.Select(c => new ContactVM(c)));
+
+			timing.Finish (LogLevel.Trace);
 		}
 
 

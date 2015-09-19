@@ -11,7 +11,7 @@ namespace SocialCapital.ViewModels.Commands
 {
 	public class MakeCallCommand : BaseContactCommand<Phone>
 	{
-		public MakeCallCommand (IEnumerable<Phone> phones) : base(phones, AppResources.InviteToChoosePhoneNumber)
+		public MakeCallCommand (Func<IEnumerable<Phone>> phoneProvider) : base(phoneProvider, AppResources.InviteToChoosePhoneNumber)
 		{
 		}
 

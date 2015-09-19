@@ -9,7 +9,7 @@ namespace SocialCapital.ViewModels.Commands
 {
 	public class SmsWriteCommand : BaseContactCommand<Phone>
 	{
-		public SmsWriteCommand (IEnumerable<Phone> phones) : base(phones, AppResources.InviteToChoosePhoneNumber)
+		public SmsWriteCommand (Func<IEnumerable<Phone>> phonesProvider) : base(phonesProvider, AppResources.InviteToChoosePhoneNumber)
 		{
 		}
 
