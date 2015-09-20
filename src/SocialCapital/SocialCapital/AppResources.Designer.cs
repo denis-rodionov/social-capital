@@ -125,6 +125,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Нет истории контакта.
+        /// </summary>
+        internal static string CommunicationHistoryIsEmpty {
+            get {
+                return ResourceManager.GetString("CommunicationHistoryIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Редактирование контакта.
         /// </summary>
         internal static string ContactEditTitle {
@@ -220,6 +229,15 @@ namespace SocialCapital {
         internal static string InviteToChoosePhoneNumber {
             get {
                 return ResourceManager.GetString("InviteToChoosePhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на История:.
+        /// </summary>
+        internal static string LastContactCommunicationHeader {
+            get {
+                return ResourceManager.GetString("LastContactCommunicationHeader", resourceCulture);
             }
         }
         

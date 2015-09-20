@@ -3,6 +3,7 @@ using SQLite;
 using SQLite.Net;
 using Xamarin.Forms;
 using SocialCapital.Data.Model;
+using SocialCapital.Common;
 
 namespace SocialCapital.Data
 {
@@ -22,9 +23,12 @@ namespace SocialCapital.Data
 			{
 				if (connection == null)
 				{
+					var timing = Timing.Start("DataContext  Init");
 					connection = DependencyService.Get<ISQLite> ().GetConnection ();
 
 					InitDatabase();
+
+					timing.Finish(LogLevel.Trace);
 				}
 			}
 			catch (Exception ex) 
@@ -45,6 +49,7 @@ namespace SocialCapital.Data
 			connection.CreateTable<Address> ();
 			connection.CreateTable<Config> ();
 			connection.CreateTable<ContactModification> ();
+			connection.CreateTable<CommunicationHistory> ();
 		}
 
 		public void ClearDatabase()

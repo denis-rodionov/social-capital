@@ -14,11 +14,12 @@
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<converters:ListToBoolConverter x:Key="ListToBoolConverter" />
+			<converters:CommunicationToImageConverter x:Key="CommunicationToImage" />
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
 	<ContentPage.Content>		
-		<StackLayout Orientation="Vertical" >
+		<StackLayout Orientation="Vertical" HorizontalOptions="Start" >
 			<!-- Header -->
 			<StackLayout Orientation="Horizontal">
 				<Image WidthRequest="100" Source="{Binding PhotoImage}" />
@@ -30,23 +31,54 @@
 				</StackLayout>
 			</StackLayout>
 
-			<!-- Action -->
-			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+
+			<!-- Action buttons -->
+
+			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">						
 				<Button Image="ic_phone_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBoolConverter}}"
 						Command="{Binding CallCommand}"
 						CommandParameter="{x:Reference page}" />
-
 				<Button Image="ic_textsms_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBoolConverter}}"	
 						Command="{Binding SmSWriteCommand}"
 						CommandParameter="{x:Reference page}" />
-
 				<Button Image="ic_email_black_36dp.png" 
 						IsVisible="{Binding Path=Emails, Converter={StaticResource ListToBoolConverter}}"
 						Command="{Binding WriteEmailCommand}"
 						CommandParameter="{x:Reference page}" />
 			</StackLayout>
+
+			<!-- History -->
+			<Label Text="{i18n:Translate LastContactCommunicationHeader}" 
+				   IsVisible="{Binding Path=History, Converter={StaticResource ListToBoolConverter}}" />
+			<ListView ItemsSource="{Binding History}" 
+					  IsVisible="{Binding Path=History, Converter={StaticResource ListToBoolConverter}}"
+					  HasUnevenRows="true">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Grid>
+								<Grid.RowDefinitions >
+									<RowDefinition Height="*"/>
+								</Grid.RowDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="25" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<Image Source="{Binding Path=Type, Converter={StaticResource CommunicationToImage}}"
+									   Grid.Column="0"
+									   Aspect="AspectFit" />
+								<Label Text="{Binding Time}"
+									   Grid.Column="1" />
+							</Grid>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<!--<Label Text="123" />-->
+			<Label Text="{i18n:Translate CommunicationHistoryIsEmpty}" 
+				   IsVisible="{Binding Path=History, Converter={StaticResource ListToBoolConverter}, ConverterParameter=true}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

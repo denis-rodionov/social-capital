@@ -11,11 +11,9 @@
 			<SearchBar Text="{Binding Filter}" />
 			<ListView x:Name="contactListView" 
 				      ItemsSource = "{Binding Contacts}"
-				      RowHeight="85">
+				      RowHeight="60">
 				<ListView.ItemTemplate>
-
 					<DataTemplate>
-
 						<ImageCell  Tapped="OnItemSelected"
 								    ImageSource="{Binding PhotoImage}" 
 								    Text="{Binding FullName}" 

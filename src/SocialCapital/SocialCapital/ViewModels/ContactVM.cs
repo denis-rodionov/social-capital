@@ -52,11 +52,27 @@ namespace SocialCapital.ViewModels
 			if (anonimusPhoto == null)
 				anonimusPhoto = GetAnonimusPhoto ();
 
-			CallCommand = new MakeCallCommand (() => Phones);
-			SmSWriteCommand = new SmsWriteCommand (() => Phones);
-			WriteEmailCommand = new EmailWriteCommand (() => Emails);
+			InitCommands ();
 
 			//timing.Finish (LogLevel.Trace);
+		}
+
+		void InitCommands ()
+		{
+			CallCommand = new MakeCallCommand (SourceContact, () => Phones);
+			(CallCommand as MakeCallCommand).CommandExecuted += () => {
+				History = null;
+			};
+				
+			SmSWriteCommand = new SmsWriteCommand (SourceContact, () => Phones);
+			(SmSWriteCommand as SmsWriteCommand).CommandExecuted += () => {
+				History = null;
+			};
+				
+			WriteEmailCommand = new EmailWriteCommand (SourceContact, () => Emails);
+			(WriteEmailCommand as EmailWriteCommand).CommandExecuted += () => {
+				History = null;
+			};
 		}
 
 		#region View Properties
@@ -122,7 +138,17 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-            		#endregion
+		private IEnumerable<CommunicationHistory> history = null;
+		public IEnumerable<CommunicationHistory> History {
+			get {
+				if (history == null)
+					history = Database.GetContactCommunications ((c) => c.ContactId == SourceContact.Id);
+				return history;
+			}
+			set { SetProperty (ref history, value); }
+		}
+
+        #endregion
 
 
 		public void Save()

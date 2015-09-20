@@ -182,6 +182,14 @@ namespace SocialCapital.Data
 			}
 		}
 
+		public IEnumerable<CommunicationHistory> GetContactCommunications(Func<CommunicationHistory, bool> filter)
+		{
+			using (var db = new DataContext ())
+			{
+				return db.Connection.Table<CommunicationHistory> ().Where (filter).ToList ();
+			}
+		}
+
 		#endregion
 
 		#region Save/Update methods
@@ -294,6 +302,19 @@ namespace SocialCapital.Data
 					throw new ContactManagerException ("Inserterd modification cannot has Id=0");
 
 				return modification;
+			}
+		}
+
+		public int SaveNewCommunication(CommunicationHistory communication)
+		{
+			using (var db = new DataContext ())
+			{
+				db.Connection.Insert (communication);
+
+				if (communication.Id == 0)
+					throw new ContactManagerException ("Cannot save communication: Id = 0");
+
+				return communication.Id;
 			}
 		}
 

@@ -63,8 +63,6 @@ namespace SocialCapital.Views.Controls
 		public TagList ()
 		{
 			InitializeComponent ();
-
-			//BindingContextChanged += (object sender, EventArgs e) => BindingContextChangedHandler(sender, e);
 		}
 
 		public TagsVM Tags { 
@@ -103,11 +101,12 @@ namespace SocialCapital.Views.Controls
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
 			
-			newTags.Tags.CollectionChanged += (s, ev) => {
-				InitLayout (LayoutType);
-				Fill (newTags);
-			};
+			//newTags.Tags.CollectionChanged += (s, ev) => {
+			//	InitLayout (LayoutType);
+			//	Fill (newTags);
+			//};
 
+			InitLayout (LayoutType);
 			Fill (newTags);
 		}
 

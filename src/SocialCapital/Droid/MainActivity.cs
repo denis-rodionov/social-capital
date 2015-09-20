@@ -11,7 +11,7 @@ using Android.OS;
 namespace SocialCapital.Droid
 {
 	[Activity (Label = "@string/app_name", 
-			   Icon = "@android:color/transparent", //"@drawable/icon", 
+			   Icon = "@drawable/icon", 
 			   Theme = "@android:style/Theme.Holo.Light",
 			   MainLauncher = true, 
 			   ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]

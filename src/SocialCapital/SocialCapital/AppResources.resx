@@ -118,4 +118,12 @@
 		<value>Выберите email-адрес</value>
 		<comment>В случае, если у email больше одного адреса, появляется всплывающая подсказка - какой email выбрать</comment>
 	</data>
+	<data name="CommunicationHistoryIsEmpty" xml:space="preserve">
+		<value>Нет истории контакта</value>
+		<comment>Надпись, отображаемая в случае, когда по контакту отсутствует история звонков, смс и проч. взаимодействий</comment>
+	</data>
+	<data name="LastContactCommunicationHeader" xml:space="preserve">
+		<value>История:</value>
+		<comment>Заголовок отображаемый над списком истории коммуникаций на странице контакта</comment>
+	</data>
 </root>

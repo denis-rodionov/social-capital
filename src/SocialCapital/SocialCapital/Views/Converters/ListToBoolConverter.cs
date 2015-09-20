@@ -13,9 +13,15 @@ namespace SocialCapital.Views.Converters
 		{
 			if (value == null)
 				return false;
+
+			var not = false;
+			if (parameter != null)
+				not = bool.Parse ((string)parameter);
 			
 			var count = Count (value as IEnumerable);
-			return count != 0;
+			var res = (count != 0);
+
+			return not ? !res : res;
 		}
 		public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{

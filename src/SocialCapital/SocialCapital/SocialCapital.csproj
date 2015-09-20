@@ -121,6 +121,9 @@
     <Compile Include="ViewModels\Commands\BaseContactCommand.cs" />
     <Compile Include="Data\Model\Enums\ILabeled.cs" />
     <Compile Include="Views\Libs\ListViewEx.cs" />
+    <Compile Include="Data\Model\CommunicationHistory.cs" />
+    <Compile Include="Data\Model\Enums\CommunicationType.cs" />
+    <Compile Include="Views\Converters\CommunicationToImageConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -199,7 +202,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="MSBuild" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="MSBuild" />
         </Policies>
       </Properties>
     </MonoDevelop>
