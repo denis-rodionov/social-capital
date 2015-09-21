@@ -3,6 +3,7 @@ using System.Reflection;
 using Xamarin.Forms;
 using SocialCapital.Data;
 using SocialCapital.Views;
+using SocialCapital.Logging;
 
 namespace SocialCapital 
 {
@@ -12,13 +13,13 @@ namespace SocialCapital
 
 		public App ()
 		{
-			Log.GetLogger ().Log ("Application starting......");
+			//Log.GetLogger ().Log ("Application starting......");
 
 			if (Device.OS != TargetPlatform.WinPhone) {
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
-		    //new DataContext ().ClearDatabase ();
+		   	DataContext.InitDatabase ();
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 

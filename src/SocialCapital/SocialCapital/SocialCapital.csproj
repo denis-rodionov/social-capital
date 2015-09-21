@@ -35,7 +35,6 @@
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\ICrossPlatformLogger.cs" />
-    <Compile Include="Logging\UniversalLogger.cs" />
     <Compile Include="Data\Model\Contact.cs" />
     <Compile Include="Views\ContactListPage.xaml.cs">
       <DependentUpon>ContactListPage.xaml</DependentUpon>
@@ -124,6 +123,14 @@
     <Compile Include="Data\Model\CommunicationHistory.cs" />
     <Compile Include="Data\Model\Enums\CommunicationType.cs" />
     <Compile Include="Views\Converters\CommunicationToImageConverter.cs" />
+    <Compile Include="Logging\ComboLogger.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\DatabaseLogger.cs" />
+    <Compile Include="Data\Model\LogMessage.cs" />
+    <Compile Include="Views\LogPage.xaml.cs">
+      <DependentUpon>LogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\LogViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -195,6 +202,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LogPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

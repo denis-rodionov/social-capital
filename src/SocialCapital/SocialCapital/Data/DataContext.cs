@@ -4,6 +4,10 @@ using SQLite.Net;
 using Xamarin.Forms;
 using SocialCapital.Data.Model;
 using SocialCapital.Common;
+using System.Linq;
+using System.Collections.Generic;
+using SocialCapital.Logging;
+using System.Threading;
 
 namespace SocialCapital.Data
 {
@@ -12,6 +16,7 @@ namespace SocialCapital.Data
 		private static object locker = new object();
 
 		private static SQLiteConnection connection;
+		private static Mutex mutex;
 
 		public SQLiteConnection Connection { get { return connection; } }
 
@@ -23,13 +28,11 @@ namespace SocialCapital.Data
 			{
 				if (connection == null)
 				{
-					var timing = Timing.Start("DataContext  Init");
 					connection = DependencyService.Get<ISQLite> ().GetConnection ();
-
-					InitDatabase();
-
-					timing.Finish(LogLevel.Trace);
+					mutex = new Mutex(false);
 				}
+
+				mutex.WaitOne();
 			}
 			catch (Exception ex) 
 			{
@@ -37,43 +40,60 @@ namespace SocialCapital.Data
 			}
 		}
 
-		public void InitDatabase()
+		public static void InitDatabase()
 		{
-			Log.GetLogger ().Log ("Creating tables...");
-			connection.CreateTable<Contact> ();
-			connection.CreateTable<Tag> ();
-			connection.CreateTable<ContactTag> ();
-			connection.CreateTable<Frequency> ();
-			connection.CreateTable<Phone> ();
-			connection.CreateTable<Email> ();
-			connection.CreateTable<Address> ();
-			connection.CreateTable<Config> ();
-			connection.CreateTable<ContactModification> ();
-			connection.CreateTable<CommunicationHistory> ();
+			using (var db = new DataContext ())
+			{
+				db.Connection.CreateTable<Contact> ();
+				db.Connection.CreateTable<Tag> ();
+				db.Connection.CreateTable<ContactTag> ();
+				db.Connection.CreateTable<Frequency> ();
+				db.Connection.CreateTable<Phone> ();
+				db.Connection.CreateTable<Email> ();
+				db.Connection.CreateTable<Address> ();
+				db.Connection.CreateTable<Config> ();
+				db.Connection.CreateTable<ContactModification> ();
+				db.Connection.CreateTable<CommunicationHistory> ();
+				db.Connection.CreateTable<LogMessage> ();
+			}
 		}
 
-		public void ClearDatabase()
+		public static void ClearDatabase()
 		{
-			connection.DeleteAll<Contact> ();
-			connection.DeleteAll<Tag> ();
-			connection.DeleteAll<ContactTag> ();
-			connection.DeleteAll<Frequency> ();
-			connection.DeleteAll<Phone> ();
-			connection.DeleteAll<Email> ();
-			connection.DeleteAll<Address> ();
-			connection.DeleteAll<Config> ();
-			connection.DeleteAll<ContactModification> ();
+			using (var db = new DataContext ())
+			{
+				db.Connection.DeleteAll<Contact> ();
+				db.Connection.DeleteAll<Tag> ();
+				db.Connection.DeleteAll<ContactTag> ();
+				db.Connection.DeleteAll<Frequency> ();
+				db.Connection.DeleteAll<Phone> ();
+				db.Connection.DeleteAll<Email> ();
+				db.Connection.DeleteAll<Address> ();
+				db.Connection.DeleteAll<Config> ();
+				db.Connection.DeleteAll<ContactModification> ();
+				db.Connection.DeleteAll<CommunicationHistory> ();
+				db.Connection.DeleteAll<LogMessage> ();
+			}
+		}
+
+		public static IEnumerable<LogMessage> GetLogs()
+		{
+			using (var db = new DataContext())
+			{
+				return db.Connection.Table<LogMessage>().ToList();
+			}
 		}
 
 		#endregion
-
 
 		#region IDisposable implementation
 		public void Dispose ()
 		{
-			
+			mutex.ReleaseMutex ();
 		}
 		#endregion
+
+
 	}
 }
 

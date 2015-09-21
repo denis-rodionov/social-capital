@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace SocialCapital
 {
-	public class UniversalLogger : ICrossPlatformLogger
+	public class DebugLogger : ICrossPlatformLogger
 	{
-		public UniversalLogger ()
+		public DebugLogger ()
 		{
 		}
 

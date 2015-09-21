@@ -10,7 +10,7 @@ namespace SocialCapital.Common
 
 	public class Timing
 	{
-		public static Dictionary<string, TimingStatiestics> Statistics = new Dictionary<string, TimingStatiestics>();
+		public static Dictionary<string, TimingStatiestics> Statistics;
 
 		public DateTime StartTime { get; private set; }
 
@@ -18,7 +18,11 @@ namespace SocialCapital.Common
 
 		public TimeSpan OperationTime { get; private set; }
 
-		private Timing() { }
+		private Timing() 
+		{
+			if (Statistics == null)
+				Statistics = new Dictionary<string, TimingStatiestics> ();
+		}
 
 		public static Timing Start(string operationName) {
 			return new Timing () { 

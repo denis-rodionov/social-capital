@@ -3,6 +3,9 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			x:Class="SocialCapital.Views.SettingsPage">
 	<ContentPage.Content>
-		<Button Text="Erase database" HorizontalOptions="CenterAndExpand" Command="{Binding Erace}" />
+		<StackLayout Orientation="Vertical">
+			<Button Text="Erase database" HorizontalOptions="CenterAndExpand" Clicked="OnErase" />
+			<Button Text="Log messages" HorizontalOptions="Center" Clicked="OnShowLogs" />
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

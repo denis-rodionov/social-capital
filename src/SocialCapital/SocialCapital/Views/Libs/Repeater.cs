@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using SocialCapital.Logging;
 
 namespace SocialCapital.Views.Libs
 {

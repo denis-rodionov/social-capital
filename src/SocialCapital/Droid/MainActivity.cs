@@ -19,13 +19,22 @@ namespace SocialCapital.Droid
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
-			Log.GetLogger ().Log ("Android application starting...");
+			//Log.GetLogger ().Log ("Android application starting...");
+
+			// https://forums.xamarin.com/discussion/13784/catching-global-exceptions-in-android
+			AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
 			LoadApplication (new App ());
+		}
+
+		private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+		{
+			Log.GetLogger ().Log ("Unhandled exception catched:", LogLevel.Critical);
+			Log.GetLogger ().Log (args.ExceptionObject as Exception);
 		}
 	}
 }
