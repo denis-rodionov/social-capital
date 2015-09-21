@@ -10,6 +10,7 @@ using System.Threading;
 using SocialCapital.Data;
 using SocialCapital.Data.Model;
 using SocialCapital.Data.Synchronization;
+using SocialCapital.Common;
 
 namespace SocialCapital.ViewModels
 {
@@ -50,7 +51,16 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref progress, value); }
 		}
 
-		public ObservableCollection<GroupVM<DateTime, ModificationVM>> ModificationGroups { get; private set; }
+		/// <summary>
+		/// Imported history
+		/// </summary>
+		private ObservableCollection<GroupVM<DateTime, ModificationVM>> modificationGroups = 
+			new ObservableCollection<GroupVM<DateTime, ModificationVM>>();
+		public ObservableCollection<GroupVM<DateTime, ModificationVM>> ModificationGroups 
+		{ 
+			get { return modificationGroups; }
+			private set { SetProperty (ref modificationGroups, value); }
+		}
 
 		#endregion
 
@@ -65,17 +75,28 @@ namespace SocialCapital.ViewModels
 			InitStatus ();
 			StartImport = new Command (Import);
 
-			InitContactList ();
+			Task.Run (() => InitContactList ());
 		}
 
 		void InitContactList()
 		{
 			var weekAgo = DateTime.Now - TimeSpan.FromDays (7);
-			var modifications = Database.GetContactModifications (m => m.Source == SyncSource.AddressBook && m.ModifiedAt > weekAgo);
-			var collection = modifications.GroupBy (
-				key => key.ModifiedAt,
-				(key, list) => new GroupVM<DateTime, ModificationVM> () { Group = key, Elements = list.Select(m => new ModificationVM(m)).ToList() })
-				.OrderByDescending(key => key.Group);
+			var modifications = Database.GetContactModifications (m => 
+				m.Source == SyncSource.AddressBook && m.ModifiedAt > weekAgo);
+
+			var timing = Timing.Start ("InitContactList");
+
+			var collection = modifications
+				.GroupBy (
+	                 key => key.ModifiedAt,
+	                 (key, list) => new GroupVM<DateTime, ModificationVM> () { 
+						Group = key, 
+						Elements = list.Take (10).Select (m => new ModificationVM (m)).ToList ()
+				})
+				.OrderByDescending(key => key.Group)
+				.ToList ();
+
+			timing.Finish ();
 
 			ModificationGroups = new ObservableCollection<GroupVM<DateTime, ModificationVM>> (collection);
 		}
@@ -146,19 +167,19 @@ namespace SocialCapital.ViewModels
 
 		private void ImportFinished(GroupVM<DateTime, ModificationVM> importResult)
 		{
-			UpdateStatus (importResult.Group);
+			UpdateStatus (importResult.Group, importResult.Count());
 			ImportProgress = 0;
 
 			if (importResult.Elements.Any())
 				ModificationGroups.Insert (0, importResult);
 		}
 
-		void UpdateStatus (DateTime updateTime)
+		void UpdateStatus (DateTime updateTime, int syncCount)
 		{
 			lastImportTime = updateTime;
 			new Settings ().LastAddressBookImportTime = lastImportTime;
 
-			Status = string.Format ("{0}: {1}", AppResources.AddressBookSynchStatus, lastImportTime);
+			Status = string.Format ("{0}({1}): {2}", AppResources.AddressBookSynchStatus, syncCount, lastImportTime);
 		}
 
 		#endregion

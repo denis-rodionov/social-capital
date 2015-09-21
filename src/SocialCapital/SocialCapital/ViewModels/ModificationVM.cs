@@ -1,6 +1,7 @@
 ﻿using System;
 using SocialCapital.Data.Model;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SocialCapital.ViewModels
 {
@@ -15,7 +16,11 @@ namespace SocialCapital.ViewModels
 
 		public ContactModification Modification { get; private set; }
 
-		public string ContactName { get; private set; }
+		string contactName = "";
+		public string ContactName { 
+			get { return contactName; }
+			set { SetProperty (ref contactName, value); }
+		}
 
 		public string Status {
 			get {
