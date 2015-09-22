@@ -47,6 +47,31 @@ namespace SocialCapital.Data.Model
 					Label == other.Label;
 		}
 
+		public static bool operator== (Address addr1, Address addr2)
+		{
+			bool rc;
+
+			if (System.Object.ReferenceEquals(addr1, addr2))
+			{
+				rc = true;
+			}
+			else if (((object)addr1 == null) || ((object)addr2 == null))
+			{
+				rc = false;
+			}
+			else
+			{
+				rc = addr1.Equals(addr2);
+			}
+
+			return rc;
+		}
+
+		public static bool operator!= (Address addr1, Address addr2)
+		{
+			return !(addr1 == addr2);
+		}
+
 		public override int GetHashCode ()
 		{
 			return (Country + City + Region + StreetAddress + PostalCode + Label).GetHashCode ();

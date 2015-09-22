@@ -47,7 +47,6 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<!--<ActivityIndicator IsVisible="{Binding Path=ModificationGroups, Converter={StaticResource ListToBool}}" />-->
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

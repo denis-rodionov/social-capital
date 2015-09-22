@@ -82,6 +82,9 @@ namespace SocialCapital.Data.Synchronization
 				res.Add (FieldValue.Phones);
 			if (!ListEqual (contactConverter.GetEmails (), db.GetContactEmails (contactConverter.DatabaseContactId)))
 				res.Add (FieldValue.Emails);
+
+			var dbAddress = db.GetContactAddress (contactConverter.DatabaseContactId);
+			var convertAddress = contactConverter.GetAddress (); 
 			if (contactConverter.GetAddress () != db.GetContactAddress (contactConverter.DatabaseContactId))
 				res.Add (FieldValue.Address);
 

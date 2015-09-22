@@ -15,6 +15,15 @@ namespace SocialCapital.Data
 
 	public class ContactManager : IDisposable
 	{
+		#region Cache
+
+		private static IEnumerable<Contact> ContactsCache = null;
+		private static IEnumerable<Phone> PhoneCache = null;
+		private static IEnumerable<Email> EmailCache = null;
+
+		#endregion
+
+
 		#region Contact database init
 
 		public ContactManager ()
@@ -147,12 +156,16 @@ namespace SocialCapital.Data
 		{
 			if (contactId == 0)
 				throw new ArgumentException ("contactId cannot be 0");
+
+			if (PhoneCache == null)
+				RefreshCache (ref PhoneCache);
+
+			return PhoneCache.Where (p => p.ContactId == contactId);
 			
-			using (var db = new DataContext ()) {
-				var res = db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
-				var debug = db.Connection.Table<Phone> ().ToList ();
-				return res;
-			}
+//			using (var db = new DataContext ()) {
+//				var res = db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
+//				return res;
+//			}
 		}
 
 		public IEnumerable<Email> GetContactEmails(int contactId)
@@ -160,9 +173,14 @@ namespace SocialCapital.Data
 			if (contactId == 0)
 				throw new ArgumentException ("contactId cannot be 0");
 
-			using (var db = new DataContext ()) {
-				return db.Connection.Table<Email> ().Where (p => p.ContactId == contactId).ToList ();
-			}
+			if (EmailCache == null)
+				RefreshCache (ref EmailCache);
+
+			return EmailCache.Where (p => p.ContactId == contactId);
+
+//			using (var db = new DataContext ()) {
+//				return db.Connection.Table<Email> ().Where (p => p.ContactId == contactId).ToList ();
+//			}
 		}
 
 		public Address GetContactAddress(int contactId)
@@ -276,7 +294,7 @@ namespace SocialCapital.Data
 						case FieldValue.Phones:
 							UpdateContactList<Phone> (contactConverter.GetPhones (), 
 								db, 
-								p => p.ContactId == contactConverter.DatabaseContactId);
+								p => p.ContactId == contactConverter.DatabaseContactId);							
 							break;
 						case FieldValue.Emails:
 							UpdateContactList<Email> (contactConverter.GetEmails (), 
@@ -284,7 +302,7 @@ namespace SocialCapital.Data
 								p => p.ContactId == contactConverter.DatabaseContactId);
 							break;
 					case FieldValue.Address:
-							SaveOrUpdate (contactConverter.GetAddress (), contactConverter.DatabaseContactId, db);
+							SaveOrUpdateAddress (contactConverter.GetAddress (), contactConverter.DatabaseContactId, db);
 							break;
 						default: 
 						throw new ContactManagerException (string.Format ("Unknown field '{0}' to update", field));
@@ -322,16 +340,25 @@ namespace SocialCapital.Data
 
 		#region Implementation
 
-		private T SaveOrUpdate<T>(T item, int contactId, DataContext db) where T : class
+		private void RefreshCache<T>(ref IEnumerable<T> cache) where T : class
 		{
-			var dbItem = db.Connection.Table<T> ().SingleOrDefault ();
-			T res;
+			using (var db = new DataContext ())
+			{
+				cache = db.Connection.Table<T> ().ToList ();
+			}
+
+			Log.GetLogger ().Log ("Cache updated for " + typeof(T));
+		}
+
+		private Address SaveOrUpdateAddress(Address item, int contactId, DataContext db) 
+		{
+			var dbItem = db.Connection.Table<Address> ().SingleOrDefault (c => c.ContactId == contactId);
+			Address res = item;
 
 			if (dbItem == null) {
-				res = item;
 				db.Connection.Insert (res);
 			} else {
-				res = dbItem;
+				res.Id = dbItem.Id;
 				db.Connection.Update (res);
 			}
 

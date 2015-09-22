@@ -58,7 +58,7 @@ namespace SocialCapital.AddressBookImport
 			service.ContactsCountCalculated -= ContactCountCalcylated;
 			service.ContactRetrieved -= ContactRetrieved;
 
-			var b = abContacts.Where (c => c.DisplayName == "Баланс").ToList (); 
+			//var b = abContacts.Where (c => c.DisplayName == "Баланс").ToList (); 
 
 			timing.Finish ();
 

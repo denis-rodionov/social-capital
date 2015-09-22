@@ -62,11 +62,10 @@ namespace SocialCapital.Droid.Services
 				Log.GetLogger().Log("Start geting contacts...");
 				//var raw = book.Where (GetFilter ()).Take (700).ToList ();
 
-				var countLimit = 10000;
+				var countLimit = book.Count ();
 				RaiseCountCalculated (countLimit);
 
 				contacts = book.Take (countLimit).Select (bc => ConvertToContact (bc)).ToList ();
-
 
 				//foreach (Contact contact in bookContacts)
 				//{
@@ -102,7 +101,7 @@ namespace SocialCapital.Droid.Services
 				MiddleName = contact.MiddleName,
 				DisplayName = contact.DisplayName,
 				NickName = contact.Nickname,
-				Thumbnail = GetImageArray (contact.GetThumbnail ()),
+				Thumbnail = null,//GetImageArray (contact.GetThumbnail ()),
 				IsAggregate = contact.IsAggregate,
 				Prefix = contact.Prefix,
 				Suffix = contact.Suffix,
