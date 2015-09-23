@@ -126,4 +126,16 @@
 		<value>История:</value>
 		<comment>Заголовок отображаемый над списком истории коммуникаций на странице контакта</comment>
 	</data>
+	<data name="TimeFormat_JustNow" xml:space="preserve">
+		<value>Только что</value>
+		<comment>формат отображение времени (если событие приизошло не ранее минуты)</comment>
+	</data>
+	<data name="TimeFormat_OneMinuteAgo" xml:space="preserve">
+		<value>минуту назад</value>
+		<comment>формат отображение времени (если 1, 21, 31... минуту назад)</comment>
+	</data>
+	<data name="TimeFormat_JustNow" xml:space="preserve">
+		<value>минуту назад</value>
+		<comment>формат отображение времени (если 1, 21, 31... минуту назад)</comment>
+	</data>
 </root>

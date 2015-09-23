@@ -23,7 +23,6 @@ namespace SocialCapital.Data
 
 		#endregion
 
-
 		#region Contact database init
 
 		public ContactManager ()

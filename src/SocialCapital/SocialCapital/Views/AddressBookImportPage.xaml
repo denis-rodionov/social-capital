@@ -2,16 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			 xmlns:converters="clr-namespace:SocialCapital.Views.Converters;assembly=SocialCapital"
 			 x:Class = "SocialCapital.Views.AddressBookImportPage"
 			 Title = "{i18n:Translate AddressBookMenuItemTitle}">
 
 	<ContentPage.Resources>
-    	<ResourceDictionary>
-        	<converters:NegateBooleanConverter x:Key="not" />
-        	<converters:ContactToStatusConverter x:Key="StatusConverter" />
-        	<converters:ListToBoolConverter x:Key="ListToBool" />
-    	</ResourceDictionary>
+    	
 	</ContentPage.Resources>
 
 	<ContentPage.Content>
@@ -30,7 +25,7 @@
 					  IsGroupingEnabled="true">
 				<ListView.GroupHeaderTemplate>
 					<DataTemplate>
-						<TextCell Text="{Binding Group}" />
+						<TextCell Text="{Binding Path=Group, Converter={StaticResource DateTimeCustom}}" />
 					</DataTemplate>
 				</ListView.GroupHeaderTemplate>
 				<ListView.ItemTemplate>

@@ -7,19 +7,20 @@ using SocialCapital.Logging;
 
 namespace SocialCapital 
 {
-	public class App : Application
+	public partial class App : Application
 	{
 		//public static Ioc Ioc { get; set; }
 
 		public App ()
 		{
+			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");
 
 			if (Device.OS != TargetPlatform.WinPhone) {
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
-		   	DataContext.InitDatabase ();
+			DataContext.InitDatabase ();
 			new TagManager ().Init ();
 			new ContactManager ().Init ();
 

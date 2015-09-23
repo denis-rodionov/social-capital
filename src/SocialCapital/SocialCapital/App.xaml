@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:converters="clr-namespace:SocialCapital.Views.Converters;assembly=SocialCapital"
+			 x:Class="SocialCapital.App">
+	<Application.Resources>
+		<ResourceDictionary>
+        	<converters:NegateBooleanConverter x:Key="not" />
+        	<converters:ContactToStatusConverter x:Key="StatusConverter" />
+        	<converters:ListToBoolConverter x:Key="ListToBool" />
+        	<converters:DateTimeCustomConverter x:Key="DateTimeCustom" />
+        	<converters:CommunicationToImageConverter x:Key="CommunicationToImage" />
+    	</ResourceDictionary>
+	</Application.Resources>
+</Application>

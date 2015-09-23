@@ -143,7 +143,7 @@ namespace SocialCapital.ViewModels
 		private void InitStatus()
 		{
 			if (lastImportTime.HasValue)
-				Status = string.Format ("{0}: {1}", AppResources.AddressBookSynchStatus, lastImportTime);
+				Status = string.Format ("{0}: {1}", AppResources.AddressBookSynchStatus, lastImportTime.Value.ToAgoFormatRus());
 			else
 				Status = AppResources.AddressBookNoSynchStatus;
 		}
@@ -179,7 +179,8 @@ namespace SocialCapital.ViewModels
 			lastImportTime = updateTime;
 			new Settings ().LastAddressBookImportTime = lastImportTime;
 
-			Status = string.Format ("{0}({1}): {2}", AppResources.AddressBookSynchStatus, syncCount, lastImportTime);
+			Status = string.Format ("{0}({1}): {2}", 
+				AppResources.AddressBookSynchStatus, syncCount, lastImportTime.Value.ToAgoFormatRus());
 		}
 
 		#endregion
