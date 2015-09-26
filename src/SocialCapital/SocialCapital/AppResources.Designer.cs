@@ -107,6 +107,24 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Люди, с которыми нет необходимости, желания или возможности поддерживать общение.
+        /// </summary>
+        internal static string ArchiveGroupDescription {
+            get {
+                return ResourceManager.GetString("ArchiveGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Архив.
+        /// </summary>
+        internal static string ArchiveGroupName {
+            get {
+                return ResourceManager.GetString("ArchiveGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Базовая информация.
         /// </summary>
         internal static string BaseContactInfo {
@@ -121,6 +139,24 @@ namespace SocialCapital {
         internal static string CancelButton {
             get {
                 return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Коллеги, которых ежедневно встречаете на работе.
+        /// </summary>
+        internal static string ColleguesGroupDescription {
+            get {
+                return ResourceManager.GetString("ColleguesGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Коллеги.
+        /// </summary>
+        internal static string ColleguesGroupName {
+            get {
+                return ResourceManager.GetString("ColleguesGroupName", resourceCulture);
             }
         }
         
@@ -152,6 +188,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Обработка контактов.
+        /// </summary>
+        internal static string ContactsProcessingPageTitle {
+            get {
+                return ResourceManager.GetString("ContactsProcessingPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить.
         /// </summary>
         internal static string DeleteButtonText {
@@ -175,6 +220,33 @@ namespace SocialCapital {
         internal static string FullNameLabel {
             get {
                 return ResourceManager.GetString("FullNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Распредилить.
+        /// </summary>
+        internal static string GroupContactCommand {
+            get {
+                return ResourceManager.GetString("GroupContactCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Расппределено по группам:.
+        /// </summary>
+        internal static string GroupedContactCount {
+            get {
+                return ResourceManager.GetString("GroupedContactCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Группы.
+        /// </summary>
+        internal static string GroupPageTitle {
+            get {
+                return ResourceManager.GetString("GroupPageTitle", resourceCulture);
             }
         }
         
@@ -287,6 +359,24 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Близкие люди: родители, братья сёстра, бабушки, дедушки.
+        /// </summary>
+        internal static string RelativesGroupDescription {
+            get {
+                return ResourceManager.GetString("RelativesGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Родственники.
+        /// </summary>
+        internal static string RelativesGroupName {
+            get {
+                return ResourceManager.GetString("RelativesGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сохранить.
         /// </summary>
         internal static string SaveButton {
@@ -332,20 +422,56 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на минуту назад.
+        ///   Ищет локализованную строку, похожую на Всего контактов:.
         /// </summary>
-        internal static string TimeFormat_JustNow {
+        internal static string TotalContactCount {
             get {
-                return ResourceManager.GetString("TimeFormat_JustNow", resourceCulture);
+                return ResourceManager.GetString("TotalContactCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на минуту назад.
+        ///   Ищет локализованную строку, похожую на Контакты без группы.
         /// </summary>
-        internal static string TimeFormat_OneMinuteAgo {
+        internal static string UngroupedSectionName {
             get {
-                return ResourceManager.GetString("TimeFormat_OneMinuteAgo", resourceCulture);
+                return ResourceManager.GetString("UngroupedSectionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Неиспользуемые группы.
+        /// </summary>
+        internal static string UnusedGoupsSectionName {
+            get {
+                return ResourceManager.GetString("UnusedGoupsSectionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Контакты по группам.
+        /// </summary>
+        internal static string UsedGoupsSectionName {
+            get {
+                return ResourceManager.GetString("UsedGoupsSectionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Интересные и полезные люди с которыми необходимо поддерживать контакт.
+        /// </summary>
+        internal static string UsefulGroupDescription {
+            get {
+                return ResourceManager.GetString("UsefulGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Полезные контакты.
+        /// </summary>
+        internal static string UsefulGroupName {
+            get {
+                return ResourceManager.GetString("UsefulGroupName", resourceCulture);
             }
         }
         

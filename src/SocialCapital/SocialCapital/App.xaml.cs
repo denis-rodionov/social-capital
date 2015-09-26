@@ -4,15 +4,18 @@ using Xamarin.Forms;
 using SocialCapital.Data;
 using SocialCapital.Views;
 using SocialCapital.Logging;
+using Ninject;
 
 namespace SocialCapital 
 {
 	public partial class App : Application
 	{
-		//public static Ioc Ioc { get; set; }
+		public static StandardKernel Container { get; set; }
 
 		public App ()
 		{
+			Container = new StandardKernel (new DatabaseNinjectModule());
+
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");
 
@@ -21,8 +24,7 @@ namespace SocialCapital
 			}
 
 			DataContext.InitDatabase ();
-			new TagManager ().Init ();
-			new ContactManager ().Init ();
+
 
 			MainPage = new RootPage();
 		}

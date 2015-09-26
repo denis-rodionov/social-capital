@@ -8,10 +8,11 @@ using System.Linq;
 using System.Collections.Generic;
 using SocialCapital.Logging;
 using System.Threading;
+using Ninject;
 
 namespace SocialCapital.Data
 {
-	public class DataContext : IDisposable
+	public class DataContext : IDataContext
 	{
 		private static object locker = new object();
 
@@ -55,6 +56,10 @@ namespace SocialCapital.Data
 				db.Connection.CreateTable<ContactModification> ();
 				db.Connection.CreateTable<CommunicationHistory> ();
 				db.Connection.CreateTable<LogMessage> ();
+				db.Connection.CreateTable<Group> ();
+
+				if (db.Connection.Table<Frequency> ().Count () == 0)
+					App.Container.Get<GroupsManager> ().Init ();
 			}
 		}
 
@@ -73,6 +78,7 @@ namespace SocialCapital.Data
 				db.Connection.DeleteAll<ContactModification> ();
 				db.Connection.DeleteAll<CommunicationHistory> ();
 				db.Connection.DeleteAll<LogMessage> ();
+				db.Connection.DeleteAll<Group> ();
 			}
 		}
 

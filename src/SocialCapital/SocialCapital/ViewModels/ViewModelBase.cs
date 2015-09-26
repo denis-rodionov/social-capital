@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SocialCapital.Data;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
@@ -27,13 +28,7 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		private ContactManager database = null;
-		protected ContactManager Database { get {
-				if (database == null)
-					database = new ContactManager ();
-				return database;
-			}
-		}
+		protected ContactManager Database { get { return App.Container.Get<ContactManager> (); 	}}
 
 	}
 }

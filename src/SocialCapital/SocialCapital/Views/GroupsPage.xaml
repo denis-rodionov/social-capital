@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+		     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		     xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+		     xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
+		     x:Class="SocialCapital.Views.GroupsPage"
+		     Title="{i18n:Translate GroupPageTitle}" >
+	<ContentPage.Content>
+		<TableView Intent="Data">
+			<TableRoot>
+				<TableSection Title="{i18n:Translate UngroupedSectionName}">
+					<TextCell Text="Нераспределённые контакты" 
+						  	  Detail="{Binding Path=NotGroupedContacts.Count, StringFormat='Contact count: {0}'}" />
+				</TableSection>
+
+				<TableSection x:Name="UsedGtoupsSection" Title="{i18n:Translate UsedGoupsSectionName}">
+					<libs:Repeater.ItemTemplate BindingContext="{Binding UsedGroups}">
+						<DataTemplate>
+							<TextCell Text="{Binding Name}" 
+									  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
+						</DataTemplate>
+					</libs:Repeater.ItemTemplate>
+				</TableSection>
+
+				<TableSection Title="{i18n:Translate UnusedGoupsSectionName}">
+					<libs:Repeater.ItemTemplate BindingContext="{Binding UnusedGroups}">
+						<DataTemplate>
+							<TextCell Text="{Binding Name}" 
+									  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
+						</DataTemplate>
+					</libs:Repeater.ItemTemplate>
+				</TableSection>
+			</TableRoot>
+		</TableView>
+	</ContentPage.Content>
+</ContentPage>

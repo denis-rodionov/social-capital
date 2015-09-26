@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 x:Class="SocialCapital.Views.ContactsProcessingPage"
+			 Title="{i18n:Translate ContactsProcessingPageTitle}" >
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+			<FormattedString>
+				<Span Text="{i18n:Translate TotalContactCount}" />
+				<Span Text="{Binding TotalContactCount}" FontAttributes="Bold"/>
+			</FormattedString>
+
+			<FormattedString>
+				<Span Text="{i18n:Translate GroupedContactCount}" />
+				<Span Text="{Binding GroupedContactCount}" FontAttributes="Bold" />
+			</FormattedString>
+
+			<Button Text="{i18n:Translate GroupContactCommand}" Clicked="OnClicked" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

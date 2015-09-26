@@ -7,7 +7,9 @@ namespace SocialCapital
 		Week = 2,
 		Month = 3,
 		ThreeMonth = 4,
-		Year = 5
+		Year = 5,
+		TwoYear = 6,
+		Never = 100
 	}
 }
 

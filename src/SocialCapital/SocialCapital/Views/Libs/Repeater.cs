@@ -8,9 +8,9 @@ namespace SocialCapital.Views.Libs
 	{
 		public Repeater ()
 		{
-			BindingContextChanged += (object sender, EventArgs e) => {
-				Log.GetLogger().Log("BindingContext set: sender={0}, sender.BindingContext={1}", sender, (sender as BindableObject).BindingContext);
-			};
+			//BindingContextChanged += (object sender, EventArgs e) => {
+			//	Log.GetLogger().Log("BindingContext set: sender={0}, sender.BindingContext={1}", sender, (sender as BindableObject).BindingContext);
+			//};
 		}
 
 		public DataTemplate ItemTemplate { get; set; }

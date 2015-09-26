@@ -31,42 +31,6 @@ namespace SocialCapital.Data
 
 		public void Init()	
 		{
-//			
-//
-//			using (var db = new DataContext ()) {
-//				if (db.Connection.Table<Contact> ().Count () == 0)
-//				{
-//					Log.GetLogger ().Log ("Creating default databas...");
-//					var tempImage = ResourceLoader.LoadFileFromResource ("SocialCapital.Resources.generic_avatar.png");
-//
-//					// contact #1
-//					var freq1 = db.Connection.Insert (new Frequency () { Period = PeriodValues.Month, Count = 2 });
-//					Log.GetLogger ().Log ("Inserted frequency id = " + freq1);
-//
-//					var ivanovId = db.Connection.Insert (new Contact () {
-//						DisplayName = "Иванов",
-//						WorkPlace = "Яндекс",
-//						Thumbnail = tempImage,
-//						FrequencyId = freq1
-//					});
-//					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 1 });
-//					db.Connection.Insert (new ContactTag () { ContactId = ivanovId, TagId = 2 });
-//
-//					// contact #2
-//					db.Connection.Insert (new Contact () {
-//						DisplayName = "Петров",
-//						WorkPlace = "Google",
-//						Thumbnail = tempImage
-//					});
-//
-//					// contact #3
-//					db.Connection.Insert (new Contact () {
-//						DisplayName = "Сидоров",
-//						WorkPlace = "Mail.ru",
-//						Thumbnail = tempImage
-//					});
-//				}
-//			}
 		}
 
 		#endregion
@@ -88,25 +52,6 @@ namespace SocialCapital.Data
 				return db.Connection.Table<Contact> ().Where (whereClause).ToList ();
 			}
 		}
-
-		/// <summary>
-		/// Contact, grouped by specified selector and filtered
-		/// </summary>
-		/// <returns>The contact groups.</returns>
-		/// <param name="groupingSelector">Grouping selector.</param>
-		/// <param name="filter">Filtering expression</param>
-//		public IEnumerable<ContactGroupVM<T>> GetContactGroups<T>(
-//			Func<Contact, T> groupingSelector,
-//			Expression<Func<Contact, bool>> filter)
-//		{
-//			using (var db = new DataContext ()) {
-//				return db.Connection.Table<Contact> ()
-//					.Where (filter)
-//					.GroupBy (
-//					groupingSelector,
-//					(key, list) => new ContactGroupVM<T> () { GroupName = key, Contacts = list }).ToList ();;
-//			}
-//		}
 
 		#endregion
 

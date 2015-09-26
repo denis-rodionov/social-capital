@@ -26,6 +26,9 @@
 					<vm:MenuItem Name = "Summary"
 								 Title="{i18n:Translate SummaryMenuItemTitle}" 
 								 IconSource="ic_insert_chart_black_48dp.png" />	
+					<vm:MenuItem Name = "ContactsProcessing"
+								 Title="{i18n:Translate ContactsProcessingPageTitle}" 
+								 IconSource="ic_insert_chart_black_48dp.png" />
 				</x:Array>					
 			</ListView.ItemsSource>
 			<libs:ListViewEx.ItemTemplate>

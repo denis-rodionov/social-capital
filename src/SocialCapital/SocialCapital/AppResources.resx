@@ -126,16 +126,68 @@
 		<value>История:</value>
 		<comment>Заголовок отображаемый над списком истории коммуникаций на странице контакта</comment>
 	</data>
-	<data name="TimeFormat_JustNow" xml:space="preserve">
-		<value>Только что</value>
-		<comment>формат отображение времени (если событие приизошло не ранее минуты)</comment>
+	<data name="GroupPageTitle" xml:space="preserve">
+		<value>Группы</value>
+		<comment>Название страницы с группами</comment>
 	</data>
-	<data name="TimeFormat_OneMinuteAgo" xml:space="preserve">
-		<value>минуту назад</value>
-		<comment>формат отображение времени (если 1, 21, 31... минуту назад)</comment>
+	<data name="UngroupedSectionName" xml:space="preserve">
+		<value>Контакты без группы</value>
+		<comment>Название подзаголовка на странице групп, относящегося к контактам с не присвоенной группой</comment>
 	</data>
-	<data name="TimeFormat_JustNow" xml:space="preserve">
-		<value>минуту назад</value>
-		<comment>формат отображение времени (если 1, 21, 31... минуту назад)</comment>
+	<data name="UsedGoupsSectionName" xml:space="preserve">
+		<value>Контакты по группам</value>
+		<comment>Название подзаголовка на странице групп, относящегося к списку групп по которым разбиры контакты</comment>
+	</data>
+	<data name="UnusedGoupsSectionName" xml:space="preserve">
+		<value>Неиспользуемые группы</value>
+		<comment>Название подзаголовка на странице групп, относящегося к списку групп, которым не присоин ни один контакт</comment>
+	</data>
+	<data name="RelativesGroupName" xml:space="preserve">
+		<value>Родственники</value>
+		<comment>Название стандартной группы "Родственники"</comment>
+	</data>
+	<data name="RelativesGroupDescription" xml:space="preserve">
+		<value>Близкие люди: родители, братья сёстра, бабушки, дедушки</value>
+		<comment>Описание стандартной группы "Родственники"</comment>
+	</data>
+	<data name="ColleguesGroupName" xml:space="preserve">
+		<value>Коллеги</value>
+		<comment>Название стандартной группы для сотрудников на работе, с которыми видишься постоянно в офисе</comment>
+	</data>
+	<data name="ColleguesGroupDescription" xml:space="preserve">
+		<value>Коллеги, которых ежедневно встречаете на работе</value>
+		<comment>Описани стандартной группы для сотрудников на работе, с которыми видишься постоянно в офисе</comment>
+	</data>
+	<data name="UsefulGroupName" xml:space="preserve">
+		<value>Полезные контакты</value>
+		<comment>Название стандартной группы для людей, с которыми необходимо поддерживать контакт, которые могут быть полезны в будующем</comment>
+	</data>
+	<data name="UsefulGroupDescription" xml:space="preserve">
+		<value>Интересные и полезные люди с которыми необходимо поддерживать контакт</value>
+		<comment>Описание стандартной группы для людей, с которыми необходимо поддерживать контакт, которые могут быть полезны в будующем</comment>
+	</data>
+	<data name="ArchiveGroupName" xml:space="preserve">
+		<value>Архив</value>
+		<comment>Название стандартной группы для контактов, с которыми нет желания поддерживать связь но и удалять их не хочется</comment>
+	</data>
+	<data name="ArchiveGroupDescription" xml:space="preserve">
+		<value>Люди, с которыми нет необходимости, желания или возможности поддерживать общение</value>
+		<comment>Название стандартной группы для контактов, с которыми нет желания поддерживать связь но и удалять их не хочется</comment>
+	</data>
+	<data name="ContactsProcessingPageTitle" xml:space="preserve">
+		<value>Обработка контактов</value>
+		<comment>Заголовок основной страницы обработки контактов</comment>
+	</data>
+	<data name="TotalContactCount" xml:space="preserve">
+		<value>Всего контактов:</value>
+		<comment>Общее количество контактов на странице обработки контактов</comment>
+	</data>
+	<data name="GroupedContactCount" xml:space="preserve">
+		<value>Расппределено по группам:</value>
+		<comment>Количество контактов, распределённых по группам на странице обработки контактов</comment>
+	</data>
+	<data name="GroupContactCommand" xml:space="preserve">
+		<value>Распредилить</value>
+		<comment>Кнопка или команда - распределить контакты по группам (сгруппировать)</comment>
 	</data>
 </root>
