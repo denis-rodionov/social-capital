@@ -190,4 +190,24 @@
 		<value>Распредилить</value>
 		<comment>Кнопка или команда - распределить контакты по группам (сгруппировать)</comment>
 	</data>
+	<data name="Day" xml:space="preserve">
+		<value>день</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="Week" xml:space="preserve">
+		<value>неделя</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="Month" xml:space="preserve">
+		<value>месяц</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="Year" xml:space="preserve">
+		<value>год</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="TwoYears" xml:space="preserve">
+		<value>два года</value>
+		<comment>перевод</comment>
+	</data>
 </root>

@@ -197,6 +197,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на день.
+        /// </summary>
+        internal static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить.
         /// </summary>
         internal static string DeleteButtonText {
@@ -323,6 +332,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на месяц.
+        /// </summary>
+        internal static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Теги отсутствуют.
         /// </summary>
         internal static string NoTagsPlaceholder {
@@ -431,6 +449,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на два года.
+        /// </summary>
+        internal static string TwoYears {
+            get {
+                return ResourceManager.GetString("TwoYears", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Контакты без группы.
         /// </summary>
         internal static string UngroupedSectionName {
@@ -476,11 +503,29 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на неделя.
+        /// </summary>
+        internal static string Week {
+            get {
+                return ResourceManager.GetString("Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Место работы.
         /// </summary>
         internal static string WorkplaceLabel {
             get {
                 return ResourceManager.GetString("WorkplaceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на год.
+        /// </summary>
+        internal static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

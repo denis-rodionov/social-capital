@@ -10,6 +10,7 @@
         	<converters:ListToBoolConverter x:Key="ListToBool" />
         	<converters:DateTimeCustomConverter x:Key="DateTimeCustom" />
         	<converters:CommunicationToImageConverter x:Key="CommunicationToImage" />
+        	<converters:PeriodConverter x:Key="PeriodConverter" />
     	</ResourceDictionary>
 	</Application.Resources>
 </Application>

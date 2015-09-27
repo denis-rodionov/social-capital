@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+			 x:Class="SocialCapital.Views.GroupDetailsPage"
+			 Title="{Binding Path=Name}">
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical" >
+			<Label Text="{Binding Description}" />
+
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate IsArchiveLabel}" />
+				<Switch IsToggled="{Binding IsArchive}" />
+			</StackLayout>
+
+			<FormatedString>
+				<Span Text="Desired contact interval: " />
+				<Span Text="{Binding Frequency.Count}" />
+				<Span Text=" time(s) a " />
+				<Span Text="{Binding Path=Frequency.Period, Converter=PeriodConverter}" />
+			</FormatedString>
+			<controls:BindablePicker Title="Picker" 
+									 ItemsSource="{Binding PeriodsList}" 
+									 ItemSelected="{Binding Frequency.Period}"
+									 Converter="{StaticResource PeriodConverter}" />
+			<Stepper Value="{Binding Frequency.Count}" />
+
+			<ListView ItemsSource="{Binding AssignedContacts}" >
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<Label Text="{Binding DisplayName}" />
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
