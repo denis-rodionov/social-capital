@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using Ninject;
 using System.Linq;
+using SocialCapital.Data.Model;
 
 namespace SocialCapital.Views
 {
@@ -16,15 +17,22 @@ namespace SocialCapital.Views
 			BindingContext = vm;
 		}
 
-		protected async void OnClicked(object sender, EventArgs args)
+		protected void OnClicked(object sender, EventArgs args)
 		{
 			var contactList = App.Container.Get<ContactListVM> ();
-			var page = new ContactPickerPage (contactList);
-			await Navigation.PushModalAsync (page);
-
 			var vm = (ContactGroupVM)BindingContext;
-			var contacts = contactList.AllContacts.Where(c => c.Selected).Select(c => c.SourceContact);
-			vm.Assign (contacts);
+			contactList.SelectContacts (vm.AssignedContacts);
+
+			var page = new ContactPickerPage (contactList, OnDone);
+
+			Navigation.PushModalAsync (page);
+		}
+
+		private void OnDone(IEnumerable<Contact> seletedContacts)
+		{
+			var vm = (ContactGroupVM)BindingContext;
+			//var contacts = contactList.AllContacts.Where(c => c.Selected).Select(c => c.SourceContact);
+			vm.Assign (seletedContacts);
 		}
 	}
 }

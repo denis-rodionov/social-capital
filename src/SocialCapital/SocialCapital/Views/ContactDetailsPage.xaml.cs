@@ -17,7 +17,7 @@ namespace SocialCapital.Views
 				BindingContext = this.BindingContext
 			};
 
-			Navigation.PushAsync (new NavigationPage(editPage));
+			Navigation.PushModalAsync (new NavigationPage(editPage));
 		}
 	}
 

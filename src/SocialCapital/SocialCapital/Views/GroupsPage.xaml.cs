@@ -35,8 +35,8 @@ namespace SocialCapital.Views
 
 		protected void OnItemTapped(object sender, ItemTappedEventArgs args)
 		{
-			var group = (Group)args.Item;
-			var page = new GroupDetailsPage (new ContactGroupVM (group));
+			var group = (ContactGroupVM)args.Item;
+			var page = new GroupDetailsPage (group);
 
 			Navigation.PushAsync (page);
 		}

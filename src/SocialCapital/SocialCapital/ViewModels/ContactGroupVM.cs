@@ -25,6 +25,10 @@ namespace SocialCapital.ViewModels
 
 		public IEnumerable<Contact> AssignedContacts {
 			get { return SourceGroup.AssignedContacts; }
+			set { 
+				SourceGroup.AssignedContacts = null;
+				OnPropertyChanged ();
+			}
 		}
 
 		public IEnumerable<PeriodValues> PeriodsList { 
@@ -55,6 +59,7 @@ namespace SocialCapital.ViewModels
 		public void Assign(IEnumerable<Contact> contacts)
 		{
 			App.Container.Get<ContactManager> ().AssignToGroup (contacts, SourceGroup.Id);
+			AssignedContacts = null;
 		}
 	}
 }

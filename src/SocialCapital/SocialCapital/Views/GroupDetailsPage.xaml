@@ -15,9 +15,9 @@
 			</StackLayout>
 
 			<StackLayout Orientation="Horizontal" >
-				<Label Text="Desired contact interval: " />
-				<Label Text="{Binding FrequencyCount}" />
-				<Label Text=" time(s) per " />
+				<Label Text="Desired contact interval: " FontSize="Large" />
+				<Label Text="{Binding FrequencyCount}"  FontSize="Large" />
+				<Label Text=" time(s) per "  FontSize="Large" />
 				<controls:BindablePicker Title="Picker" 
 									 ItemsSource="{Binding PeriodsList}" 
 									 SelectedItem="{Binding FrequencyPeriod}"
@@ -30,6 +30,10 @@
 			<Button Text="{i18n:Translate AssignContactsToGroup}" 
 					HorizontalOptions="CenterAndExpand"
 					Clicked="OnClicked" />
+
+			<Label Text="{Binding Path=AssignedContacts, 
+								  Converter={StaticResource ListToCountConverter},
+								  StringFormat='Contact count: {0}'}" />
 
 			<ListView ItemsSource="{Binding AssignedContacts}" >
 				<ListView.ItemTemplate>

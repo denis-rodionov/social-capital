@@ -72,6 +72,15 @@ namespace SocialCapital.ViewModels
 		}
 
 
+		public void SelectContacts(IEnumerable<Contact> contacts)
+		{
+			var ids = contacts.Select (c => c.Id).ToList ();
+
+			foreach (var contact in AllContacts)
+				if (ids.Contains(contact.SourceContact.Id))
+					contact.Selected = true;
+		}
+
 	}
 }
 

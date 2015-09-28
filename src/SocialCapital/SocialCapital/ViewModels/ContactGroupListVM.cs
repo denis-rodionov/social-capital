@@ -20,32 +20,32 @@ namespace SocialCapital.ViewModels
 			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true);
 		}
 
-		public IEnumerable<ListGroupVM<string, Group>> GroupedItems {
+		public IEnumerable<ListGroupVM<string, ContactGroupVM>> GroupedItems {
 			get {
-				var used = new ListGroupVM<string, Group> () {
+				var used = new ListGroupVM<string, ContactGroupVM> () {
 					GroupName = AppResources.UsedGoupsSectionName,
-					Elements = Groups.Where (g => g.AssignedContacts.Any ()).ToList()
+					Elements = Groups.Where (g => g.AssignedContacts.Any ()).Select(g => new ContactGroupVM(g)).ToList()
 				};
-				var unused = new ListGroupVM<string, Group>() {
+				var unused = new ListGroupVM<string, ContactGroupVM>() {
 					GroupName = AppResources.UnusedGoupsSectionName,
-					Elements = Groups.Where(g => !g.AssignedContacts.Any()).ToList()
+					Elements = Groups.Where(g => !g.AssignedContacts.Any()).Select(g => new ContactGroupVM(g)).ToList()
 				};
 
-				return new List<ListGroupVM<string, Group>> () { used, unused };
+				return new List<ListGroupVM<string, ContactGroupVM>> () { used, unused };
 			}
 		}
 
-		public IEnumerable<Contact> NotGroupedContacts {
-			get { return Contacts.Where (c => c.GroupId == 0); }
-		}
-
-		public IEnumerable<Group> UsedGroups {
-			get { return Groups.Where (g => g.AssignedContacts.Any()); }
-		}
-
-		public IEnumerable<Group> UnusedGroup {
-			get { return Groups.Where (g => !g.AssignedContacts.Any()); }
-		}
+//		public IEnumerable<Contact> NotGroupedContacts {
+//			get { return Contacts.Where (c => c.GroupId == 0); }
+//		}
+//
+//		public IEnumerable<Group> UsedGroups {
+//			get { return Groups.Where (g => g.AssignedContacts.Any()); }
+//		}
+//
+//		public IEnumerable<Group> UnusedGroup {
+//			get { return Groups.Where (g => !g.AssignedContacts.Any()); }
+//		}
 	}
 }
 
