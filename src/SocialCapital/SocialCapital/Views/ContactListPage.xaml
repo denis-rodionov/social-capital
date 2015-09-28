@@ -10,7 +10,7 @@
 		<StackLayout Orientation="Vertical">
 			<SearchBar Text="{Binding Filter}" />
 			<ListView x:Name="contactListView" 
-				      ItemsSource = "{Binding Contacts}"
+				      ItemsSource = "{Binding FilteredContacts}"
 				      RowHeight="60">
 				<ListView.ItemTemplate>
 					<DataTemplate>

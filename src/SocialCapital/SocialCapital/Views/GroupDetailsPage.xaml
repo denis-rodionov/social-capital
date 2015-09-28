@@ -14,17 +14,22 @@
 				<Switch IsToggled="{Binding IsArchive}" />
 			</StackLayout>
 
-			<FormatedString>
-				<Span Text="Desired contact interval: " />
-				<Span Text="{Binding Frequency.Count}" />
-				<Span Text=" time(s) a " />
-				<Span Text="{Binding Path=Frequency.Period, Converter=PeriodConverter}" />
-			</FormatedString>
-			<controls:BindablePicker Title="Picker" 
+			<StackLayout Orientation="Horizontal" >
+				<Label Text="Desired contact interval: " />
+				<Label Text="{Binding FrequencyCount}" />
+				<Label Text=" time(s) per " />
+				<controls:BindablePicker Title="Picker" 
 									 ItemsSource="{Binding PeriodsList}" 
-									 ItemSelected="{Binding Frequency.Period}"
+									 SelectedItem="{Binding FrequencyPeriod}"
 									 Converter="{StaticResource PeriodConverter}" />
-			<Stepper Value="{Binding Frequency.Count}" />
+				<!--<Label Text="{Binding Path=Frequency.Period, Converter={StaticResource PeriodConverter}}" />-->
+			</StackLayout>
+
+			<Stepper Value="{Binding FrequencyCount}" />
+
+			<Button Text="{i18n:Translate AssignContactsToGroup}" 
+					HorizontalOptions="CenterAndExpand"
+					Clicked="OnClicked" />
 
 			<ListView ItemsSource="{Binding AssignedContacts}" >
 				<ListView.ItemTemplate>

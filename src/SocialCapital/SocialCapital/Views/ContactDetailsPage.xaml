@@ -11,11 +11,6 @@
 		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
 	</ContentPage.ToolbarItems>
 
-	<ContentPage.Resources>
-		<ResourceDictionary>
-		</ResourceDictionary>
-	</ContentPage.Resources>
-
 	<ContentPage.Content>		
 		<StackLayout Orientation="Vertical" HorizontalOptions="Start" >
 			<!-- Header -->

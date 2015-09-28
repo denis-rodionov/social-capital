@@ -71,6 +71,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Контакты из адресной книги.
+        /// </summary>
+        internal static string AddressBookContacts {
+            get {
+                return ResourceManager.GetString("AddressBookContacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Импорт адресной книги.
         /// </summary>
         internal static string AddressBookMenuItemTitle {
@@ -125,6 +134,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить контакты в группу.
+        /// </summary>
+        internal static string AssignContactsToGroup {
+            get {
+                return ResourceManager.GetString("AssignContactsToGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Базовая информация.
         /// </summary>
         internal static string BaseContactInfo {
@@ -166,6 +184,15 @@ namespace SocialCapital {
         internal static string CommunicationHistoryIsEmpty {
             get {
                 return ResourceManager.GetString("CommunicationHistoryIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Количество контактов.
+        /// </summary>
+        internal static string ContactCountInGroup {
+            get {
+                return ResourceManager.GetString("ContactCountInGroup", resourceCulture);
             }
         }
         
@@ -314,6 +341,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Архив.
+        /// </summary>
+        internal static string IsArchiveLabel {
+            get {
+                return ResourceManager.GetString("IsArchiveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на История:.
         /// </summary>
         internal static string LastContactCommunicationHeader {
@@ -337,6 +373,15 @@ namespace SocialCapital {
         internal static string Month {
             get {
                 return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на никогда.
+        /// </summary>
+        internal static string Never {
+            get {
+                return ResourceManager.GetString("Never", resourceCulture);
             }
         }
         
@@ -436,6 +481,15 @@ namespace SocialCapital {
         internal static string TagSelectTitle {
             get {
                 return ResourceManager.GetString("TagSelectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на три месяц.
+        /// </summary>
+        internal static string ThreeMonth {
+            get {
+                return ResourceManager.GetString("ThreeMonth", resourceCulture);
             }
         }
         

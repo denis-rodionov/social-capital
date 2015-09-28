@@ -71,7 +71,7 @@ namespace SocialCapital.AddressBookImport
 		/// Update all contact in database
 		/// </summary>
 		/// <returns>The group of updated contacts</returns>
-		public GroupVM<DateTime, ModificationVM> FullUpdate()
+		public ListGroupVM<DateTime, ModificationVM> FullUpdate()
 		{
 			if (LoadedContacts == null)
 				throw new Exception ("Load contacts first");
@@ -79,7 +79,7 @@ namespace SocialCapital.AddressBookImport
 			var timing = Timing.Start ("AddressBookService.FullUpdate");
 			var db = new ContactManager ();
 			var updateTime = DateTime.Now;
-			var resGroup = new GroupVM<DateTime, ModificationVM> () { Group = updateTime, Elements = new List<ModificationVM>() };
+			var resGroup = new ListGroupVM<DateTime, ModificationVM> () { GroupName = updateTime, Elements = new List<ModificationVM>() };
 
 			foreach (var bookContact in LoadedContacts) {
 				if (bookContact.Phones.Count () != 0) {

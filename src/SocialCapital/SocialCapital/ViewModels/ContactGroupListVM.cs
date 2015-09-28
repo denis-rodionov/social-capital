@@ -20,6 +20,21 @@ namespace SocialCapital.ViewModels
 			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true);
 		}
 
+		public IEnumerable<ListGroupVM<string, Group>> GroupedItems {
+			get {
+				var used = new ListGroupVM<string, Group> () {
+					GroupName = AppResources.UsedGoupsSectionName,
+					Elements = Groups.Where (g => g.AssignedContacts.Any ()).ToList()
+				};
+				var unused = new ListGroupVM<string, Group>() {
+					GroupName = AppResources.UnusedGoupsSectionName,
+					Elements = Groups.Where(g => !g.AssignedContacts.Any()).ToList()
+				};
+
+				return new List<ListGroupVM<string, Group>> () { used, unused };
+			}
+		}
+
 		public IEnumerable<Contact> NotGroupedContacts {
 			get { return Contacts.Where (c => c.GroupId == 0); }
 		}

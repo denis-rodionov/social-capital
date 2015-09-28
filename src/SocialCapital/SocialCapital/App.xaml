@@ -11,6 +11,8 @@
         	<converters:DateTimeCustomConverter x:Key="DateTimeCustom" />
         	<converters:CommunicationToImageConverter x:Key="CommunicationToImage" />
         	<converters:PeriodConverter x:Key="PeriodConverter" />
+        	<converters:ListToCountConverter x:Key="ListToCountConverter" />
+        	<converters:BoolToImageConverter x:Key="BoolToImageConverter" />
     	</ResourceDictionary>
 	</Application.Resources>
 </Application>

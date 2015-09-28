@@ -202,6 +202,10 @@
 		<value>месяц</value>
 		<comment>перевод</comment>
 	</data>
+	<data name="ThreeMonth" xml:space="preserve">
+		<value>три месяц</value>
+		<comment>перевод</comment>
+	</data>
 	<data name="Year" xml:space="preserve">
 		<value>год</value>
 		<comment>перевод</comment>
@@ -209,5 +213,25 @@
 	<data name="TwoYears" xml:space="preserve">
 		<value>два года</value>
 		<comment>перевод</comment>
+	</data>
+	<data name="Never" xml:space="preserve">
+		<value>никогда</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="AssignContactsToGroup" xml:space="preserve">
+		<value>Добавить контакты в группу</value>
+		<comment>Кнопка или команда для перехода на страницу добавления контактов в группу</comment>
+	</data>
+	<data name="ContactCountInGroup" xml:space="preserve">
+		<value>Количество контактов</value>
+		<comment>Надпись с информацией о количестве контактов в группе</comment>
+	</data>
+	<data name="AddressBookContacts" xml:space="preserve">
+		<value>Контакты из адресной книги</value>
+		<comment>Класс контактов - скачанные из телефонной книги</comment>
+	</data>
+	<data name="IsArchiveLabel" xml:space="preserve">
+		<value>Архив</value>
+		<comment>Переключетель делающий группу архивной</comment>
 	</data>
 </root>

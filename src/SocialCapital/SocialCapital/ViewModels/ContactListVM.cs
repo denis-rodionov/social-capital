@@ -7,6 +7,8 @@ using SocialCapital.Data;
 using Xamarin.Forms;
 using SocialCapital.AddressBookImport;
 using SocialCapital.Common;
+using System.Windows.Input;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
@@ -16,13 +18,17 @@ namespace SocialCapital.ViewModels
 		/// Contact list
 		/// </summary>
 		IEnumerable<ContactVM> contacts;
-		public IEnumerable<ContactVM> Contacts { 
+		public IEnumerable<ContactVM> AllContacts{
+			get { return contacts; }
+		}
+
+		public IEnumerable<ContactVM> FilteredContacts { 
 			get { return contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(Filter.ToLowerInvariant())); }
 			set { SetProperty (ref contacts, value); }
 		}
 
 		public int ContactsCount {
-			get { return Contacts.Count (); }
+			get { return FilteredContacts.Count (); }
 		}
 
 		/// <summary>
@@ -33,20 +39,36 @@ namespace SocialCapital.ViewModels
 			get { return filter; }
 			set { 
 				SetProperty (ref filter, value); 
-				OnPropertyChanged ("Contacts");
+				OnPropertyChanged ("FilteredContacts");
 			}
+		}
+
+		/// <summary>
+		/// Number of contacts selected in multy-select list
+		/// </summary>
+		public int SelectedCount {
+			get { return contacts.Where (c => c.Selected).Count(); }
 		}
 			
 		public ContactListVM ()
 		{
 			var timing = Timing.Start ("ContactListVM constructor");
 
-			var manager = new ContactManager ();
+			var manager = App.Container.Get<ContactManager> ();
 			var contacts = manager.Contacts .ToList ();
 
-			Contacts = new ObservableCollection<ContactVM> (contacts.Select(c => new ContactVM(c)));
+			FilteredContacts = new ObservableCollection<ContactVM> (contacts.Select(c => new ContactVM(c)));
+			SelectCommand = new Command (OnSelectCommandExecuted);
 
 			timing.Finish (LogLevel.Trace);
+		}
+
+		public ICommand SelectCommand { get; set; }
+		private void OnSelectCommandExecuted(object item)
+		{
+			var contact = (ContactVM)item;
+			contact.Selected = !contact.Selected;
+			OnPropertyChanged ("SelectedCount");
 		}
 
 

@@ -4,6 +4,7 @@ using SocialCapital.Data.Model;
 using Ninject;
 using SocialCapital.Data;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace SocialCapital.ViewModels
 {
@@ -16,8 +17,8 @@ namespace SocialCapital.ViewModels
 
 		public IEnumerable<Contact> AllContacts { get; set; }
 
-		public int TotalContactCount {
-			get { return AllContacts.Count(); }
+		public string TotalContactCount {
+			get { return AllContacts.Count().ToString(); }
 		}
 
 		public int GroupedContactCount {

@@ -148,6 +148,15 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref history, value); }
 		}
 
+		/// <summary>
+		/// Defines of the contact is selected in the list
+		/// </summary>
+		private bool selected = false;
+		public bool Selected {
+			get { return selected; }
+			set { SetProperty (ref selected, value); }
+		}
+
         #endregion
 
 

@@ -54,9 +54,9 @@ namespace SocialCapital.ViewModels
 		/// <summary>
 		/// Imported history
 		/// </summary>
-		private ObservableCollection<GroupVM<DateTime, ModificationVM>> modificationGroups = 
-			new ObservableCollection<GroupVM<DateTime, ModificationVM>>();
-		public ObservableCollection<GroupVM<DateTime, ModificationVM>> ModificationGroups 
+		private ObservableCollection<ListGroupVM<DateTime, ModificationVM>> modificationGroups = 
+			new ObservableCollection<ListGroupVM<DateTime, ModificationVM>>();
+		public ObservableCollection<ListGroupVM<DateTime, ModificationVM>> ModificationGroups 
 		{ 
 			get { return modificationGroups; }
 			private set { SetProperty (ref modificationGroups, value); }
@@ -89,16 +89,16 @@ namespace SocialCapital.ViewModels
 			var collection = modifications
 				.GroupBy (
 	                 key => key.ModifiedAt,
-	                 (key, list) => new GroupVM<DateTime, ModificationVM> () { 
-						Group = key, 
+	                 (key, list) => new ListGroupVM<DateTime, ModificationVM> () { 
+						GroupName = key, 
 						Elements = list.Take (10).Select (m => new ModificationVM (m)).ToList ()
 				})
-				.OrderByDescending(key => key.Group)
+				.OrderByDescending(key => key.GroupName)
 				.ToList ();
 
 			timing.Finish ();
 
-			ModificationGroups = new ObservableCollection<GroupVM<DateTime, ModificationVM>> (collection);
+			ModificationGroups = new ObservableCollection<ListGroupVM<DateTime, ModificationVM>> (collection);
 		}
 
 		#endregion
@@ -121,7 +121,7 @@ namespace SocialCapital.ViewModels
 			Status = AppResources.ImportStatusInProgress;
 			Log.GetLogger ().Log ("Starting import task...");
 
-			var imported = await Task.Run<GroupVM<DateTime, ModificationVM>>(() => 
+			var imported = await Task.Run<ListGroupVM<DateTime, ModificationVM>>(() => 
 				{
 					Log.GetLogger ().Log ("Import started");
 					var service = new AddressBookService();
@@ -165,9 +165,9 @@ namespace SocialCapital.ViewModels
 			ImportProgress = res;
 		}
 
-		private void ImportFinished(GroupVM<DateTime, ModificationVM> importResult)
+		private void ImportFinished(ListGroupVM<DateTime, ModificationVM> importResult)
 		{
-			UpdateStatus (importResult.Group, importResult.Count());
+			UpdateStatus (importResult.GroupName, importResult.Count());
 			ImportProgress = 0;
 
 			if (importResult.Elements.Any())

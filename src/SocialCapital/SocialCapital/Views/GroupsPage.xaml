@@ -6,31 +6,53 @@
 		     x:Class="SocialCapital.Views.GroupsPage"
 		     Title="{i18n:Translate GroupPageTitle}" >
 	<ContentPage.Content>
-		<TableView Intent="Data">
-			<TableRoot>
-				<TableSection Title="{i18n:Translate UngroupedSectionName}">
-					<TextCell Text="Нераспределённые контакты" 
-						  	  Detail="{Binding Path=NotGroupedContacts.Count, StringFormat='Contact count: {0}'}" />
-				</TableSection>
+		<StackLayout Orientation="Vertical">
+			<ListView IsGroupingEnabled="true"
+					  ItemsSource="{Binding GroupedItems}"
+					  GroupDisplayBinding="{Binding GroupName}"
+					  ItemTapped="OnItemTapped">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<TextCell Text="{Binding Name}" 
+								  Detail="{Binding Path=AssignedContacts, 
+								  		   StringFormat='ContactCount: {0}',
+								  		   Converter={StaticResource ListToCountConverter}}" />
+					</DataTemplate>
+				</ListView.ItemTemplate>			
+			</ListView>
 
-				<TableSection x:Name="UsedGtoupsSection" Title="{i18n:Translate UsedGoupsSectionName}">
-					<libs:Repeater.ItemTemplate BindingContext="{Binding UsedGroups}">
-						<DataTemplate>
-							<TextCell Text="{Binding Name}" 
-									  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
-						</DataTemplate>
-					</libs:Repeater.ItemTemplate>
-				</TableSection>
+			<!--
+			<TableView Intent="Form" IsVisible="false">
+				<TableRoot>
+					<TableSection Title="{i18n:Translate UngroupedSectionName}">
+						<TextCell Text="{i18n:Translate AddressBookContacts}" 
+							  	  Detail="{Binding Path=NotGroupedContacts, 
+							  	  		   StringFormat='Contact count: {0}',
+							  	  		   Converter={StaticResource ListToCountConverter}}" />
+					</TableSection>
 
-				<TableSection Title="{i18n:Translate UnusedGoupsSectionName}">
-					<libs:Repeater.ItemTemplate BindingContext="{Binding UnusedGroups}">
-						<DataTemplate>
-							<TextCell Text="{Binding Name}" 
-									  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
-						</DataTemplate>
-					</libs:Repeater.ItemTemplate>
-				</TableSection>
-			</TableRoot>
-		</TableView>
+					<TableSection x:Name="UsedGtoupsSection" Title="{i18n:Translate UsedGoupsSectionName}">
+						<libs:TableRepeater>
+							<libs:Repeater.ItemTemplate BindingContext="{Binding UsedGroups}">
+								<DataTemplate>
+									<TextCell Text="{Binding Name}" 
+											  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
+								</DataTemplate>
+							</libs:Repeater.ItemTemplate>
+						</libs:TableRepeater>
+					</TableSection>
+
+					<TableSection x:Name="UnusedGroupSection" Title="{i18n:Translate UnusedGoupsSectionName}">
+						<libs:Repeater.ItemTemplate BindingContext="{Binding UnusedGroups}">
+							<DataTemplate>
+								<TextCell Text="{Binding Name}" 
+										  Detail="{Binding Path=AssignedContacts.Count, StringFormat='ContactCount: {0}'}" />
+							</DataTemplate>
+						</libs:Repeater.ItemTemplate>
+					</TableSection>
+				</TableRoot>
+			</TableView> -->
+
+		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

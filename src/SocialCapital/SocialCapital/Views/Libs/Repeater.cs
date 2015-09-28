@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using SocialCapital.Logging;
+using System.Collections.Generic;
 
 namespace SocialCapital.Views.Libs
 {
@@ -15,5 +16,10 @@ namespace SocialCapital.Views.Libs
 
 		public DataTemplate ItemTemplate { get; set; }
 	}
+
+//	public class TableRepeater : IEnumerable<Cell>
+//	{
+//		public DataTemplate ItemTemplate { get; set; }
+//	}
 }
 

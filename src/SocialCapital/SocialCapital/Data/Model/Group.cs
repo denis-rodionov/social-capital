@@ -46,7 +46,7 @@ namespace SocialCapital.Data.Model
 		public IEnumerable<Contact> AssignedContacts {
 			get { 
 				if (assignedContacts == null)
-					App.Container.Get<ContactManager> ().GetContacts (c => c.GroupId == Id);
+					assignedContacts = App.Container.Get<ContactManager> ().GetContacts (c => c.GroupId == Id);
 				return assignedContacts;
 			}
 			set { assignedContacts = value; }

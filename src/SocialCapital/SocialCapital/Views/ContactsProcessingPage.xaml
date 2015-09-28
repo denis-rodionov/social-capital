@@ -6,15 +6,15 @@
 			 Title="{i18n:Translate ContactsProcessingPageTitle}" >
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
-			<FormattedString>
-				<Span Text="{i18n:Translate TotalContactCount}" />
-				<Span Text="{Binding TotalContactCount}" FontAttributes="Bold"/>
-			</FormattedString>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate TotalContactCount}" />
+				<Label Text="{Binding TotalContactCount}" FontAttributes="Bold" />
+			</StackLayout>
 
-			<FormattedString>
-				<Span Text="{i18n:Translate GroupedContactCount}" />
-				<Span Text="{Binding GroupedContactCount}" FontAttributes="Bold" />
-			</FormattedString>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate GroupedContactCount}" />
+				<Label Text="{Binding GroupedContactCount}" FontAttributes="Bold" />
+			</StackLayout>
 
 			<Button Text="{i18n:Translate GroupContactCommand}" Clicked="OnClicked" />
 		</StackLayout>

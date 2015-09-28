@@ -5,6 +5,7 @@ using SocialCapital.Data;
 using SocialCapital.Views;
 using SocialCapital.Logging;
 using Ninject;
+using SocialCapital.ViewModels;
 
 namespace SocialCapital 
 {
@@ -14,7 +15,7 @@ namespace SocialCapital
 
 		public App ()
 		{
-			Container = new StandardKernel (new DatabaseNinjectModule());
+			Container = new StandardKernel (new DatabaseNinjectModule(), new ViewModelNinjectModule());
 
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");

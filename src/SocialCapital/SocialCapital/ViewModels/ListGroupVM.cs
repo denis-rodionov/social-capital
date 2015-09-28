@@ -7,9 +7,9 @@ namespace SocialCapital.ViewModels
 	/// <summary>
 	/// Secondary view-model class for grouping list view
 	/// </summary>
-	public class GroupVM<GroupType, ElementType> : IEnumerable<ElementType>
+	public class ListGroupVM<GroupType, ElementType> : IEnumerable<ElementType>
 	{
-		public GroupType Group { get; set; }
+		public GroupType GroupName { get; set; }
 		public List<ElementType> Elements { get; set; }
 
 		#region IEnumerable implementation

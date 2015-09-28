@@ -179,40 +179,6 @@ namespace SocialCapital.Data
 			tagManager.AssignToContact (newTags, contactId);
 			tagManager.RemoveFromContact (removeTags, contactId);
 		}
-			
-
-		/// <summary>
-		/// Saves the or update contact from the device address book
-		/// </summary>
-		/// <param name="bookContact">Book contact.</param>
-		/// <param name="updateTime">Update time.</param>
-		/// <param name="contact">If contact = null, create takes place, otherwise - update</param>
-		/// <returns>Returns saved contact</returns>
-//		public Contact SaveOrUpdateContact (AddressBookContact bookContact, DateTime updateTime, Contact contact = null)
-//		{
-//			var converter = new AddressBookContactConverter (bookContact, updateTime, contact);
-//			var contactToSave = converter.GetContact ();
-//			int contactId;
-//
-//			using (var db = new DataContext ()) {	
-//				if (contactToSave.Id == 0)
-//					db.Connection.Insert (contactToSave);
-//				else
-//					db.Connection.Update (contactToSave);
-//
-//				contactId = contactToSave.Id;
-//
-//				//contactToSave.Id = contactId;
-//				if (contactId == 0)
-//					throw new ContactManagerException ("InsertOrReplace returned 0");
-//
-//				UpdateContactList<Phone> (converter.GetContactPhones (contactId), contactId, db, p => p.ContactId == contactId);
-//				UpdateContactList<Email> (converter.GetContactEmails (contactId), contactId, db, p => p.ContactId == contactId);
-//				UpdateContactList<Address> (converter.GetContactAddresses (contactId), contactId, db, p => p.ContactId == contactId);
-//			}
-//
-//			return contactToSave;
-//		}
 
 		/// <summary>
 		/// Updates fields and relations of the contact by given list of fields.
@@ -277,6 +243,26 @@ namespace SocialCapital.Data
 					throw new ContactManagerException ("Cannot save communication: Id = 0");
 
 				return communication.Id;
+			}
+		}
+
+		public void AssignToGroup(IEnumerable<Contact> contacts, int groupId)
+		{
+			var contactIds = contacts.Select (c => c.Id);
+
+			using (var db = new DataContext ())
+			{
+				var assignedContacts = db.Connection.Table<Contact> ().Where (c => c.GroupId == groupId).Select (c => c.Id);
+				var toAssign = contactIds.Except (assignedContacts).ToList ();
+				var toUnassign = assignedContacts.Except (contactIds).ToList ();
+
+				// assign
+				foreach (var contactId in toAssign)
+					db.Connection.Execute ("UPDATE Contact SET GroupId=? WHERE Id=?", groupId, contactId);
+
+				// unassign
+				foreach (var contactId in toUnassign)
+					db.Connection.Execute ("UPDATE Contact SET GroupId = null WHERE Id=?", contactId);
 			}
 		}
 

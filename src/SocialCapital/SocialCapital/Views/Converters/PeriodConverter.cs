@@ -17,10 +17,14 @@ namespace SocialCapital.Views.Converters
 					return AppResources.Week;
 				case PeriodValues.Month:
 					return AppResources.Month;
+				case PeriodValues.ThreeMonth:
+					return AppResources.ThreeMonth;
 				case PeriodValues.Year:
 					return AppResources.Year;
 				case PeriodValues.TwoYear:
 					return AppResources.TwoYears;
+				case PeriodValues.Never:
+					return AppResources.Never;
 				default:
 					throw new Exception ("Unknown period value: " + period);
 			}

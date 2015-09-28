@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
+			 x:Class="SocialCapital.Views.ContactPickerPage"
+			 Title="{Binding Path=SelectedCount, StringFormat='Selected count: {0}'}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Clicked="OnDoneClicked" Icon="ic_edit_black_36dp.png" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout Orientation="Vertical">
+			<SearchBar Text="{Binding Filter}" />
+
+			<libs:ListViewEx ItemsSource="{Binding FilteredContacts}"
+					  		 ItemClickCommand="{Binding SelectCommand}">
+				<libs:ListViewEx.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Orientation="Horizontal">								
+								<Image Source="{Binding Path=Selected, Converter={StaticResource BoolToImageConverter}"  />
+								<Label Text="{Binding FullName}" />
+							</StackLayout>
+						</ViewCell>
+						<!--<ImageCell  ImageSource="{Binding PhotoImage}" 
+								    Text="{Binding FullName}" 
+								    Detail="{Binding Tags.TagList}"
+								    TextColor="Black"
+								    DetailColor="Gray" />-->
+					</DataTemplate>
+				</libs:ListViewEx.ItemTemplate>
+			</libs:ListViewEx>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

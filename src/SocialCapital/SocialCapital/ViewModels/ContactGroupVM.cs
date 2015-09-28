@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using SocialCapital.Data.Model;
 using System.Collections.Generic;
+using SocialCapital.Data;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
-	public class ContactGroupVM
+	public class ContactGroupVM : ViewModelBase
 	{
 		private Group SourceGroup;
 
@@ -13,6 +15,8 @@ namespace SocialCapital.ViewModels
 		{
 			SourceGroup = gr;
 		}
+
+		#region Propertied
 
 		public string Name {
 			get { return SourceGroup.Name; }
@@ -26,12 +30,31 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<PeriodValues> PeriodsList { 
 			get {
 				foreach (var en in Enum.GetValues (typeof(PeriodValues)))
-					yield return (PeriodValues)en;
+					yield return (PeriodValues)en;				
 			}
 		}
 
-		public Frequency Frequency { 
-			get { return SourceGroup.Frequency; }
+		public int FrequencyCount {
+			get { return SourceGroup.Frequency.Count; }
+			set { 
+				SourceGroup.Frequency.Count = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		public PeriodValues FrequencyPeriod {
+			get { return SourceGroup.Frequency.Period; }
+			set { 
+				SourceGroup.Frequency.Period = value;
+				OnPropertyChanged ();
+			}
+		}
+
+		#endregion
+
+		public void Assign(IEnumerable<Contact> contacts)
+		{
+			App.Container.Get<ContactManager> ().AssignToGroup (contacts, SourceGroup.Id);
 		}
 	}
 }

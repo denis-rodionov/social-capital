@@ -8,7 +8,7 @@ namespace SocialCapital.Data
 {
 	public class FrequencyManager : BaseDataManager
 	{
-		public FrequencyManager (IDataContext dataContext = null)
+		public FrequencyManager ()
 		{
 		}
 

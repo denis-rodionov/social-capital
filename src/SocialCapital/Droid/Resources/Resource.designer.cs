@@ -55,58 +55,67 @@ namespace SocialCapital.Droid
 			public const int ic_add_box_black_24dp = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int ic_edit_black_36dp = 2130837506;
+			public const int ic_check_box_black_24dp = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int ic_email_black_18dp = 2130837507;
+			public const int ic_check_box_outline_blank_black_24dp = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int ic_email_black_36dp = 2130837508;
+			public const int ic_edit_black_36dp = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int ic_insert_chart_black_36dp = 2130837509;
+			public const int ic_email_black_18dp = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int ic_insert_chart_black_48dp = 2130837510;
+			public const int ic_email_black_36dp = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int ic_menu_black_36dp = 2130837511;
+			public const int ic_insert_chart_black_36dp = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int ic_people_black_36dp = 2130837512;
+			public const int ic_insert_chart_black_48dp = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int ic_people_black_48dp = 2130837513;
+			public const int ic_menu_black_24dp = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int ic_phone_black_18dp = 2130837514;
+			public const int ic_menu_black_36dp = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int ic_phone_black_36dp = 2130837515;
+			public const int ic_people_black_36dp = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int ic_settings_black_36dp = 2130837516;
+			public const int ic_people_black_48dp = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int ic_settings_black_48dp = 2130837517;
+			public const int ic_phone_black_18dp = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int ic_sync_black_36dp = 2130837518;
+			public const int ic_phone_black_36dp = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int ic_sync_black_48dp = 2130837519;
+			public const int ic_settings_black_36dp = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int ic_textsms_black_18dp = 2130837520;
+			public const int ic_settings_black_48dp = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int ic_textsms_black_36dp = 2130837521;
+			public const int ic_sync_black_36dp = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int icon = 2130837522;
+			public const int ic_sync_black_48dp = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int monoandroidsplash = 2130837523;
+			public const int ic_textsms_black_18dp = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int ic_textsms_black_36dp = 2130837524;
+			
+			// aapt resource value: 0x7f020015
+			public const int icon = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int monoandroidsplash = 2130837526;
 			
 			static Drawable()
 			{
