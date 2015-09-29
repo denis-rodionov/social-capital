@@ -6,16 +6,17 @@
 			 x:Class="SocialCapital.Views.GroupDetailsPage"
 			 Title="{Binding Path=Name}">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="{i18n:Translate Rename}" Icon="ic_edit_black_36dp.png" Clicked="OnRename" />
+		<ToolbarItem Name="{i18n:Translate Rename}" Icon="ic_edit_black_36dp.png" Command="{Binding EditModeCommand}" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" >
-			<StackLayout Orientation="Horizontal" IsVisible="{Binding EditMode}">
+			<StackLayout Orientation="Vertical" IsVisible="{Binding EditMode}" BackgroundColor="Aqua">
 				<Entry Text="{Binding Path=Name}" />
-				<Button Command="{Binding UpdateGroupCommand}" />
+				<Editor Text="{Binding Path=Description}" />
+				<Button Text="Save" Command="{Binding UpdateGroupCommand}" />
 			</StackLayout>
 
-			<Editor Text="{Binding Description}" Completed="OnEditDescriptionComplete" />
+			<Label Text="{Binding Description}" IsVisible"{Binding Path=EditMode, Converter={StaticResource NegariveBooleanConverter}}" />
 
 			<StackLayout Orientation="Horizontal">
 				<Label Text="{i18n:Translate IsArchiveLabel}" />

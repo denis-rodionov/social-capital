@@ -21,11 +21,16 @@ namespace SocialCapital.ViewModels
 				EditMode = false;
 				UpdateGroup ();
 			});
+
+			EditModeCommand = new Command ((sender) => {  
+				EditMode = !EditMode; 
+			});
 		}
 
 		#region Propertied
 
-		private ICommand UpdateGroupCommand;
+		public ICommand UpdateGroupCommand { get; set; }
+		public ICommand EditModeCommand { get; set; }
 
 		private bool editMode = false;
 		public bool EditMode {
@@ -35,7 +40,10 @@ namespace SocialCapital.ViewModels
 
 		public string Name {
 			get { return SourceGroup.Name; }
-			set { SourceGroup.Name = value; }
+			set { 
+				SourceGroup.Name = value; 
+				OnPropertyChanged ();
+			}
 		}
 
 		public IEnumerable<Contact> AssignedContacts {

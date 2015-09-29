@@ -40,11 +40,6 @@ namespace SocialCapital.Views
 			var vm = (ContactGroupVM)BindingContext;
 			vm.UpdateGroup ();
 		}
-
-		private void OnRename(object sender, EventArgs args)
-		{
-			var vm = (ContactGroupVM)BindingContext;
-		}
 	}
 }
 
