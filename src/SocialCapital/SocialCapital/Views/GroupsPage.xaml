@@ -5,6 +5,9 @@
 		     xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
 		     x:Class="SocialCapital.Views.GroupsPage"
 		     Title="{i18n:Translate GroupPageTitle}" >
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="{i18n:Translate AddButtonText}" Icon="ic_add_box_black_24dp.png" Clicked="OnAddGroup" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			<ListView IsGroupingEnabled="true"

@@ -2,6 +2,7 @@
 using SQLite.Net.Attributes;
 using System.Collections.Generic;
 using Ninject;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
@@ -9,7 +10,7 @@ namespace SocialCapital.Data.Model
 	/// Group of contcts for classifying contacts by importance status
 	/// and desired frequency of meetings
 	/// </summary>
-	public class Group
+	public class Group : IHasId
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -64,6 +65,11 @@ namespace SocialCapital.Data.Model
 		}
 
 		#endregion
+
+		public override string ToString ()
+		{
+			return string.Format ("[Group: Id={0}, Name={1}, Description={2}, IsArchive={3}, FrequencyId={4}, AssignedContacts={5}, Frequency={6}]", Id, Name, Description, IsArchive, FrequencyId, AssignedContacts, Frequency);
+		}
 	}
 }
 

@@ -7,8 +7,11 @@ using System.Collections.Generic;
 
 namespace SocialCapital.Data
 {
-	public class GroupsManager
+	public class GroupsManager : BaseDataManager
 	{
+		const PeriodValues DefaultPeriod = PeriodValues.Year;
+		const int DefaultPeriodCount = 2;
+
 		public GroupsManager ()
 		{
 		}
@@ -91,11 +94,45 @@ namespace SocialCapital.Data
 
 			using (var db = new DataContext ())
 			{
-				//db.Connection.BeginTransaction ();
+				db.Connection.BeginTransaction ();
+
 				var frequency = frequencyManager.GetFrequency (db, group.Frequency.Period, group.Frequency.Count);
 				if (frequency.Id != group.FrequencyId)
 					db.Connection.Execute ("UPDATE [Group] SET FrequencyId=? WHERE Id=?", frequency.Id, group.Id);
-				//db.Connection.Commit ();
+				
+				db.Connection.Commit ();
+			}
+		}
+
+		public Group CreateNewGroup()
+		{
+			var frequencyManager = App.Container.Get<FrequencyManager> ();
+			Group newGroup;
+
+			using (var db = new DataContext ())
+			{
+				var frequency = frequencyManager.GetFrequency (db, DefaultPeriod, DefaultPeriodCount);
+
+				newGroup = new Group () {
+					Name = null,
+					Description = null,
+					FrequencyId = frequency.Id,
+					IsArchive = false
+				};
+
+				db.Connection.Insert (newGroup);
+
+				CheckId (newGroup);
+			}
+
+			return newGroup;
+		}
+
+		public void DeleteGroup(Group group)
+		{
+			using (var db = new DataContext ())
+			{
+				db.Connection.Delete (group);
 			}
 		}
 

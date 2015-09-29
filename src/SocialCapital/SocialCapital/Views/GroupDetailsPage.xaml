@@ -4,15 +4,22 @@
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.GroupDetailsPage"
-			 Title="{Binding Path=Name}">
+			 Title="{Binding Path=Name}"
+			 x:Name="page">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="{i18n:Translate Rename}" Icon="ic_edit_black_36dp.png" Command="{Binding EditModeCommand}" />
+		<ToolbarItem Name="{i18n:Translate Rename}" 
+					 Icon="ic_mode_edit_black_24dp.png" 
+					 Command="{Binding EditModeCommand}" />
+		<ToolbarItem Name="{i18n:Translate DeleteButtonText}" 
+					 Icon="ic_delete_black_24dp.png" 
+					 Command="{Binding DeleteCommand}"
+					 CommandParameter="{x:Reference page}" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" >
 			<StackLayout Orientation="Vertical" IsVisible="{Binding EditMode}" BackgroundColor="Aqua">
-				<Entry Text="{Binding Path=Name}" />
-				<Editor Text="{Binding Path=Description}" />
+				<Entry Text="{Binding Path=Name}" Placeholder="{i18n:Translate NewGroupNameEntryPlaceholder}" />
+				<Entry Text="{Binding Path=Description}" Placeholder="{i18n:Translate NewGroupDescriptionEntryPlaceholder}" />
 				<Button Text="Save" Command="{Binding UpdateGroupCommand}" />
 			</StackLayout>
 

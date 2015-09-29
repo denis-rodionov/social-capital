@@ -12,7 +12,7 @@ namespace SocialCapital.Views
 		{
 			InitializeComponent ();
 
-			this.BindingContext = new ContactListVM ();
+			this.BindingContext = new ContactListVM (c => true);
 		}
 
 		protected override void OnAppearing()

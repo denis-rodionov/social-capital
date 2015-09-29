@@ -12,7 +12,7 @@ namespace SocialCapital.ViewModels
 {
 	public class ContactGroupVM : ViewModelBase
 	{
-		private Group SourceGroup;
+		public Group SourceGroup { get; private set; }
 
 		public ContactGroupVM (Group gr)
 		{
@@ -22,15 +22,18 @@ namespace SocialCapital.ViewModels
 				UpdateGroup ();
 			});
 
-			EditModeCommand = new Command ((sender) => {  
+			EditModeCommand = new Command (() => {  
 				EditMode = !EditMode; 
 			});
+
+			DeleteCommand = new Command (page => DeleteGroup((Page)page));
 		}
 
 		#region Propertied
 
 		public ICommand UpdateGroupCommand { get; set; }
 		public ICommand EditModeCommand { get; set; }
+		public ICommand DeleteCommand { get; set; }
 
 		private bool editMode = false;
 		public bool EditMode {
@@ -129,6 +132,20 @@ namespace SocialCapital.ViewModels
 		{
 			var db = App.Container.Get<GroupsManager> ();
 			return Task.Run (() => db.UpdateFrequency (SourceGroup));
+		}
+
+		public async void DeleteGroup(Page page)
+		{
+			var yes = await page.DisplayAlert (AppResources.Warning, AppResources.AreYouSureToDeleteGroup, AppResources.Yes, AppResources.No);
+
+			if (yes)
+			{
+				var db = App.Container.Get<GroupsManager> ();
+
+				await Task.Run (() => db.DeleteGroup (SourceGroup));
+
+				page.Navigation.PopAsync ();
+			} 
 		}
 
 		#endregion

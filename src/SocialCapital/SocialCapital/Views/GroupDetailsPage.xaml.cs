@@ -6,6 +6,7 @@ using SocialCapital.ViewModels;
 using Ninject;
 using System.Linq;
 using SocialCapital.Data.Model;
+using SocialCapital.Common;
 
 namespace SocialCapital.Views
 {
@@ -13,14 +14,23 @@ namespace SocialCapital.Views
 	{
 		public GroupDetailsPage (ContactGroupVM vm)
 		{
+			var timing = Timing.Start ("GroupDetailsPage init");
+
 			InitializeComponent ();
 			BindingContext = vm;
+
+			timing.Finish ();
 		}
 
+		/// <summary>
+		/// Assign contacts to the group
+		/// </summary>
 		protected void OnClicked(object sender, EventArgs args)
 		{
-			var contactList = App.Container.Get<ContactListVM> ();
 			var vm = (ContactGroupVM)BindingContext;
+
+			var contactList = new ContactListVM (c => c.GroupId == 0 || c.GroupId == vm.SourceGroup.Id );
+						
 			contactList.SelectContacts (vm.AssignedContacts);
 
 			var page = new ContactPickerPage (contactList, OnDone);

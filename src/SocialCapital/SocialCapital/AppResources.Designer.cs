@@ -134,6 +134,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы уверены что хотите удалить группу?.
+        /// </summary>
+        internal static string AreYouSureToDeleteGroup {
+            get {
+                return ResourceManager.GetString("AreYouSureToDeleteGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Добавить контакты в группу.
         /// </summary>
         internal static string AssignContactsToGroup {
@@ -238,6 +247,15 @@ namespace SocialCapital {
         internal static string DeleteButtonText {
             get {
                 return ResourceManager.GetString("DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Описание.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
@@ -391,6 +409,33 @@ namespace SocialCapital {
         internal static string Never {
             get {
                 return ResourceManager.GetString("Never", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите описание группы.
+        /// </summary>
+        internal static string NewGroupDescriptionEntryPlaceholder {
+            get {
+                return ResourceManager.GetString("NewGroupDescriptionEntryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Введите название группы.
+        /// </summary>
+        internal static string NewGroupNameEntryPlaceholder {
+            get {
+                return ResourceManager.GetString("NewGroupNameEntryPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Нет.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -575,6 +620,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Внимание.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на неделя.
         /// </summary>
         internal static string Week {
@@ -598,6 +652,15 @@ namespace SocialCapital {
         internal static string Year {
             get {
                 return ResourceManager.GetString("Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Да.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -12,13 +12,15 @@ namespace SocialCapital.ViewModels
 	{
 		private IEnumerable<Contact> Contacts { get; set; }
 
-		private IEnumerable<Group> Groups { get; set; }
+		private List<Group> Groups { get; set; }
 
 		public ContactGroupListVM ()
 		{
 			Contacts = App.Container.Get<ContactManager> ().Contacts;
-			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true);
+			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true).ToList ();
 		}
+
+		#region Properties
 
 		public IEnumerable<ListGroupVM<string, ContactGroupVM>> GroupedItems {
 			get {
@@ -38,12 +40,22 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		#endregion
+
+		#region Actions
+
 		public void Refresh()
 		{
+			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true).ToList ();
 			GroupedItems = null;
 		}
 
+		public void AddGroup(Group group)
+		{
+			Groups.Add (group);
+		}
 
+		#endregion
 	}
 }
 

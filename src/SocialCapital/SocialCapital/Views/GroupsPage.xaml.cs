@@ -6,6 +6,9 @@ using SocialCapital.ViewModels;
 using System.Collections.ObjectModel;
 using SocialCapital.Data.Model;
 using System.Linq;
+using SocialCapital.Common;
+using Ninject;
+using SocialCapital.Data;
 
 namespace SocialCapital.Views
 {
@@ -15,9 +18,13 @@ namespace SocialCapital.Views
 
 		public GroupsPage (ContactGroupListVM vm)
 		{
+			var timing = Timing.Start ("GroupsPage init");
+
 			InitializeComponent ();
 			BindingContext = vm;
 			FirstAppearing = true;
+
+			timing.Finish ();
 		}
 
 		protected override void OnAppearing ()
@@ -35,6 +42,19 @@ namespace SocialCapital.Views
 
 			FirstAppearing = false;
 			Navigation.PushAsync (page);
+		}
+
+		protected void OnAddGroup(object sender, EventArgs args)
+		{
+			var newGroup = App.Container.Get<GroupsManager> ().CreateNewGroup ();
+			var vm = (ContactGroupListVM)BindingContext;
+
+			var newVM = new ContactGroupVM (newGroup) {
+				EditMode = true
+			};
+
+			FirstAppearing = false;
+			Navigation.PushAsync (new GroupDetailsPage (newVM));
 		}
 	}
 }

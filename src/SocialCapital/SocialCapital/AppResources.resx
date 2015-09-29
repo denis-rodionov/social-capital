@@ -54,6 +54,10 @@
 		<value>Переименовать</value>
 		<comment>Название действия RENAME</comment>
 	</data>
+	<data name="Warning" xml:space="preserve">
+		<value>Внимание</value>
+		<comment>Короткая надпись для обращения внимания пользователя</comment>
+	</data>
 	<data name="InputSelectTagPlaceholder" xml:space="preserve">
 		<value>Введите название</value>
 		<comment>Предложение ввести навазение тега, или часть названия для поиска тега</comment>
@@ -226,6 +230,18 @@
 		<value>никогда</value>
 		<comment>перевод</comment>
 	</data>
+	<data name="Yes" xml:space="preserve">
+		<value>Да</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="No" xml:space="preserve">
+		<value>Нет</value>
+		<comment>перевод</comment>
+	</data>
+	<data name="Description" xml:space="preserve">
+		<value>Описание</value>
+		<comment>перевод</comment>
+	</data>
 	<data name="AssignContactsToGroup" xml:space="preserve">
 		<value>Добавить контакты в группу</value>
 		<comment>Кнопка или команда для перехода на страницу добавления контактов в группу</comment>
@@ -242,6 +258,17 @@
 		<value>Архив</value>
 		<comment>Переключетель делающий группу архивной</comment>
 	</data>
-
+	<data name="NewGroupNameEntryPlaceholder" xml:space="preserve">
+		<value>Введите название группы</value>
+		<comment>Подсказка в строке ввода названия новой группы</comment>
+	</data>
+	<data name="NewGroupDescriptionEntryPlaceholder" xml:space="preserve">
+		<value>Введите описание группы</value>
+		<comment>Подсказка в строке ввода описания новой группы</comment>
+	</data>
+	<data name="AreYouSureToDeleteGroup" xml:space="preserve">
+		<value>Вы уверены что хотите удалить группу?</value>
+		<comment>Запрос подтверждения удаления группы</comment>
+	</data>
 
 </root>
