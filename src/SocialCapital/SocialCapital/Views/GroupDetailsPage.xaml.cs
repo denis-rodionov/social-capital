@@ -29,7 +29,7 @@ namespace SocialCapital.Views
 		{
 			var vm = (ContactGroupVM)BindingContext;
 
-			var contactList = new ContactListVM (c => c.GroupId == 0 || c.GroupId == vm.SourceGroup.Id );
+			var contactList = new ContactListVM (c => c.GroupId == null || c.GroupId == vm.SourceGroup.Id );
 						
 			contactList.SelectContacts (vm.AssignedContacts);
 

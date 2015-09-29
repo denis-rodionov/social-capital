@@ -50,19 +50,6 @@ namespace SocialCapital.Data
 		public IEnumerable<Contact> GetContacts(Expression<Func<Contact, bool>> whereClause)
 		{
 			using (var db = new DataContext ()) {
-
-				var timing1 = Timing.Start ("op1");
-				var temp = db.Connection.Table<Contact> ().ToList ().Where (c => c.GroupId == 1);
-				timing1.Finish ();
-
-				var timing2 = Timing.Start ("op2");
-				var temp1 = db.Connection.Table<Contact> ().Where (c => c.GroupId == 1).ToList ();
-				timing2.Finish ();
-
-				var timing3 = Timing.Start ("op3");
-				var temp5 = db.Connection.Query<Contact> ("SELECT * FROM Contact WHERE GroupId=?", 1);
-				timing3.Finish ();
-
 				return db.Connection.Table<Contact> ().Where (whereClause).ToList ();
 			}
 		}

@@ -29,7 +29,7 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		public string AddressBookId { get; set; }
 
-		public int GroupId { get; set; }
+		public int? GroupId { get; set; }
 
 		#region Navigation Properties
 
@@ -39,8 +39,8 @@ namespace SocialCapital.Data.Model
 			get {
 				if (group != null)
 				{
-					if (GroupId != 0)
-						group = App.Container.Get<GroupsManager> ().GetGroup (GroupId);
+					if (GroupId != null)
+						group = App.Container.Get<GroupsManager> ().GetGroup (GroupId.Value);
 				}
 				return group;
 			}
