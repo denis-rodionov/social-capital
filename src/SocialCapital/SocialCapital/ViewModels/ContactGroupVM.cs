@@ -4,6 +4,9 @@ using SocialCapital.Data.Model;
 using System.Collections.Generic;
 using SocialCapital.Data;
 using Ninject;
+using System.Windows.Input;
+using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace SocialCapital.ViewModels
 {
@@ -14,9 +17,21 @@ namespace SocialCapital.ViewModels
 		public ContactGroupVM (Group gr)
 		{
 			SourceGroup = gr;
+			UpdateGroupCommand = new Command (() => { 
+				EditMode = false;
+				UpdateGroup ();
+			});
 		}
 
 		#region Propertied
+
+		private ICommand UpdateGroupCommand;
+
+		private bool editMode = false;
+		public bool EditMode {
+			get { return editMode; }
+			set { SetProperty (ref editMode, value); }
+		}
 
 		public string Name {
 			get { return SourceGroup.Name; }
@@ -41,26 +56,74 @@ namespace SocialCapital.ViewModels
 		public int FrequencyCount {
 			get { return SourceGroup.Frequency.Count; }
 			set { 
-				SourceGroup.Frequency.Count = value;
-				OnPropertyChanged ();
+				if (SourceGroup.Frequency.Count != value)
+				{
+					SourceGroup.Frequency.Count = value;
+					OnPropertyChanged ();
+					UpdateFrequency ();
+				}
 			}
 		}
 
 		public PeriodValues FrequencyPeriod {
 			get { return SourceGroup.Frequency.Period; }
 			set { 
-				SourceGroup.Frequency.Period = value;
-				OnPropertyChanged ();
+				if (SourceGroup.Frequency.Period != value)
+				{
+					SourceGroup.Frequency.Period = value;
+					OnPropertyChanged ();
+					UpdateFrequency ();
+				}
+			}
+		}
+
+		public bool IsArchive {
+			get { return SourceGroup.IsArchive; }
+			set {
+				if (SourceGroup.IsArchive != value)
+				{
+					SourceGroup.IsArchive = value;
+					OnPropertyChanged ();
+					UpdateGroup ();
+				}
+			}
+		}
+
+		public string Description {
+			get { return SourceGroup.Description; }
+			set {
+				if (SourceGroup.Description != value)
+				{
+					SourceGroup.Description = value;
+					OnPropertyChanged ();
+					UpdateGroup ();
+				}
 			}
 		}
 
 		#endregion
+
+		#region Actions
 
 		public void Assign(IEnumerable<Contact> contacts)
 		{
 			App.Container.Get<ContactManager> ().AssignToGroup (contacts, SourceGroup.Id);
 			AssignedContacts = null;
 		}
+
+		public Task UpdateGroup()
+		{
+			var db = App.Container.Get<GroupsManager> ();
+			return Task.Run (() => db.UpdateGroupData (SourceGroup));
+		}
+
+		public Task UpdateFrequency()
+		{
+			var db = App.Container.Get<GroupsManager> ();
+			return Task.Run (() => db.UpdateFrequency (SourceGroup));
+		}
+
+		#endregion
 	}
 }
 

@@ -75,7 +75,7 @@ namespace SocialCapital.ViewModels
 				case "Settings":
 					return new SettingsPage (SettingsViewModel);
 				case "ContactsProcessing":
-					return new ContactsProcessingPage(new ContactsProcessingVM());
+					return new GroupsPage(new ContactGroupListVM());
 				default:
 					return new ContentPage ();
 			}

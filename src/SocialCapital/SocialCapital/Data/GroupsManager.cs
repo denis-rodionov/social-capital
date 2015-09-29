@@ -74,6 +74,32 @@ namespace SocialCapital.Data
 				return db.Connection.Table<Group> ().Where (whereClause).ToList ();
 			}
 		}
+
+		#region Save actions
+
+		public void UpdateGroupData(Group group)
+		{
+			using (var db = new DataContext ())
+			{
+				db.Connection.Update (group);
+			}
+		}
+
+		public void UpdateFrequency(Group group)
+		{
+			var frequencyManager = App.Container.Get<FrequencyManager> ();
+
+			using (var db = new DataContext ())
+			{
+				db.Connection.BeginTransaction ();
+				var frequency = frequencyManager.GetFrequency (db, group.Frequency.Period, group.Frequency.Count);
+				if (frequency.Id != group.FrequencyId)
+					db.Connection.Execute ("UPDATE Group SET FrequencyId=?", frequency.Id);
+				db.Connection.Commit ();
+			}
+		}
+
+		#endregion
 	}
 }
 

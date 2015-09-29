@@ -34,6 +34,17 @@ namespace SocialCapital.Views
 			//var contacts = contactList.AllContacts.Where(c => c.Selected).Select(c => c.SourceContact);
 			vm.Assign (seletedContacts);
 		}
+
+		private void OnEditDescriptionComplete(object sender, EventArgs args)
+		{
+			var vm = (ContactGroupVM)BindingContext;
+			vm.UpdateGroup ();
+		}
+
+		private void OnRename(object sender, EventArgs args)
+		{
+			var vm = (ContactGroupVM)BindingContext;
+		}
 	}
 }
 

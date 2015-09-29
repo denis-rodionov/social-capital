@@ -5,9 +5,17 @@
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.GroupDetailsPage"
 			 Title="{Binding Path=Name}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="{i18n:Translate Rename}" Icon="ic_edit_black_36dp.png" Clicked="OnRename" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical" >
-			<Label Text="{Binding Description}" />
+			<StackLayout Orientation="Horizontal" IsVisible="{Binding EditMode}">
+				<Entry Text="{Binding Path=Name}" />
+				<Button Command="{Binding UpdateGroupCommand}" />
+			</StackLayout>
+
+			<Editor Text="{Binding Description}" Completed="OnEditDescriptionComplete" />
 
 			<StackLayout Orientation="Horizontal">
 				<Label Text="{i18n:Translate IsArchiveLabel}" />
@@ -19,9 +27,9 @@
 				<Label Text="{Binding FrequencyCount}"  FontSize="Large" />
 				<Label Text=" time(s) per "  FontSize="Large" />
 				<controls:BindablePicker Title="Picker" 
-									 ItemsSource="{Binding PeriodsList}" 
-									 SelectedItem="{Binding FrequencyPeriod}"
-									 Converter="{StaticResource PeriodConverter}" />
+									 	 ItemsSource="{Binding PeriodsList}" 
+									 	 SelectedItem="{Binding FrequencyPeriod}"
+									 	 Converter="{StaticResource PeriodConverter}" />
 				<!--<Label Text="{Binding Path=Frequency.Period, Converter={StaticResource PeriodConverter}}" />-->
 			</StackLayout>
 

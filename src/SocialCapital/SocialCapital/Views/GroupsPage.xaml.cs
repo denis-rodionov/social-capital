@@ -11,26 +11,21 @@ namespace SocialCapital.Views
 {
 	public partial class GroupsPage : ContentPage
 	{
+		bool FirstAppearing { get; set; }
+
 		public GroupsPage (ContactGroupListVM vm)
 		{
 			InitializeComponent ();
 			BindingContext = vm;
-
-			// populating the table
-//			foreach (var group in vm.UnusedGroup)
-//				UnusedGroupSection.Add (CreateCell (group));
-//
-//			foreach (var group in vm.UsedGroups)
-//				UsedGtoupsSection.Add (CreateCell (group));
+			FirstAppearing = true;
 		}
 
-		static TextCell CreateCell (Group group)
+		protected override void OnAppearing ()
 		{
-			var newCell = new TextCell () {
-				Text = group.Name,
-				Detail = string.Format ("{0}: {1}", AppResources.ContactCountInGroup, group.AssignedContacts.Count ())	
-			};
-			return newCell;
+			base.OnAppearing ();
+
+			if (!FirstAppearing)
+				(BindingContext as ContactGroupListVM).Refresh ();
 		}
 
 		protected void OnItemTapped(object sender, ItemTappedEventArgs args)
@@ -38,6 +33,7 @@ namespace SocialCapital.Views
 			var group = (ContactGroupVM)args.Item;
 			var page = new GroupDetailsPage (group);
 
+			FirstAppearing = false;
 			Navigation.PushAsync (page);
 		}
 	}

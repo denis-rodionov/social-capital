@@ -16,7 +16,7 @@ namespace SocialCapital.Views.Controls
 			BindableProperty.Create<BindablePicker, IEnumerable>(o => o.ItemsSource, default(IEnumerable), propertyChanged: OnItemsSourceChanged);
 
 		public static BindableProperty SelectedItemProperty =
-			BindableProperty.Create<BindablePicker, object>(o => o.SelectedItem, default(object),propertyChanged: OnSelectedItemChanged);
+			BindableProperty.Create<BindablePicker, object>(o => o.SelectedItem, default(object), BindingMode.TwoWay, propertyChanged: OnSelectedItemChanged);
 
 		public static BindableProperty ConverterProperty =
 			BindableProperty.Create<BindablePicker, IValueConverter>(o => o.Converter, default(IValueConverter), BindingMode.TwoWay, null,
@@ -50,6 +50,14 @@ namespace SocialCapital.Views.Controls
 					: (String)converter.Convert(input, typeof(String), null, System.Globalization.CultureInfo.CurrentUICulture);
 		}
 
+		private object ConvertBack(string value)
+		{
+			if (Converter != null)
+				return Converter.ConvertBack (value, typeof(object), null, System.Globalization.CultureInfo.CurrentUICulture);
+			else
+				return value;
+		}
+
 		private static void OnItemsSourceChanged(BindableObject bindable, IEnumerable oldvalue, IEnumerable newvalue)
 		{
 			var picker = bindable as BindablePicker;
@@ -67,13 +75,14 @@ namespace SocialCapital.Views.Controls
 
 		private void OnSelectedIndexChanged(object sender, EventArgs eventArgs)
 		{
+			//var picker = bindable as BindablePicker;
 			if (SelectedIndex < 0 || SelectedIndex > Items.Count - 1)
 			{
 				SelectedItem = null;
 			}
 			else
 			{
-				SelectedItem = Items[SelectedIndex];
+				SelectedItem = ConvertBack (Items [SelectedIndex]);
 			}
 		}
 
@@ -82,7 +91,9 @@ namespace SocialCapital.Views.Controls
 			var picker = bindable as BindablePicker;
 			if (newvalue != null)
 			{
-				picker.SelectedIndex = picker.Items.IndexOf(newvalue.ToString());
+				var converted = picker.Convert (newvalue, picker.Converter);
+
+				picker.SelectedIndex = picker.Items.IndexOf(converted);
 			}
 		}
 	}

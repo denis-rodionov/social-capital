@@ -46,6 +46,14 @@
 		<value>Отменить</value>
 		<comment>Название для любой кнопки отмены сделанных изменений</comment>
 	</data>
+	<data name="Done" xml:space="preserve">
+		<value>Готово</value>
+		<comment>Название действия DONE (готово/закончить/закрыть)</comment>
+	</data>
+	<data name="Rename" xml:space="preserve">
+		<value>Переименовать</value>
+		<comment>Название действия RENAME</comment>
+	</data>
 	<data name="InputSelectTagPlaceholder" xml:space="preserve">
 		<value>Введите название</value>
 		<comment>Предложение ввести навазение тега, или часть названия для поиска тега</comment>
@@ -234,4 +242,6 @@
 		<value>Архив</value>
 		<comment>Переключетель делающий группу архивной</comment>
 	</data>
+
+
 </root>

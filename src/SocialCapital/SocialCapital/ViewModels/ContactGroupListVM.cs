@@ -33,19 +33,17 @@ namespace SocialCapital.ViewModels
 
 				return new List<ListGroupVM<string, ContactGroupVM>> () { used, unused };
 			}
+			set {
+				OnPropertyChanged ();
+			}
 		}
 
-//		public IEnumerable<Contact> NotGroupedContacts {
-//			get { return Contacts.Where (c => c.GroupId == 0); }
-//		}
-//
-//		public IEnumerable<Group> UsedGroups {
-//			get { return Groups.Where (g => g.AssignedContacts.Any()); }
-//		}
-//
-//		public IEnumerable<Group> UnusedGroup {
-//			get { return Groups.Where (g => !g.AssignedContacts.Any()); }
-//		}
+		public void Refresh()
+		{
+			GroupedItems = null;
+		}
+
+
 	}
 }
 
