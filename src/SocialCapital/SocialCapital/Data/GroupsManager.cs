@@ -91,11 +91,11 @@ namespace SocialCapital.Data
 
 			using (var db = new DataContext ())
 			{
-				db.Connection.BeginTransaction ();
+				//db.Connection.BeginTransaction ();
 				var frequency = frequencyManager.GetFrequency (db, group.Frequency.Period, group.Frequency.Count);
 				if (frequency.Id != group.FrequencyId)
-					db.Connection.Execute ("UPDATE Group SET FrequencyId=?", frequency.Id);
-				db.Connection.Commit ();
+					db.Connection.Execute ("UPDATE [Group] SET FrequencyId=? WHERE Id=?", frequency.Id, group.Id);
+				//db.Connection.Commit ();
 			}
 		}
 
