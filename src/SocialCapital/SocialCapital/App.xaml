@@ -5,7 +5,7 @@
 			 x:Class="SocialCapital.App">
 	<Application.Resources>
 		<ResourceDictionary>
-        	<converters:NegateBooleanConverter x:Key="not" />
+        	<converters:NegativeBooleanConverter x:Key="not" />
         	<converters:ContactToStatusConverter x:Key="StatusConverter" />
         	<converters:ListToBoolConverter x:Key="ListToBool" />
         	<converters:DateTimeCustomConverter x:Key="DateTimeCustom" />

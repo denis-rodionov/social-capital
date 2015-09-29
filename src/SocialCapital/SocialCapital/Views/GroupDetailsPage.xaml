@@ -16,7 +16,7 @@
 				<Button Text="Save" Command="{Binding UpdateGroupCommand}" />
 			</StackLayout>
 
-			<Label Text="{Binding Description}" IsVisible"{Binding Path=EditMode, Converter={StaticResource NegariveBooleanConverter}}" />
+			<Label Text="{Binding Description}" IsVisible="{Binding Path=EditMode, Converter={StaticResource not}}" />
 
 			<StackLayout Orientation="Horizontal">
 				<Label Text="{i18n:Translate IsArchiveLabel}" />
