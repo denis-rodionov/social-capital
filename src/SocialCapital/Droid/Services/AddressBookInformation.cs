@@ -10,30 +10,22 @@ using System.Drawing;
 using System.IO;
 using System.Linq.Expressions;
 
-[assembly: Dependency(typeof(SocialCapital.Droid.Services.AddressBookInformation))]
+//[assembly: Dependency(typeof(SocialCapital.Droid.Services.AddressBookInformation))]
 
 namespace SocialCapital.Droid.Services
 {
-	public class AddressBookInformation : IAddressBookInformation
+	public class AddressBookInformation : BaseAddressBookService, IAddressBookInformation
 	{
-		const int ProgressReportFrequency = 2;
+		
 
 		/// <summary>
 		/// The book.
 		/// </summary>
 		private AddressBook book = null;
 
-		private int countRetrieved = 0;
 
-		/// <summary>
-		/// Event of calculation the count of contact in device book
-		/// </summary>
-		public event Action<int> ContactsCountCalculated;
 
-		/// <summary>
-		/// Event of the contact retrieve from device book with the count of retrieved contacts
-		/// </summary>
-		public event Action<int> ContactRetrieved;
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AddressBookInformation"/> class.
@@ -43,11 +35,15 @@ namespace SocialCapital.Droid.Services
 			this.book = new AddressBook(Forms.Context.ApplicationContext);
 		}
 
+		/// <summary>
+		/// Gets the contacts by means of Xamarin.Mobile
+		/// </summary>
+		/// <returns>The contacts.</returns>
 		public IEnumerable<AddressBookContact> GetContacts ()
 		{
 			IEnumerable<AddressBookContact> contacts;
 
-			countRetrieved = 0;
+			CountRetrieved = 0;
 
 			// Observation:
 			// On device RequestPermission() returns false sometimes so you can use  this.book.RequestPermission().Result (remove await)
@@ -79,13 +75,9 @@ namespace SocialCapital.Droid.Services
 			return contacts;
 		}
 
-		private void RaiseCountCalculated(int count)
-		{
-			var handler = ContactsCountCalculated;
 
-			if (handler != null)
-				handler (count);
-		}
+
+
 
 		private Expression<Func<Contact, bool>> GetFilter()
 		{
@@ -101,7 +93,7 @@ namespace SocialCapital.Droid.Services
 				MiddleName = contact.MiddleName,
 				DisplayName = contact.DisplayName,
 				NickName = contact.Nickname,
-				Thumbnail = null,//GetImageArray (contact.GetThumbnail ()),
+				Thumbnail = GetImageArray (contact.GetThumbnail ()),
 				IsAggregate = contact.IsAggregate,
 				Prefix = contact.Prefix,
 				Suffix = contact.Suffix,
@@ -133,21 +125,12 @@ namespace SocialCapital.Droid.Services
 				}).ToList()
 			};
 
-			RaiseContactRetrieved (countRetrieved++);
+			RaiseContactRetrieved (CountRetrieved++);
 
 			return res;
 		}
 
-		private void RaiseContactRetrieved(int count)
-		{
-			if (count % ProgressReportFrequency == 0) {
-				var handler = ContactRetrieved;
 
-				if (handler != null)
-					handler (count);
-			}
-				
-		}
 
 		private SocialCapital.Data.Model.EmailType ToEmailType(EmailType type)
 		{

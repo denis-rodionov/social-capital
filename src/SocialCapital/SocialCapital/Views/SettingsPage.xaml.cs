@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using SocialCapital.Data;
+using SocialCapital.AddressBookImport;
 
 namespace SocialCapital.Views
 {
@@ -30,6 +31,16 @@ namespace SocialCapital.Views
 
 			if (yes)
 				DataContext.ClearDatabase ();
+		}
+
+		private void OnLoadContacts(object sender, EventArgs args)
+		{
+			var service = DependencyService.Get<IAddressBookInformation> ();
+
+			var contacts = service.GetContacts ();
+
+			var page = new TestContacts (new TestContactsVM (contacts));
+			Navigation.PushAsync (page);
 		}
 	}
 }

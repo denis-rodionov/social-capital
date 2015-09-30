@@ -94,6 +94,9 @@
     <Compile Include="Localize.cs" />
     <Compile Include="Services\AddressBookInformation.cs" />
     <Compile Include="Services\PhoneService.cs" />
+    <Compile Include="Services\BaseAddressBookService.cs" />
+    <Compile Include="Services\NativeContactService.cs" />
+    <Compile Include="Services\AndroidContact.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

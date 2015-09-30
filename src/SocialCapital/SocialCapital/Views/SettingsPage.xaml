@@ -6,6 +6,7 @@
 		<StackLayout Orientation="Vertical">
 			<Button Text="Erase database" HorizontalOptions="CenterAndExpand" Clicked="OnErase" />
 			<Button Text="Log messages" HorizontalOptions="CenterAndExpand" Clicked="OnShowLogs" />
+			<Button Text="Load contacts" HorizontalOptions="CenterAndExpand" Clicked="OnLoadContacts" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
