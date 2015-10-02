@@ -32,6 +32,11 @@ namespace SocialCapital.Data.Model
 		{
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("[Country={0}, City={1}, StreetAddress={2}, Region={3}, PostalCode={4}, Label={5}]", Country, City, StreetAddress, Region, PostalCode, Label);
+		}
+
 		#region IEquatable implementation
 
 		public bool Equals (Address other)

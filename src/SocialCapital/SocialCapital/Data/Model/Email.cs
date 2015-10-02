@@ -28,7 +28,7 @@ namespace SocialCapital.Data.Model
 
 		public override string ToString ()
 		{
-			return string.Format ("[Address={0}, Label={1}, Type={2}]", Address, Label, Type);
+			return string.Format ("[{0}: {1} ({2})]", Label, Address, Type);
 		}
 
 		#region IEquatable implementation
