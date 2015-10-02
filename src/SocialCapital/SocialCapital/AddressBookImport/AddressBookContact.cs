@@ -28,15 +28,15 @@ namespace SocialCapital.AddressBookImport
 
 		public byte[] Thumbnail { get; set; }
 
-		public IEnumerable<Organization> Organizations { get; set; }
+		public List<Organization> Organizations { get; set; }
 
-		public IEnumerable<Phone> Phones { get; set; }
+		public List<Phone> Phones { get; set; }
 
-		public IEnumerable<Email> Emails { get; set; }
+		public List<Email> Emails { get; set; }
 
-		public IEnumerable<Note> Notes { get; set; }
+		public List<Note> Notes { get; set; }
 
-		public IEnumerable<Address> Addresses { get; set; }
+		public List<Address> Addresses { get; set; }
 
 		#region Experiment fields
 
@@ -70,6 +70,11 @@ namespace SocialCapital.AddressBookImport
 
 		public AddressBookContact ()
 		{
+			Phones = new List<Phone> ();
+			Emails = new List<Email> ();
+			Organizations = new List<Organization> ();
+			Addresses = new List<Address> ();
+			Notes = new List<Note> ();
 		}
 
 		public override string ToString ()
@@ -129,29 +134,42 @@ namespace SocialCapital.AddressBookImport
 			}
 		}
 
-
 		string AppendProperty(object obj, string name)
 		{
 			if (obj != null)
 			{
 				string objValue;
 
-				if (obj.GetType().Name == "Byte[]")
+				if (obj.GetType ().Name == "Byte[]")
 					objValue = "[NOT NULL]";
-				else if (obj.GetType () is IEnumerable)
-					objValue = string.Join ("\n\t", obj);
+				else if (obj.GetType ().Name.Contains ("List"))
+					objValue = ListToString ((IEnumerable)obj);
 				else
 					objValue = obj.ToString ();		
 
 				if (objValue == "1")
 					return name + "\n";
-				else if (objValue == "0")
+				else if (objValue == "0" || objValue == "False" || objValue == String.Empty)
 					return "";
 				else
 					return string.Format ("{0} = '{1}'\n", name, objValue);
 			}
 			else
 				return string.Empty;
+		}
+
+		string ListToString(IEnumerable list)
+		{
+			string res = "";
+			foreach (var item in list)
+			{
+				res += "\n\t" + item.ToString ();
+			}
+
+			//if (res.Length > 0)
+			//	res.Remove (res.Length - 1, 1);
+
+			return res;
 		}
 	}
 }

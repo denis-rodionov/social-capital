@@ -4,9 +4,9 @@
 			x:Class="SocialCapital.Views.SettingsPage">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
-			<Button Text="Erase database" HorizontalOptions="CenterAndExpand" Clicked="OnErase" />
-			<Button Text="Log messages" HorizontalOptions="CenterAndExpand" Clicked="OnShowLogs" />
-			<Button Text="Load contacts" HorizontalOptions="CenterAndExpand" Clicked="OnLoadContacts" />
+			<Button Text="Erase database" HorizontalOptions="Fill" Clicked="OnErase" />
+			<Button Text="Log messages" HorizontalOptions="Fill" Clicked="OnShowLogs" />
+			<Button Text="Load contacts" HorizontalOptions="Fill" Clicked="OnLoadContacts" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

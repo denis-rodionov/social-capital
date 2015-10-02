@@ -72,7 +72,7 @@ namespace SocialCapital.Data.Model
 
 		public override string ToString ()
 		{
-			return string.Format ("[Label={0}, Number={1}, Type={2}]", Label, Number, Type);
+			return string.Format ("{0},{1},{2}", Label, Number, Type);
 		}
 	}
 }

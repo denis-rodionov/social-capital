@@ -10,6 +10,7 @@ using Android.Content;
 using Xamarin.Forms;
 using SocialCapital.Data.Model;
 using SocialCapital.Common;
+using System.Linq;
 
 [assembly: Dependency(typeof(SocialCapital.Droid.Services.NativeContactService))]
 
@@ -72,7 +73,8 @@ namespace SocialCapital.Droid.Services
 				ContactsContract.Contacts.InterfaceConsts.SortKeyAlternative,
 				ContactsContract.Contacts.InterfaceConsts.SortKeyPrimary,
 				ContactsContract.Contacts.InterfaceConsts.Starred,
-				ContactsContract.Contacts.InterfaceConsts.TimesContacted,
+				ContactsContract.Contacts.InterfaceConsts.TimesContacted
+				//ContactsContract.CommonDataKinds.Phone.Number
 			};
 
 			// CursorLoader introduced in Honeycomb (3.0, API11)
@@ -83,7 +85,7 @@ namespace SocialCapital.Droid.Services
 			if (cursor.MoveToFirst ()) {
 				do {
 					
-					contactList.Add (new AddressBookContact{
+					var newContact = new AddressBookContact() {
 						Id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Id)),
 						DisplayName = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.DisplayName)),
 						LastUpdatedTimespamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactLastUpdatedTimestamp)),
@@ -98,60 +100,164 @@ namespace SocialCapital.Droid.Services
 						PhotoUri = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoUri)),
 						Stared = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Starred)),
 						ContactStatusTimestamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactStatusTimestamp))
-					});
+					};
+
+					if (newContact.HasPhoneNumber == "1")
+					{
+//						var newPhone = new Phone();
+//						newPhone.Number = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
+//						newContact.Phones = new List<Phone> { newPhone };
+					}
+
+					contactList.Add (newContact);
 
 				} while (cursor.MoveToNext());
 			}
+
+			LoadPhones(activity, contactList);
+			LoadEmails (activity, contactList);
 
 			timing.Finish ();
 
 			return contactList;
 		}
 
-//		List<Phone> LoadPhones(Activity activity)
-//		{
-//			Android.Net.Uri phoneUri = ContactsContract.CommonDataKinds.Phone.ContentUri;
-//
-//			string[] projection = null;
-//
-//			var loader = new CursorLoader (
-//				activity,
-//				ContactsContract.CommonDataKinds.Phone.ContentUri, 
-//				projection,
-//				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "="+contactId,
-//				null,
-//				null);
-//			var phonesCursor = (ICursor)loader.LoadInBackground ();
-//
-//			//LogCursorColumns ("Phone cursor", phonesCursor);
-//
-//			/* // Using Managed Query
-//			var phonesCursor = contactsActivity.ManagedQuery (
-//				ContactsContract.CommonDataKinds.Phone.ContentUri, 
-//				projection,
-//				ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "="+contactId,
-//				null,
-//				null);
-//			*/
-//			var res = new List<LocalContactPhone> ();
-//
-//			while (phonesCursor.MoveToNext ()) 
-//			{
-//				var phoneCursorIndex = phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number);
-//				//var phoneCursorIndex = phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.);
-//
-//				var number = phonesCursor.GetString (phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
-//				//var number = phonesCursor.GetString (phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.));
-//
-//
-//				var ik = 10;
-//				res.Add (
-//					new LocalContactPhone {
-//						Number = pno,
-//						Type = LocalContactPhoneType.Mobile
-//					});
-//			}
-//		}
+		#region Load Emails
+
+		private List<Email> LoadEmails(Activity activity, IEnumerable<AddressBookContact> contacts = null, string filterContactId = null)
+		{
+			if ((contacts != null && filterContactId != null) || (contacts == null && filterContactId == null))
+				throw new ArgumentException ("Only one of values must be set (contacts or filterContactId)");
+
+			var loader = new CursorLoader (
+				activity,
+				ContactsContract.CommonDataKinds.Email.ContentUri, 
+				null,	// projection
+				filterContactId == null ? null : ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "=" + filterContactId,
+				null,
+				null);
+			var emailCursor = (ICursor)loader.LoadInBackground ();
+
+			var res = new List<Email> ();
+
+			while (emailCursor.MoveToNext ()) 
+			{
+				var email = new Email ();
+				email.Address = emailCursor.GetString (emailCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Email.Address));
+				string contactId = emailCursor.GetString (emailCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Email.InterfaceConsts.ContactId));
+
+				EmailDataKind pkind = (EmailDataKind) emailCursor.GetInt (emailCursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
+				email.Type = ToEmailType(pkind);
+
+				if (pkind != EmailDataKind.Custom)
+					email.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (activity.Resources, pkind, String.Empty);
+				else
+					email.Label = emailCursor.GetString (emailCursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
+
+				if (contacts != null)
+					BindToContact (contactId, email, contacts, "Emails");
+
+				res.Add (email);
+			}
+
+			return res;
+		}
+
+		private EmailType ToEmailType (EmailDataKind emailKind)
+		{
+			switch (emailKind)
+			{
+				case EmailDataKind.Home:
+					return EmailType.Home;
+				case EmailDataKind.Work:
+					return EmailType.Work;
+				default:
+					return EmailType.Other;
+			}
+		}
+
+		#endregion
+
+		#region Load phones
+
+		private List<Phone> LoadPhones(Activity activity, IEnumerable<AddressBookContact> contacts = null, string filterContactId = null)
+		{
+			if ((contacts != null && filterContactId != null) || (contacts == null && filterContactId == null))
+				throw new ArgumentException ("Only one of values must be set (contacts or filterContactId)");
+
+			var loader = new CursorLoader (
+				activity,
+				ContactsContract.CommonDataKinds.Phone.ContentUri, 
+				null,	// projection
+				filterContactId == null ? null : ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + "=" + filterContactId,
+				null,
+				null);
+			var phonesCursor = (ICursor)loader.LoadInBackground ();
+
+			var res = new List<Phone> ();
+
+			while (phonesCursor.MoveToNext ()) 
+			{
+				var phone = new Phone ();
+				phone.Number = phonesCursor.GetString (phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
+				string contactId = phonesCursor.GetString (phonesCursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId));
+
+				PhoneDataKind pkind = (PhoneDataKind) phonesCursor.GetInt (phonesCursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
+				phone.Type = ToPhoneType(pkind);
+
+				if (pkind != PhoneDataKind.Custom)
+					phone.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (activity.Resources, pkind, String.Empty);
+				else
+					phone.Label = phonesCursor.GetString (phonesCursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
+
+				if (contacts != null)
+					BindToContact (contactId, phone, contacts, "Phones");
+
+				res.Add (phone);
+			}
+
+			phonesCursor.Close ();
+
+			return res;
+		}
+
+		internal static PhoneType ToPhoneType (PhoneDataKind phoneKind)
+		{
+			switch (phoneKind)
+			{
+				case PhoneDataKind.Home:
+					return PhoneType.Home;
+				case PhoneDataKind.Mobile:
+					return PhoneType.Mobile;
+				case PhoneDataKind.FaxHome:
+					return PhoneType.HomeFax;
+				case PhoneDataKind.Work:
+					return PhoneType.Work;
+				case PhoneDataKind.FaxWork:
+					return PhoneType.WorkFax;
+				case PhoneDataKind.Pager:
+				case PhoneDataKind.WorkPager:
+					return PhoneType.Pager;
+				default:
+					return PhoneType.Other;
+			}
+		}
+
+		#endregion
+
+		private void BindToContact<T>(string contactId, T phone, IEnumerable<AddressBookContact> contacts, string propertyName)
+		{
+			var contact = contacts.SingleOrDefault (c => c.Id == contactId);
+
+			if (contact != null)
+			{
+				var list = contact.GetType ().GetProperty (propertyName).GetValue (contact);
+				var tList = (List<T>)list;
+				tList.Add (phone);
+			}
+			else
+				Log.GetLogger ().Log (string.Format ("Cannot find contact with id = {0}", contactId));
+		}
 	}
 }
 
