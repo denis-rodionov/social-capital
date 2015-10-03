@@ -38,9 +38,11 @@ namespace SocialCapital.AddressBookImport
 
 		public List<Address> Addresses { get; set; }
 
+		public long LastUpdatedTimespamp { get; set; }
+
 		#region Experiment fields
 
-		public string LastUpdatedTimespamp { get; set; }
+
 
 		public string HasPhoneNumber { get; set; }
 

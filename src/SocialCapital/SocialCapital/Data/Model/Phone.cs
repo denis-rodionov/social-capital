@@ -69,6 +69,13 @@ namespace SocialCapital.Data.Model
 
 		#endregion
 
+		public string NormalNumber()
+		{
+			return Number.Replace (" ", "")
+				.Replace ("(", "")
+				.Replace (")", "")
+				.Replace("-", "");
+		}
 
 		public override string ToString ()
 		{

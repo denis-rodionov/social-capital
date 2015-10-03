@@ -3,6 +3,7 @@ using SocialCapital.Data.Model.Converters;
 using System.Linq;
 using System.Collections.Generic;
 using SocialCapital.Data.Model;
+using SocialCapital.Common;
 
 namespace SocialCapital.Data.Synchronization
 {
@@ -10,7 +11,9 @@ namespace SocialCapital.Data.Synchronization
 
 	public class Syncker
 	{
-		
+		static TimeSpan update = new TimeSpan (0);
+		static TimeSpan getFields = new TimeSpan (0);
+		static TimeSpan save = new TimeSpan (0);
 
 		/// <summary>
 		/// Import or update the contact from the given source
@@ -25,17 +28,29 @@ namespace SocialCapital.Data.Synchronization
 			var dbContact = new ContactManager().GetContacts (contactConverter.IsContactExistsInDatabase()).SingleOrDefault ();
 
 			if (dbContact == null) {
+				var t2 = Timing.Start ("UpdateFields");
 				SaveNewContact (contactConverter);
+				update += t2.Finish (LogLevel.Trace);
+
+				var t3 = Timing.Start ("saveModif");
 				res = SaveModification (contactConverter, GetAllFields(), true);
+				save += t3.Finish (LogLevel.Trace);
 			}
 			else {
 				contactConverter.DatabaseContactId = dbContact.Id;
 
+				var t1 = Timing.Start ("fildsToUpdate");
 				var fieldsToUpdate = GetFieldsToUpdate (contactConverter, dbContact);
+				getFields += t1.Finish (LogLevel.Trace);
 
 				if (fieldsToUpdate.Any()) {
+					var t2 = Timing.Start ("UpdateFields");
 					UpdateFields (contactConverter, fieldsToUpdate);
+					update += t2.Finish (LogLevel.Trace);
+
+					var t3 = Timing.Start ("saveModif");
 					res = SaveModification (contactConverter, fieldsToUpdate, false);
+					save += t3.Finish (LogLevel.Trace);
 				}
 				else 
 					res = null;

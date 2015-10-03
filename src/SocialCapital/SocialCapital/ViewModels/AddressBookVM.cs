@@ -75,7 +75,7 @@ namespace SocialCapital.ViewModels
 			InitStatus ();
 			StartImport = new Command (Import);
 
-			Task.Run (() => InitContactList ());
+			//Task.Run (() => InitContactList ());
 		}
 
 		void InitContactList()

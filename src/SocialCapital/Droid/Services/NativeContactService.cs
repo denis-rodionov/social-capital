@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using SocialCapital.Data.Model;
 using SocialCapital.Common;
 using System.Linq;
+using Android.Content.Res;
 
 [assembly: Dependency(typeof(SocialCapital.Droid.Services.NativeContactService))]
 
@@ -31,11 +32,11 @@ namespace SocialCapital.Droid.Services
 
 		#endregion
 
+		#region Implementation
+
 		// Populate the contact list based on account currently selected in the account spinner.
 		private List<AddressBookContact> GetAllContacts ()
 		{
-			var activity = Forms.Context as Activity;
-
 			// Build adapter with contact entries
 			var uri = ContactsContract.Contacts.ContentUri;
 
@@ -77,9 +78,9 @@ namespace SocialCapital.Droid.Services
 
 			var timing = Timing.Start ("Get contacts list");
 
-			// CursorLoader introduced in Honeycomb (3.0, API11)
-			var loader = new CursorLoader(activity, uri, projection, null, null, null);
-			var cursor = (ICursor)loader.LoadInBackground();
+			var context = Forms.Context.ApplicationContext;
+			var content = context.ContentResolver;
+			var cursor = content.Query (uri, projection, null, null, null);
 
 			var contactList = new List<AddressBookContact> ();  
 			if (cursor.MoveToFirst ()) {
@@ -88,7 +89,7 @@ namespace SocialCapital.Droid.Services
 					var newContact = new AddressBookContact() {
 						Id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Id)),
 						DisplayName = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.DisplayName)),
-						LastUpdatedTimespamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactLastUpdatedTimestamp)),
+						LastUpdatedTimespamp = cursor.GetLong (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactLastUpdatedTimestamp)),
 						HasPhoneNumber = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber)),
 						//InDefaultDirectory = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.D)),
 						InVisibleGroup = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.InVisibleGroup)),
@@ -102,51 +103,96 @@ namespace SocialCapital.Droid.Services
 						ContactStatusTimestamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactStatusTimestamp))
 					};
 
-					if (newContact.HasPhoneNumber == "1")
-					{
-//						var newPhone = new Phone();
-//						newPhone.Number = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
-//						newContact.Phones = new List<Phone> { newPhone };
-					}
-
 					contactList.Add (newContact);
 
 				} while (cursor.MoveToNext());
 			}
 
-			LoadPhones(activity, contactList);
-			LoadEmails (activity, contactList);
-			LoadExtras (activity, contactList);
+			LoadExtras (context, contactList);
+
+			DeletePhoneDuplicates (contactList);
+
+			var res = PostProcess (contactList);
+
+			RaiseCountCalculated (res.Count ());
 
 			timing.Finish ();
 
-			return contactList;
+			return res;
 		}
 
-		private ICursor GetCursor(Android.Net.Uri uri, Activity activity, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		private List<AddressBookContact> PostProcess(IEnumerable<AddressBookContact> contacts)
+		{
+			var res = new List<AddressBookContact> ();
+
+			foreach (var contact in contacts)
+				if (contact.HasPhoneNumber == "1")
+					res.Add (ProcessContact (contact));
+
+			return res;
+		}
+
+		private AddressBookContact ProcessContact(AddressBookContact contact)
+		{
+			contact.Id = contact.LookupKey;
+			return contact;
+		}
+
+		/// <summary>
+		/// Because contacts somehow have duplicates phone we need to clear them
+		/// </summary>
+		private void DeletePhoneDuplicates(IEnumerable<AddressBookContact> contacts)
+		{
+			foreach (var contact in contacts)
+			{
+				if (contact.Phones.Count > 1)
+				{
+					var dupPhones = contact.Phones.GroupBy (x => x.NormalNumber ())
+						.Where (g => g.Count () > 1)
+						.ToDictionary (x => x.Key, y => y.ToList ());
+
+					if (dupPhones.Any ())
+						foreach (var dup in dupPhones.Keys)
+						{
+							var list = dupPhones [dup];
+
+							if (list.Count < 2)
+								throw new Exception ("Algorithm error");
+
+							if (list [0].Number.Length > list [1].Number.Length)
+								contact.Phones.Remove (list [1]);
+							else
+								contact.Phones.Remove (list [0]);
+						}
+				}
+			}
+		}
+
+		private ICursor GetCursor(Android.Net.Uri uri, ContentResolver content, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
 		{
 			if ((contacts != null && forContact != null) || (contacts == null && forContact == null))
 				throw new ArgumentException ("Only one of values must be set (contacts or filterContactId)");
 
-			var loader = new CursorLoader (
-				activity,
-				uri, 
-				null,	// projection
+			return content.Query(
+				uri,
+				null,
 				forContact == null ? null : "contact_id=" + forContact.Id,
 				null,
 				null);
-			return (ICursor)loader.LoadInBackground ();
 		}
 
-		private void BindToContact<T>(string contactId, T phone, IEnumerable<AddressBookContact> contacts, string propertyName)
+		private void BindToContact<T>(string contactId, T item, IEnumerable<AddressBookContact> contacts, string propertyName)
 		{
 			var contact = contacts.SingleOrDefault (c => c.Id == contactId);
 
 			if (contact != null)
 			{
-				var list = contact.GetType ().GetProperty (propertyName).GetValue (contact);
-				var tList = (List<T>)list;
-				tList.Add (phone);
+				var prop = contact.GetType ().GetProperty (propertyName);
+				var val = prop.GetValue (contact);
+				if (val != null && val.GetType().Name.Contains("List"))	// then it is a list
+					(val as List<T>).Add (item);
+				else
+					prop.SetValue (contact, item);
 			}
 			else
 				Log.GetLogger ().Log (string.Format ("Cannot find contact with id = {0}", contactId));
@@ -163,9 +209,11 @@ namespace SocialCapital.Droid.Services
 			}
 		}
 
-		private void LoadExtras(Activity activity, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		private void LoadExtras(Context context, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
 		{
-			var cursor = GetCursor (ContactsContract.Data.ContentUri, activity, contacts, forContact);
+			var content = context.ContentResolver;
+			var resources = context.Resources;
+			var cursor = GetCursor (ContactsContract.Data.ContentUri, content, contacts, forContact);
 			var res = new List<Organization> ();
 
 			while (cursor.MoveToNext ()) 
@@ -176,46 +224,65 @@ namespace SocialCapital.Droid.Services
 				switch (dataType)
 				{
 					case ContactsContract.CommonDataKinds.Organization.ContentItemType:
-						var org = GetOrganization (cursor, activity);
+						var org = GetOrganization (cursor, resources);
 						Bind ("Organizations", org, contacts, contactId, forContact);
 						break;
 					case ContactsContract.CommonDataKinds.StructuredPostal.ContentItemType:
-						var address = GetAddress (cursor, activity);
+						var address = GetAddress (cursor, resources);
 						Bind ("Addresses", address, contacts, contactId, forContact);
 						break;	
 					case ContactsContract.CommonDataKinds.Note.ContentItemType:
 						var note = GetNote (cursor);
-						Bind ("Notes", note, contacts, contactId, forContact);
+						if (!string.IsNullOrEmpty (note.Contents))
+							Bind ("Notes", note, contacts, contactId, forContact);
+						break;
+					case ContactsContract.CommonDataKinds.Photo.ContentItemType:
+						byte[] photo = cursor.GetBlob (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Photo.PhotoColumnId));
+						if (photo != null)
+							Bind ("Thumbnail", photo, contacts, contactId, forContact);
+						break;
+					case ContactsContract.CommonDataKinds.Phone.ContentItemType:
+						var phone = GetPhone (cursor, resources);
+						Bind ("Phones", phone, contacts, contactId, forContact);
+						break;
+					case ContactsContract.CommonDataKinds.Email.ContentItemType:
+						var email = GetEmail (cursor, resources);
+						Bind ("Emails", email, contacts, contactId, forContact);
 						break;
 				}
 			}
 		}
 
+		#endregion
+
 		#region Load Emails
 
-		private List<Email> LoadEmails(Activity activity, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		private Email GetEmail(ICursor cursor, Resources resources)
 		{
-			var cursor = GetCursor (ContactsContract.CommonDataKinds.Email.ContentUri, activity, contacts, forContact);
+			var email = new Email ();
+			email.Address = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Email.Address));
+
+			EmailDataKind pkind = (EmailDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
+			email.Type = ToEmailType(pkind);
+
+			if (pkind != EmailDataKind.Custom)
+				email.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (resources, pkind, String.Empty);
+			else
+				email.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
+
+			return email;
+		}
+
+		private List<Email> LoadEmails(Context context, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		{
+			var cursor = GetCursor (ContactsContract.CommonDataKinds.Email.ContentUri, context.ContentResolver, contacts, forContact);
 			var res = new List<Email> ();
 
 			while (cursor.MoveToNext ()) 
 			{
-				var email = new Email ();
-				email.Address = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Email.Address));
 				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Email.InterfaceConsts.ContactId));
-
-				EmailDataKind pkind = (EmailDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
-				email.Type = ToEmailType(pkind);
-
-				if (pkind != EmailDataKind.Custom)
-					email.Label = ContactsContract.CommonDataKinds.Email.GetTypeLabel (activity.Resources, pkind, String.Empty);
-				else
-					email.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
-
-				if (contacts != null)
-					BindToContact (contactId, email, contacts, "Emails");
-
-				res.Add (email);
+				var email = GetEmail (cursor, context.Resources);
+				Bind ("Emails", email, contacts, contactId, forContact);
 			}
 
 			return res;
@@ -238,29 +305,32 @@ namespace SocialCapital.Droid.Services
 
 		#region Load phones
 
-		private List<Phone> LoadPhones(Activity activity, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		private Phone GetPhone(ICursor cursor, Resources resources)
 		{
-			var cursor = GetCursor (ContactsContract.CommonDataKinds.Phone.ContentUri, activity, contacts, forContact);
+			var phone = new Phone ();
+			phone.Number = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
+
+			PhoneDataKind pkind = (PhoneDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
+			phone.Type = ToPhoneType(pkind);
+
+			if (pkind != PhoneDataKind.Custom)
+				phone.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (resources, pkind, String.Empty);
+			else
+				phone.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
+
+			return phone;
+		}
+
+		private List<Phone> LoadPhones(Context context, IEnumerable<AddressBookContact> contacts = null, AddressBookContact forContact = null)
+		{
+			var cursor = GetCursor (ContactsContract.CommonDataKinds.Phone.ContentUri, context.ContentResolver, contacts, forContact);
 			var res = new List<Phone> ();
 
 			while (cursor.MoveToNext ()) 
 			{
-				var phone = new Phone ();
-				phone.Number = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.Number));
-				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId));
-
-				PhoneDataKind pkind = (PhoneDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
-				phone.Type = ToPhoneType(pkind);
-
-				if (pkind != PhoneDataKind.Custom)
-					phone.Label = ContactsContract.CommonDataKinds.Phone.GetTypeLabel (activity.Resources, pkind, String.Empty);
-				else
-					phone.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
-
-				if (contacts != null)
-					BindToContact (contactId, phone, contacts, "Phones");
-
-				res.Add (phone);
+				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId));				
+				var phone = GetPhone (cursor, context.Resources);
+				Bind ("Phones", phone, contacts, contactId, forContact);
 			}
 
 			cursor.Close ();
@@ -290,13 +360,11 @@ namespace SocialCapital.Droid.Services
 			}
 		}
 
-		#endregion
-
-
+            		#endregion
 
 		#region Load Organizations
 
-		private Organization GetOrganization(ICursor cursor, Activity activity)
+		private Organization GetOrganization(ICursor cursor, Resources resources)
 		{
 			var company = new Organization ();
 			company.Name = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Organization.Company));
@@ -305,49 +373,18 @@ namespace SocialCapital.Droid.Services
 			OrganizationDataKind pkind = (OrganizationDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
 
 			if (pkind != OrganizationDataKind.Custom)
-				company.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (activity.Resources, pkind, String.Empty);
+				company.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (resources, pkind, String.Empty);
 			else
 				company.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
 
 			return company;
 		}
 
-//		private List<Organization> LoadOrganizations(Activity activity, IEnumerable<AddressBookContact> contacts = null, string filterContactId = null)
-//		{
-//			var cursor = GetCursor (ContactsContract.Data.ContentUri, activity, contacts, filterContactId);
-//			var res = new List<Organization> ();
-//
-//			while (cursor.MoveToNext ()) 
-//			{
-//				var company = new Organization ();
-//				company.Name = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Organization.Company));
-//				company.ContactTitle = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Organization.Title));
-//
-//				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Organization.InterfaceConsts.ContactId));
-//
-//				OrganizationDataKind pkind = (OrganizationDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
-//
-//				if (pkind != OrganizationDataKind.Custom)
-//					company.Label = ContactsContract.CommonDataKinds.Organization.GetTypeLabel (activity.Resources, pkind, String.Empty);
-//				else
-//					company.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
-//
-//				if (contacts != null)
-//					BindToContact (contactId, company, contacts, "Organizations");
-//
-//				res.Add (company);
-//			}
-//
-//			cursor.Close ();
-//
-//			return res;
-//		}
-
 		#endregion
 
 		#region Load Addresses
 
-		private Address GetAddress(ICursor cursor, Activity activity)
+		private Address GetAddress(ICursor cursor, Resources resources)
 		{
 			var address = new Address ();
 			address.Country = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.Country));
@@ -359,46 +396,12 @@ namespace SocialCapital.Droid.Services
 			var pkind = (AddressDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
 
 			if (pkind != AddressDataKind.Custom)
-				address.Label = ContactsContract.CommonDataKinds.StructuredPostal.GetTypeLabel (activity.Resources, pkind, String.Empty);
+				address.Label = ContactsContract.CommonDataKinds.StructuredPostal.GetTypeLabel (resources, pkind, String.Empty);
 			else
 				address.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
 
 			return address;
 		}
-
-//		private List<Address> LoadAddresses(Activity activity, IEnumerable<AddressBookContact> contacts = null, string filterContactId = null)
-//		{
-//			var cursor = GetCursor (ContactsContract.Data.ContentUri, activity, contacts, filterContactId);
-//			var res = new List<Address> ();
-//
-//			while (cursor.MoveToNext ()) 
-//			{
-//				var address = new Address ();
-//				address.Country = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.Country));
-//				address.Region = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.Region));
-//				address.City = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.City));
-//				address.PostalCode = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.Postcode));
-//				address.StreetAddress = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.Street));
-//
-//				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.StructuredPostal.InterfaceConsts.ContactId));
-//
-//				var pkind = (AddressDataKind) cursor.GetInt (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Type));
-//
-//				if (pkind != AddressDataKind.Custom)
-//					address.Label = ContactsContract.CommonDataKinds.StructuredPostal.GetTypeLabel (activity.Resources, pkind, String.Empty);
-//				else
-//					address.Label = cursor.GetString (cursor.GetColumnIndex (Android.Provider.ContactsContract.CommonDataKinds.CommonColumns.Label));
-//
-//				if (contacts != null)
-//					BindToContact (contactId, address, contacts, "Addresses");
-//
-//				res.Add (address);
-//			}
-//
-//			cursor.Close ();
-//
-//			return res;
-//		}
 
 		#endregion
 
@@ -410,29 +413,6 @@ namespace SocialCapital.Droid.Services
 			note.Contents = cursor.GetString (cursor.GetColumnIndex (ContactsContract.DataColumns.Data1));
 			return note;
 		}
-
-//		private List<Note> LoadNotes(Activity activity, IEnumerable<AddressBookContact> contacts = null, string filterContactId = null)
-//		{
-//			var cursor = GetCursor (ContactsContract.Data.ContentUri, activity, contacts, filterContactId);
-//			var res = new List<Note> ();
-//
-//			while (cursor.MoveToNext ()) 
-//			{
-//				var note = new Note ();
-//				note.Contents = cursor.GetString (cursor.GetColumnIndex (ContactsContract.DataColumns.Data1));
-//
-//				string contactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.CommonDataKinds.Note.InterfaceConsts.ContactId));
-//
-//				if (contacts != null)
-//					BindToContact (contactId, note, contacts, "Notes");
-//
-//				res.Add (note);
-//			}
-//
-//			cursor.Close ();
-//
-//			return res;
-//		}
 
 		#endregion
 
