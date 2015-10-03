@@ -124,7 +124,7 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<Phone> Phones { 
 			get {
 				if (phones == null)
-					phones = Database.GetContactPhones (SourceContact.Id);
+					phones = Database.PhoneDB.GetContactPhones (SourceContact.Id);
 				return phones;
 			}
 		}
@@ -133,7 +133,7 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<Email> Emails { 
 			get {
 				if (emails == null)
-					emails = Database.GetContactEmails (SourceContact.Id);
+					emails = Database.EmailDB.GetContactEmails (SourceContact.Id);
 				return emails;
 			}
 		}

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Collections.Generic;
 using SocialCapital.AddressBookImport;
 using Ninject;
+using SocialCapital.Data.Managers;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
-	public class Contact
+	public class Contact : IHaveId, IEquatable<Contact>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -68,6 +70,21 @@ namespace SocialCapital.Data.Model
 		{
 			return string.Format ("[Contact: Id={0}, FullName={1}, WorkPlace={2}, Photo={3}, FrequencyId={4}]", Id, DisplayName, WorkPlace, Thumbnail);
 		}
+
+		#region IEquatable implementation
+		public bool Equals (Contact other)
+		{
+			if (other == null)
+				return false;
+
+			return DisplayName == other.DisplayName;
+		}
+
+		public override int GetHashCode ()
+		{
+			return DisplayName.GetHashCode ();
+		}
+		#endregion
 	}
 }
 

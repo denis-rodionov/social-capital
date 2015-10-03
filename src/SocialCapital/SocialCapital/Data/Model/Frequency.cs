@@ -7,7 +7,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Defines how often need to contact with the person in specified period
 	/// </summary>
-	public class Frequency : IHasId
+	public class Frequency : IHaveId, IEquatable<Frequency>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -20,6 +20,21 @@ namespace SocialCapital.Data.Model
 		{
 			return string.Format ("[Frequency: Id={0}, Period={1}, Count={2}]", Id, Period, Count);
 		}
+
+		#region IEquatable implementation
+		public bool Equals (Frequency other)
+		{
+			if (other == null)
+				return false;
+
+			return Period == other.Period && Count == other.Count;
+		}
+
+		public override int GetHashCode ()
+		{
+			return (Period.ToString () + Count.ToString ()).GetHashCode ();
+		}
+		#endregion
 	}
 }
 

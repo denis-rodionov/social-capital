@@ -2,7 +2,7 @@
 
 namespace SocialCapital.Data.Model.Enums
 {
-	public interface IHasId
+	public interface IHaveId
 	{
 		int Id { get; }
 	}

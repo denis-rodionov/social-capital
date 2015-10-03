@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Input;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital
 {

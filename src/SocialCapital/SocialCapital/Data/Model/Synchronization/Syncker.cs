@@ -4,6 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using SocialCapital.Data.Model;
 using SocialCapital.Common;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.Data.Synchronization
 {
@@ -14,6 +16,7 @@ namespace SocialCapital.Data.Synchronization
 		static TimeSpan update = new TimeSpan (0);
 		static TimeSpan getFields = new TimeSpan (0);
 		static TimeSpan save = new TimeSpan (0);
+		static TimeSpan t0 = new TimeSpan(0);
 
 		/// <summary>
 		/// Import or update the contact from the given source
@@ -25,32 +28,23 @@ namespace SocialCapital.Data.Synchronization
 		{
 			ContactModification res;
 
-			var dbContact = new ContactManager().GetContacts (contactConverter.IsContactExistsInDatabase()).SingleOrDefault ();
+			var dbContact = App.Container.Get<ContactManager>()
+				.GetContacts (contactConverter.IsContactExistsInDatabase().Compile()).SingleOrDefault ();
 
 			if (dbContact == null) {
-				var t2 = Timing.Start ("UpdateFields");
 				SaveNewContact (contactConverter);
-				update += t2.Finish (LogLevel.Trace);
 
-				var t3 = Timing.Start ("saveModif");
 				res = SaveModification (contactConverter, GetAllFields(), true);
-				save += t3.Finish (LogLevel.Trace);
 			}
 			else {
 				contactConverter.DatabaseContactId = dbContact.Id;
 
-				var t1 = Timing.Start ("fildsToUpdate");
 				var fieldsToUpdate = GetFieldsToUpdate (contactConverter, dbContact);
-				getFields += t1.Finish (LogLevel.Trace);
 
 				if (fieldsToUpdate.Any()) {
-					var t2 = Timing.Start ("UpdateFields");
 					UpdateFields (contactConverter, fieldsToUpdate);
-					update += t2.Finish (LogLevel.Trace);
 
-					var t3 = Timing.Start ("saveModif");
 					res = SaveModification (contactConverter, fieldsToUpdate, false);
-					save += t3.Finish (LogLevel.Trace);
 				}
 				else 
 					res = null;
@@ -68,7 +62,8 @@ namespace SocialCapital.Data.Synchronization
 		private void UpdateFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fieldsToUpdate)
 		{
 			if (fieldsToUpdate.Count () != 0) 
-				new ContactManager ().SaveOrUpdateContactFields (contactConverter, fieldsToUpdate);
+				App.Container.Get<ContactManager>()
+					.SaveOrUpdateContactFields (contactConverter, fieldsToUpdate);
 		}
 
 		private IEnumerable<FieldValue> GetFieldsToUpdate(BaseContactConverter contactConverter, Contact databaseContact)
@@ -85,7 +80,7 @@ namespace SocialCapital.Data.Synchronization
 		{
 			var sourceContat = contactConverter.GetContactInfo ();
 			var res = new List<FieldValue> ();
-			var db = new ContactManager ();
+			var db = App.Container.Get<ContactManager>();
 
 			if (sourceContat.DisplayName != databaseContact.DisplayName)
 				res.Add (FieldValue.DisplayName);
@@ -93,9 +88,9 @@ namespace SocialCapital.Data.Synchronization
 				res.Add (FieldValue.Thumbnail);
 			if (sourceContat.WorkPlace != databaseContact.WorkPlace)
 				res.Add (FieldValue.WorkPlace);
-			if (!ListEqual (contactConverter.GetPhones (), db.GetContactPhones (contactConverter.DatabaseContactId)))
+			if (!ListEqual (contactConverter.GetPhones (), db.PhoneDB.GetContactPhones (contactConverter.DatabaseContactId)))
 				res.Add (FieldValue.Phones);
-			if (!ListEqual (contactConverter.GetEmails (), db.GetContactEmails (contactConverter.DatabaseContactId)))
+			if (!ListEqual (contactConverter.GetEmails (), db.EmailDB.GetContactEmails (contactConverter.DatabaseContactId)))
 				res.Add (FieldValue.Emails);
 
 			var dbAddress = db.GetContactAddress (contactConverter.DatabaseContactId);
@@ -116,7 +111,8 @@ namespace SocialCapital.Data.Synchronization
 
 		private void SaveNewContact(BaseContactConverter contactConverter)
 		{
-			var contactId = new ContactManager ().SaveContactInfo (contactConverter.GetContactInfo ());
+			var contactId = App.Container.Get<ContactManager>()
+				.SaveContactInfo (contactConverter.GetContactInfo ());
 
 			contactConverter.DatabaseContactId = contactId;
 
@@ -157,7 +153,7 @@ namespace SocialCapital.Data.Synchronization
 			if (newModification.ContactId == 0)
 				throw new ArgumentException ("ContactId cannot be null while creating modification");
 
-			return new ContactManager ().SaveModification (newModification);
+			return App.Container.Get<ContactManager>().SaveModification (newModification);
 		}
 
 		#endregion

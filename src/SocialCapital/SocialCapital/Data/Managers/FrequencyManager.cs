@@ -4,9 +4,9 @@ using Ninject;
 using Ninject.Parameters;
 using System.Linq;
 
-namespace SocialCapital.Data
+namespace SocialCapital.Data.Managers
 {
-	public class FrequencyManager : BaseDataManager
+	public class FrequencyManager : BaseManager<Frequency>
 	{
 		public FrequencyManager ()
 		{

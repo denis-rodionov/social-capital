@@ -7,6 +7,7 @@ using Ninject;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {

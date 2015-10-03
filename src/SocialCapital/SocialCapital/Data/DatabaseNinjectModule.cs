@@ -1,5 +1,6 @@
 ﻿using System;
 using Ninject.Modules;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.Data
 {

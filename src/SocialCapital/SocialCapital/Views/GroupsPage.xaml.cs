@@ -9,6 +9,7 @@ using System.Linq;
 using SocialCapital.Common;
 using Ninject;
 using SocialCapital.Data;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.Views
 {

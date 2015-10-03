@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SocialCapital
+namespace SocialCapital.Data.Model.Enums
 {
 	public interface ILabeled
 	{

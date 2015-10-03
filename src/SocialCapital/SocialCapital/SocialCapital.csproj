@@ -38,7 +38,6 @@
     <Compile Include="Views\ContactListPage.xaml.cs">
       <DependentUpon>ContactListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\ContactManager.cs" />
     <Compile Include="Resources\ResourceLoader.cs" />
     <Compile Include="Data\Model\Tag.cs" />
     <Compile Include="Data\Model\ContactTag.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Data\Model\Synchronization\Syncker.cs" />
     <Compile Include="Data\Model\Synchronization\Enums.cs" />
     <Compile Include="Data\Model\ContactModification.cs" />
-    <Compile Include="Data\ContactManagerException.cs" />
     <Compile Include="AddressBookImport\AddressBookContactConverter.cs" />
     <Compile Include="ViewModels\ModificationVM.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
@@ -140,13 +138,9 @@
     </Compile>
     <Compile Include="ViewModels\ContactGroupListVM.cs" />
     <Compile Include="ViewModels\ContactGroupVM.cs" />
-    <Compile Include="Data\GroupsManager.cs" />
     <Compile Include="Common\MyIoc.cs" />
-    <Compile Include="Data\FrequencyManager.cs" />
     <Compile Include="Data\DatabaseNinjectModule.cs" />
     <Compile Include="Data\IDataContext.cs" />
-    <Compile Include="Data\BaseDataManager.cs" />
-    <Compile Include="Data\Model\Enums\IHasId.cs" />
     <Compile Include="Views\ContactsProcessingPage.xaml.cs">
       <DependentUpon>ContactsProcessingPage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +161,14 @@
       <DependentUpon>TestContacts.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TestContactsVM.cs" />
+    <Compile Include="Data\Managers\PhonesManager.cs" />
+    <Compile Include="Data\Managers\ContactManager.cs" />
+    <Compile Include="Data\Managers\EmailManager.cs" />
+    <Compile Include="Data\Model\Enums\IHaveId.cs" />
+    <Compile Include="Data\Managers\BaseManager.cs" />
+    <Compile Include="Data\Managers\GroupsManager.cs" />
+    <Compile Include="Data\Managers\FrequencyManager.cs" />
+    <Compile Include="Data\Managers\DataManagerException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6446\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -211,6 +213,7 @@
     <Folder Include="PhoneServices\" />
     <Folder Include="Data\Model\Synchronization\" />
     <Folder Include="ViewModels\Commands\" />
+    <Folder Include="Data\Managers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">

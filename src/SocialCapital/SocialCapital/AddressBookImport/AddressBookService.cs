@@ -7,6 +7,8 @@ using SocialCapital.Data;
 using SocialCapital.Common;
 using SocialCapital.Data.Synchronization;
 using SocialCapital.ViewModels;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.AddressBookImport
 {
@@ -77,7 +79,7 @@ namespace SocialCapital.AddressBookImport
 				throw new Exception ("Load contacts first");
 			
 			var timing = Timing.Start ("AddressBookService.FullUpdate");
-			var db = new ContactManager ();
+			var db = App.Container.Get<ContactManager>();
 			var updateTime = DateTime.Now;
 			var resGroup = new ListGroupVM<DateTime, ModificationVM> () { GroupName = updateTime, Elements = new List<ModificationVM>() };
 

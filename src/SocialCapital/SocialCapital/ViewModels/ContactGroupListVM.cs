@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using SocialCapital.Data.Model;
 using Ninject;
 using SocialCapital.Data;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {

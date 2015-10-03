@@ -10,6 +10,7 @@ using SocialCapital.Common;
 using System.Windows.Input;
 using Ninject;
 using System.Linq.Expressions;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {
@@ -17,7 +18,7 @@ namespace SocialCapital.ViewModels
 	{
 		#region Init
 
-		public ContactListVM (Expression<Func<Contact, bool>> whereClause)
+		public ContactListVM (Func<Contact, bool> whereClause)
 		{
 			var timing = Timing.Start ("ContactListVM constructor");
 

@@ -9,25 +9,30 @@ using SocialCapital.AddressBookImport;
 using SocialCapital.Data.Model.Converters;
 using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;
+using SocialCapital.Data.Managers;
 
-namespace SocialCapital.Data
+namespace SocialCapital.Data.Managers
 {
-	
-
-	public class ContactManager : IDisposable
+	public class ContactManager : BaseManager<Contact>, IDisposable
 	{
 		#region Cache
 
 		private static IEnumerable<Contact> ContactsCache = null;
-		private static IEnumerable<Phone> PhoneCache = null;
+
 		private static IEnumerable<Email> EmailCache = null;
 
 		#endregion
 
-		#region Contact database init
+		public PhonesManager PhoneDB { get; set; }
+
+		public EmailManager EmailDB { get; set; }
+
+		#region Init
 
 		public ContactManager ()
 		{
+			PhoneDB = new PhonesManager ();
+			EmailDB = new EmailManager ();
 		}
 
 		public void Init()	
@@ -40,17 +45,14 @@ namespace SocialCapital.Data
 
 		public IEnumerable<Contact> Contacts { 
 			get { 
-				using (var db = new DataContext ()) {
-					var res = db.Connection.Table<Contact> ().ToList ();				
-					return res;
-				}
+				return GetContacts (c => true);
 			}
 		}
 
-		public IEnumerable<Contact> GetContacts(Expression<Func<Contact, bool>> whereClause)
+		public IEnumerable<Contact> GetContacts(Func<Contact, bool> whereClause)
 		{
 			using (var db = new DataContext ()) {
-				return db.Connection.Table<Contact> ().Where (whereClause).ToList ();
+				return GetList (whereClause, db);
 			}
 		}
 
@@ -65,7 +67,10 @@ namespace SocialCapital.Data
 		/// <param name="contactId">Contact identifier.</param>
 		public Contact GetContact(int contactId)
 		{
-			return Contacts.Single (c => c.Id == contactId);
+			using (var db = new DataContext ())
+			{
+				return Get (contactId, db);
+			}
 		}
 
 		public IEnumerable<Tag> GetContactTags(int contactId)
@@ -95,37 +100,6 @@ namespace SocialCapital.Data
 					.OrderByDescending(m => m.ModifiedAt)
 					.ToList ();
 			}
-		}
-
-		public IEnumerable<Phone> GetContactPhones(int contactId)
-		{
-			if (contactId == 0)
-				throw new ArgumentException ("contactId cannot be 0");
-
-			if (PhoneCache == null)
-				RefreshCache (ref PhoneCache);
-
-			return PhoneCache.Where (p => p.ContactId == contactId);
-			
-//			using (var db = new DataContext ()) {
-//				var res = db.Connection.Table<Phone> ().Where (p => p.ContactId == contactId).ToList ();
-//				return res;
-//			}
-		}
-
-		public IEnumerable<Email> GetContactEmails(int contactId)
-		{
-			if (contactId == 0)
-				throw new ArgumentException ("contactId cannot be 0");
-
-			if (EmailCache == null)
-				RefreshCache (ref EmailCache);
-
-			return EmailCache.Where (p => p.ContactId == contactId);
-
-//			using (var db = new DataContext ()) {
-//				return db.Connection.Table<Email> ().Where (p => p.ContactId == contactId).ToList ();
-//			}
 		}
 
 		public Address GetContactAddress(int contactId)
@@ -203,12 +177,12 @@ namespace SocialCapital.Data
 							contactInfoFields.Add (field);
 							break;
 						case FieldValue.Phones:
-							UpdateContactList<Phone> (contactConverter.GetPhones (), 
+							PhoneDB.UpdateList (contactConverter.GetPhones (), 
 								db, 
 								p => p.ContactId == contactConverter.DatabaseContactId);							
 							break;
 						case FieldValue.Emails:
-							UpdateContactList<Email> (contactConverter.GetEmails (), 
+							EmailDB.UpdateList (contactConverter.GetEmails (), 
 								db, 
 								p => p.ContactId == contactConverter.DatabaseContactId);
 							break;
@@ -216,10 +190,11 @@ namespace SocialCapital.Data
 							SaveOrUpdateAddress (contactConverter.GetAddress (), contactConverter.DatabaseContactId, db);
 							break;
 						default: 
-						throw new ContactManagerException (string.Format ("Unknown field '{0}' to update", field));
+						throw new DataManagerException (string.Format ("Unknown field '{0}' to update", field));
 					}
 				}
-				UpdateContactInfoFields (contactConverter, contactInfoFields, db);
+				if (contactInfoFields.Any())
+					UpdateContactInfoFields (contactConverter, contactInfoFields, db);
 			}
 		}
 
@@ -228,7 +203,7 @@ namespace SocialCapital.Data
 			using (var db = new DataContext ()) {
 				db.Connection.Insert (modification);
 				if (modification.Id == 0)
-					throw new ContactManagerException ("Inserterd modification cannot has Id=0");
+					throw new DataManagerException ("Inserterd modification cannot has Id=0");
 
 				return modification;
 			}
@@ -241,7 +216,7 @@ namespace SocialCapital.Data
 				db.Connection.Insert (communication);
 
 				if (communication.Id == 0)
-					throw new ContactManagerException ("Cannot save communication: Id = 0");
+					throw new DataManagerException ("Cannot save communication: Id = 0");
 
 				return communication.Id;
 			}
@@ -264,22 +239,14 @@ namespace SocialCapital.Data
 				// unassign
 				foreach (var contactId in toUnassign)
 					db.Connection.Execute ("UPDATE Contact SET GroupId = null WHERE Id=?", contactId);
+
+				RefreshCache (db);
 			}
 		}
 
 		#endregion
 
 		#region Implementation
-
-		private void RefreshCache<T>(ref IEnumerable<T> cache) where T : class
-		{
-			using (var db = new DataContext ())
-			{
-				cache = db.Connection.Table<T> ().ToList ();
-			}
-
-			Log.GetLogger ().Log ("Cache updated for " + typeof(T));
-		}
 
 		private Address SaveOrUpdateAddress(Address item, int contactId, DataContext db) 
 		{
@@ -300,10 +267,10 @@ namespace SocialCapital.Data
 		{
 			if (contact.Id == 0) {
 				contact.CreateTime = DateTime.Now;
-				db.Connection.Insert (contact);
+				Insert (contact, db);
 			}
 			else
-				db.Connection.Update (contact);
+				Update (contact, db);
 
 			if (contact.Id == 0)
 				throw new Exception (string.Format ("Contact {0} saved incorrect: Id = 0", contact.DisplayName));
@@ -323,7 +290,7 @@ namespace SocialCapital.Data
 			var dbContact = GetContact (contactConverter.DatabaseContactId);
 
 			if (dbContact == null || dbContact.Id == 0)
-				throw new ContactManagerException ("No contact exists in database with such id");
+				throw new DataManagerException ("No contact exists in database with such id");
 
 			foreach (var field in fields) {
 				switch (field) {
@@ -337,26 +304,11 @@ namespace SocialCapital.Data
 						dbContact.WorkPlace = newContact.WorkPlace;
 						break;
 					default:
-						throw new ContactManagerException ("Unknown field for the table 'Contact'");
+						throw new DataManagerException ("Unknown field for the table 'Contact'");
 				}
 			}
 
 			SaveContactInfo (dbContact, db);
-		}
-
-		private void UpdateContactList<T>(IEnumerable<T> actualList, DataContext db,
-			Expression<Func<T, bool>> whereClause) where T : class, IEquatable<T>
-		{
-			var existingList = db.Connection.Table<T> ().Where (whereClause).ToList();
-			var newList = actualList.Except (existingList).ToList();
-			var deleteList = existingList.Except (actualList).ToList();
-
-			foreach (var item in newList) {
-				db.Connection.Insert (item);
-			}
-
-			foreach (var item in deleteList)
-				db.Connection.Delete(item);
 		}
 
 		#endregion

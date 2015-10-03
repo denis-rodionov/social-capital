@@ -4,10 +4,11 @@ using Ninject;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using SocialCapital.Data.Managers;
 
-namespace SocialCapital.Data
+namespace SocialCapital.Data.Managers
 {
-	public class GroupsManager : BaseDataManager
+	public class GroupsManager : BaseManager<Group>
 	{
 		const PeriodValues DefaultPeriod = PeriodValues.Year;
 		const int DefaultPeriodCount = 2;

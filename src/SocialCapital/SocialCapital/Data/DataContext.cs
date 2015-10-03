@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using SocialCapital.Logging;
 using System.Threading;
 using Ninject;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.Data
 {
@@ -80,6 +81,7 @@ namespace SocialCapital.Data
 				db.Connection.DeleteAll<LogMessage> ();
 				db.Connection.DeleteAll<Group> ();
 			}
+			App.Container.Get<ContactManager> ().ClearCache ();
 		}
 
 		public static IEnumerable<LogMessage> GetLogs()

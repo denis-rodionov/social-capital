@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using SocialCapital.Data;
 using SocialCapital.Data.Model.Enums;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.ViewModels.Commands
 {
@@ -23,7 +25,7 @@ namespace SocialCapital.ViewModels.Commands
 
 		protected override void SaveCommunication ()
 		{
-			var db = new ContactManager ();
+			var db = App.Container.Get<ContactManager> ();
 
 			db.SaveNewCommunication (new CommunicationHistory () {
 				ContactId = Contact.Id,

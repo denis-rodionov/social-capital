@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using SocialCapital.Data;
 using Ninject;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {

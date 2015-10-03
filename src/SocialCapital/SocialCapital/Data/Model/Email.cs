@@ -1,5 +1,6 @@
 ﻿using System;
 using SQLite.Net.Attributes;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
@@ -12,7 +13,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Class migrated from phone Address book structure
 	/// </summary>
-	public class Email : IEquatable<Email>, ILabeled
+	public class Email : IEquatable<Email>, ILabeled, IHaveId
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }

@@ -3,6 +3,7 @@ using SQLite.Net.Attributes;
 using System.Collections.Generic;
 using Ninject;
 using SocialCapital.Data.Model.Enums;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.Data.Model
 {
@@ -10,7 +11,7 @@ namespace SocialCapital.Data.Model
 	/// Group of contcts for classifying contacts by importance status
 	/// and desired frequency of meetings
 	/// </summary>
-	public class Group : IHasId
+	public class Group : IHaveId, IEquatable<Group>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -64,6 +65,23 @@ namespace SocialCapital.Data.Model
 			set { frequency = value; }
 		}
 
+		#endregion
+
+		#region IEquatable implementation
+		public bool Equals (Group other)
+		{
+			if (other == null)
+				return false;
+			if (Id == 0)
+				return false;
+
+			return Id == other.Id;
+		}
+
+		public override int GetHashCode ()
+		{
+			return Id.GetHashCode ();
+		}
 		#endregion
 
 		public override string ToString ()

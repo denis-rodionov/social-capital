@@ -5,6 +5,7 @@ using Ninject;
 using SocialCapital.Data;
 using System.Linq;
 using Xamarin.Forms;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {

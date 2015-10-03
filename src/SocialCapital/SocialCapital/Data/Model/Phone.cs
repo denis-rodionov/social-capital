@@ -1,5 +1,6 @@
 ﻿using System;
 using SQLite.Net.Attributes;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
@@ -16,7 +17,7 @@ namespace SocialCapital.Data.Model
 	/// <summary>
 	/// Database class migrated from phone Address book structure
 	/// </summary>
-	public class Phone : IEquatable<Phone>, ILabeled
+	public class Phone : IEquatable<Phone>, ILabeled, IHaveId
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
