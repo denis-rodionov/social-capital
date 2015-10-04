@@ -5,13 +5,6 @@ namespace SocialCapital.Data
 {
 	public class Settings
 	{
-		const string AddressBookConfig = "LastAddressBookImportTime";
-
-		public DateTime? LastAddressBookImportTime {
-			get { return GetConfigValue<DateTime?> (AddressBookConfig); }
-			set { SaveValue<DateTime?> (AddressBookConfig, value); }
-		}
-
 		public void SaveValue<T>(string key, T value)
 		{
 			using (var db = new DataContext ()) {
@@ -47,6 +40,22 @@ namespace SocialCapital.Data
 			else
 				return config.GetValue<T> ();
 		}
+
+		#region Configs
+
+		const string AddressBookConfig = "LastAddressBookImportTime";
+		public DateTime? LastAddressBookImportTime {
+			get { return GetConfigValue<DateTime?> (AddressBookConfig); }
+			set { SaveValue<DateTime?> (AddressBookConfig, value); }
+		}
+
+		const string MaxUpdatedTimestampConfig = "MaxUpdatedTimestamp";
+		public long? MaxUpdatedTimestamp {
+			get { return GetConfigValue<long?> (MaxUpdatedTimestampConfig); }
+			set { SaveValue<long?> (MaxUpdatedTimestampConfig, value); }
+		}
+
+		#endregion
 	}
 }
 

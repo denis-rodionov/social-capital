@@ -17,6 +17,7 @@ namespace SocialCapital.Data
 			this.Bind<FrequencyManager> ().To<FrequencyManager> ().InSingletonScope ();
 			this.Bind<GroupsManager> ().To < GroupsManager> ().InSingletonScope ();
 			this.Bind<ContactManager> ().To<ContactManager> ().InSingletonScope ();
+			this.Bind<Settings> ().ToSelf ();
 		}
 
 		#endregion

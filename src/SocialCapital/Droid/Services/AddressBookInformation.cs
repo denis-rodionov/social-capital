@@ -39,7 +39,7 @@ namespace SocialCapital.Droid.Services
 		/// Gets the contacts by means of Xamarin.Mobile
 		/// </summary>
 		/// <returns>The contacts.</returns>
-		public IEnumerable<AddressBookContact> GetContacts ()
+		public IEnumerable<AddressBookContact> GetContacts (long lastTimeStamp = 0)
 		{
 			IEnumerable<AddressBookContact> contacts;
 

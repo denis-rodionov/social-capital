@@ -55,12 +55,16 @@ namespace SocialCapital.AddressBookImport
 			service.ContactsCountCalculated += ContactCountCalcylated;
 			service.ContactRetrieved += ContactRetrieved;
 
-			var abContacts = service.GetContacts ();
+			IEnumerable<AddressBookContact> abContacts;
+			var lastTime = App.Container.Get<Settings> ().MaxUpdatedTimestamp;
+
+			if (lastTime == null)
+				abContacts = service.GetContacts ();
+			else
+				abContacts = service.GetContacts (lastTime.Value);
 
 			service.ContactsCountCalculated -= ContactCountCalcylated;
 			service.ContactRetrieved -= ContactRetrieved;
-
-			//var b = abContacts.Where (c => c.DisplayName == "Баланс").ToList (); 
 
 			timing.Finish ();
 
@@ -82,6 +86,7 @@ namespace SocialCapital.AddressBookImport
 			var db = App.Container.Get<ContactManager>();
 			var updateTime = DateTime.Now;
 			var resGroup = new ListGroupVM<DateTime, ModificationVM> () { GroupName = updateTime, Elements = new List<ModificationVM>() };
+			long maxUpdatedTimestamp = 0;
 
 			foreach (var bookContact in LoadedContacts) {
 				if (bookContact.Phones.Count () != 0) {
@@ -89,12 +94,18 @@ namespace SocialCapital.AddressBookImport
 					var converter = new AddressBookContactConverter (bookContact, updateTime);
 					var mod = new Syncker ().SyncContact (converter);
 
+					if (converter.BookContact.LastUpdatedTimespamp > maxUpdatedTimestamp)
+						maxUpdatedTimestamp = converter.BookContact.LastUpdatedTimespamp;
+
 					if (mod != null)
 						resGroup.Elements.Add (new ModificationVM(mod));
 				}
 				CurrentProgressValue.ContactsSync++;
 				RaiseProgress (CurrentProgressValue);
 			}
+
+			if (maxUpdatedTimestamp != 0)
+				App.Container.Get<Settings> ().MaxUpdatedTimestamp = maxUpdatedTimestamp;
 
 			timing.Finish ();
 

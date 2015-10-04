@@ -11,7 +11,7 @@ namespace SocialCapital.AddressBookImport
 	/// </summary>
 	public interface IAddressBookInformation
 	{
-		IEnumerable<AddressBookContact> GetContacts();
+		IEnumerable<AddressBookContact> GetContacts(long lastTimeStamp = 0);
 
 		/// <summary>
 		/// Event of calculation the count of contact in device book

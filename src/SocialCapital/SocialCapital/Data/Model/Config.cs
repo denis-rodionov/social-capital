@@ -46,6 +46,11 @@ namespace SocialCapital.Data.Model
 			Value = value.ToString ();
 		}
 
+		public void SetValue(long value)
+		{
+			Value = value.ToString ();
+		}
+
 		public DateTime GetDateTimeValue()
 		{
 			return new DateTime (GetLongValue ());
@@ -59,19 +64,23 @@ namespace SocialCapital.Data.Model
 		public void SetValue<T>(T value) 
 		{
 			if (typeof(T) == typeof(int))
-				SetValue (Convert.ToInt32(value));
+				SetValue (Convert.ToInt32 (value));
+			else if	(typeof(T) == typeof(long) || typeof(T) == typeof(long?))
+				SetValue (Convert.ToInt64(value));
 			else if (typeof(T) == typeof(string))
 				Value = (value as object).ToString ();
 			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))
 				SetDateTimeValue (Convert.ToDateTime (value));
 			else
-				throw new Exception (string.Format ("Unknow type of the argument '{0}'", value));
+				throw new Exception (string.Format ("MyError: Unknow type of the argument '{0}'", value));
 		}
 
 		public T GetValue<T>() 
 		{
 			if (typeof(T) == typeof(int))
 				return (T)((object)Convert.ToInt32 (GetIntValue ()));
+			else if (typeof(T) == typeof(long) || typeof(T) == typeof(long?))
+				return (T)((object)Convert.ToInt64 (GetLongValue ()));
 			else if (typeof(T) == typeof(string))
 				return (T)((object)Convert.ToString(Value));
 			else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?))

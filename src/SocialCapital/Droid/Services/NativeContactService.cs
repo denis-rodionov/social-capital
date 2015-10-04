@@ -25,9 +25,9 @@ namespace SocialCapital.Droid.Services
 
 		#region interface IAddressBookInformation
 
-		public IEnumerable<AddressBookContact> GetContacts ()
+		public IEnumerable<AddressBookContact> GetContacts (long lastTimeStamp = 0)
 		{
-			return GetAllContacts ();
+			return GetAllContacts (lastTimeStamp);
 		}
 
 		#endregion
@@ -35,11 +35,68 @@ namespace SocialCapital.Droid.Services
 		#region Implementation
 
 		// Populate the contact list based on account currently selected in the account spinner.
-		private List<AddressBookContact> GetAllContacts ()
+		private List<AddressBookContact> GetAllContacts (long lastTimeStamp)
 		{
-			// Build adapter with contact entries
 			var uri = ContactsContract.Contacts.ContentUri;
 
+			string[] projection = GetProjections ();
+
+			var timing = Timing.Start ("Get contacts list");
+
+			var context = Forms.Context.ApplicationContext;
+			var content = context.ContentResolver;
+			var cursor = content.Query (uri, projection, null, null, null);
+
+			var contactList = new List<AddressBookContact> ();  
+			if (cursor.MoveToFirst ()) {
+				do {
+					
+					var newContact = new AddressBookContact() {
+						Id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Id)),
+						DisplayName = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.DisplayName)),
+						LastUpdatedTimespamp = cursor.GetLong (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactLastUpdatedTimestamp)),
+						HasPhoneNumber = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber)),
+						//InDefaultDirectory = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.D)),
+						InVisibleGroup = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.InVisibleGroup)),
+						LookupKey = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.LookupKey)),
+						RawContactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.TimesContacted)),
+						PhotoFileId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoFileId)),
+						PhotoId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoId)),
+						ThumbnailUri = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri)),
+						PhotoUri = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoUri)),
+						Stared = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Starred)),
+						ContactStatusTimestamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactStatusTimestamp))
+					};
+
+					if (lastTimeStamp != 0)
+					{
+						if (newContact.LastUpdatedTimespamp > lastTimeStamp)
+						{
+							LoadExtras(context, null, newContact);
+							contactList.Add(newContact);
+						}
+					}
+					else
+						contactList.Add (newContact);
+
+				} while (cursor.MoveToNext());
+			}
+
+			if (lastTimeStamp == 0)		// load all contacts
+				LoadExtras (context, contactList);
+
+			DeletePhoneDuplicates (contactList);
+
+			var res = PostProcess (contactList);
+			RaiseCountCalculated (res.Count ());
+
+			timing.Finish ();
+
+			return res;
+		}
+
+		private string[] GetProjections()
+		{
 			string[] projection = {
 				ContactsContract.Contacts.InterfaceConsts.Id,
 				ContactsContract.Contacts.InterfaceConsts.DisplayName,
@@ -76,49 +133,7 @@ namespace SocialCapital.Droid.Services
 				//ContactsContract.CommonDataKinds.Phone.Number
 			};
 
-			var timing = Timing.Start ("Get contacts list");
-
-			var context = Forms.Context.ApplicationContext;
-			var content = context.ContentResolver;
-			var cursor = content.Query (uri, projection, null, null, null);
-
-			var contactList = new List<AddressBookContact> ();  
-			if (cursor.MoveToFirst ()) {
-				do {
-					
-					var newContact = new AddressBookContact() {
-						Id = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Id)),
-						DisplayName = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.DisplayName)),
-						LastUpdatedTimespamp = cursor.GetLong (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactLastUpdatedTimestamp)),
-						HasPhoneNumber = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber)),
-						//InDefaultDirectory = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.D)),
-						InVisibleGroup = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.InVisibleGroup)),
-						LookupKey = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.LookupKey)),
-						RawContactId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.TimesContacted)),
-						PhotoFileId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoFileId)),
-						PhotoId = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoId)),
-						ThumbnailUri = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoThumbnailUri)),
-						PhotoUri = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.PhotoUri)),
-						Stared = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.Starred)),
-						ContactStatusTimestamp = cursor.GetString (cursor.GetColumnIndex (ContactsContract.Contacts.InterfaceConsts.ContactStatusTimestamp))
-					};
-
-					contactList.Add (newContact);
-
-				} while (cursor.MoveToNext());
-			}
-
-			LoadExtras (context, contactList);
-
-			DeletePhoneDuplicates (contactList);
-
-			var res = PostProcess (contactList);
-
-			RaiseCountCalculated (res.Count ());
-
-			timing.Finish ();
-
-			return res;
+			return projection;
 		}
 
 		private List<AddressBookContact> PostProcess(IEnumerable<AddressBookContact> contacts)
@@ -186,16 +201,19 @@ namespace SocialCapital.Droid.Services
 			var contact = contacts.SingleOrDefault (c => c.Id == contactId);
 
 			if (contact != null)
-			{
-				var prop = contact.GetType ().GetProperty (propertyName);
-				var val = prop.GetValue (contact);
-				if (val != null && val.GetType().Name.Contains("List"))	// then it is a list
-					(val as List<T>).Add (item);
-				else
-					prop.SetValue (contact, item);
-			}
+				BindToProperty (contact, propertyName, item);
 			else
 				Log.GetLogger ().Log (string.Format ("Cannot find contact with id = {0}", contactId));
+		}
+
+		private void BindToProperty<T>(AddressBookContact contact, string propertyName, T item)
+		{
+			var prop = contact.GetType ().GetProperty (propertyName);
+			var val = prop.GetValue (contact);
+			if (val != null && val.GetType().Name.Contains("List"))	// then it is a list
+				(val as List<T>).Add (item);
+			else
+				prop.SetValue (contact, item);
 		}
 
 		private void Bind<T>(string propertyName, T item, IEnumerable<AddressBookContact> contacts, string androidContactId, AddressBookContact forContact)
@@ -204,8 +222,7 @@ namespace SocialCapital.Droid.Services
 				BindToContact (androidContactId, item, contacts, propertyName);
 			else
 			{
-				var list = (List<T>)forContact.GetType ().GetProperty (propertyName).GetValue (forContact);
-				list.Add (item);
+				BindToProperty (forContact, propertyName, item);
 			}
 		}
 
@@ -251,6 +268,8 @@ namespace SocialCapital.Droid.Services
 						break;
 				}
 			}
+
+			cursor.Close ();
 		}
 
 		#endregion
