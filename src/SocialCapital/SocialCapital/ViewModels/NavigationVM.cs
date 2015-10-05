@@ -76,6 +76,8 @@ namespace SocialCapital.ViewModels
 					return new SettingsPage (SettingsViewModel);
 				case "ContactsProcessing":
 					return new GroupsPage(new ContactGroupListVM());
+				case "PriorityContactList":
+					return new PriorityContactListPage (new PriorityContactListVM ());
 				default:
 					return new ContentPage ();
 			}

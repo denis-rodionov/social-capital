@@ -270,5 +270,8 @@
 		<value>Вы уверены что хотите удалить группу?</value>
 		<comment>Запрос подтверждения удаления группы</comment>
 	</data>
-
+	<data name="PriorityContactListPageTitle" xml:space="preserve">
+		<value>Приоритетные</value>
+		<comment>Название страницы с контактами отсортированными от красного к зелёному</comment>
+	</data>
 </root>

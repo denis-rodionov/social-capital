@@ -476,6 +476,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Приоритетные.
+        /// </summary>
+        internal static string PriorityContactListPageTitle {
+            get {
+                return ResourceManager.GetString("PriorityContactListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Близкие люди: родители, братья сёстра, бабушки, дедушки.
         /// </summary>
         internal static string RelativesGroupDescription {

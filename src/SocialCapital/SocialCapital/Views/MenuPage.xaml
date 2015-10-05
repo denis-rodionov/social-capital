@@ -29,6 +29,9 @@
 					<vm:MenuItem Name = "ContactsProcessing"
 								 Title="{i18n:Translate ContactsProcessingPageTitle}" 
 								 IconSource="ic_folder_shared_black_48dp.png" />
+					<vm:MenuItem Name = "PriorityContactList"
+								 Title = "{i18n:Translate PriorityContactListPageTitle}"
+								 IconSource = "ic_flash_on_black_48dp.png" />
 				</x:Array>					
 			</ListView.ItemsSource>
 			<libs:ListViewEx.ItemTemplate>
