@@ -10,29 +10,17 @@ using SocialCapital.Data.Model.Converters;
 using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;
 using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.Data.Managers
 {
 	public class ContactManager : BaseManager<Contact>, IDisposable
 	{
-		#region Cache
-
-		private static IEnumerable<Contact> ContactsCache = null;
-
-		private static IEnumerable<Email> EmailCache = null;
-
-		#endregion
-
-		public PhonesManager PhoneDB { get; set; }
-
-		public EmailManager EmailDB { get; set; }
 
 		#region Init
 
 		public ContactManager ()
 		{
-			PhoneDB = new PhonesManager ();
-			EmailDB = new EmailManager ();
 		}
 
 		public void Init()	
@@ -119,13 +107,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public IEnumerable<CommunicationHistory> GetContactCommunications(Func<CommunicationHistory, bool> filter)
-		{
-			using (var db = new DataContext ())
-			{
-				return db.Connection.Table<CommunicationHistory> ().Where (filter).ToList ();
-			}
-		}
+
 
 		#endregion
 
@@ -177,14 +159,14 @@ namespace SocialCapital.Data.Managers
 							contactInfoFields.Add (field);
 							break;
 						case FieldValue.Phones:
-							PhoneDB.UpdateList (contactConverter.GetPhones (), 
-								db, 
-								p => p.ContactId == contactConverter.DatabaseContactId);							
+							App.Container.Get<PhonesManager>().UpdateList (contactConverter.GetPhones (),
+								p => p.ContactId == contactConverter.DatabaseContactId,
+								db);							
 							break;
 						case FieldValue.Emails:
-							EmailDB.UpdateList (contactConverter.GetEmails (), 
-								db, 
-								p => p.ContactId == contactConverter.DatabaseContactId);
+							App.Container.Get<EmailManager>().UpdateList (contactConverter.GetEmails (), 
+								p => p.ContactId == contactConverter.DatabaseContactId,
+								db);
 							break;
 					case FieldValue.Address:
 							SaveOrUpdateAddress (contactConverter.GetAddress (), contactConverter.DatabaseContactId, db);

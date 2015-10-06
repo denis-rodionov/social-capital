@@ -11,6 +11,8 @@ using SocialCapital.PhoneServices;
 using System.Windows.Input;
 using SocialCapital.ViewModels.Commands;
 using SocialCapital.Common;
+using Ninject;
+using SocialCapital.Data.Managers;
 
 namespace SocialCapital.ViewModels
 {
@@ -23,15 +25,7 @@ namespace SocialCapital.ViewModels
 		/// </summary>
 		public Contact SourceContact { get; private set; }
 
-		#region Commands
-
-		public ICommand CallCommand { get; set; }
-
-		public ICommand SmSWriteCommand { get; set; }
-
-		public ICommand WriteEmailCommand { get; set; }
-
-		#endregion
+		#region Init
 
 		/// <summary>
 		/// VM Constructor
@@ -52,28 +46,10 @@ namespace SocialCapital.ViewModels
 			if (anonimusPhoto == null)
 				anonimusPhoto = GetAnonimusPhoto ();
 
-			InitCommands ();
-
 			//timing.Finish (LogLevel.Trace);
 		}
 
-		void InitCommands ()
-		{
-			CallCommand = new MakeCallCommand (SourceContact, () => Phones);
-			(CallCommand as MakeCallCommand).CommandExecuted += () => {
-				History = null;
-			};
-				
-			SmSWriteCommand = new SmsWriteCommand (SourceContact, () => Phones);
-			(SmSWriteCommand as SmsWriteCommand).CommandExecuted += () => {
-				History = null;
-			};
-				
-			WriteEmailCommand = new EmailWriteCommand (SourceContact, () => Emails);
-			(WriteEmailCommand as EmailWriteCommand).CommandExecuted += () => {
-				History = null;
-			};
-		}
+		#endregion
 
 		#region View Properties
 
@@ -124,7 +100,7 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<Phone> Phones { 
 			get {
 				if (phones == null)
-					phones = Database.PhoneDB.GetContactPhones (SourceContact.Id);
+					phones = App.Container.Get<PhonesManager>().GetContactPhones (SourceContact.Id);
 				return phones;
 			}
 		}
@@ -133,7 +109,7 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<Email> Emails { 
 			get {
 				if (emails == null)
-					emails = Database.EmailDB.GetContactEmails (SourceContact.Id);
+					emails = App.Container.Get<EmailManager>().GetContactEmails (SourceContact.Id);
 				return emails;
 			}
 		}
@@ -142,7 +118,7 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<CommunicationHistory> History {
 			get {
 				if (history == null)
-					history = Database.GetContactCommunications ((c) => c.ContactId == SourceContact.Id);
+					history = App.Container.Get<CommunicationManager>().GetCommunications ((c) => c.ContactId == SourceContact.Id);
 				return history;
 			}
 			set { SetProperty (ref history, value); }
@@ -157,8 +133,58 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref selected, value); }
 		}
 
+		private ContactStatus contactStatus = null;
+		public ContactStatus ContactStatus {
+			get {
+				return null; 	//return new ContactStatus(SourceContact, 
+			}
+		}
+
         #endregion
 
+		#region Commands
+
+		private ICommand callCommand;
+		public ICommand CallCommand { 
+			get { 
+				if (callCommand == null)
+				{
+					callCommand = new MakeCallCommand (SourceContact, () => Phones);
+					(callCommand as MakeCallCommand).CommandExecuted += () => {
+						History = null;
+					};
+				}
+				return callCommand;
+			}
+		}
+
+		private ICommand smsWriteCommand;
+		public ICommand SmSWriteCommand {
+			get {
+				if (smsWriteCommand == null)
+				{
+					smsWriteCommand = new SmsWriteCommand (SourceContact, () => Phones);
+					(smsWriteCommand as SmsWriteCommand).CommandExecuted += () => {
+						History = null;
+					};
+				}
+				return smsWriteCommand;
+			}
+		}
+
+		private ICommand writeEmailCommand;
+		public ICommand WriteEmailCommand {
+			get {
+				if (writeEmailCommand == null)
+				{
+					writeEmailCommand = new EmailWriteCommand (SourceContact, () => Emails);
+					(writeEmailCommand as EmailWriteCommand).CommandExecuted += () => {
+						History = null;
+					};
+				}
+				return writeEmailCommand;
+			}
+		}
 
 		public void Save()
 		{
@@ -177,7 +203,9 @@ namespace SocialCapital.ViewModels
 			return string.Format ("[ContactVM: {0}]", SourceContact);
 		}
 
-		#region implementation
+		#endregion
+
+		#region Implementation
 
 		private ImageSource GetAnonimusPhoto()
 		{

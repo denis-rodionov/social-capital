@@ -18,7 +18,7 @@ namespace SocialCapital.Views
 		private void OnItemAppearing(object sender, ItemVisibilityEventArgs args)
 		{
 			var vm = (PriorityContactListVM)BindingContext;
-			var contact = (Contact)args.Item;
+			var contact = (ContactVM)args.Item;
 
 			vm.OnItemAppearing (contact);
 		}

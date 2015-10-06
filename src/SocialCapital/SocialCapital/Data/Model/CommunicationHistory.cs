@@ -4,7 +4,7 @@ using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
-	public class CommunicationHistory
+	public class CommunicationHistory : IHaveId, IEquatable<CommunicationHistory>
 	{
 		/// <summary>
 		/// Primary ID
@@ -40,6 +40,21 @@ namespace SocialCapital.Data.Model
 		/// In case of phone call: null
 		/// </summary>
 		public string FullMessage { get; set; }
+
+		#region IEquatable implementation
+		public bool Equals (CommunicationHistory other)
+		{
+			if (other == null)
+				return false;
+
+			return Id == other.Id;
+		}
+
+		public override int GetHashCode ()
+		{
+			return Id.GetHashCode ();
+		}
+		#endregion
 	}
 }
 

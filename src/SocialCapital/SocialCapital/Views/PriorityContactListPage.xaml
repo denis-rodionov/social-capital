@@ -8,7 +8,7 @@
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
-						<Label Text="{Binding DisplayName}" />
+						<Label Text="{Binding FullName}" />
 					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>

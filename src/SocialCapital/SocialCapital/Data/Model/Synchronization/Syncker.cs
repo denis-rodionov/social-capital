@@ -88,9 +88,9 @@ namespace SocialCapital.Data.Synchronization
 				res.Add (FieldValue.Thumbnail);
 			if (sourceContat.WorkPlace != databaseContact.WorkPlace)
 				res.Add (FieldValue.WorkPlace);
-			if (!ListEqual (contactConverter.GetPhones (), db.PhoneDB.GetContactPhones (contactConverter.DatabaseContactId)))
+			if (!ListEqual (contactConverter.GetPhones (), App.Container.Get<PhonesManager>().GetContactPhones (contactConverter.DatabaseContactId)))
 				res.Add (FieldValue.Phones);
-			if (!ListEqual (contactConverter.GetEmails (), db.EmailDB.GetContactEmails (contactConverter.DatabaseContactId)))
+			if (!ListEqual (contactConverter.GetEmails (),App.Container.Get<EmailManager>().GetContactEmails (contactConverter.DatabaseContactId)))
 				res.Add (FieldValue.Emails);
 
 			var dbAddress = db.GetContactAddress (contactConverter.DatabaseContactId);

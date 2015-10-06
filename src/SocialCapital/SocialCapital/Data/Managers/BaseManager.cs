@@ -30,8 +30,7 @@ namespace SocialCapital.Data.Managers
 		/// Update filtered list: take as argument result list: 
 		/// turn filtered list to actual
 		/// </summary>
-		public void UpdateList(IEnumerable<Type> actualList, DataContext db,
-			Expression<Func<Type, bool>> whereClause)
+		public void UpdateList(IEnumerable<Type> actualList, Expression<Func<Type, bool>> whereClause, DataContext db)
 		{
 			var existingList = db.Connection.Table<Type> ().Where (whereClause).ToList();
 			var newList = actualList.Except (existingList).ToList();
