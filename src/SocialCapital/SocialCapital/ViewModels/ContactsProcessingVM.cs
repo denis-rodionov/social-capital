@@ -13,7 +13,7 @@ namespace SocialCapital.ViewModels
 	{
 		public ContactsProcessingVM ()
 		{
-			AllContacts = App.Container.Get<ContactManager> ().Contacts;
+			AllContacts = App.Container.Get<ContactManager> ().AllContacts;
 		}
 
 		public IEnumerable<Contact> AllContacts { get; set; }

@@ -3,50 +3,61 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using SocialCapital.Data.Model.Enums;
+using SocialCapital.Common;
 
 namespace SocialCapital.Data.Managers
 {
 	public abstract class BaseManager<Type> where Type : class, IHaveId, IEquatable<Type>
 	{
-		public List<Type> Cache { get; set; }
-
 		public BaseManager ()
 		{
 		}
 
-		public void CheckId(IHaveId dbObject)
-		{
-			if (dbObject.Id == 0)
-				throw new Exception(string.Format("Database object {0} has incorrect id == 0", dbObject));
-		}
+
+
+		#region Cache
+
+		public List<Type> Cache { get; set; }
 
 		public void RefreshCache(DataContext db)
 		{
+			var timing = Timing.Start ("Cache updated for " + typeof(Type));
+
+			if (db == null)
+				using (var innerDb = new DataContext ())
+					Cache = innerDb.Connection.Table<Type> ().ToList ();
+			else
+				Cache = db.Connection.Table<Type> ().ToList ();
+
+			timing.Finish (LogLevel.Debug);
+		}
+
+		private void InnerRefreshCache(DataContext db)
+		{
 			Cache = db.Connection.Table<Type> ().ToList ();
-			Log.GetLogger ().Log ("Cache updated for " + typeof(Type), LogLevel.Trace);
 		}
 
-		/// <summary>
-		/// Update filtered list: take as argument result list: 
-		/// turn filtered list to actual
-		/// </summary>
-		public void UpdateList(IEnumerable<Type> actualList, Expression<Func<Type, bool>> whereClause, DataContext db)
+		public void ClearCache()
 		{
-			var existingList = db.Connection.Table<Type> ().Where (whereClause).ToList();
-			var newList = actualList.Except (existingList).ToList();
-			var deleteList = existingList.Except (actualList).ToList();
-
-			foreach (var item in newList) 
-				Insert (item, db);
-
-			foreach (var item in deleteList)
-				Delete (item, db);
+			Cache = null;
 		}
 
-		public void Insert(Type item, DataContext db)
+            		#endregion
+
+		#region Insert
+
+		public Type Insert(Type item, DataContext db = null)
 		{
-			db.Connection.Insert (item);
+			if (db == null)
+				using (var innerDb = new DataContext ())
+					innerDb.Connection.Insert (item);
+			else
+				db.Connection.Insert (item);
+
+			CheckId (item);			
 			ItemInserted (item);
+
+			return item;
 		}
 
 		public void ItemInserted(Type item)
@@ -57,9 +68,36 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void Delete(Type item, DataContext db)
+		public void CheckId(IHaveId dbObject)
 		{
-			db.Connection.Delete(item);
+			if (dbObject.Id == 0)
+				throw new Exception(string.Format("Database object {0} has incorrect id == 0", dbObject));
+		}
+
+		public void InsertAll(IEnumerable<Type> items, DataContext db = null)
+		{
+			if (db == null)
+				using (var innerDb = new DataContext ())
+					innerDb.Connection.InsertAll (items);
+			else
+				db.Connection.InsertAll (items);
+
+			foreach (var item in items)
+				ItemInserted (item);
+		}
+
+		#endregion
+
+		#region Delete
+
+		public void Delete(Type item, DataContext db = null)
+		{
+			if (db == null)
+				using (var innerDb = new DataContext ())
+					innerDb.Connection.Delete (item);
+			else
+				db.Connection.Delete(item);
+			
 			ItemDeleted (item);
 		}
 
@@ -73,10 +111,27 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void Update(Type item, DataContext db)
+		#endregion
+
+		#region Update
+
+		public void Update(Type item, DataContext db = null)
+		{
+			if (db == null)
+			{
+				using (var innerDB = new DataContext ())
+				{
+					InnerUpdate (item, innerDB);
+				}
+			} else
+				InnerUpdate (item, db);
+				
+			ItemUpdated (item);
+		}
+
+		public void InnerUpdate(Type item, DataContext db)
 		{
 			db.Connection.Update (item);
-			ItemUpdated (item);
 		}
 
 		public void ItemUpdated(Type item)
@@ -90,7 +145,29 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public Type Get(int Id, DataContext db)
+		/// <summary>
+		/// Update filtered list: take as argument result list: 
+		/// turn filtered list to actual
+		/// </summary>
+		public void UpdateList(IEnumerable<Type> actualList, Func<Type, bool> whereClause, DataContext db = null)
+		{
+			var existingList = GetList (whereClause, db);
+
+			var newList = actualList.Except (existingList).ToList();
+			var deleteList = existingList.Except (actualList).ToList();
+
+			foreach (var item in newList) 
+				Insert (item, db);
+
+			foreach (var item in deleteList)
+				Delete (item, db);
+		}
+
+		#endregion
+
+		#region Get
+
+		public Type Get(int Id, DataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -109,17 +186,39 @@ namespace SocialCapital.Data.Managers
 			return res;
 		}
 
-		public List<Type> GetList(Func<Type, bool> whereClause, DataContext db)
+		public Type Find(Func<Type, bool> whereClause, DataContext db = null)
+		{
+			if (Cache == null)
+				RefreshCache (db);
+
+			var res = Cache.Where (whereClause);
+
+			if (res.Count() > 1)
+				throw new DataManagerException (string.Format ("More than one element found of type {0}", typeof(Type)));
+			else 
+				return res.SingleOrDefault ();		
+		}
+
+		public List<Type> GetList(Func<Type, bool> whereClause, DataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
 			return Cache.Where (whereClause).ToList ();
 		}
 
-		public void ClearCache()
+		#endregion
+
+		#region Count
+
+		public int Count(DataContext db = null)
 		{
-			Cache = null;
+			if (Cache == null)
+				RefreshCache (db);
+
+			return Cache.Count;
 		}
+
+		#endregion
 	}
 }
 

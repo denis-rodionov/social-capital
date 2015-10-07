@@ -153,7 +153,7 @@ namespace SocialCapital.Data.Synchronization
 			if (newModification.ContactId == 0)
 				throw new ArgumentException ("ContactId cannot be null while creating modification");
 
-			return App.Container.Get<ContactManager>().SaveModification (newModification);
+			return App.Container.Get<ModificationManager>().SaveModification (newModification);
 		}
 
 		#endregion

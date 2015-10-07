@@ -16,10 +16,7 @@ namespace SocialCapital.Data.Managers
 			if (contactId == 0)
 				throw new ArgumentException ("contactId cannot be 0");
 
-			using (var db = new DataContext())
-			{
-				return GetList (p => p.ContactId == contactId, db);
-			}
+			return GetList (p => p.ContactId == contactId);
 		}
 	}
 }

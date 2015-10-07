@@ -20,6 +20,7 @@ namespace SocialCapital.Data
 			this.Bind<EmailManager> ().To<EmailManager> ().InSingletonScope ();
 			this.Bind<PhonesManager> ().To<PhonesManager> ().InSingletonScope ();
 			this.Bind<CommunicationManager> ().To<CommunicationManager> ().InSingletonScope ();
+			this.Bind<ModificationManager> ().To<ModificationManager> ().InSingletonScope ();
 
 			this.Bind<Settings> ().ToSelf ();
 		}

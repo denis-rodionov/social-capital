@@ -3,6 +3,7 @@ using SocialCapital.Data.Model;
 using Ninject;
 using Ninject.Parameters;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SocialCapital.Data.Managers
 {
@@ -20,45 +21,48 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void InitFrequencies(IDataContext db)
+		public void InitFrequencies(DataContext db)
 		{
-			if (db.Connection.Table<Frequency> ().Count () != 0)
+			if (Count (db) != 0)
 				throw new Exception ("Frequencies already filled");
 
+			var stdFrequencies = new List<Frequency> ();
+
 			// once a year
-			db.Connection.Insert (new Frequency () {
+			stdFrequencies.Add (new Frequency () {
 				Period = PeriodValues.Year,
 				Count = 1
 			});
 
 			// twise a year
-			db.Connection.Insert (new Frequency () {
+			stdFrequencies.Add (new Frequency () {
 				Period = PeriodValues.Year,
 				Count = 2
 			});
 
 			// once a quater
-			db.Connection.Insert (new Frequency () {
+			stdFrequencies.Add (new Frequency () {
 				Period = PeriodValues.Year,
 				Count = 4
 			});
 
 			// once a month
-			db.Connection.Insert (new Frequency () {
+			stdFrequencies.Add (new Frequency () {
 				Period = PeriodValues.Month,
 				Count = 1
 			});
+
+			InsertAll (stdFrequencies);
 		}
 
-		public Frequency GetFrequency(IDataContext db, PeriodValues period, int count)
+		public Frequency GetFrequency(DataContext db, PeriodValues period, int count)
 		{
-			var res = db.Connection.Table<Frequency> ().SingleOrDefault (f => f.Period == period && f.Count == count);
+			var res = Find(f => f.Period == period && f.Count == count, db);
 
 			if (res == null)
 			{
 				res = new Frequency () { Period = period, Count = count };
-				db.Connection.Insert (res);
-				CheckId (res);
+				Insert (res, db);
 			}
 
 			return res;
@@ -66,13 +70,7 @@ namespace SocialCapital.Data.Managers
 
 		public Frequency GetFrequency(int frequencyId)
 		{
-			using (var db = new DataContext ())
-			{
-				var res = db.Connection.Table<Frequency> ().SingleOrDefault (f => f.Id == frequencyId);
-				if (res == null)
-					throw new Exception ("No Frequency object in database with such id = " + frequencyId);
-				return res;
-			}
+			return Get (frequencyId);
 		}
 	}
 }

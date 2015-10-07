@@ -17,7 +17,7 @@ namespace SocialCapital.ViewModels
 
 		public ContactGroupListVM ()
 		{
-			Contacts = App.Container.Get<ContactManager> ().Contacts;
+			Contacts = App.Container.Get<ContactManager> ().AllContacts;
 			Groups = App.Container.Get<GroupsManager> ().GetAllGroups (g => true).ToList ();
 		}
 

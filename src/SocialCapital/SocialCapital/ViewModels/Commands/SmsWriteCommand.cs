@@ -32,7 +32,7 @@ namespace SocialCapital.ViewModels.Commands
 
 		protected override void SaveCommunication ()
 		{
-			var db = App.Container.Get<ContactManager> ();
+			var db = App.Container.Get<CommunicationManager> ();
 			db.SaveNewCommunication (new CommunicationHistory () {
 				ContactId = Contact.Id,
 				Time = DateTime.Now,

@@ -2,6 +2,7 @@
 using SQLite.Net.Attributes;
 using SocialCapital.Data.Synchronization;
 using System.Collections.Generic;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
@@ -9,7 +10,7 @@ namespace SocialCapital.Data.Model
 	/// Modification record. Every time a contact created or modified -
 	/// a ContactModification record must be created.
 	/// </summary>
-	public class ContactModification
+	public class ContactModification : IHaveId, IEquatable<ContactModification>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -86,6 +87,21 @@ namespace SocialCapital.Data.Model
 			return string.Format ("[ContactModification: Id={0}, ContactId={1}, Source={2}, ModifiedFields={3}, ModifiedAt={4}, IsFirst={5}]", Id, ContactId, Source, ModifiedFields, ModifiedAt, IsFirst);
 		}
 
+		#endregion
+
+		#region IEquatable implementation
+		public bool Equals (ContactModification other)
+		{
+			if (other == null)
+				return false;
+
+			return Id == other.Id;
+		}
+
+		public override int GetHashCode ()
+		{
+			return Id.GetHashCode ();
+		}
 		#endregion
 	}
 }

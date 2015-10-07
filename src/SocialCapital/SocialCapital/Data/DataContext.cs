@@ -35,6 +35,7 @@ namespace SocialCapital.Data
 				}
 
 				mutex.WaitOne();
+				Log.GetLogger().Log("DataContext created!", LogLevel.Trace);
 			}
 			catch (Exception ex) 
 			{
@@ -98,6 +99,7 @@ namespace SocialCapital.Data
 		public void Dispose ()
 		{
 			mutex.ReleaseMutex ();
+			Log.GetLogger ().Log ("DataContext disposed", LogLevel.Trace);
 		}
 		#endregion
 

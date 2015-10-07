@@ -23,15 +23,11 @@ namespace SocialCapital.Data.Managers
 		{
 		}
 
-		public void Init()	
-		{
-		}
-
 		#endregion
 
 		#region Contact lists
 
-		public IEnumerable<Contact> Contacts { 
+		public IEnumerable<Contact> AllContacts { 
 			get { 
 				return GetContacts (c => true);
 			}
@@ -39,9 +35,7 @@ namespace SocialCapital.Data.Managers
 
 		public IEnumerable<Contact> GetContacts(Func<Contact, bool> whereClause)
 		{
-			using (var db = new DataContext ()) {
-				return GetList (whereClause, db);
-			}
+			return GetList (whereClause);
 		}
 
 		#endregion
@@ -55,10 +49,7 @@ namespace SocialCapital.Data.Managers
 		/// <param name="contactId">Contact identifier.</param>
 		public Contact GetContact(int contactId)
 		{
-			using (var db = new DataContext ())
-			{
-				return Get (contactId, db);
-			}
+			return Get (contactId);
 		}
 
 		public IEnumerable<Tag> GetContactTags(int contactId)
@@ -77,19 +68,6 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public IEnumerable<ContactModification> GetContactModifications(int contactId)
-		{
-			if (contactId == 0)
-				throw new ArgumentException ("contactId cannot be 0");
-
-			using (var db = new DataContext ()) {
-				return db.Connection.Table<ContactModification> ()
-					.Where (m => m.ContactId == contactId)
-					.OrderByDescending(m => m.ModifiedAt)
-					.ToList ();
-			}
-		}
-
 		public Address GetContactAddress(int contactId)
 		{
 			if (contactId == 0)
@@ -99,16 +77,7 @@ namespace SocialCapital.Data.Managers
 				return db.Connection.Table<Address> ().Where (p => p.ContactId == contactId).FirstOrDefault ();
 			}
 		}
-
-		public IEnumerable<ContactModification> GetContactModifications(Func<ContactModification, bool> filter)
-		{
-			using (var db = new DataContext ()) {
-				return db.Connection.Table<ContactModification> ().Where (filter).ToList ();
-			}
-		}
-
-
-
+			
 		#endregion
 
 		#region Save/Update methods
@@ -177,30 +146,6 @@ namespace SocialCapital.Data.Managers
 				}
 				if (contactInfoFields.Any())
 					UpdateContactInfoFields (contactConverter, contactInfoFields, db);
-			}
-		}
-
-		public ContactModification SaveModification(ContactModification modification)
-		{
-			using (var db = new DataContext ()) {
-				db.Connection.Insert (modification);
-				if (modification.Id == 0)
-					throw new DataManagerException ("Inserterd modification cannot has Id=0");
-
-				return modification;
-			}
-		}
-
-		public int SaveNewCommunication(CommunicationHistory communication)
-		{
-			using (var db = new DataContext ())
-			{
-				db.Connection.Insert (communication);
-
-				if (communication.Id == 0)
-					throw new DataManagerException ("Cannot save communication: Id = 0");
-
-				return communication.Id;
 			}
 		}
 

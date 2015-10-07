@@ -11,6 +11,8 @@ using SocialCapital.Data;
 using SocialCapital.Data.Model;
 using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
@@ -81,7 +83,7 @@ namespace SocialCapital.ViewModels
 		void InitContactList()
 		{
 			var weekAgo = DateTime.Now - TimeSpan.FromDays (7);
-			var modifications = Database.GetContactModifications (m => 
+			var modifications = App.Container.Get<ModificationManager>().GetContactModifications (m => 
 				m.Source == SyncSource.AddressBook && m.ModifiedAt > weekAgo);
 
 			var timing = Timing.Start ("InitContactList");
