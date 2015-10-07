@@ -10,8 +10,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class GroupsManager : BaseManager<Group>
 	{
-		const PeriodValues DefaultPeriod = PeriodValues.Year;
-		const int DefaultPeriodCount = 2;
+		readonly string DefaultFrequency = AppResources.OnceAYear;
 
 		public GroupsManager ()
 		{
@@ -33,29 +32,25 @@ namespace SocialCapital.Data.Managers
 				defaultGroups.Add (new Group () {
 					Name = AppResources.RelativesGroupName,
 					Description = AppResources.RelativesGroupDescription,
-					FrequencyId = fm.GetFrequency(db, PeriodValues.Month, 1).Id,
-					IsArchive = false
+					FrequencyId = fm.GetFrequency(AppResources.OnceAMonth, db).Id
 				});
 
 				defaultGroups.Add (new Group () {
 					Name = AppResources.ColleguesGroupName,
 					Description = AppResources.ColleguesGroupDescription,
-					FrequencyId = fm.GetFrequency(db, PeriodValues.Never, 0).Id,
-					IsArchive = false
+					FrequencyId = fm.GetFrequency(AppResources.OnceAQuarter, db).Id
 				});
 
 				defaultGroups.Add (new Group () {
 					Name = AppResources.UsefulGroupName,
 					Description = AppResources.UsefulGroupDescription,
-					FrequencyId = fm.GetFrequency(db, PeriodValues.Month, 1).Id,
-					IsArchive = false
+					FrequencyId = fm.GetFrequency(AppResources.OnceAMonth, db).Id
 				});
 
 				defaultGroups.Add (new Group () {
 					Name = AppResources.ArchiveGroupName,
 					Description = AppResources.ArchiveGroupDescription,
-					FrequencyId = fm.GetFrequency(db, PeriodValues.Never, 0).Id,
-					IsArchive = true
+					FrequencyId = fm.GetFrequency(AppResources.Never, db).Id
 				});
 
 				InsertAll (defaultGroups, db);
@@ -87,7 +82,7 @@ namespace SocialCapital.Data.Managers
 			{
 				db.Connection.BeginTransaction ();
 
-				var frequency = frequencyManager.GetFrequency (db, group.Frequency.Period, group.Frequency.Count);
+				var frequency = frequencyManager.GetFrequency (group.Frequency.Name, db);
 				if (frequency.Id != group.FrequencyId)
 					db.Connection.Execute ("UPDATE [Group] SET FrequencyId=? WHERE Id=?", frequency.Id, group.Id);
 
@@ -104,13 +99,12 @@ namespace SocialCapital.Data.Managers
 
 			using (var db = new DataContext ())
 			{
-				var frequency = frequencyManager.GetFrequency (db, DefaultPeriod, DefaultPeriodCount);
+				var frequency = frequencyManager.GetFrequency (DefaultFrequency, db);
 
 				newGroup = new Group () {
 					Name = null,
 					Description = null,
-					FrequencyId = frequency.Id,
-					IsArchive = false
+					FrequencyId = frequency.Id
 				};
 
 				Insert (newGroup);

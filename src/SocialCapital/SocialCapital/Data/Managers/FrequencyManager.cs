@@ -30,39 +30,54 @@ namespace SocialCapital.Data.Managers
 
 			// once a year
 			stdFrequencies.Add (new Frequency () {
-				Period = PeriodValues.Year,
-				Count = 1
+				Name = AppResources.OnceAYear,
+				Period = 365,
+				Never = false
 			});
 
 			// twise a year
 			stdFrequencies.Add (new Frequency () {
-				Period = PeriodValues.Year,
-				Count = 2
+				Name = AppResources.TwiceAYear,
+				Period = 182,
+				Never = false
 			});
 
 			// once a quater
 			stdFrequencies.Add (new Frequency () {
-				Period = PeriodValues.Year,
-				Count = 4
+				Name = AppResources.OnceAQuarter,
+				Period = 91,
+				Never = false
 			});
 
 			// once a month
 			stdFrequencies.Add (new Frequency () {
-				Period = PeriodValues.Month,
-				Count = 1
+				Name = AppResources.OnceAMonth,
+				Period = 30,
+				Never = false
+			});
+
+			// never
+			stdFrequencies.Add (new Frequency () {
+				Name = AppResources.Never,
+				Period = 0,
+				Never = true
 			});
 
 			InsertAll (stdFrequencies);
 		}
 
-		public Frequency GetFrequency(DataContext db, PeriodValues period, int count)
+		public IEnumerable<Frequency> GetAllFrequencies()
 		{
-			var res = Find(f => f.Period == period && f.Count == count, db);
+			return GetList (f => true);
+		}
+
+		public Frequency GetFrequency(string name, DataContext db = null)
+		{
+			var res = Find(f => f.Name == name, db);
 
 			if (res == null)
 			{
-				res = new Frequency () { Period = period, Count = count };
-				Insert (res, db);
+				throw new DataManagerException (string.Format ("No frequency with name = '{0}' in database"));
 			}
 
 			return res;

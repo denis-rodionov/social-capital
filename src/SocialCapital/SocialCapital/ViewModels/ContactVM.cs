@@ -133,10 +133,9 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref selected, value); }
 		}
 
-		private ContactStatus contactStatus = null;
 		public ContactStatus ContactStatus {
 			get {
-				return null; 	//return new ContactStatus(SourceContact, 
+				return new ContactStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
 			}
 		}
 

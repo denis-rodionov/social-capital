@@ -35,18 +35,36 @@ namespace SocialCapital.Data.Model
 
 		#region Navigation Properties
 
-		private Group group = null;
 		[Ignore]
 		public Group Group {
 			get {
-				if (group != null)
-				{
-					if (GroupId != null)
-						group = App.Container.Get<GroupsManager> ().GetGroup (GroupId.Value);
-				}
-				return group;
+				if (GroupId.HasValue)
+					return  App.Container.Get<GroupsManager> ().GetGroup (GroupId.Value);
+				else
+					return null;
 			}
-			set { group = value; }
+		}
+
+		[Ignore]
+		public Frequency Frequency {
+			get {
+				if (Group != null)
+					return Group.Frequency;
+				else
+					return null;
+			}
+		}
+
+		[Ignore]
+		public IEnumerable<CommunicationHistory> CommunicationHistory {
+			get {
+				return App.Container.Get<CommunicationManager> ().GetCommunications (c => c.ContactId == Id);
+			}
+		}
+
+		[Ignore]
+		public CommunicationHistory LastCommunication {
+			get { return App.Container.Get<CommunicationManager> ().GetLastCommunication (Id); }
 		}
 
 		#endregion

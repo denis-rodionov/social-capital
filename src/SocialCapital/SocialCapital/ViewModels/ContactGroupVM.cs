@@ -58,45 +58,20 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public IEnumerable<PeriodValues> PeriodsList { 
+		public IEnumerable<Frequency> FrequencyList { 
 			get {
-				foreach (var en in Enum.GetValues (typeof(PeriodValues)))
-					yield return (PeriodValues)en;				
+				return App.Container.Get<FrequencyManager> ().GetAllFrequencies ();	
 			}
 		}
 
-		public int FrequencyCount {
-			get { return SourceGroup.Frequency.Count; }
+		public Frequency Frequency {
+			get { return SourceGroup.Frequency; }
 			set { 
-				if (SourceGroup.Frequency.Count != value)
+				if (SourceGroup.Frequency != value)
 				{
-					SourceGroup.Frequency.Count = value;
+					SourceGroup.Frequency = value;
 					OnPropertyChanged ();
 					UpdateFrequency ();
-				}
-			}
-		}
-
-		public PeriodValues FrequencyPeriod {
-			get { return SourceGroup.Frequency.Period; }
-			set { 
-				if (SourceGroup.Frequency.Period != value)
-				{
-					SourceGroup.Frequency.Period = value;
-					OnPropertyChanged ();
-					UpdateFrequency ();
-				}
-			}
-		}
-
-		public bool IsArchive {
-			get { return SourceGroup.IsArchive; }
-			set {
-				if (SourceGroup.IsArchive != value)
-				{
-					SourceGroup.IsArchive = value;
-					OnPropertyChanged ();
-					UpdateGroup ();
 				}
 			}
 		}

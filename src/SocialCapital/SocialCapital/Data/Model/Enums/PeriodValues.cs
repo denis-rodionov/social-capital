@@ -2,7 +2,7 @@
 
 namespace SocialCapital
 {
-	public enum PeriodValues {
+	enum PeriodValues {
 		Day = 1,
 		Week = 2,
 		Month = 3,

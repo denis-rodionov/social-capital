@@ -11,15 +11,33 @@ namespace SocialCapital.Common
 	public class ContactStatus 
 	{
 		readonly Color InactiveColor = new Color (100, 100, 100);
+		readonly Color GreenColor = new Color(0, 100, 0);
+		readonly Color RedColor = new Color(100, 0, 0);
 		const double InactiveStatus = -1;
+		const double RedStatus = 0;
+		const double GreenStatus = 1;
 
-		public ContactStatus (Contact contact, Frequency frequency, DateTime lastContact)
+		public ContactStatus (Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
 		{
+			RawStatus = CalculateRawStatus (contact, frequency, lastCommunication);
 		}
 
-		protected virtual double CalculateRawStatus(Contact contact, Frequency frequency, DateTime lastContact)
+		protected virtual double CalculateRawStatus(Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
 		{
-			return 1;
+			if (frequency == null)
+				return InactiveStatus;
+
+			if (lastCommunication == null)
+				return (GreenStatus - RedStatus) / 2;
+
+			var passedSinceCommunication = (DateTime.Now - lastCommunication.Time).TotalDays;
+			var middlePoint = frequency.Period / 2;
+			var slope = -1 / (frequency.Period - middlePoint);
+
+			if (passedSinceCommunication < middlePoint)
+				return GreenStatus;
+			else
+				return passedSinceCommunication * (slope + frequency.Period);
 		}
 
 		/// <summary>
@@ -34,15 +52,21 @@ namespace SocialCapital.Common
 		/// Determin if the user interested in the developing relationship with the person.
 		/// </summary>
 		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
-		public bool Active { get; private set; }
+		public bool Active { get { return RawStatus == InactiveStatus; }}
 
 		/// <summary>
 		/// Color represents the relationship status
 		/// </summary>
 		/// <value>The color.</value>
-		public Color Color { get; private set; }
+		public Color Color { 
+			get  {
+				var r = RedColor.R + (int)((GreenColor.R - RedColor.R) * RawStatus);
+				var g = RedColor.G + (int)((GreenColor.G - RedColor.G) * RawStatus);
+				var b = RedColor.B + (int)((GreenColor.B - RedColor.B) * RawStatus);
 
-
+				return Color.FromRgb(r, g, b);
+			}
+		}
 	}
 }
 

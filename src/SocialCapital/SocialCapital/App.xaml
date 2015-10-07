@@ -13,6 +13,7 @@
         	<converters:PeriodConverter x:Key="PeriodConverter" />
         	<converters:ListToCountConverter x:Key="ListToCountConverter" />
         	<converters:BoolToImageConverter x:Key="BoolToImageConverter" />
+        	<converters:FrequencyConverter x:Key="FrequencyConverter" />
     	</ResourceDictionary>
 	</Application.Resources>
 </Application>

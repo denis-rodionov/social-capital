@@ -12,13 +12,26 @@ namespace SocialCapital.Data.Model
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
-		public PeriodValues Period { get; set; }
+		/// <summary>
+		/// Name of the frequency
+		/// </summary>
+		[Unique]
+		public string Name { get; set; }
 
-		public int Count { get; set; }
+		/// <summary>
+		/// Wanted interval of communications:
+		/// 0 - undefined (in case of never)
+		/// 1 - day
+		/// 30 - month
+		/// 365 - year
+		/// </summary>
+		public double Period { get; set; }
+
+		public bool Never { get; set; }
 
 		public override string ToString ()
 		{
-			return string.Format ("[Frequency: Id={0}, Period={1}, Count={2}]", Id, Period, Count);
+			return string.Format ("[Frequency: Id={0}, Name={1}, Period={2}]", Id, Name, Period);
 		}
 
 		#region IEquatable implementation
@@ -27,12 +40,12 @@ namespace SocialCapital.Data.Model
 			if (other == null)
 				return false;
 
-			return Period == other.Period && Count == other.Count;
+			return Name == other.Name;
 		}
 
 		public override int GetHashCode ()
 		{
-			return (Period.ToString () + Count.ToString ()).GetHashCode ();
+			return Name.GetHashCode ();
 		}
 		#endregion
 	}

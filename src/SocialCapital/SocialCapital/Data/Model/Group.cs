@@ -27,13 +27,6 @@ namespace SocialCapital.Data.Model
 		public string Description { get; set; }
 
 		/// <summary>
-		/// If the IsArchive property is true - the properties' contacts
-		/// are not tracked by application
-		/// </summary>
-		/// <value><c>true</c> if this instance is archive; otherwise, <c>false</c>.</value>
-		public bool IsArchive { get; set; }
-
-		/// <summary>
 		/// Describes how often to contact with the person
 		/// </summary>
 		public int FrequencyId { get; set; }
@@ -54,15 +47,16 @@ namespace SocialCapital.Data.Model
 			set { assignedContacts = value; }
 		}
 
-		private Frequency frequency;
+		private Frequency frequency = null;
 		[Ignore]
 		public Frequency Frequency {
 			get {
-				if (frequency == null)
-					frequency = App.Container.Get<FrequencyManager> ().GetFrequency (FrequencyId);
+				frequency = App.Container.Get<FrequencyManager> ().GetFrequency (FrequencyId);
 				return frequency;
 			}
-			set { frequency = value; }
+			set {
+				frequency = value;
+			}
 		}
 
 		#endregion
@@ -86,7 +80,7 @@ namespace SocialCapital.Data.Model
 
 		public override string ToString ()
 		{
-			return string.Format ("[Group: Id={0}, Name={1}, Description={2}, IsArchive={3}, FrequencyId={4}, AssignedContacts={5}, Frequency={6}]", Id, Name, Description, IsArchive, FrequencyId, AssignedContacts, Frequency);
+			return string.Format ("[Group: Id={0}, Name={1}, Description={2}, FrequencyId={4}, AssignedContacts={5}, Frequency={6}]", Id, Name, Description, FrequencyId, AssignedContacts, Frequency);
 		}
 	}
 }

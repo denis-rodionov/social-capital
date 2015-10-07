@@ -449,6 +449,33 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Раз в месяц.
+        /// </summary>
+        internal static string OnceAMonth {
+            get {
+                return ResourceManager.GetString("OnceAMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Раз в три месяца.
+        /// </summary>
+        internal static string OnceAQuarter {
+            get {
+                return ResourceManager.GetString("OnceAQuarter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Раз в год.
+        /// </summary>
+        internal static string OnceAYear {
+            get {
+                return ResourceManager.GetString("OnceAYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Добавлен.
         /// </summary>
         internal static string PhoneContactImportedStatus {
@@ -571,6 +598,15 @@ namespace SocialCapital {
         internal static string TotalContactCount {
             get {
                 return ResourceManager.GetString("TotalContactCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Два раза в год.
+        /// </summary>
+        internal static string TwiceAYear {
+            get {
+                return ResourceManager.GetString("TwiceAYear", resourceCulture);
             }
         }
         

@@ -32,13 +32,10 @@
 
 			<StackLayout Orientation="Horizontal" >
 				<Label Text="Desired contact interval: " FontSize="Large" />
-				<Label Text="{Binding FrequencyCount}"  FontSize="Large" />
-				<Label Text=" time(s) per "  FontSize="Large" />
 				<controls:BindablePicker Title="Picker" 
-									 	 ItemsSource="{Binding PeriodsList}" 
-									 	 SelectedItem="{Binding FrequencyPeriod}"
-									 	 Converter="{StaticResource PeriodConverter}" />
-				<!--<Label Text="{Binding Path=Frequency.Period, Converter={StaticResource PeriodConverter}}" />-->
+									 	 ItemsSource="{Binding FrequencyList}" 
+									 	 SelectedItem="{Binding Frequency}"
+									 	 Converter="{StaticResource FrequencyConverter}" />
 			</StackLayout>
 
 			<Stepper Value="{Binding FrequencyCount}" />

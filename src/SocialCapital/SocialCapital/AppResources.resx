@@ -274,4 +274,20 @@
 		<value>Приоритетные</value>
 		<comment>Название страницы с контактами отсортированными от красного к зелёному</comment>
 	</data>
+	<data name="OnceAYear" xml:space="preserve">
+		<value>Раз в год</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
+	<data name="TwiceAYear" xml:space="preserve">
+		<value>Два раза в год</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
+	<data name="OnceAQuarter" xml:space="preserve">
+		<value>Раз в три месяца</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
+	<data name="OnceAMonth" xml:space="preserve">
+		<value>Раз в месяц</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
 </root>

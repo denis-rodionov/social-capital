@@ -8,7 +8,10 @@
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
-						<Label Text="{Binding FullName}" />
+						<StackLayout Orientation="Horizontal">
+							<BoxView Color="{Binding ContactStatus.Color}" />
+							<Label Text="{Binding FullName}" />
+						</StackLayout>
 					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
