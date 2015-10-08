@@ -10,7 +10,7 @@ using Ninject;
 
 namespace SocialCapital.ViewModels.Commands
 {
-	public class EmailWriteCommand : BaseContactCommand<Email>
+	public class EmailWriteCommand : BaseActionCommand<Email>
 	{
 		public EmailWriteCommand (Contact contact, Func<IEnumerable<Email>> getEmails) 
 			: base(contact, getEmails, AppResources.InviteToChooseEmail)

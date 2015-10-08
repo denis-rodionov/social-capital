@@ -7,10 +7,13 @@
 		<ListView ItemsSource="{Binding Items}" ItemAppearing="OnItemAppearing">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<ViewCell>
+					<ViewCell Tapped="OnItemTapped">
 						<StackLayout Orientation="Horizontal">
 							<BoxView Color="{Binding ContactStatus.Color}" />
-							<Label Text="{Binding FullName}" />
+							<StackLayout Orientation="Vertical">
+								<Label Text="{Binding FullName}" />
+								<!--<Label Text="{Binding Tags.TagList}" />-->
+							</StackLayout>
 						</StackLayout>
 					</ViewCell>
 				</DataTemplate>

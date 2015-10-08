@@ -290,4 +290,20 @@
 		<value>Раз в месяц</value>
 		<comment>Частота комменикаций с контактом</comment>
 	</data>
+	<data name="LogCommunicationAction" xml:space="preserve">
+		<value>Отметить разговор</value>
+		<comment>Названием кнопки или действия, сохраняющую в систему информацию о том что произошла коммуникация</comment>
+	</data>
+	<data name="Phone" xml:space="preserve">
+		<value>Телефон</value>
+		<comment>Перевод</comment>
+	</data>
+	<data name="Sms" xml:space="preserve">
+		<value>СМС</value>
+		<comment>Перевод</comment>
+	</data>
+	<data name="Email" xml:space="preserve">
+		<value>Email</value>
+		<comment>Перевод</comment>
+	</data>
 </root>

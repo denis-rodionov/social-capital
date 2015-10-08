@@ -10,7 +10,7 @@ namespace SocialCapital.Common
 	/// </summary>
 	public class ContactStatus 
 	{
-		readonly Color InactiveColor = new Color (100, 100, 100);
+		readonly Color InactiveColor = new Color (50, 50, 50);
 		readonly Color GreenColor = new Color(0, 100, 0);
 		readonly Color RedColor = new Color(100, 0, 0);
 		const double InactiveStatus = -1;
@@ -52,7 +52,7 @@ namespace SocialCapital.Common
 		/// Determin if the user interested in the developing relationship with the person.
 		/// </summary>
 		/// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
-		public bool Active { get { return RawStatus == InactiveStatus; }}
+		public bool Active { get { return RawStatus != InactiveStatus; }}
 
 		/// <summary>
 		/// Color represents the relationship status
@@ -60,6 +60,9 @@ namespace SocialCapital.Common
 		/// <value>The color.</value>
 		public Color Color { 
 			get  {
+				if (RawStatus == InactiveStatus)
+					return InactiveColor;
+
 				var r = RedColor.R + (int)((GreenColor.R - RedColor.R) * RawStatus);
 				var g = RedColor.G + (int)((GreenColor.G - RedColor.G) * RawStatus);
 				var b = RedColor.B + (int)((GreenColor.B - RedColor.B) * RawStatus);

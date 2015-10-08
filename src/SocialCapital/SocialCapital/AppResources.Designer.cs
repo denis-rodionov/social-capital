@@ -278,6 +278,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Email.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         internal static string FullNameLabel {
@@ -386,6 +395,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Отметить разговор.
+        /// </summary>
+        internal static string LogCommunicationAction {
+            get {
+                return ResourceManager.GetString("LogCommunicationAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Меню.
         /// </summary>
         internal static string MainMenuTitle {
@@ -476,6 +494,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Телефон.
+        /// </summary>
+        internal static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Добавлен.
         /// </summary>
         internal static string PhoneContactImportedStatus {
@@ -553,6 +580,15 @@ namespace SocialCapital {
         internal static string SettingsMenuItemTitle {
             get {
                 return ResourceManager.GetString("SettingsMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на СМС.
+        /// </summary>
+        internal static string Sms {
+            get {
+                return ResourceManager.GetString("Sms", resourceCulture);
             }
         }
         

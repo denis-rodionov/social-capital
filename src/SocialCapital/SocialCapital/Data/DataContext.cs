@@ -15,6 +15,8 @@ namespace SocialCapital.Data
 {
 	public class DataContext : IDataContext
 	{
+		const string databaseVersion = "0.1";
+		
 		private static object locker = new object();
 
 		private static SQLiteConnection connection;
@@ -29,8 +31,9 @@ namespace SocialCapital.Data
 			try
 			{
 				if (connection == null)
-				{
+				{					
 					connection = DependencyService.Get<ISQLite> ().GetConnection ();
+					CheckVersion();
 					mutex = new Mutex(false);
 				}
 
@@ -40,7 +43,18 @@ namespace SocialCapital.Data
 			catch (Exception ex) 
 			{
 				Log.GetLogger ().Log (ex);
+				throw;
 			}
+		}
+
+		public void CheckVersion()
+		{
+			var ver = App.Container.Get<Settings> ().GetConfigValue<string> (Settings.DatabaseVersionConfig, this);
+
+			if (ver == null)
+				App.Container.Get<Settings> ().SaveValue (Settings.DatabaseVersionConfig, databaseVersion, this);
+			else if (ver != databaseVersion)
+				throw new Exception(string.Format("Database version is different: AppVersion={0}, DeviceVersion={1}", databaseVersion, ver));
 		}
 
 		public static void InitDatabase()
@@ -82,7 +96,14 @@ namespace SocialCapital.Data
 				db.Connection.DeleteAll<LogMessage> ();
 				db.Connection.DeleteAll<Group> ();
 			}
+
 			App.Container.Get<ContactManager> ().ClearCache ();
+			App.Container.Get<CommunicationManager> ().ClearCache ();
+			App.Container.Get<EmailManager> ().ClearCache ();
+			App.Container.Get<FrequencyManager> ().ClearCache ();
+			App.Container.Get<GroupsManager> ().ClearCache ();
+			App.Container.Get<ModificationManager> ().ClearCache ();
+			App.Container.Get<PhonesManager> ().ClearCache ();
 		}
 
 		public static IEnumerable<LogMessage> GetLogs()

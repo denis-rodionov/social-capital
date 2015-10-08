@@ -9,7 +9,7 @@ using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital
 {
-	public abstract class BaseContactCommand<T> : ICommand where T : ILabeled
+	public abstract class BaseActionCommand<T> : ICommand where T : ILabeled
 	{
 		public Func<IEnumerable<T>> GetItems { get; private set; }
 
@@ -17,9 +17,7 @@ namespace SocialCapital
 
 		public Contact Contact { get; private set; }
 
-		public event Action CommandExecuted;
-
-		public BaseContactCommand (Contact contact, Func<IEnumerable<T>> getItems, string userInviteString)
+		public BaseActionCommand (Contact contact, Func<IEnumerable<T>> getItems, string userInviteString)
 		{
 			UserInvite = userInviteString;
 			Contact = contact;
@@ -33,6 +31,7 @@ namespace SocialCapital
 		#region ICommand implementation
 
 		public event EventHandler CanExecuteChanged;
+		public event Action CommandExecuted;
 
 		public bool CanExecute (object parameter)
 		{
@@ -55,6 +54,20 @@ namespace SocialCapital
 				SaveCommunication ();
 				RaiseCommandExecuted ();
 			}
+		}
+
+		private void CanExecuteChangedRaise()
+		{
+			var handler = CanExecuteChanged;
+			if (handler != null)
+				CanExecuteChanged (this, new EventArgs());
+		}
+
+		private void RaiseCommandExecuted()
+		{
+			var handler = CommandExecuted;
+			if (handler != null)
+				CommandExecuted();
 		}
 
 		#endregion
@@ -99,19 +112,7 @@ namespace SocialCapital
 				return dict [label];
 		}
 
-		private void CanExecuteChangedRaise()
-		{
-			var handler = CanExecuteChanged;
-			if (handler != null)
-				CanExecuteChanged (this, new EventArgs());
-		}
 
-		private void RaiseCommandExecuted()
-		{
-			var handler = CommandExecuted;
-			if (handler != null)
-				CommandExecuted();
-		}
 	}
 }
 

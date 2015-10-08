@@ -41,6 +41,9 @@
 						Command="{Binding WriteEmailCommand}"
 						CommandParameter="{x:Reference page}" />
 			</StackLayout>
+			<Button Text="{i18n:Translate LogCommunicationAction}"
+					Command="{Binding LogCommunication}"
+					CommandParameter="{x:Reference page}" />
 
 			<!-- History -->
 			<Label Text="{i18n:Translate LastContactCommunicationHeader}" 

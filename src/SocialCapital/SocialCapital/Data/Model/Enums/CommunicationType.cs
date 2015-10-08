@@ -11,7 +11,8 @@ namespace SocialCapital.Data.Model.Enums
 	public enum CommunicationType {
 		PhoneCall = 1,
 		EmailSent = 2,
-		SmsSend = 3
+		SmsSend = 3,
+		Unknown = 100
 	}
 }
 

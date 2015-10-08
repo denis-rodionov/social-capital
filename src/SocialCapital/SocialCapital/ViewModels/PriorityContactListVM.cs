@@ -5,6 +5,7 @@ using SocialCapital.Data.Managers;
 using SocialCapital.Data.Model;
 using System.Collections.Generic;
 using System.Linq;
+using SocialCapital.Common;
 
 namespace SocialCapital.ViewModels
 {
@@ -12,16 +13,23 @@ namespace SocialCapital.ViewModels
 	{
 		const int TakeCount = 20;
 
-		private List<Contact> sourceItems = new List<Contact>();
+		private List<ContactVM> sourceItems = new List<ContactVM>();
 		
 		public ObservableCollection<ContactVM> Items { get; private set; }
 
 		public PriorityContactListVM ()
 		{
-			sourceItems = App.Container.Get<ContactManager> ().GetContacts (c => true).ToList();
+			var timing = Timing.Start ("PriorityContactListVM constructor");
+
+			sourceItems = App.Container.Get<ContactManager> ().AllContacts
+				.Select (c => new ContactVM (c))
+				.Where(c => c.ContactStatus.Active)
+				.OrderBy (c => c.ContactStatus.RawStatus).ToList ();
 			Items = new ObservableCollection<ContactVM> ();
 
 			LoadMore ();
+
+			timing.Finish (LogLevel.Trace);
 		}
 
 		public void OnItemAppearing(ContactVM contact)
@@ -35,11 +43,15 @@ namespace SocialCapital.ViewModels
 
 		private void LoadMore()
 		{
+			var timing = Timing.Start ("LoadMode");
+
 			var loaded = Items.Count;
-			var newItems = sourceItems.Skip (loaded).Take (TakeCount).Select (c => new ContactVM (c));
+			var newItems = sourceItems.Skip (loaded).Take (TakeCount);
 
 			foreach (var item in newItems)
 				Items.Add (item);
+
+			timing.Finish (LogLevel.Trace);
 		}
 	}
 }

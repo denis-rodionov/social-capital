@@ -42,11 +42,11 @@ namespace SocialCapital.Data.Managers
 			Cache = null;
 		}
 
-            		#endregion
+        #endregion
 
 		#region Insert
 
-		public Type Insert(Type item, DataContext db = null)
+		protected Type Insert(Type item, DataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = new DataContext ())
@@ -74,7 +74,7 @@ namespace SocialCapital.Data.Managers
 				throw new Exception(string.Format("Database object {0} has incorrect id == 0", dbObject));
 		}
 
-		public void InsertAll(IEnumerable<Type> items, DataContext db = null)
+		protected void InsertAll(IEnumerable<Type> items, DataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = new DataContext ())
@@ -90,7 +90,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Delete
 
-		public void Delete(Type item, DataContext db = null)
+		protected void Delete(Type item, DataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = new DataContext ())
@@ -115,7 +115,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Update
 
-		public void Update(Type item, DataContext db = null)
+		protected void Update(Type item, DataContext db = null)
 		{
 			if (db == null)
 			{
@@ -129,7 +129,7 @@ namespace SocialCapital.Data.Managers
 			ItemUpdated (item);
 		}
 
-		public void InnerUpdate(Type item, DataContext db)
+		protected void InnerUpdate(Type item, DataContext db)
 		{
 			db.Connection.Update (item);
 		}
@@ -167,7 +167,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Get
 
-		public Type Get(int Id, DataContext db = null)
+		protected Type Get(int Id, DataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -186,7 +186,7 @@ namespace SocialCapital.Data.Managers
 			return res;
 		}
 
-		public Type Find(Func<Type, bool> whereClause, DataContext db = null)
+		protected Type Find(Func<Type, bool> whereClause, DataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -199,7 +199,7 @@ namespace SocialCapital.Data.Managers
 				return res.SingleOrDefault ();		
 		}
 
-		public List<Type> GetList(Func<Type, bool> whereClause, DataContext db = null)
+		protected List<Type> GetList(Func<Type, bool> whereClause, DataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);

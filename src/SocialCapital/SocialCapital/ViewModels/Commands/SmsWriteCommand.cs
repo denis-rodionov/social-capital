@@ -11,7 +11,7 @@ using Ninject;
 
 namespace SocialCapital.ViewModels.Commands
 {
-	public class SmsWriteCommand : BaseContactCommand<Phone>
+	public class SmsWriteCommand : BaseActionCommand<Phone>
 	{
 		public SmsWriteCommand (Contact contact, Func<IEnumerable<Phone>> getPhones) 
 			: base(contact, getPhones, AppResources.InviteToChoosePhoneNumber)

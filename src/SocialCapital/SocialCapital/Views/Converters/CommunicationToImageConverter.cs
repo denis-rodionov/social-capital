@@ -19,6 +19,8 @@ namespace SocialCapital.Views.Converters
 					return "ic_textsms_black_18dp.png";
 				case CommunicationType.EmailSent:
 					return "ic_email_black_18db.png";
+				case CommunicationType.Unknown:
+					return "ic_swap_horiz_black_18dp.png";
 				default:
 					throw new Exception ("No image for type " + type);
 			}

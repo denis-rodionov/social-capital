@@ -13,7 +13,7 @@ using Ninject;
 
 namespace SocialCapital.ViewModels.Commands
 {
-	public class MakeCallCommand : BaseContactCommand<Phone>
+	public class MakeCallCommand : BaseActionCommand<Phone>
 	{
 		public MakeCallCommand (Contact contact, Func<IEnumerable<Phone>> getPhones) 
 			: base(contact, getPhones, AppResources.InviteToChoosePhoneNumber)

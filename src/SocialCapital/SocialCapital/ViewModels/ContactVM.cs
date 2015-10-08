@@ -149,9 +149,7 @@ namespace SocialCapital.ViewModels
 				if (callCommand == null)
 				{
 					callCommand = new MakeCallCommand (SourceContact, () => Phones);
-					(callCommand as MakeCallCommand).CommandExecuted += () => {
-						History = null;
-					};
+					(callCommand as MakeCallCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return callCommand;
 			}
@@ -163,9 +161,7 @@ namespace SocialCapital.ViewModels
 				if (smsWriteCommand == null)
 				{
 					smsWriteCommand = new SmsWriteCommand (SourceContact, () => Phones);
-					(smsWriteCommand as SmsWriteCommand).CommandExecuted += () => {
-						History = null;
-					};
+					(smsWriteCommand as SmsWriteCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return smsWriteCommand;
 			}
@@ -177,11 +173,21 @@ namespace SocialCapital.ViewModels
 				if (writeEmailCommand == null)
 				{
 					writeEmailCommand = new EmailWriteCommand (SourceContact, () => Emails);
-					(writeEmailCommand as EmailWriteCommand).CommandExecuted += () => {
-						History = null;
-					};
+					(writeEmailCommand as EmailWriteCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return writeEmailCommand;
+			}
+		}
+
+		private ICommand logCommunication;
+		public ICommand LogCommunication {
+			get {
+				if (logCommunication == null)
+				{
+					logCommunication = new LogCommunication (SourceContact);
+					(logCommunication as LogCommunication).CommandExecuted += OnCommunicationCommandExecuted;
+				}
+				return logCommunication;
 			}
 		}
 
@@ -205,6 +211,11 @@ namespace SocialCapital.ViewModels
 		#endregion
 
 		#region Implementation
+
+		private void OnCommunicationCommandExecuted()
+		{
+			History = null;
+		}
 
 		private ImageSource GetAnonimusPhoto()
 		{

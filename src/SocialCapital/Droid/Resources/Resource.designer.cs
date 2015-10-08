@@ -112,22 +112,25 @@ namespace SocialCapital.Droid
 			public const int ic_settings_black_48dp = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int ic_sync_black_36dp = 2130837525;
+			public const int ic_swap_horiz_black_18dp = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int ic_sync_black_48dp = 2130837526;
+			public const int ic_sync_black_36dp = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int ic_textsms_black_18dp = 2130837527;
+			public const int ic_sync_black_48dp = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int ic_textsms_black_36dp = 2130837528;
+			public const int ic_textsms_black_18dp = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int icon = 2130837529;
+			public const int ic_textsms_black_36dp = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int monoandroidsplash = 2130837530;
+			public const int icon = 2130837530;
+			
+			// aapt resource value: 0x7f02001b
+			public const int monoandroidsplash = 2130837531;
 			
 			static Drawable()
 			{

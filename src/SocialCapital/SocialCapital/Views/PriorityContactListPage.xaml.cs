@@ -22,6 +22,13 @@ namespace SocialCapital.Views
 
 			vm.OnItemAppearing (contact);
 		}
+
+		private void OnItemTapped(object sender, EventArgs args)
+		{
+			var contact = (sender as Cell).BindingContext;
+			var page = new ContactDetailsPage() { BindingContext = contact };
+			Navigation.PushAsync(page);
+		}
 	}
 }
 
