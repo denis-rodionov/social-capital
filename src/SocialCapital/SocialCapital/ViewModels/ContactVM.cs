@@ -86,7 +86,7 @@ namespace SocialCapital.ViewModels
 		public TagsVM Tags {
 			get {
 				if (tags == null)
-					tags = new TagsVM (Database.GetContactTags (SourceContact.Id));
+					tags = new TagsVM (App.Container.Get<ContactTagsManager>().GetContactTags (SourceContact.Id));
 				return tags;
 			}
 			set 
@@ -137,6 +137,7 @@ namespace SocialCapital.ViewModels
 			get {
 				return new ContactStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
 			}
+			set { OnPropertyChanged (); }
 		}
 
         #endregion
@@ -194,7 +195,7 @@ namespace SocialCapital.ViewModels
 		public void Save()
 		{
 			Database.SaveContactInfo (SourceContact);
-			Database.SaveContactTags (Tags.Tags, SourceContact.Id);
+			App.Container.Get<ContactTagsManager>().SaveContactTags (Tags.Tags, SourceContact.Id);
 		}
 
 		public void Reload()
@@ -215,6 +216,7 @@ namespace SocialCapital.ViewModels
 		private void OnCommunicationCommandExecuted()
 		{
 			History = null;
+			ContactStatus = null;
 		}
 
 		private ImageSource GetAnonimusPhoto()

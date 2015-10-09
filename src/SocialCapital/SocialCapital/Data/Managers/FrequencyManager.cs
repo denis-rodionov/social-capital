@@ -15,7 +15,7 @@ namespace SocialCapital.Data.Managers
 
 		public void InitFrequencies()
 		{
-			using (var db = new DataContext ())
+			using (var db = CreateContext())
 			{
 				InitFrequencies (db);
 			}

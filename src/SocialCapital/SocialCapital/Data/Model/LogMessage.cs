@@ -1,9 +1,10 @@
 ﻿using System;
 using SQLite.Net.Attributes;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
-	public class LogMessage
+	public class LogMessage : IHaveId, IEquatable<LogMessage>
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
@@ -20,6 +21,20 @@ namespace SocialCapital.Data.Model
 				return string.Format ("{0}: {1}", Time, Message);			
 			}
 		}
+
+		#region IEquatable implementation
+
+		public bool Equals (LogMessage other)
+		{
+			return Id != other.Id;
+		}
+
+		public override int GetHashCode ()
+		{
+			return Id.GetHashCode ();
+		}
+
+		#endregion
 	}
 }
 

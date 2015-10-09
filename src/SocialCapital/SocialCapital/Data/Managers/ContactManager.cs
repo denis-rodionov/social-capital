@@ -52,28 +52,12 @@ namespace SocialCapital.Data.Managers
 			return Get (contactId);
 		}
 
-		public IEnumerable<Tag> GetContactTags(int contactId)
-		{
-			if (contactId == 0)
-				throw new ArgumentException ("contactId cannot be 0");
-
-			using (var db = new DataContext ()) {
-				var tags = 
-					db.Connection.Query<Tag> (
-						"select t.Id, t.Name " +
-						"from Tag t " +
-						"join ContactTag ct on ct.TagId = t.Id " +
-						"where ct.ContactId = ?", contactId);
-				return tags;
-			}
-		}
-
 		public Address GetContactAddress(int contactId)
 		{
 			if (contactId == 0)
 				throw new ArgumentException ("contactId cannot be 0");
 
-			using (var db = new DataContext ()) {
+			using (var db = CreateContext()) {
 				return db.Connection.Table<Address> ().Where (p => p.ContactId == contactId).FirstOrDefault ();
 			}
 		}
@@ -89,21 +73,9 @@ namespace SocialCapital.Data.Managers
 		/// <param name="contact">Contact to save or update</param>
 		public int SaveContactInfo(Contact contact)
 		{
-			using (var db = new DataContext ()) {
+			using (var db = CreateContext()) {
 				return SaveContactInfo (contact, db);
 			}
-		}
-
-		public void SaveContactTags(IEnumerable<Tag> tags, int contactId)
-		{
-			var contactTags = GetContactTags (contactId);
-			var newTags = tags.Except (contactTags).ToList ();
-			var removeTags = contactTags.Except (tags).ToList ();
-
-			var tagManager = new TagManager ();
-			tagManager.SaveTags (newTags);
-			tagManager.AssignToContact (newTags, contactId);
-			tagManager.RemoveFromContact (removeTags, contactId);
 		}
 
 		/// <summary>
@@ -117,7 +89,7 @@ namespace SocialCapital.Data.Managers
 			if (contactConverter.DatabaseContactId == 0)
 				throw new ArgumentException ("Converter does not have DatabaseContactId set");
 
-			using (var db = new DataContext ()) {
+			using (var db = CreateContext()) {
 				var contactInfoFields = new List<FieldValue> ();
 
 				foreach (var field in fields) {
@@ -153,7 +125,7 @@ namespace SocialCapital.Data.Managers
 		{
 			var contactIds = contacts.Select (c => c.Id);
 
-			using (var db = new DataContext ())
+			using (var db = CreateContext())
 			{
 				var assignedContacts = db.Connection.Table<Contact> ().Where (c => c.GroupId == groupId).Select (c => c.Id);
 				var toAssign = contactIds.Except (assignedContacts).ToList ();

@@ -1,9 +1,10 @@
 ﻿using System;
 using SQLite.Net.Attributes;
+using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
-	public class Tag : IEquatable<Tag>
+	public class Tag : IEquatable<Tag>, IHaveId
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }

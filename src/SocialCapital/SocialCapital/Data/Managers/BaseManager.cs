@@ -7,32 +7,38 @@ using SocialCapital.Common;
 
 namespace SocialCapital.Data.Managers
 {
-	public abstract class BaseManager<Type> where Type : class, IHaveId, IEquatable<Type>
+	public abstract class BaseManager<Type> : ICachable
+		where Type : class, IHaveId, IEquatable<Type>
 	{
 		public BaseManager ()
 		{
 		}
 
-
+		public DataContext CreateContext()
+		{
+			var db = new DataContext();
+			Log.GetLogger().Log(string.Format("DataContext for type [{0}]", typeof(Type)), LogLevel.Trace);
+			return db;
+		}
 
 		#region Cache
 
 		public List<Type> Cache { get; set; }
 
-		public void RefreshCache(DataContext db)
+		public void RefreshCache(DataContext db = null)
 		{
 			var timing = Timing.Start ("Cache updated for " + typeof(Type));
 
 			if (db == null)
-				using (var innerDb = new DataContext ())
-					Cache = innerDb.Connection.Table<Type> ().ToList ();
+				using (var innerDb = CreateContext ())
+					InnerRefreshCache (innerDb);
 			else
-				Cache = db.Connection.Table<Type> ().ToList ();
+				InnerRefreshCache (db);
 
 			timing.Finish (LogLevel.Debug);
 		}
 
-		private void InnerRefreshCache(DataContext db)
+		protected virtual void InnerRefreshCache(DataContext db)
 		{
 			Cache = db.Connection.Table<Type> ().ToList ();
 		}
@@ -49,7 +55,7 @@ namespace SocialCapital.Data.Managers
 		protected Type Insert(Type item, DataContext db = null)
 		{
 			if (db == null)
-				using (var innerDb = new DataContext ())
+				using (var innerDb = CreateContext())
 					innerDb.Connection.Insert (item);
 			else
 				db.Connection.Insert (item);
@@ -77,7 +83,7 @@ namespace SocialCapital.Data.Managers
 		protected void InsertAll(IEnumerable<Type> items, DataContext db = null)
 		{
 			if (db == null)
-				using (var innerDb = new DataContext ())
+				using (var innerDb = CreateContext())
 					innerDb.Connection.InsertAll (items);
 			else
 				db.Connection.InsertAll (items);
@@ -93,7 +99,7 @@ namespace SocialCapital.Data.Managers
 		protected void Delete(Type item, DataContext db = null)
 		{
 			if (db == null)
-				using (var innerDb = new DataContext ())
+				using (var innerDb = CreateContext())
 					innerDb.Connection.Delete (item);
 			else
 				db.Connection.Delete(item);
@@ -119,7 +125,7 @@ namespace SocialCapital.Data.Managers
 		{
 			if (db == null)
 			{
-				using (var innerDB = new DataContext ())
+				using (var innerDB = CreateContext())
 				{
 					InnerUpdate (item, innerDB);
 				}

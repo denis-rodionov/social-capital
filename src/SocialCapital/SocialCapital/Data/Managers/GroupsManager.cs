@@ -23,7 +23,7 @@ namespace SocialCapital.Data.Managers
 		{
 			var fm = App.Container.Get<FrequencyManager> ();
 
-			using (var db = new DataContext ())
+			using (var db = CreateContext())
 			{		
 				fm.InitFrequencies (db);
 
@@ -78,7 +78,7 @@ namespace SocialCapital.Data.Managers
 		{
 			var frequencyManager = App.Container.Get<FrequencyManager> ();
 
-			using (var db = new DataContext ())
+			using (var db = CreateContext())
 			{
 				db.Connection.BeginTransaction ();
 
@@ -97,7 +97,7 @@ namespace SocialCapital.Data.Managers
 			var frequencyManager = App.Container.Get<FrequencyManager> ();
 			Group newGroup;
 
-			using (var db = new DataContext ())
+			using (var db = CreateContext())
 			{
 				var frequency = frequencyManager.GetFrequency (DefaultFrequency, db);
 

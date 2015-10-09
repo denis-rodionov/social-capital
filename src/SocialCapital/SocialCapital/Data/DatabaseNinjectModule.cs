@@ -21,6 +21,9 @@ namespace SocialCapital.Data
 			this.Bind<PhonesManager> ().To<PhonesManager> ().InSingletonScope ();
 			this.Bind<CommunicationManager> ().To<CommunicationManager> ().InSingletonScope ();
 			this.Bind<ModificationManager> ().To<ModificationManager> ().InSingletonScope ();
+			this.Bind<LogManager> ().To<LogManager> ().InSingletonScope ();
+			this.Bind<ContactTagsManager> ().To<ContactTagsManager> ().InSingletonScope ();
+			this.Bind<TagManager> ().To<TagManager> ().InSingletonScope ();
 
 			this.Bind<Settings> ().ToSelf ();
 		}

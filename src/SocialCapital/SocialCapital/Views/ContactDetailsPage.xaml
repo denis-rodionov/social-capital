@@ -43,14 +43,16 @@
 			</StackLayout>
 			<Button Text="{i18n:Translate LogCommunicationAction}"
 					Command="{Binding LogCommunication}"
-					CommandParameter="{x:Reference page}" />
+					CommandParameter="{x:Reference page}"
+					HorizontalOptions="FillAndExpand" />
 
 			<!-- History -->
 			<Label Text="{i18n:Translate LastContactCommunicationHeader}" 
 				   IsVisible="{Binding Path=History, Converter={StaticResource ListToBool}}" />
 			<ListView ItemsSource="{Binding History}" 
 					  IsVisible="{Binding Path=History, Converter={StaticResource ListToBool}}"
-					  HasUnevenRows="true">
+					  HasUnevenRows="true"
+					  HorizontalOptions = "Fill">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>

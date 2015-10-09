@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using SocialCapital.Data;
 using SocialCapital.Data.Model;
 using System.Linq;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
@@ -11,7 +13,7 @@ namespace SocialCapital.ViewModels
 	{
 		public LogViewModel()
 		{
-			logs = DataContext.GetLogs ().OrderByDescending (l => l.Time);
+			logs = App.Container.Get<LogManager>().GetLogs ().OrderByDescending (l => l.Time);
 		}
 
 		/// <summary>

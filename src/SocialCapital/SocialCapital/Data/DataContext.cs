@@ -38,7 +38,8 @@ namespace SocialCapital.Data
 				}
 
 				mutex.WaitOne();
-				Log.GetLogger().Log("DataContext created!", LogLevel.Trace);
+
+				//Log.GetLogger().Log("DataContext created!", LogLevel.Trace);
 			}
 			catch (Exception ex) 
 			{
@@ -59,6 +60,8 @@ namespace SocialCapital.Data
 
 		public static void InitDatabase()
 		{
+			var timing = Timing.Start ("InitDatabase");
+
 			using (var db = new DataContext ())
 			{
 				db.Connection.CreateTable<Contact> ();
@@ -76,7 +79,13 @@ namespace SocialCapital.Data
 
 				if (db.Connection.Table<Frequency> ().Count () == 0)
 					App.Container.Get<GroupsManager> ().Init ();
+
+				// load cache
+				foreach (var manager in GetAllDataManagers())
+					manager.RefreshCache (db);
 			}
+
+			timing.Finish (LogLevel.Trace);
 		}
 
 		public static void ClearDatabase()
@@ -97,21 +106,25 @@ namespace SocialCapital.Data
 				db.Connection.DeleteAll<Group> ();
 			}
 
-			App.Container.Get<ContactManager> ().ClearCache ();
-			App.Container.Get<CommunicationManager> ().ClearCache ();
-			App.Container.Get<EmailManager> ().ClearCache ();
-			App.Container.Get<FrequencyManager> ().ClearCache ();
-			App.Container.Get<GroupsManager> ().ClearCache ();
-			App.Container.Get<ModificationManager> ().ClearCache ();
-			App.Container.Get<PhonesManager> ().ClearCache ();
+			// Clear cache
+			foreach (var manager in GetAllDataManagers())
+				manager.ClearCache ();
 		}
 
-		public static IEnumerable<LogMessage> GetLogs()
+		public static IEnumerable<ICachable> GetAllDataManagers()
 		{
-			using (var db = new DataContext())
-			{
-				return db.Connection.Table<LogMessage>().ToList();
-			}
+			return new List<ICachable> () {
+				App.Container.Get<ContactManager> (),
+				App.Container.Get<CommunicationManager> (),
+				App.Container.Get<EmailManager> (),
+				App.Container.Get<FrequencyManager> (),
+				App.Container.Get<GroupsManager> (),
+				App.Container.Get<ModificationManager> (),
+				App.Container.Get<PhonesManager> (),
+				App.Container.Get<LogManager>(),
+				App.Container.Get<TagManager>(),
+				App.Container.Get<ContactTagsManager>()
+			};
 		}
 
 		#endregion
