@@ -19,7 +19,7 @@
 				<StackLayout Orientation="Vertical">
 					<Label Text="{Binding WorkPlace}" />
 					<controls:TagList LayoutType="Wrap" 
-									  Tags="{Binding Tags}" 
+									  Tags="{Binding Tags.Tags}" 
 									  Placeholder="{i18n:Translate NoTagsPlaceholder}" />
 				</StackLayout>
 			</StackLayout>

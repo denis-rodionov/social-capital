@@ -92,7 +92,6 @@ namespace SocialCapital.ViewModels
 			set 
 			{ 
 				SetProperty (ref tags, value);
-				OnPropertyChanged ("TagList");
 			}
 		}
 

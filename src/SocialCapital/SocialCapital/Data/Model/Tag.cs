@@ -4,7 +4,7 @@ using SocialCapital.Data.Model.Enums;
 
 namespace SocialCapital.Data.Model
 {
-	public class Tag : IEquatable<Tag>, IHaveId
+	public class Tag : IEquatable<Tag>, IHaveId, ILabel
 	{
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }

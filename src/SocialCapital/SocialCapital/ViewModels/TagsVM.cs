@@ -26,12 +26,13 @@ namespace SocialCapital.ViewModels
 		public TagsVM (IEnumerable<Tag> tags)
 		{
 			Tags = new ObservableCollection<Tag> (tags);
-			CandidateTags = new ObservableCollection<Tag> ();
+			CandidateTags = new List<Tag> ();
 
 			Add = new Command (
 				execute: (obj) => {
-					var newTag = (obj as Entry).Text;
-					Tags.Add(new Tag() { Name = newTag });
+					var tag = new Tag() { Name = (string)obj };
+					
+					Tags.Add(tag);
 					SearchTag = null;
 				},
 				canExecute: (obj) => {
@@ -51,7 +52,11 @@ namespace SocialCapital.ViewModels
 
 		public ObservableCollection<Tag> Tags { get; private set; }
 
-		public ObservableCollection<Tag> CandidateTags { get; private set; }
+		private List<Tag> candidateTags;
+		public List<Tag> CandidateTags { 
+			get { return candidateTags; }
+			set { SetProperty(ref candidateTags, value); }
+		}
 
 		public string TagList { 
 			get {
@@ -75,15 +80,14 @@ namespace SocialCapital.ViewModels
 
 		public void FillCandidateTags(string filter)
 		{
-			CandidateTags.Clear ();
+			var res = new List<Tag> ();
 
-			var tags = App.Container.Get<TagManager> ().GetTagList (t => t.Name.ToLowerInvariant ().Contains (filter.ToLowerInvariant ()));
-			//var toAdd = tags.Except (CandidateTags);
-			//var toDelete = CandidateTags.Except (tags);
+			if (!string.IsNullOrEmpty(filter))
+			{
+				res = App.Container.Get<TagManager> ().GetTagList (t => t.Name.ToLowerInvariant ().Contains (filter.ToLowerInvariant ()));
+			}
 
-			foreach (var tag in tags)
-				CandidateTags.Add (tag);
-
+			CandidateTags = res;
 		}
 
 		#endregion

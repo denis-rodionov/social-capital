@@ -42,7 +42,7 @@ namespace SocialCapital.ViewModels
 		}
 
 		public Page DefaultPage {
-			get { return new SettingsPage (SettingsViewModel); }
+			get { return new ContactListPage () { BindingContext = new ContactListVM (c => true) }; }
 		}
 
 		AddressBookVM addressBook;

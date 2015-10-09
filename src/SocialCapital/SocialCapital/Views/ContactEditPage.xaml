@@ -24,7 +24,9 @@
 							   Keyboard="Text" />
 					<ViewCell Tapped="OnTagsTaped">
 						<ContentView Padding="5, 25, 5, 25">
-							<controls:TagList LayoutType="Wrap" Tags="{Binding Tags}" Placeholder="{i18n:Translate NoTagsPlaceholder}"/>
+							<controls:TagList LayoutType="Wrap" 
+											  Tags="{Binding Tags.Tags}" 
+											  Placeholder="{i18n:Translate NoTagsPlaceholder}"/>
 						</ContentView>
 					</ViewCell>
 				</TableSection>

@@ -5,6 +5,9 @@ using SocialCapital.Data.Model;
 using SocialCapital.ViewModels;
 using SocialCapital.Views.Libs;
 using System.Collections.Specialized;
+using SocialCapital.Data.Model.Enums;
+using System.Linq;
+using System.Windows.Input;
 
 namespace SocialCapital.Views.Controls
 {
@@ -35,6 +38,10 @@ namespace SocialCapital.Views.Controls
 		Wrap
 	}
 
+	public class LabelContext {
+		public ILabel Label { get; set; }
+		public double Size { get; set; }
+	}
 
 
 	/// <summary>
@@ -48,26 +55,43 @@ namespace SocialCapital.Views.Controls
 		private string placeholder = null;
 
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public TagList ()
+		{
+			Size = 14;
+			InitializeComponent ();
+		}
+
+		#region Properties
+
+		public static BindableProperty LabelClickCommandProperty = BindableProperty.Create<TagList, ICommand>(
+			x => x.LabelClickCommand, 
+			null);
+
+		/// <summary>
+		/// Execute when clicked by any visible label.
+		/// Send label name (string) as a command parameter.
+		/// </summary>
+		public ICommand LabelClickCommand {
+			get { return (ICommand)this.GetValue(LabelClickCommandProperty); }
+			set { this.SetValue(LabelClickCommandProperty, value); }
+		}
 
 		public static readonly BindableProperty TagsProperty =
-			BindableProperty.Create<TagList, TagsVM>(
+			BindableProperty.Create<TagList, IEnumerable<ILabel>>(
 				(tagList) => tagList.Tags,
 				null,
 				propertyChanged: (bindable, oldValue, newValue) => {
 					(bindable as TagList).OnTagsModelChanged(oldValue, newValue);
 				});
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public TagList ()
-		{
-			InitializeComponent ();
-		}
-
-		public TagsVM Tags { 
-			set { SetValue (TagsProperty, value); }
-			get { return (TagsVM)GetValue (TagsProperty); }
+		public IEnumerable<ILabel> Tags { 
+			set { 
+				SetValue (TagsProperty, value); 
+			}
+			get { return (IEnumerable<ILabel>)GetValue (TagsProperty); }
 		}
 
 		public LayoutTypes LayoutType { 
@@ -77,8 +101,8 @@ namespace SocialCapital.Views.Controls
 
 				layoutType = value;
 
-				if (BindingContext != null && BindingContext is TagsVM)
-					Fill (BindingContext as TagsVM);
+				if (BindingContext != null && BindingContext is IEnumerable<ILabel>)
+					Fill (BindingContext as IEnumerable<ILabel>);
 			}
 		}
 
@@ -90,27 +114,62 @@ namespace SocialCapital.Views.Controls
 			}
 		}
 
-		public void OnTagsModelChanged(TagsVM oldTags, TagsVM newTags)
+		public int Size {
+			get;
+			set;
+		}
+
+		#endregion
+
+		#region Handlers
+
+		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+		}
+
+		public void OnTagsModelChanged(IEnumerable<ILabel> oldTags, IEnumerable<ILabel> newTags)
+		{
+//			if (newTags is INotifyCollectionChanged)
+//				(newTags as INotifyCollectionChanged).CollectionChanged += OnCollectionChanged;
+			
 			if (newTags == null)
 				return;
 
 			if (oldTags == newTags)
 				throw new ArgumentException("Stange behaviour of bindable property");
 
+			UpdateComponent (newTags);
+		}
+
+		private void OnTapped(object sender, EventArgs args)
+		{
+			if (!(sender is View))
+				throw new Exception ("sender is not a View (TagList)");
+			
+			var context = (sender as View).BindingContext as LabelContext;
+
+			if (context != null && this.LabelClickCommand != null && this.LabelClickCommand.CanExecute(context.Label.Name)) {
+				this.LabelClickCommand.Execute(context.Label.Name);
+			}	
+		}
+
+		#endregion
+
+		#region Implementation
+
+		public void UpdateComponent(IEnumerable<ILabel> labels)
+		{
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
-			
+
 			//newTags.Tags.CollectionChanged += (s, ev) => {
 			//	InitLayout (LayoutType);
 			//	Fill (newTags);
 			//};
 
 			InitLayout (LayoutType);
-			Fill (newTags);
+			Fill (labels);
 		}
-
-		#region Implementation
 
 		void InitLayout (LayoutTypes value)
 		{
@@ -126,6 +185,28 @@ namespace SocialCapital.Views.Controls
 				break;
 			default:
 				throw new Exception ("Unsupported layout type");
+			}
+		}
+
+		void Fill (IEnumerable<ILabel> labels)
+		{
+			int count = 0;
+
+			if (labels.Count() == 0 && Placeholder != null)
+				ShowPlaceholder ();
+
+			foreach (var label in labels) {
+				var view = (View)ItemTemplate.CreateContent ();
+				view.BindingContext = new LabelContext() { Label = label, Size = this.Size  };
+
+				if (LayoutType == LayoutTypes.HorizontalGrid)
+					AddElementToHorizontalGrid (view, count++);
+				else if (LayoutType == LayoutTypes.Wrap)
+					AddElementToWrap (view);
+				else if (LayoutType == LayoutTypes.VerticalGrid)
+					AddElementToVerticalGrid (view, count++);
+				else
+					throw new Exception ("Unknown LayoutType");
 			}
 		}
 
@@ -154,27 +235,7 @@ namespace SocialCapital.Views.Controls
 			Content = placeHolderContaineer;
 		}
 
-		void Fill (TagsVM tagList)
-		{
-			int count = 0;
 
-			if (tagList.Tags.Count == 0 && Placeholder != null)
-				ShowPlaceholder ();
-
-			foreach (var tag in tagList.Tags) {
-				var view = (View)ItemTemplate.CreateContent ();
-				view.BindingContext = tag;
-
-				if (LayoutType == LayoutTypes.HorizontalGrid)
-					AddElementToHorizontalGrid (view, count++);
-				else if (LayoutType == LayoutTypes.Wrap)
-					AddElementToWrap (view);
-				else if (LayoutType == LayoutTypes.VerticalGrid)
-					AddElementToVerticalGrid (view, count++);
-				else
-					throw new Exception ("Uncknown LayoutType");
-			}
-		}
 
 		void AddElementToWrap (View view)
 		{

@@ -16,7 +16,7 @@
 						Placeholder="{i18n:Translate InputSelectTagPlaceholder}" />
 				<Button Text = "{i18n:Translate AddButtonText}" 
 						Command="{Binding Add}" 
-						CommandParameter="{x:Reference Name=searchTagEntry}" >
+						CommandParameter="{Binding Path=Text, Source={x:Reference Name=searchTagEntry}}" >
 					<Button.Image>
 						<OnPlatform x:TypeArguments="FileImageSource"
 									iOS = ""
@@ -25,14 +25,16 @@
 					</Button.Image>
 				</Button>
 			</StackLayout>
-			<!--
+
 			<StackLayout BackgroundColor="Aqua">
 				<controls:TagList LayoutType="Wrap"
 								  Tags="{Binding CandidateTags}"
-								  Placeholder="Press ADD to create new tag" />
+								  Placeholder="Press ADD to create new tag"
+								  LabelClickCommand="{Binding Add}"
+								  Size="20" />
 			</StackLayout>
-			-->
 
+			<!--
 			<ListView x:Name="listview" ItemsSource="{Binding CandidateTags}" VerticalOptions="FillAndExpand">
 				<ListView.ItemTemplate>
 					<DataTemplate>
@@ -48,7 +50,7 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-
+			-->
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
