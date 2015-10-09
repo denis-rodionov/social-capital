@@ -28,8 +28,9 @@ namespace SocialCapital.ViewModels
 
 			sourceItems = App.Container.Get<ContactManager> ().AllContacts
 				.Select (c => new ContactVM (c))
-				.Where(c => c.ContactStatus.Active)
+				.Where (c => c.ContactStatus.Active)
 				.OrderBy (c => c.ContactStatus.RawStatus).ToList ();
+			
 			Items = new ObservableCollection<ContactVM> ();
 
 			LoadMore ();
@@ -66,8 +67,6 @@ namespace SocialCapital.ViewModels
 
 			foreach (var item in newItems)
 				Items.Add (item);
-
-			//SubscribeForChange (Items);
 
 			timing.Finish (LogLevel.Trace);
 		}

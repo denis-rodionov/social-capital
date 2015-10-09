@@ -10,7 +10,7 @@ namespace SocialCapital.Data
 			if (db == null)
 				using (var innerDb = new DataContext ())
 				{
-					InnerSaveValue (key, value, db);
+					InnerSaveValue (key, value, innerDb);
 				}
 			else
 				InnerSaveValue (key, value, db);

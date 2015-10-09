@@ -12,7 +12,7 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>		
-		<StackLayout Orientation="Vertical" HorizontalOptions="Start" >
+		<StackLayout Orientation="Vertical">
 			<!-- Header -->
 			<StackLayout Orientation="Horizontal">
 				<Image WidthRequest="100" Source="{Binding PhotoImage}" />
@@ -41,6 +41,7 @@
 						Command="{Binding WriteEmailCommand}"
 						CommandParameter="{x:Reference page}" />
 			</StackLayout>
+
 			<Button Text="{i18n:Translate LogCommunicationAction}"
 					Command="{Binding LogCommunication}"
 					CommandParameter="{x:Reference page}"
@@ -49,6 +50,7 @@
 			<!-- History -->
 			<Label Text="{i18n:Translate LastContactCommunicationHeader}" 
 				   IsVisible="{Binding Path=History, Converter={StaticResource ListToBool}}" />
+
 			<ListView ItemsSource="{Binding History}" 
 					  IsVisible="{Binding Path=History, Converter={StaticResource ListToBool}}"
 					  HasUnevenRows="true"
@@ -74,6 +76,7 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
+
 			<!--<Label Text="123" />-->
 			<Label Text="{i18n:Translate CommunicationHistoryIsEmpty}" 
 				   IsVisible="{Binding Path=History, Converter={StaticResource ListToBool}, ConverterParameter=true}" />

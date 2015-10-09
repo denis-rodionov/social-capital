@@ -133,11 +133,14 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref selected, value); }
 		}
 
+		private ContactStatus contactStatus;
 		public ContactStatus ContactStatus {
 			get {
-				return new ContactStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
+				if (contactStatus == null)
+					contactStatus = new ContactStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
+				return contactStatus;
 			}
-			set { OnPropertyChanged (); }
+			set { SetProperty (ref contactStatus, value); }
 		}
 
         #endregion
