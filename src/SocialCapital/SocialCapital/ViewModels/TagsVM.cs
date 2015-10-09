@@ -6,20 +6,18 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.ComponentModel;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
-	public class TagsVM : INotifyPropertyChanged
+	public class TagsVM : ViewModelBase
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public ObservableCollection<Tag> Tags { get; private set; }
-
 		public ICommand Add { get; private set; }
 
 		public ICommand Delete { get; private set; }
 
-		private string searchTag = null;
+		#region Init
 
 		/// <summary>
 		/// Constructor
@@ -28,6 +26,7 @@ namespace SocialCapital.ViewModels
 		public TagsVM (IEnumerable<Tag> tags)
 		{
 			Tags = new ObservableCollection<Tag> (tags);
+			CandidateTags = new ObservableCollection<Tag> ();
 
 			Add = new Command (
 				execute: (obj) => {
@@ -46,31 +45,48 @@ namespace SocialCapital.ViewModels
 				});
 		}
 
+		#endregion
+
+		#region Properties
+
+		public ObservableCollection<Tag> Tags { get; private set; }
+
+		public ObservableCollection<Tag> CandidateTags { get; private set; }
+
 		public string TagList { 
-			get { 
-				//Tags.PropertyChanged += (sender, e) => { OnPropertyChanged(); };
+			get {
 				return string.Join (",", Tags.Select(t => t.Name).ToArray ()); 
 			} 
 		}
 
+		private string searchTag = null;
 		public string SearchTag {
 			get { return searchTag; }
-			set {
-				if (searchTag != value) {
-					searchTag = value;
-					FirePropertyChanged ("SearchTag");
-					(Add as Command).ChangeCanExecute ();
-				}
+			set {	
+				SetProperty (ref searchTag, value);
+				(Add as Command).ChangeCanExecute ();
+				FillCandidateTags (searchTag);
 			}
 		}
 
-		public void FirePropertyChanged(string property)
-		{
-			var handler = PropertyChanged;
+		#endregion
 
-			if (handler != null)
-				handler (this, new PropertyChangedEventArgs (property));
+		#region Implementation
+
+		public void FillCandidateTags(string filter)
+		{
+			CandidateTags.Clear ();
+
+			var tags = App.Container.Get<TagManager> ().GetTagList (t => t.Name.ToLowerInvariant ().Contains (filter.ToLowerInvariant ()));
+			//var toAdd = tags.Except (CandidateTags);
+			//var toDelete = CandidateTags.Except (tags);
+
+			foreach (var tag in tags)
+				CandidateTags.Add (tag);
+
 		}
+
+		#endregion
 	}
 }
 

@@ -25,8 +25,15 @@
 					</Button.Image>
 				</Button>
 			</StackLayout>
+			<!--
+			<StackLayout BackgroundColor="Aqua">
+				<controls:TagList LayoutType="Wrap"
+								  Tags="{Binding CandidateTags}"
+								  Placeholder="Press ADD to create new tag" />
+			</StackLayout>
+			-->
 
-			<ListView x:Name="listview" ItemsSource="{Binding Tags}" VerticalOptions="FillAndExpand">
+			<ListView x:Name="listview" ItemsSource="{Binding CandidateTags}" VerticalOptions="FillAndExpand">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<TextCell Text="{Binding Name}">
@@ -41,6 +48,7 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
+
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
