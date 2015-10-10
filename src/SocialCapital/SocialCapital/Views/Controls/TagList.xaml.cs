@@ -125,12 +125,14 @@ namespace SocialCapital.Views.Controls
 
 		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+			if (e.NewItems != null)
+				UpdateComponent ((IEnumerable<ILabel>)sender);
 		}
 
 		public void OnTagsModelChanged(IEnumerable<ILabel> oldTags, IEnumerable<ILabel> newTags)
 		{
-//			if (newTags is INotifyCollectionChanged)
-//				(newTags as INotifyCollectionChanged).CollectionChanged += OnCollectionChanged;
+			if (newTags is INotifyCollectionChanged)
+				(newTags as INotifyCollectionChanged).CollectionChanged += OnCollectionChanged;
 			
 			if (newTags == null)
 				return;

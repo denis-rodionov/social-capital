@@ -50,7 +50,14 @@ namespace SocialCapital.ViewModels
 
 		#region Properties
 
-		public ObservableCollection<Tag> Tags { get; private set; }
+		private ObservableCollection<Tag> tags;
+		public ObservableCollection<Tag> Tags { 
+			get { return tags; }
+			private set { 
+				SetProperty (ref tags, value); 
+				OnPropertyChanged ("TagList");
+			}
+		}
 
 		private List<Tag> candidateTags;
 		public List<Tag> CandidateTags { 

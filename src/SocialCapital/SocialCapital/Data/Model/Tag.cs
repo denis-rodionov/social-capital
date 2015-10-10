@@ -9,6 +9,7 @@ namespace SocialCapital.Data.Model
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
+		[Unique]
 		public string Name { get; set; }
 
 		#region IEquatable implementation

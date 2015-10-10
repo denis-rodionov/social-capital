@@ -33,7 +33,7 @@ namespace SocialCapital.Droid
 
 		private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
 		{
-			Log.GetLogger ().Log ("Unhandled exception catched:", LogLevel.Critical);
+			Log.GetLogger ().Log ("!Unhandled exception catched:", LogLevel.Critical);
 			Log.GetLogger ().Log (args.ExceptionObject as Exception);
 		}
 	}

@@ -7,6 +7,14 @@
 	xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 	Title = "{i18n:Translate TagSelectTitle}"
 	x:Name = "page">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style x:Key="TextCellStyle" TargetType="TextCell">
+    			<Setter Property="TextColor" Value="Black" />        	
+    		</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
@@ -26,31 +34,39 @@
 				</Button>
 			</StackLayout>
 
-			<StackLayout BackgroundColor="Aqua">
-				<controls:TagList LayoutType="Wrap"
-								  Tags="{Binding CandidateTags}"
-								  Placeholder="Press ADD to create new tag"
-								  LabelClickCommand="{Binding Add}"
-								  Size="20" />
-			</StackLayout>
+			<AbsoluteLayout>				
+				
+				<ListView x:Name="listview" 
+						  ItemsSource="{Binding Tags}" 
+						  VerticalOptions="FillAndExpand">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<TextCell Text="{Binding Name}">
+								<TextCell.ContextActions>
+									<MenuItem Text="{i18n:Translate DeleteButtonText}" 
+												Command="{Binding Source={x:Reference Name=page},
+															      Path=BindingContext.Delete}"
+												IsDestructive="true" 
+												CommandParameter="{Binding}" />
+								</TextCell.ContextActions>
+							</TextCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
 
-			<!--
-			<ListView x:Name="listview" ItemsSource="{Binding CandidateTags}" VerticalOptions="FillAndExpand">
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<TextCell Text="{Binding Name}">
-							<TextCell.ContextActions>
-								<MenuItem Text="{i18n:Translate DeleteButtonText}" 
-											Command="{Binding Source={x:Reference Name=page},
-														      Path=BindingContext.Delete}"
-											IsDestructive="true" 
-											CommandParameter="{Binding}" />
-							</TextCell.ContextActions>
-						</TextCell>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-			-->
+				<ContentView Padding="5,5,5,5"
+							 IsVisible="{Binding Path=CandidateTags, 
+							 					 Converter={StaticResource ListToBool}}">
+					<controls:TagList LayoutType="Wrap"
+									  Tags="{Binding CandidateTags}"
+									  LabelClickCommand="{Binding Add}"
+									  Size="22" 
+									  HorizontalOptions="FillAndExpand"
+									  />
+				</ContentView>
+			</AbsoluteLayout>
+
+
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

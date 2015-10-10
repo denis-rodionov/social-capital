@@ -33,7 +33,6 @@ namespace SocialCapital.Data
 				if (connection == null)
 				{					
 					connection = DependencyService.Get<ISQLite> ().GetConnection ();
-					CheckVersion();
 					mutex = new Mutex(false);
 				}
 
@@ -48,12 +47,12 @@ namespace SocialCapital.Data
 			}
 		}
 
-		public void CheckVersion()
+		public static void CheckVersion(DataContext db)
 		{
-			var ver = App.Container.Get<Settings> ().GetConfigValue<string> (Settings.DatabaseVersionConfig, this);
+			var ver = App.Container.Get<Settings> ().GetConfigValue<string> (Settings.DatabaseVersionConfig, db);
 
 			if (ver == null)
-				App.Container.Get<Settings> ().SaveValue (Settings.DatabaseVersionConfig, databaseVersion, this);
+				App.Container.Get<Settings> ().SaveValue (Settings.DatabaseVersionConfig, databaseVersion, db);
 			else if (ver != databaseVersion)
 				throw new Exception(string.Format("Database version is different: AppVersion={0}, DeviceVersion={1}", databaseVersion, ver));
 		}
@@ -83,7 +82,11 @@ namespace SocialCapital.Data
 				// load cache
 				foreach (var manager in GetAllDataManagers())
 					manager.RefreshCache (db);
+
+				CheckVersion(db);
 			}
+
+
 
 			timing.Finish (LogLevel.Trace);
 		}

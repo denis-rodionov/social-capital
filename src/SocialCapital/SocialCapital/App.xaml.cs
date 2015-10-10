@@ -24,6 +24,7 @@ namespace SocialCapital
 				AppResources.Culture = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
 			}
 
+			//DataContext.ClearDatabase ();
 			DataContext.InitDatabase ();
 
 

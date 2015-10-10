@@ -14,6 +14,11 @@
         	<converters:ListToCountConverter x:Key="ListToCountConverter" />
         	<converters:BoolToImageConverter x:Key="BoolToImageConverter" />
         	<converters:FrequencyConverter x:Key="FrequencyConverter" />
+        	<converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+
+        	<Style x:Key="TextCellStyle" TargetType="TextCell">
+        		<Setter Property="TextColor" Value="Black" />
+        	</Style>
     	</ResourceDictionary>
 	</Application.Resources>
 </Application>
