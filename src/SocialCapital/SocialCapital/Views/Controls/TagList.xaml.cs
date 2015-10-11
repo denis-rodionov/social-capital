@@ -69,7 +69,10 @@ namespace SocialCapital.Views.Controls
 
 		public static BindableProperty LabelClickCommandProperty = BindableProperty.Create<TagList, ICommand>(
 			x => x.LabelClickCommand, 
-			null);
+			null,
+			propertyChanged: (bindable, oldValue, newValue) => {
+				(bindable as TagList).OnLabelClickCommandPropertyChanged(newValue);
+			});
 
 		/// <summary>
 		/// Execute when clicked by any visible label.
@@ -124,6 +127,12 @@ namespace SocialCapital.Views.Controls
 
 		#region Handlers
 
+		private void OnLabelClickCommandPropertyChanged(ICommand newValue)
+		{
+		}
+
+
+
 		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			if (sender != null)
@@ -151,9 +160,13 @@ namespace SocialCapital.Views.Controls
 			
 			var context = (sender as View).BindingContext as LabelContext;
 
-			if (context != null && this.LabelClickCommand != null && this.LabelClickCommand.CanExecute(context.Label.Name)) {
-				this.LabelClickCommand.Execute(context.Label.Name);
-			}	
+			if (this.LabelClickCommand != null)
+			{
+				if (context != null && this.LabelClickCommand.CanExecute (context.Label.Name))
+				{
+					this.LabelClickCommand.Execute (context.Label.Name);
+				}	
+			}
 		}
 
 		#endregion
@@ -176,6 +189,13 @@ namespace SocialCapital.Views.Controls
 			Fill (labels);
 
 			timing.Finish (LogLevel.Trace);
+		}
+
+		private void AddRecognizer(View view)
+		{
+			var recognizer = new TapGestureRecognizer ();
+			recognizer.Tapped += OnTapped;
+			view.GestureRecognizers.Add (recognizer);
 		}
 
 		void InitLayout (LayoutTypes value)
@@ -205,6 +225,8 @@ namespace SocialCapital.Views.Controls
 			foreach (var label in labels) {
 				var view = (View)ItemTemplate.CreateContent ();
 				view.BindingContext = new LabelContext() { Label = label, Size = this.Size  };
+				if (LabelClickCommand != null)
+					AddRecognizer (view);
 
 				if (LayoutType == LayoutTypes.HorizontalGrid)
 					AddElementToHorizontalGrid (view, count++);
@@ -241,8 +263,6 @@ namespace SocialCapital.Views.Controls
 		{
 			Content = placeHolderContaineer;
 		}
-
-
 
 		void AddElementToWrap (View view)
 		{

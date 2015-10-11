@@ -9,10 +9,9 @@
 			<controls:Repeater.ItemTemplate>
 				<DataTemplate>
 						<ContentView Padding="5,0,5,0"  BackgroundColor="Silver" Grid.Row="0" Grid.Column="0">
-							<Label Text="{Binding Label.Name}" TextColor="Black" FontSize="{Binding Size}" >
-								<Label.GestureRecognizers>
-									<TapGestureRecognizer Tapped="OnTapped" />
-								</Label.GestureRecognizers>
+							<Label Text="{Binding Label.Name}" 
+								   TextColor="Black" 	
+								   FontSize="{Binding Size}" >
 							</Label>
 						</ContentView>
 				</DataTemplate>
