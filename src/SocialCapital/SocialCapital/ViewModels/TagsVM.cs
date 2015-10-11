@@ -94,7 +94,8 @@ namespace SocialCapital.ViewModels
 				res = App.Container.Get<TagManager> ().GetTagList (t => t.Name.ToLowerInvariant ().Contains (filter.ToLowerInvariant ()));
 			}
 
-			CandidateTags = res;
+			if (CandidateTags.Count() != res.Count())
+				CandidateTags = res;
 		}
 
 		#endregion

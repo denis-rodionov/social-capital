@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using SocialCapital.Data.Model.Enums;
 using System.Linq;
 using System.Windows.Input;
+using SocialCapital.Common;
 
 namespace SocialCapital.Views.Controls
 {
@@ -125,7 +126,7 @@ namespace SocialCapital.Views.Controls
 
 		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			if (e.NewItems != null)
+			if (sender != null)
 				UpdateComponent ((IEnumerable<ILabel>)sender);
 		}
 
@@ -161,6 +162,8 @@ namespace SocialCapital.Views.Controls
 
 		public void UpdateComponent(IEnumerable<ILabel> labels)
 		{
+			var timing = Timing.Start ("Show tag list");
+
 			if (LayoutType == LayoutTypes.Undefined)
 				throw new ArgumentException ("LayoutType is Undefined. Set value");
 
@@ -171,6 +174,8 @@ namespace SocialCapital.Views.Controls
 
 			InitLayout (LayoutType);
 			Fill (labels);
+
+			timing.Finish (LogLevel.Trace);
 		}
 
 		void InitLayout (LayoutTypes value)
