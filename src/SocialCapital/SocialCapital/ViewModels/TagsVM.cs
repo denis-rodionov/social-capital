@@ -29,21 +29,13 @@ namespace SocialCapital.ViewModels
 			CandidateTags = new List<Tag> ();
 
 			Add = new Command (
-				execute: (obj) => {
-					var tag = new Tag() { Name = (string)obj };
-					
-					Tags.Add(tag);
-					SearchTag = null;
-				},
+				execute: (obj) => AddTag(obj),
 				canExecute: (obj) => {
 					return !string.IsNullOrWhiteSpace(SearchTag);
 				});
 
 			Delete = new Command (
-				execute: (obj) => {
-					var tag = obj as Tag;
-					Tags.Remove (tag);
-				});
+				execute: (obj) => DeleteTag(obj));
 		}
 
 		#endregion
@@ -79,6 +71,28 @@ namespace SocialCapital.ViewModels
 				(Add as Command).ChangeCanExecute ();
 				FillCandidateTags (searchTag);
 			}
+		}
+
+		#endregion
+
+		#region Commands
+
+		private void DeleteTag(object obj)
+		{
+			var tag = obj as Tag;
+			Tags.Remove (tag);
+		}
+
+		private void AddTag(object obj)
+		{
+			var candidate = CandidateTags.SingleOrDefault(t => t.Name == (string)obj);
+
+			if (candidate != null)
+				Tags.Add(candidate);
+			else
+				Tags.Add(new Tag() { Name = (string)obj });
+
+			SearchTag = null;
 		}
 
 		#endregion

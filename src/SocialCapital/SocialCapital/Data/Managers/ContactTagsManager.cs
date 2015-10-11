@@ -38,7 +38,8 @@ namespace SocialCapital.Data.Managers
 				var newTags = tags.Except (contactTags).ToList ();
 				var removeTags = contactTags.Except (tags).ToList ();
 
-				App.Container.Get<TagManager> ().SaveTags (newTags, db);
+				var tagsToSave = newTags.Where (t => t.Id == 0).ToList ();
+				App.Container.Get<TagManager> ().SaveTags (tagsToSave, db);
 
 				AssignToContact (newTags, contactId, db);
 				RemoveFromContact (removeTags, contactId, db);
