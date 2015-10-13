@@ -260,6 +260,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Желаемая частота встреч.
+        /// </summary>
+        internal static string DesiredContactInterval {
+            get {
+                return ResourceManager.GetString("DesiredContactInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Готово.
         /// </summary>
         internal static string Done {

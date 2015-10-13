@@ -10,10 +10,12 @@ namespace SocialCapital.Views
 	public partial class SettingsPage : ContentPage
 	{
 		private SettingsVM Settings { get; set; }
+		private DatabaseService databaseService;
 
-		public SettingsPage (SettingsVM settings)
+		public SettingsPage (SettingsVM settings, DatabaseService databaseService)
 		{
 			Settings = settings;
+			this.databaseService = databaseService;
 
 			InitializeComponent ();
 		}
@@ -30,7 +32,7 @@ namespace SocialCapital.Views
 			var yes = await DisplayAlert ("Warning", "Are you sure you want to delete all data", "Yes", "No");
 
 			if (yes)
-				DataContext.ClearDatabase ();
+				databaseService.ClearDatabase ();
 		}
 
 		private void OnLoadContacts(object sender, EventArgs args)

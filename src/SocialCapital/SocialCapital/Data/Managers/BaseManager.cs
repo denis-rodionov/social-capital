@@ -10,13 +10,16 @@ namespace SocialCapital.Data.Managers
 	public abstract class BaseManager<Type> : ICachable
 		where Type : class, IHaveId, IEquatable<Type>
 	{
-		public BaseManager ()
+		private Func<IDataContext> contextFactory;
+
+		public BaseManager (Func<IDataContext> contextFactory)
 		{
+			this.contextFactory = contextFactory;
 		}
 
-		public DataContext CreateContext()
+		public IDataContext CreateContext()
 		{
-			var db = new DataContext();
+			var db = contextFactory();
 			Log.GetLogger().Log(string.Format("DataContext for type [{0}]", typeof(Type)), LogLevel.Trace);
 			return db;
 		}
@@ -25,7 +28,7 @@ namespace SocialCapital.Data.Managers
 
 		public List<Type> Cache { get; set; }
 
-		public void RefreshCache(DataContext db = null)
+		public void RefreshCache(IDataContext db = null)
 		{
 			var timing = Timing.Start ("Cache updated for " + typeof(Type));
 
@@ -38,7 +41,7 @@ namespace SocialCapital.Data.Managers
 			timing.Finish (LogLevel.Debug);
 		}
 
-		protected virtual void InnerRefreshCache(DataContext db)
+		protected virtual void InnerRefreshCache(IDataContext db)
 		{
 			Cache = db.Connection.Table<Type> ().ToList ();
 		}
@@ -52,7 +55,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Insert
 
-		protected Type Insert(Type item, DataContext db = null)
+		protected Type Insert(Type item, IDataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = CreateContext())
@@ -80,7 +83,7 @@ namespace SocialCapital.Data.Managers
 				throw new Exception(string.Format("Database object {0} has incorrect id == 0", dbObject));
 		}
 
-		protected void InsertAll(IEnumerable<Type> items, DataContext db = null)
+		protected void InsertAll(IEnumerable<Type> items, IDataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = CreateContext())
@@ -96,7 +99,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Delete
 
-		protected void Delete(Type item, DataContext db = null)
+		protected void Delete(Type item, IDataContext db = null)
 		{
 			if (db == null)
 				using (var innerDb = CreateContext())
@@ -121,7 +124,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Update
 
-		protected void Update(Type item, DataContext db = null)
+		protected void Update(Type item, IDataContext db = null)
 		{
 			if (db == null)
 			{
@@ -135,7 +138,7 @@ namespace SocialCapital.Data.Managers
 			ItemUpdated (item);
 		}
 
-		protected void InnerUpdate(Type item, DataContext db)
+		protected void InnerUpdate(Type item, IDataContext db)
 		{
 			db.Connection.Update (item);
 		}
@@ -155,7 +158,7 @@ namespace SocialCapital.Data.Managers
 		/// Update filtered list: take as argument result list: 
 		/// turn filtered list to actual
 		/// </summary>
-		public void UpdateList(IEnumerable<Type> actualList, Func<Type, bool> whereClause, DataContext db = null)
+		public void UpdateList(IEnumerable<Type> actualList, Func<Type, bool> whereClause, IDataContext db = null)
 		{
 			var existingList = GetList (whereClause, db);
 
@@ -173,7 +176,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Get
 
-		protected Type Get(int Id, DataContext db = null)
+		protected Type Get(int Id, IDataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -192,7 +195,7 @@ namespace SocialCapital.Data.Managers
 			return res;
 		}
 
-		protected Type Find(Func<Type, bool> whereClause, DataContext db = null)
+		protected Type Find(Func<Type, bool> whereClause, IDataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -205,7 +208,7 @@ namespace SocialCapital.Data.Managers
 				return res.SingleOrDefault ();		
 		}
 
-		protected List<Type> GetList(Func<Type, bool> whereClause, DataContext db = null)
+		protected List<Type> GetList(Func<Type, bool> whereClause, IDataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);
@@ -216,7 +219,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Count
 
-		public int Count(DataContext db = null)
+		public int Count(IDataContext db = null)
 		{
 			if (Cache == null)
 				RefreshCache (db);

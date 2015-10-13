@@ -306,4 +306,8 @@
 		<value>Email</value>
 		<comment>Перевод</comment>
 	</data>
+	<data name="DesiredContactInterval" xml:space="preserve">
+		<value>Желаемая частота встреч</value>
+		<comment>При создании/редактировании группы, пользователю предлагается выбрать, как часто он предполагает контактировать с человеком входящим в группу</comment>
+	</data>
 </root>

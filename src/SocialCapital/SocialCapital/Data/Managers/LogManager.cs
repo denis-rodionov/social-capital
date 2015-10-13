@@ -7,7 +7,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class LogManager : BaseManager<LogMessage>
 	{
-		public LogManager ()
+		public LogManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
@@ -29,7 +29,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		protected override void InnerRefreshCache (DataContext db)
+		protected override void InnerRefreshCache (IDataContext db)
 		{
 			// no caching fot logs
 		}

@@ -14,6 +14,10 @@ namespace SocialCapital.Data
 
 		public override void Load ()
 		{
+			// DataContext
+			this.Bind<Func<IDataContext>>().ToMethod(ctx => () => new DataContext());
+
+			// Managers
 			this.Bind<FrequencyManager> ().To<FrequencyManager> ().InSingletonScope ();
 			this.Bind<GroupsManager> ().To < GroupsManager> ().InSingletonScope ();
 			this.Bind<ContactManager> ().To<ContactManager> ().InSingletonScope ();
@@ -26,6 +30,8 @@ namespace SocialCapital.Data
 			this.Bind<TagManager> ().To<TagManager> ().InSingletonScope ();
 
 			this.Bind<Settings> ().ToSelf ();
+
+			this.Bind<DatabaseService> ().ToSelf ().InSingletonScope ();
 		}
 
 		#endregion

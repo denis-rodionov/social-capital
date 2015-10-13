@@ -12,7 +12,7 @@ namespace SocialCapital.Data.Managers
 	{
 		readonly string DefaultFrequency = AppResources.OnceAYear;
 
-		public GroupsManager ()
+		public GroupsManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 

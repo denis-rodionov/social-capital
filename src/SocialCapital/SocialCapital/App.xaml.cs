@@ -15,7 +15,7 @@ namespace SocialCapital
 
 		public App ()
 		{
-			Container = new StandardKernel (new DatabaseNinjectModule(), new ViewModelNinjectModule());
+			Container = new StandardKernel (new DatabaseNinjectModule(), new ViewModelNinjectModule(), new ViewNInjectModule());
 
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");
@@ -25,7 +25,7 @@ namespace SocialCapital
 			}
 
 			//DataContext.ClearDatabase ();
-			DataContext.InitDatabase ();
+			Container.Get<DatabaseService>().InitDatabase ();
 
 
 			MainPage = new RootPage();

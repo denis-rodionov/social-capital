@@ -19,7 +19,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Init
 
-		public ContactManager ()
+		public ContactManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
@@ -147,7 +147,7 @@ namespace SocialCapital.Data.Managers
 
 		#region Implementation
 
-		private Address SaveOrUpdateAddress(Address item, int contactId, DataContext db) 
+		private Address SaveOrUpdateAddress(Address item, int contactId, IDataContext db) 
 		{
 			var dbItem = db.Connection.Table<Address> ().SingleOrDefault (c => c.ContactId == contactId);
 			Address res = item;
@@ -162,7 +162,7 @@ namespace SocialCapital.Data.Managers
 			return res;
 		}
 
-		private int SaveContactInfo(Contact contact, DataContext db)
+		private int SaveContactInfo(Contact contact, IDataContext db)
 		{
 			if (contact.Id == 0) {
 				contact.CreateTime = DateTime.Now;
@@ -183,7 +183,7 @@ namespace SocialCapital.Data.Managers
 		/// <param name="contactConverter">Contact converter.</param>
 		/// <param name="fields">Fields.</param>
 		/// <param name="db">Db.</param>
-		private void UpdateContactInfoFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fields, DataContext db)
+		private void UpdateContactInfoFields(BaseContactConverter contactConverter, IEnumerable<FieldValue> fields, IDataContext db)
 		{
 			var newContact = contactConverter.GetContactInfo ();
 			var dbContact = GetContact (contactConverter.DatabaseContactId);

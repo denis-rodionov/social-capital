@@ -9,7 +9,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class FrequencyManager : BaseManager<Frequency>
 	{
-		public FrequencyManager ()
+		public FrequencyManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
@@ -21,7 +21,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void InitFrequencies(DataContext db)
+		public void InitFrequencies(IDataContext db)
 		{
 			if (Count (db) != 0)
 				throw new Exception ("Frequencies already filled");
@@ -71,7 +71,7 @@ namespace SocialCapital.Data.Managers
 			return GetList (f => true);
 		}
 
-		public Frequency GetFrequency(string name, DataContext db = null)
+		public Frequency GetFrequency(string name, IDataContext db = null)
 		{
 			var res = Find(f => f.Name == name, db);
 

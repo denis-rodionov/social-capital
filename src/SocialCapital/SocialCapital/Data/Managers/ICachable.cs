@@ -4,7 +4,7 @@ namespace SocialCapital.Data.Managers
 {
 	public interface ICachable
 	{
-		void RefreshCache(DataContext db = null);
+		void RefreshCache(IDataContext db = null);
 		void ClearCache();
 	}
 }

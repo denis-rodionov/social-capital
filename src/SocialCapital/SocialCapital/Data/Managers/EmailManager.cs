@@ -7,7 +7,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class EmailManager : BaseManager<Email>
 	{
-		public EmailManager ()
+		public EmailManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 

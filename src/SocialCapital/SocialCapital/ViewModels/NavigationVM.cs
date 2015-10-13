@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using System.Windows.Input;
 using SocialCapital.Views;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
@@ -45,35 +46,15 @@ namespace SocialCapital.ViewModels
 			get { return new ContactListPage () { BindingContext = new ContactListVM (c => true) }; }
 		}
 
-		AddressBookVM addressBook;
-		public AddressBookVM AddressBookViewModel {
-			get {
-				if (addressBook == null)
-					addressBook = new AddressBookVM ();
-
-				return addressBook;
-			}
-		}
-
-		SettingsVM settings;
-		public SettingsVM SettingsViewModel {
-			get {
-				if (settings == null)
-					settings = new SettingsVM ();
-
-				return settings;
-			}
-		}
-
 		private Page GetPageByName(string name)
 		{
 			switch (name) {
 				case "AllContacts":
 					return new ContactListPage ();
 				case "AddressBookImport":
-					return new AddressBookImportPage () { BindingContext = AddressBookViewModel };
+					return new AddressBookImportPage () { BindingContext = App.Container.Get<AddressBookVM>() };
 				case "Settings":
-					return new SettingsPage (SettingsViewModel);
+					return App.Container.Get<SettingsPage>();
 				case "ContactsProcessing":
 					return new GroupsPage(new ContactGroupListVM());
 				case "PriorityContactList":

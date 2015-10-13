@@ -7,6 +7,10 @@ namespace SocialCapital.Data.Managers
 {
 	public class ModificationManager : BaseManager<ContactModification>
 	{
+		public ModificationManager(Func<IDataContext> contextFactory) : base(contextFactory)
+		{
+		}
+
 		public IEnumerable<ContactModification> GetContactModifications(int contactId)
 		{			
 			if (contactId == 0)

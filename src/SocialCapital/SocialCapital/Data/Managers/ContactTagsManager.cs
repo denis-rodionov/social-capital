@@ -8,11 +8,11 @@ namespace SocialCapital.Data.Managers
 {
 	public class ContactTagsManager : BaseManager<ContactTag>
 	{
-		public ContactTagsManager ()
+		public ContactTagsManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
-		public IEnumerable<Tag> GetContactTags(int contactId, DataContext db = null)
+		public IEnumerable<Tag> GetContactTags(int contactId, IDataContext db = null)
 		{
 			if (contactId == 0)
 				throw new ArgumentException ("contactId cannot be 0");
@@ -46,7 +46,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void AssignToContact(IEnumerable<Tag> tags, int contactId, DataContext db)
+		public void AssignToContact(IEnumerable<Tag> tags, int contactId, IDataContext db)
 		{
 			foreach (var tag in tags) {
 				if (tag.Id == 0)
@@ -60,7 +60,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public void RemoveFromContact(IEnumerable<Tag> tags, int contactId, DataContext db)
+		public void RemoveFromContact(IEnumerable<Tag> tags, int contactId, IDataContext db)
 		{
 			foreach (var tag in tags) {
 				if (tag.Id == 0)
@@ -74,7 +74,7 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		protected override void InnerRefreshCache (DataContext db)
+		protected override void InnerRefreshCache (IDataContext db)
 		{
 			var contactTags = db.Connection.Table<ContactTag> ().ToList ();
 			var tags = App.Container.Get<TagManager> ().GetTagList (t => true);

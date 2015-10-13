@@ -25,20 +25,13 @@
 
 			<Label Text="{Binding Description}" IsVisible="{Binding Path=EditMode, Converter={StaticResource not}}" />
 
-			<StackLayout Orientation="Horizontal">
-				<Label Text="{i18n:Translate IsArchiveLabel}" />
-				<Switch IsToggled="{Binding IsArchive}" />
-			</StackLayout>
-
 			<StackLayout Orientation="Horizontal" >
-				<Label Text="Desired contact interval: " FontSize="Large" />
+				<Label Text="{i18n:Translate Text=DesiredContactInterval, Format='{0}:'}" FontSize="Large" />
 				<controls:BindablePicker Title="Picker" 
 									 	 ItemsSource="{Binding FrequencyList}" 
 									 	 SelectedItem="{Binding Frequency}"
 									 	 Converter="{StaticResource FrequencyConverter}" />
 			</StackLayout>
-
-			<Stepper Value="{Binding FrequencyCount}" />
 
 			<Button Text="{i18n:Translate AssignContactsToGroup}" 
 					HorizontalOptions="CenterAndExpand"

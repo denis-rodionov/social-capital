@@ -5,10 +5,17 @@ namespace SocialCapital.Data
 {
 	public class Settings
 	{
-		public void SaveValue<T>(string key, T value, DataContext db = null)
+		private Func<IDataContext> getContext = null;
+		
+		public Settings(Func<IDataContext> getContext)
+		{
+			this.getContext = getContext;
+		}
+
+		public void SaveValue<T>(string key, T value, IDataContext db = null)
 		{
 			if (db == null)
-				using (var innerDb = new DataContext ())
+				using (var innerDb = getContext())
 				{
 					InnerSaveValue (key, value, innerDb);
 				}
@@ -16,7 +23,7 @@ namespace SocialCapital.Data
 				InnerSaveValue (key, value, db);
 		}
 
-		private void InnerSaveValue<T>(string key, T value, DataContext db)
+		private void InnerSaveValue<T>(string key, T value, IDataContext db)
 		{
 			var existingConfig = db.Connection.Table<Config> ().Where (c => c.Key == key).FirstOrDefault ();
 
@@ -33,22 +40,22 @@ namespace SocialCapital.Data
 			}
 		}
 
-		public Config GetConfig(string key, DataContext db = null)
+		public Config GetConfig(string key, IDataContext db = null)
 		{
 			if (db == null)
-				using (var innerDb = new DataContext ()) {
+				using (var innerDb = getContext()) {
 					return InnerGetConfig(key, innerDb);
 				}
 			else
 				return InnerGetConfig(key, db);
 		}
 
-		private Config InnerGetConfig(string key, DataContext db)
+		private Config InnerGetConfig(string key, IDataContext db)
 		{
 			return db.Connection.Table<Config> ().Where (c => c.Key == key).FirstOrDefault ();
 		}
 
-		public T GetConfigValue<T>(string key, DataContext db = null) 
+		public T GetConfigValue<T>(string key, IDataContext db = null) 
 		{
 			var config = GetConfig (key, db);
 

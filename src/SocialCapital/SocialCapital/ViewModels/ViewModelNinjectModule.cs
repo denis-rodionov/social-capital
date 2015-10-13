@@ -11,6 +11,8 @@ namespace SocialCapital.ViewModels
 		public override void Load ()
 		{
 			this.Bind<ContactListVM> ().To<ContactListVM> ();
+			this.Bind<AddressBookVM> ().To<AddressBookVM> ().InSingletonScope ();
+			this.Bind<SettingsVM> ().ToSelf ();
 		}
 		#endregion
 	}

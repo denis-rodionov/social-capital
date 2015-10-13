@@ -7,7 +7,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class PhonesManager : BaseManager<Phone>
 	{
-		public PhonesManager ()
+		public PhonesManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 

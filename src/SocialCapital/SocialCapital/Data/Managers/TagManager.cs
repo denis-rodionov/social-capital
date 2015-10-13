@@ -6,11 +6,11 @@ namespace SocialCapital.Data.Managers
 {
 	public class TagManager : BaseManager<Tag>
 	{
-		public TagManager ()
+		public TagManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
-		public void SaveTags(IEnumerable<Tag> tags, DataContext db = null)
+		public void SaveTags(IEnumerable<Tag> tags, IDataContext db = null)
 		{
 			foreach (var tag in tags)
 				if (tag.Id == 0)

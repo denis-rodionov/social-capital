@@ -30,6 +30,8 @@ namespace SocialCapital.ViewModels
 
 		DateTime? lastImportTime = null;
 
+		Settings Settings { get; set; }
+
 		#region Properties
 
 		public ICommand StartImport { get; private set; }
@@ -71,9 +73,10 @@ namespace SocialCapital.ViewModels
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public AddressBookVM ()
+		public AddressBookVM (Settings settings)
 		{
-			lastImportTime = new Settings ().LastAddressBookImportTime;
+			this.Settings = settings;
+			lastImportTime = settings.LastAddressBookImportTime;
 			InitStatus ();
 			StartImport = new Command (Import);
 
@@ -179,7 +182,7 @@ namespace SocialCapital.ViewModels
 		void UpdateStatus (DateTime updateTime, int syncCount)
 		{
 			lastImportTime = updateTime;
-			new Settings ().LastAddressBookImportTime = lastImportTime;
+			Settings.LastAddressBookImportTime = lastImportTime;
 
 			Status = string.Format ("{0}({1}): {2}", 
 				AppResources.AddressBookSynchStatus, syncCount, lastImportTime.Value.ToAgoFormatRus());

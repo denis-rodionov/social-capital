@@ -7,7 +7,7 @@ namespace SocialCapital.Data.Managers
 {
 	public class CommunicationManager : BaseManager<CommunicationHistory>
 	{
-		public CommunicationManager ()
+		public CommunicationManager (Func<IDataContext> contextFactory) : base(contextFactory)
 		{
 		}
 
