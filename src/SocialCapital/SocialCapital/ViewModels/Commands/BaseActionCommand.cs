@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Input;
 using SocialCapital.Data.Model.Enums;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital
 {
@@ -17,14 +18,17 @@ namespace SocialCapital
 
 		public Contact Contact { get; private set; }
 
-		public BaseActionCommand (Contact contact, Func<IEnumerable<T>> getItems, string userInviteString)
+		protected IDialogProvider dialogService;
+
+		public BaseActionCommand (Contact contact, Func<IEnumerable<T>> getItems, string userInviteString, IDialogProvider dialogService)
 		{
 			UserInvite = userInviteString;
 			Contact = contact;
 			GetItems = getItems;
+			this.dialogService = dialogService;
 		}
 
-		protected abstract Task<bool> CommandAction(Page page);
+		protected abstract Task<bool> CommandAction(string number);
 
 		protected abstract void SaveCommunication ();
 
@@ -45,15 +49,35 @@ namespace SocialCapital
 				CanExecuteChangedRaise ();
 				throw new ArgumentException("No items in the list (phones, emails)");
 			}
-
-			Page page = parameter as Page;
-			var executed = await CommandAction (page);
+			var executed = await InnerAction ();
 
 			if (executed)
 			{
 				SaveCommunication ();
 				RaiseCommandExecuted ();
 			}
+		}
+
+		private async Task<bool> InnerAction()
+		{
+			string number = await GetValue ();
+
+			// user canceled the operation
+			if (number == string.Empty)
+				return false;
+
+			var executed = await CommandAction (number);
+			if (!executed)
+				ShowError ();
+			
+			return executed;
+		}
+
+		private async void ShowError()
+		{
+			await dialogService.DisplayAlert (AppResources.Error,
+				AppResources.NoPermissions,
+				AppResources.CancelButton);
 		}
 
 		private void CanExecuteChangedRaise()
@@ -72,7 +96,7 @@ namespace SocialCapital
 
 		#endregion
 
-		protected async Task<string> GetValue(Page page)
+		protected async Task<string> GetValue()
 		{
 			var items = GetItems();
 
@@ -81,7 +105,7 @@ namespace SocialCapital
 
 			string number;
 			if (items.Count () > 1) {
-				var phone = await ChooseItem (page);
+				var phone = await ChooseItem ();
 
 				if (phone == null)	// user canceled operation
 					return string.Empty;
@@ -93,7 +117,7 @@ namespace SocialCapital
 			return number;
 		}
 
-		protected async Task<T> ChooseItem(Page page)
+		protected async Task<T> ChooseItem()
 		{
 			var items = GetItems();
 			var dict = new Dictionary<string, T> ();
@@ -101,10 +125,10 @@ namespace SocialCapital
 			foreach (var item in items)
 				dict.Add (string.Format ("{0} : {1}", item.GetLabel(), item.GetValue()), item);
 
-			var label = await page.DisplayActionSheet (UserInvite, 
-				AppResources.CancelButton, 
-				null,
-				dict.Keys.ToArray());
+			var label = await dialogService.DisplayActionSheet (UserInvite,
+				            AppResources.CancelButton,
+				            null,
+				            dict.Keys.ToArray ());
 
 			if (label == AppResources.CancelButton)
 				return default(T);

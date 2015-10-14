@@ -9,15 +9,13 @@ namespace SocialCapital.Data
 {
 	public class DatabaseService
 	{
-		const string databaseVersion = "0.1";
-
 		private Func<IDataContext> contextFactory;
-		private Settings settings;
+		private Migrator migrator;
 
-		public DatabaseService (Func<IDataContext> contextFactory, Settings settings)
+		public DatabaseService (Func<IDataContext> contextFactory, Migrator migrator)
 		{
 			this.contextFactory = contextFactory;
-			this.settings = settings;
+			this.migrator = migrator;
 		}
 
 		public void InitDatabase()
@@ -46,7 +44,7 @@ namespace SocialCapital.Data
 				foreach (var manager in GetAllDataManagers())
 					manager.RefreshCache (db);
 
-				CheckVersion(db);
+				migrator.Migrate (db);
 			}
 
 			timing.Finish (LogLevel.Trace);
@@ -74,18 +72,6 @@ namespace SocialCapital.Data
 			foreach (var manager in GetAllDataManagers())
 				manager.ClearCache ();
 		}
-
-		public void CheckVersion(IDataContext db)
-		{
-			var ver = App.Container.Get<Settings> ().GetConfigValue<string> (Settings.DatabaseVersionConfig, db);
-
-			if (ver == null)
-				settings.SaveValue (Settings.DatabaseVersionConfig, databaseVersion, db);
-			else if (ver != databaseVersion)
-				throw new Exception(string.Format("Database version is different: AppVersion={0}, DeviceVersion={1}", databaseVersion, ver));
-		}
-
-
 
 		public IEnumerable<ICachable> GetAllDataManagers()
 		{

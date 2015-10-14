@@ -8,26 +8,20 @@ using SocialCapital.Data;
 using SocialCapital.Data.Model.Enums;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.ViewModels.Commands
 {
 	public class SmsWriteCommand : BaseActionCommand<Phone>
 	{
-		public SmsWriteCommand (Contact contact, Func<IEnumerable<Phone>> getPhones) 
-			: base(contact, getPhones, AppResources.InviteToChoosePhoneNumber)
+		public SmsWriteCommand (Contact contact, Func<IEnumerable<Phone>> getPhones, IDialogProvider dialogService) 
+			: base(contact, getPhones, AppResources.InviteToChoosePhoneNumber, dialogService)
 		{
 		}
 
-		protected override async Task<bool> CommandAction(Page page)
+		protected override async Task<bool> CommandAction(string number)
 		{
-			string number = await GetValue (page);
-
-			// user canceled the operation
-			if (number == string.Empty)
-				return false;
-
-			DependencyService.Get<IPhoneService> ().WriteSmS (number);
-			return true;
+			return DependencyService.Get<IPhoneService> ().WriteSmS (number);
 		}
 
 		protected override void SaveCommunication ()

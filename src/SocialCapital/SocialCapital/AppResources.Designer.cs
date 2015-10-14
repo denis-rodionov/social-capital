@@ -296,6 +296,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Ошибка.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         internal static string FullNameLabel {
@@ -463,6 +472,15 @@ namespace SocialCapital {
         internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отсутствуют разрешения на выполнение данного действия.
+        /// </summary>
+        internal static string NoPermissions {
+            get {
+                return ResourceManager.GetString("NoPermissions", resourceCulture);
             }
         }
         
@@ -643,6 +661,15 @@ namespace SocialCapital {
         internal static string TotalContactCount {
             get {
                 return ResourceManager.GetString("TotalContactCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Два раза в месяц.
+        /// </summary>
+        internal static string TwiceAMonth {
+            get {
+                return ResourceManager.GetString("TwiceAMonth", resourceCulture);
             }
         }
         

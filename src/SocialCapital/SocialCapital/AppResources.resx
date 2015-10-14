@@ -238,6 +238,10 @@
 		<value>Нет</value>
 		<comment>перевод</comment>
 	</data>
+	<data name="Error" xml:space="preserve">
+		<value>Ошибка</value>
+		<comment>перевод</comment>
+	</data>
 	<data name="Description" xml:space="preserve">
 		<value>Описание</value>
 		<comment>перевод</comment>
@@ -290,6 +294,10 @@
 		<value>Раз в месяц</value>
 		<comment>Частота комменикаций с контактом</comment>
 	</data>
+	<data name="TwiceAMonth" xml:space="preserve">
+		<value>Два раза в месяц</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
 	<data name="LogCommunicationAction" xml:space="preserve">
 		<value>Отметить разговор</value>
 		<comment>Названием кнопки или действия, сохраняющую в систему информацию о том что произошла коммуникация</comment>
@@ -309,5 +317,9 @@
 	<data name="DesiredContactInterval" xml:space="preserve">
 		<value>Желаемая частота встреч</value>
 		<comment>При создании/редактировании группы, пользователю предлагается выбрать, как часто он предполагает контактировать с человеком входящим в группу</comment>
+	</data>
+	<data name="NoPermissions" xml:space="preserve">
+		<value>Отсутствуют разрешения на выполнение данного действия</value>
+		<comment>Сообщение пользователю при отсутствии разрешений данных приложению для выполнения действия</comment>
 	</data>
 </root>

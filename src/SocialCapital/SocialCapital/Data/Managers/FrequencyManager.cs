@@ -63,12 +63,18 @@ namespace SocialCapital.Data.Managers
 				Never = true
 			});
 
+			// twice a month
+			stdFrequencies.Add (new Frequency () {
+				Name = AppResources.TwiceAMonth,
+				Period = 15,
+			});
+
 			InsertAll (stdFrequencies);
 		}
 
 		public IEnumerable<Frequency> GetAllFrequencies()
 		{
-			return GetList (f => true);
+			return GetList (f => true).OrderBy (f => f.Period);
 		}
 
 		public Frequency GetFrequency(string name, IDataContext db = null)
@@ -86,6 +92,14 @@ namespace SocialCapital.Data.Managers
 		public Frequency GetFrequency(int frequencyId)
 		{
 			return Get (frequencyId);
+		}
+
+		public void AddFrequency(string name, double period, IDataContext db = null)
+		{
+			var existing = Find (f => f.Name == name, db);
+
+			if (existing == null)
+				Insert (new Frequency () { Name = name, Period = period }, db);
 		}
 	}
 }

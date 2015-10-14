@@ -57,6 +57,11 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
+		public void InsertGroup(Group group, IDataContext db = null)
+		{
+			Insert (group, db);
+		}
+
 		public Group GetGroup(int groupId)
 		{
 			return Get (groupId);

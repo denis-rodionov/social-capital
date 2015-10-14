@@ -6,6 +6,7 @@ using SocialCapital.Views;
 using SocialCapital.Logging;
 using Ninject;
 using SocialCapital.ViewModels;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital 
 {
@@ -15,7 +16,11 @@ namespace SocialCapital
 
 		public App ()
 		{
-			Container = new StandardKernel (new DatabaseNinjectModule(), new ViewModelNinjectModule(), new ViewNInjectModule());
+			Container = new StandardKernel (
+				new DatabaseNinjectModule(), 
+				new ViewModelNinjectModule(), 
+				new ViewNInjectModule(),
+				new MvvmPattenNinjectModule());
 
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");

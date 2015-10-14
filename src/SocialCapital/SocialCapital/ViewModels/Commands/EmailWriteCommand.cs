@@ -7,20 +7,22 @@ using SocialCapital.Data;
 using SocialCapital.Data.Model.Enums;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.PhoneServices;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.ViewModels.Commands
 {
 	public class EmailWriteCommand : BaseActionCommand<Email>
 	{
-		public EmailWriteCommand (Contact contact, Func<IEnumerable<Email>> getEmails) 
-			: base(contact, getEmails, AppResources.InviteToChooseEmail)
+		public EmailWriteCommand (Contact contact, Func<IEnumerable<Email>> getEmails, IDialogProvider dialogService) 
+			: base(contact, getEmails, AppResources.InviteToChooseEmail, dialogService)
 		{
 		}
 
-		protected override async Task<bool> CommandAction(Page page)
+		protected override async Task<bool> CommandAction(string number)
 		{
-			var email = await GetValue (page);
-			return false;
+			// number is email address
+			return DependencyService.Get<IPhoneService> ().SendEmail (number);
 		}
 
 		protected override void SaveCommunication ()

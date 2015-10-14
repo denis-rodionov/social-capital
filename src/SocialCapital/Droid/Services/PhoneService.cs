@@ -31,13 +31,26 @@ namespace SocialCapital.Droid.Services
 			return StartIntent (smsIntent);
 		}
 
+		public bool SendEmail (string toAddress, string subject = "", string text = "")
+		{
+			var email = new Intent (Android.Content.Intent.ActionSend);
+
+			email.PutExtra (Android.Content.Intent.ExtraEmail, toAddress);
+			email.PutExtra (Android.Content.Intent.ExtraSubject, subject);
+			email.PutExtra (Android.Content.Intent.ExtraText, text);
+
+			email.SetType ("message/rfc822");
+
+			return StartIntent (email);
+		}
+
 		#endregion
 
 		static bool StartIntent (Intent intent)
 		{
 			var context = Forms.Context;
 			if (context == null) {
-				Log.GetLogger ().Log ("PhoneService.Call : No context!", LogLevel.Error);
+				Log.GetLogger ().Log ("PhoneService : No context!", LogLevel.Error);
 				return false;
 			}
 
@@ -46,7 +59,7 @@ namespace SocialCapital.Droid.Services
 				return true;
 			}
 			else {
-				Log.GetLogger ().Log ("PhoneService.Call : Intent is not available!", LogLevel.Error);
+				Log.GetLogger ().Log ("PhoneService : Intent is not available!", LogLevel.Error);
 				return false;
 			}
 		}
@@ -55,8 +68,10 @@ namespace SocialCapital.Droid.Services
 
 			var packageManager = context.PackageManager;
 
-			var list = packageManager.QueryIntentServices(intent, 0)
-				.Union(packageManager.QueryIntentActivities(intent, 0));
+			var services = packageManager.QueryIntentServices (intent, 0);
+			var activities = packageManager.QueryIntentActivities (intent, 0);
+
+			var list = services.Union (activities);
 			if (list.Any())
 				return true;
 

@@ -31,6 +31,8 @@ namespace SocialCapital.Data
 
 			this.Bind<Settings> ().ToSelf ();
 
+			this.Bind<Migrator> ().ToSelf ().InSingletonScope ();
+
 			this.Bind<DatabaseService> ().ToSelf ().InSingletonScope ();
 		}
 

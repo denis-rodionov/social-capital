@@ -13,6 +13,7 @@ using SocialCapital.ViewModels.Commands;
 using SocialCapital.Common;
 using Ninject;
 using SocialCapital.Data.Managers;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.ViewModels
 {
@@ -151,7 +152,8 @@ namespace SocialCapital.ViewModels
 			get { 
 				if (callCommand == null)
 				{
-					callCommand = new MakeCallCommand (SourceContact, () => Phones);
+					var dialogService = App.Container.Get<IDialogProvider> ();
+					callCommand = new MakeCallCommand (SourceContact, () => Phones, dialogService);
 					(callCommand as MakeCallCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return callCommand;
@@ -163,7 +165,8 @@ namespace SocialCapital.ViewModels
 			get {
 				if (smsWriteCommand == null)
 				{
-					smsWriteCommand = new SmsWriteCommand (SourceContact, () => Phones);
+					var dialogService = App.Container.Get<IDialogProvider> ();
+					smsWriteCommand = new SmsWriteCommand (SourceContact, () => Phones, dialogService);
 					(smsWriteCommand as SmsWriteCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return smsWriteCommand;
@@ -175,7 +178,8 @@ namespace SocialCapital.ViewModels
 			get {
 				if (writeEmailCommand == null)
 				{
-					writeEmailCommand = new EmailWriteCommand (SourceContact, () => Emails);
+					var dialogService = App.Container.Get<IDialogProvider> ();
+					writeEmailCommand = new EmailWriteCommand (SourceContact, () => Emails, dialogService);
 					(writeEmailCommand as EmailWriteCommand).CommandExecuted += OnCommunicationCommandExecuted;
 				}
 				return writeEmailCommand;

@@ -60,7 +60,7 @@ namespace SocialCapital.ViewModels
 
 		public IEnumerable<Frequency> FrequencyList { 
 			get {
-				return App.Container.Get<FrequencyManager> ().GetAllFrequencies ();	
+				return App.Container.Get<FrequencyManager> ().GetAllFrequencies ();
 			}
 		}
 
