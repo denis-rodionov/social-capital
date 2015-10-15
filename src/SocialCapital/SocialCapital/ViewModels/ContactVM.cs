@@ -118,7 +118,9 @@ namespace SocialCapital.ViewModels
 		public IEnumerable<CommunicationHistory> History {
 			get {
 				if (history == null)
-					history = App.Container.Get<CommunicationManager>().GetCommunications ((c) => c.ContactId == SourceContact.Id);
+					history = App.Container.Get<CommunicationManager>()
+						.GetCommunications ((c) => c.ContactId == SourceContact.Id)
+						.OrderByDescending(h => h.Time);
 				return history;
 			}
 			set { SetProperty (ref history, value); }
