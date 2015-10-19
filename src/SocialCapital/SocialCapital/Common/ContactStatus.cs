@@ -24,7 +24,7 @@ namespace SocialCapital.Common
 
 		protected virtual double CalculateRawStatus(Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
 		{
-			if (frequency == null)
+			if (frequency == null || frequency.Never)
 				return InactiveStatus;
 
 			if (lastCommunication == null)

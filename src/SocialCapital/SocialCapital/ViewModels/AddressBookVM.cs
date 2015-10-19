@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;

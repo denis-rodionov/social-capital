@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using SocialCapital.Data;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 
 namespace SocialCapital.Views
 {

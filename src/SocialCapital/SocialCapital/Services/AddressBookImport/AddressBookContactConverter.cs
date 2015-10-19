@@ -1,5 +1,5 @@
 ﻿using System;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using System.Collections.Generic;
 using System.Linq;
 using SocialCapital.Data.Model.Converters;
@@ -7,7 +7,7 @@ using SocialCapital.Data.Model;
 using SocialCapital.Data.Synchronization;
 using System.Linq.Expressions;
 
-namespace SocialCapital.AddressBookImport
+namespace SocialCapital.Services.AddressBookImport
 {
 	public class AddressBookContactConverter : BaseContactConverter
 	{

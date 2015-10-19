@@ -10,7 +10,7 @@ using SocialCapital.ViewModels;
 using SocialCapital.Data.Managers;
 using Ninject;
 
-namespace SocialCapital.AddressBookImport
+namespace SocialCapital.Services.AddressBookImport
 {
 	public class ProgressValue {
 		public int ContactsRetrieved { get; set; }

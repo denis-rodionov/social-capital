@@ -71,15 +71,12 @@
     <Compile Include="Views\ContactDetailsPage.xaml.cs">
       <DependentUpon>ContactDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddressBookImport\IAddressBookInformation.cs" />
-    <Compile Include="AddressBookImport\AddressBookContact.cs" />
     <Compile Include="Data\Model\Organization.cs" />
     <Compile Include="Data\Model\Phone.cs" />
     <Compile Include="Data\Model\Website.cs" />
     <Compile Include="Data\Model\Address.cs" />
     <Compile Include="Data\Model\Note.cs" />
     <Compile Include="Data\Model\Email.cs" />
-    <Compile Include="AddressBookImport\AddressBookService.cs" />
     <Compile Include="Views\RootPage.cs" />
     <Compile Include="Views\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
@@ -103,7 +100,6 @@
     <Compile Include="Data\Model\Synchronization\Syncker.cs" />
     <Compile Include="Data\Model\Synchronization\Enums.cs" />
     <Compile Include="Data\Model\ContactModification.cs" />
-    <Compile Include="AddressBookImport\AddressBookContactConverter.cs" />
     <Compile Include="ViewModels\ModificationVM.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -192,6 +188,10 @@
     <Compile Include="Common\FormsMVVM\PageProxy.cs" />
     <Compile Include="Common\FormsMVVM\DialogService.cs" />
     <Compile Include="Common\FormsMVVM\MvvmPattenNinjectModule.cs" />
+    <Compile Include="Services\AddressBookImport\AddressBookContact.cs" />
+    <Compile Include="Services\AddressBookImport\AddressBookContactConverter.cs" />
+    <Compile Include="Services\AddressBookImport\AddressBookService.cs" />
+    <Compile Include="Services\AddressBookImport\IAddressBookInformation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -230,7 +230,6 @@
     <Folder Include="Views\Libs\" />
     <Folder Include="Views\Libs\RepeaterViewLib\" />
     <Folder Include="Common\" />
-    <Folder Include="AddressBookImport\" />
     <Folder Include="Data\Model\Converters\" />
     <Folder Include="Views\Converters\" />
     <Folder Include="PhoneServices\" />
@@ -239,6 +238,7 @@
     <Folder Include="Data\Managers\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Common\FormsMVVM\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">

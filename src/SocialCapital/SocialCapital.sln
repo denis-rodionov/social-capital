@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1C0F643-9C97-4AFF-A3FF-69DF93839D77}"
 	ProjectSection(SolutionItems) = preProject
 		SocialCapital.sln = SocialCapital.sln
+		SocialCapital.sln = SocialCapital.sln
 	EndProjectSection
 EndProject
 Global

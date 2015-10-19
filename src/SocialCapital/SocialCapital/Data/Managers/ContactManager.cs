@@ -5,7 +5,7 @@ using System.IO;
 using SocialCapital.Data.Model;
 using System.Linq;
 using System.Linq.Expressions;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using SocialCapital.Data.Model.Converters;
 using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;

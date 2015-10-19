@@ -1,5 +1,5 @@
 ﻿using System;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using System.Collections.Generic;
 using System.Linq;
 

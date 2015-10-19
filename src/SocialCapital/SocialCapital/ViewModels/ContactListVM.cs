@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using SocialCapital.Data.Model;
 using SocialCapital.Data;
 using Xamarin.Forms;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using SocialCapital.Common;
 using System.Windows.Input;
 using Ninject;

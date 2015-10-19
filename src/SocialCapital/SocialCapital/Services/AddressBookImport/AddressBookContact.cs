@@ -4,7 +4,7 @@ using SocialCapital.Data.Model;
 using System.Text;
 using System.Collections;
 
-namespace SocialCapital.AddressBookImport
+namespace SocialCapital.Services.AddressBookImport
 {
 	public class AddressBookContact
 	{

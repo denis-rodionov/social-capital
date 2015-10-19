@@ -4,7 +4,7 @@ using Xamarin.Forms;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using Ninject;
 using SocialCapital.Data.Managers;
 using SocialCapital.Data.Model.Enums;

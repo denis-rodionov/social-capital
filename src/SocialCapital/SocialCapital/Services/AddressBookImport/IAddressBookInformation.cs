@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialCapital.AddressBookImport
+namespace SocialCapital.Services.AddressBookImport
 {
 	/// <summary>
 	/// Interface for getting address book from dependency service of specific platform
