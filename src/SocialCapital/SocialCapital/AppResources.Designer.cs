@@ -161,6 +161,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Основные настройки.
+        /// </summary>
+        internal static string BasicSettings {
+            get {
+                return ResourceManager.GetString("BasicSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отменить.
         /// </summary>
         internal static string CancelButton {
@@ -274,6 +283,24 @@ namespace SocialCapital {
         internal static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Установите приложение Dropbox для создания резервной копии.
+        /// </summary>
+        internal static string DropboxNotLinked {
+            get {
+                return ResourceManager.GetString("DropboxNotLinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Синхронизировать с Dropbox.
+        /// </summary>
+        internal static string DropBoxSyncEnabled {
+            get {
+                return ResourceManager.GetString("DropBoxSyncEnabled", resourceCulture);
             }
         }
         

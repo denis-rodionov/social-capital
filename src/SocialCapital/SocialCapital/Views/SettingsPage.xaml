@@ -1,12 +1,35 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			x:Class="SocialCapital.Views.SettingsPage">
 	<ContentPage.Content>
-		<StackLayout Orientation="Vertical">
-			<Button Text="Erase database" HorizontalOptions="Fill" Clicked="OnErase" />
-			<Button Text="Log messages" HorizontalOptions="Fill" Clicked="OnShowLogs" />
-			<Button Text="Load contacts" HorizontalOptions="Fill" Clicked="OnLoadContacts" />
+		<StackLayout>
+			<TableView>
+				<TableView.Root>
+					<TableRoot>
+						<TableSection Title="{i18n:Translate BasicSettings}">
+							<ViewCell>
+								<StackLayout Orientation="Horizontal">
+									<Image Source="dropbox_logo_36dp.png" />
+									<Label Text="{i18n:Translate DropBoxSyncEnabled}" />
+									<Switch IsVisible="{Binding DropboxAccountLinked}" 
+											Toggled="OnDropboxSwitchToggled" />
+									<Label Text="{i18n:Translate DropboxNotLinked}" 
+										   IsVisible="{Binding Path=DropboxAccountLinked, Converter={StaticResource not}}" />
+								</StackLayout>
+							</ViewCell>
+						</TableSection>
+					</TableRoot>
+				</TableView.Root>
+			</TableView>
+
+			<!-- Service control -->
+			<StackLayout Orientation="Vertical">
+				<Button Text="Erase database" HorizontalOptions="Fill" Clicked="OnErase" />
+				<Button Text="Log messages" HorizontalOptions="Fill" Clicked="OnShowLogs" />
+				<Button Text="Load contacts" HorizontalOptions="Fill" Clicked="OnLoadContacts" />
+			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

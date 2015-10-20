@@ -67,6 +67,12 @@ namespace SocialCapital.Data
 
 		#region Configs
 
+//		public const string DropboxSyncConfig = "DropboxSyncConfig";
+//		public bool? DropboxSync {
+//			get { return GetConfigValue<bool?> (DropboxSyncConfig); }
+//			set { SaveValue<bool?> (DropboxSyncConfig); }
+//		}
+
 		public const string AddressBookConfig = "LastAddressBookImportTime";
 		public DateTime? LastAddressBookImportTime {
 			get { return GetConfigValue<DateTime?> (AddressBookConfig); }

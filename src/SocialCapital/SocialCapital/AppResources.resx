@@ -322,4 +322,17 @@
 		<value>Отсутствуют разрешения на выполнение данного действия</value>
 		<comment>Сообщение пользователю при отсутствии разрешений данных приложению для выполнения действия</comment>
 	</data>
+	<data name="BasicSettings" xml:space="preserve">
+		<value>Основные настройки</value>
+		<comment>Заголовок раздела с основными настройками</comment>
+	</data>
+	<data name="DropboxNotLinked" xml:space="preserve">
+		<value>Установите приложение Dropbox для создания резервной копии</value>
+		<comment>Заголовок раздела с основными настройками</comment>
+	</data>
+	<data name="DropBoxSyncEnabled" xml:space="preserve">
+		<value>Синхронизировать с Dropbox</value>
+		<comment>Пункт настроек, включающий и выключающий синхронизацию с Dropbox</comment>
+	</data>
+
 </root>

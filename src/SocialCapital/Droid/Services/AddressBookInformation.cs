@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Contacts;
-using SocialCapital.AddressBookImport;
+using SocialCapital.Services.AddressBookImport;
 using System.Threading.Tasks;
 using Android.Graphics;
 using System.Drawing;

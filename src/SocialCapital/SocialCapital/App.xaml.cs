@@ -7,6 +7,7 @@ using SocialCapital.Logging;
 using Ninject;
 using SocialCapital.ViewModels;
 using SocialCapital.Common.FormsMVVM;
+using SocialCapital.Services;
 
 namespace SocialCapital 
 {
@@ -20,7 +21,9 @@ namespace SocialCapital
 				new DatabaseNinjectModule(), 
 				new ViewModelNinjectModule(), 
 				new ViewNInjectModule(),
-				new MvvmPattenNinjectModule());
+				new MvvmPattenNinjectModule(),
+				new ServiceNInjectModule()
+			);
 
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");
