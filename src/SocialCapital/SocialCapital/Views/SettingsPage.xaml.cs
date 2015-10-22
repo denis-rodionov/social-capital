@@ -15,6 +15,7 @@ namespace SocialCapital.Views
 		public SettingsPage (SettingsVM settings, DatabaseService databaseService)
 		{
 			Settings = settings;
+			BindingContext = Settings;
 			this.databaseService = databaseService;
 
 			InitializeComponent ();

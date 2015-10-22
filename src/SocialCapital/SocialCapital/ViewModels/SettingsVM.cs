@@ -9,20 +9,20 @@ namespace SocialCapital.ViewModels
 {
 	public class SettingsVM
 	{
-		private DropboxSyncker dropboxSyncker;
+		private DropboxBackupService dropboxSyncker;
 		private IDropboxSync dropboxService;
 
-		public SettingsVM (DropboxSyncker dropboxSyncker, IDropboxSync dropboxService)
+		public SettingsVM (DropboxBackupService dropboxSyncker, IDropboxSync dropboxService)
 		{
 			this.dropboxService = dropboxService;
 			this.dropboxSyncker = dropboxSyncker;
 
-			DropboxAccountLinked = dropboxService.HasDropboxAccount();
+			IsDropboxAccountLinked = dropboxService.HasDropboxAccount();
 		}
 
 		#region Properties
 
-		public bool DropboxAccountLinked { get; set; }
+		public bool IsDropboxAccountLinked { get; set; }
 
 		#endregion
 

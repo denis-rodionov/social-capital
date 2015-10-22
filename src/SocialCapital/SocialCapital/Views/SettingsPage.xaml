@@ -13,10 +13,10 @@
 								<StackLayout Orientation="Horizontal">
 									<Image Source="dropbox_logo_36dp.png" />
 									<Label Text="{i18n:Translate DropBoxSyncEnabled}" />
-									<Switch IsVisible="{Binding DropboxAccountLinked}" 
+									<Switch IsVisible="{Binding IsDropboxAccountLinked}" 
 											Toggled="OnDropboxSwitchToggled" />
 									<Label Text="{i18n:Translate DropboxNotLinked}" 
-										   IsVisible="{Binding Path=DropboxAccountLinked, Converter={StaticResource not}}" />
+										   IsVisible="{Binding Path=IsDropboxAccountLinked, Converter={StaticResource not}}" />
 								</StackLayout>
 							</ViewCell>
 						</TableSection>

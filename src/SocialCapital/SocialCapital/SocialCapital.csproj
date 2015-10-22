@@ -193,8 +193,12 @@
     <Compile Include="Services\AddressBookImport\AddressBookService.cs" />
     <Compile Include="Services\AddressBookImport\IAddressBookInformation.cs" />
     <Compile Include="Services\DropboxSync\IDropboxSync.cs" />
-    <Compile Include="Services\DropboxSync\DropboxSyncker.cs" />
     <Compile Include="Services\ServiceNInjectModule.cs" />
+    <Compile Include="Common\EventProviders\IEventProvider.cs" />
+    <Compile Include="Common\EventProviders\TimerEventProvider.cs" />
+    <Compile Include="Services\DropboxSync\DropboxBackupService.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
+    <Compile Include="Services\DropboxSync\DropboxFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -243,6 +247,8 @@
     <Folder Include="Common\FormsMVVM\" />
     <Folder Include="Services\" />
     <Folder Include="Services\DropboxSync\" />
+    <Folder Include="Common\EventProviders\" />
+    <Folder Include="Services\FileService\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">

@@ -2,6 +2,8 @@
 using Ninject.Modules;
 using SocialCapital.Services.DropboxSync;
 using Xamarin.Forms;
+using SocialCapital.Common.EventProviders;
+using SocialCapital.Services.FileService;
 
 namespace SocialCapital.Services
 {
@@ -16,7 +18,9 @@ namespace SocialCapital.Services
 		public override void Load ()
 		{
 			Bind<IDropboxSync> ().ToMethod (ctx => DependencyService.Get<IDropboxSync> ());
-			Bind<DropboxSyncker> ().ToSelf ().InSingletonScope ();
+			Bind<IFileService> ().ToMethod (ctx => DependencyService.Get<IFileService> ());
+			Bind<DropboxBackupService> ().ToSelf ().InSingletonScope ();
+			Bind<IEventProvider> ().To<TimerEventProvider> ();
 		}
 
 		#endregion

@@ -4,6 +4,9 @@ using Xamarin.Forms;
 using DropboxSync.Android;
 using Android.Content;
 using Android.App;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 [assembly: Dependency(typeof(SocialCapital.Droid.Services.DropboxSync.DropboxSyncService))]
 
@@ -16,8 +19,6 @@ namespace SocialCapital.Droid.Services.DropboxSync
 
 		public DropboxSyncService ()
 		{
-			
-
 		}
 
 		private DBAccountManager manager;
@@ -39,9 +40,11 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			{
 				var account = Manager.LinkedAccount;
 
-				Intent intent = new Intent(Intent.ActionView);
-				Manager.StartLink((Activity)Forms.Context, 0);
-				account = Manager.LinkedAccount;
+				if (account == null)
+				{
+					Manager.StartLink((Activity)Forms.Context, 0);
+					account = Manager.LinkedAccount;
+				}
 
 				return account != null;
 			}
@@ -55,12 +58,12 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			}
 		}
 
-		public void SaveFile (byte[] data, string fileName)
+		public void UploadFile (byte[] data, string dropboxFileName)
 		{
 			try
 			{
 				var filesystem = GetFileSystem();
-				var file = filesystem.Create (new DBPath (fileName));
+				var file = filesystem.Create (new DBPath (dropboxFileName));
 
 				if (file == null)
 					throw new DropboxException ("Cannot create file!");
@@ -78,7 +81,25 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			}
 		}
 
-		public byte[] LoadFile (string fileName)
+		public void UploadFile (string path, string dropboxFileName)
+		{
+			try
+			{
+				var data = File.ReadAllBytes(path);
+
+				UploadFile(data, dropboxFileName);
+			}
+			catch (DropboxException)
+			{
+				throw;
+			}
+			catch (Exception ex)
+			{
+				throw new DropboxException ("Unknown exception while preparing file to upload", ex);
+			}
+		}
+
+		public byte[] DownloadData (string fileName)
 		{
 			try
 			{
@@ -97,7 +118,7 @@ namespace SocialCapital.Droid.Services.DropboxSync
 					var length = file.ReadStream.Length;
 					byte[] buffer = new byte[length];
 					file.ReadStream.Read(buffer, 0, (int)length);
-						
+
 					file.Close();
 
 					return buffer;
@@ -113,9 +134,54 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			}
 		}
 
+		public void DownloadFile (string fileName, string destinationPath)
+		{
+			try
+			{
+				var data = DownloadData(fileName);
+
+				File.WriteAllBytes(destinationPath, data);
+			}
+			catch (DropboxException)
+			{
+				throw;
+			}
+			catch (Exception ex)
+			{
+				throw new DropboxException ("Exception while processing downloaded file", ex);
+			}
+		}
+
+		public IEnumerable<DropboxFile> GetFileInfos()
+		{
+			try
+			{
+				var filesystem = GetFileSystem();
+
+				var files = filesystem.ListFolder(DBPath.Root);
+
+				var res = files.Select(f => new DropboxFile() { Name = f.Path.ToString(), Modified = ToDateTime(f.ModifiedTime) }).ToList();
+
+				return res;
+			}
+			catch (DropboxException)
+			{
+				throw;
+			}
+			catch (Exception ex)
+			{
+				throw new DropboxException ("Error while accessin dropbox files lise", ex);
+			}
+		}
+
 		#endregion
 
 		#region Implementation
+
+		private DateTime ToDateTime(Java.Util.Date date)
+		{
+			return new DateTime (date.Year, date.Month, date.Day, date.Hours, date.Minutes, date.Seconds);
+		}
 
 		private DBFileSystem GetFileSystem()
 		{
