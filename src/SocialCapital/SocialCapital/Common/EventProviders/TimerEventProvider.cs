@@ -42,9 +42,11 @@ namespace SocialCapital.Common.EventProviders
 					Raised ();
 
 				return true;
-			}
-			else
+			} else
+			{
+				deviceTimerStarted = false;
 				return false;
+			}
 		}
 
 		private bool deviceTimerStarted = false;

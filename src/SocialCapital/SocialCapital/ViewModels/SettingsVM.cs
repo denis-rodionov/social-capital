@@ -18,11 +18,14 @@ namespace SocialCapital.ViewModels
 			this.dropboxSyncker = dropboxSyncker;
 
 			IsDropboxAccountLinked = dropboxService.HasDropboxAccount();
+			DropboxBackupEnabled = dropboxSyncker.Enabled;
 		}
 
 		#region Properties
 
 		public bool IsDropboxAccountLinked { get; set; }
+
+		public bool DropboxBackupEnabled { get; set; }
 
 		#endregion
 

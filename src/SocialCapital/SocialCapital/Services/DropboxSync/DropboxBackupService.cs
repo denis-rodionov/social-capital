@@ -51,7 +51,7 @@ namespace SocialCapital.Services.DropboxSync
 				{
 					StartSyncWorker (dropboxService);
 					Enabled = true;
-					settings.SaveValue (SettingsKey, Enabled);
+					settings.SaveValue (SettingsKey, true);
 				}
 			}
 		}
@@ -64,7 +64,7 @@ namespace SocialCapital.Services.DropboxSync
 				{
 					StopSyncWorker ();
 					Enabled = false;
-					settings.SaveValue (SettingsKey, Enabled);
+					settings.SaveValue (SettingsKey, false);
 				}
 			}
 		}

@@ -334,5 +334,12 @@
 		<value>Синхронизировать с Dropbox</value>
 		<comment>Пункт настроек, включающий и выключающий синхронизацию с Dropbox</comment>
 	</data>
-
+	<data name="BackupSectionHeader" xml:space="preserve">
+		<value>Резервное копирование</value>
+		<comment>Заголовок раздела резервного копирования</comment>
+	</data>
+	<data name="RestoreBackup" xml:space="preserve">
+		<value>Восстановить</value>
+		<comment>Кнопка/Действие</comment>
+	</data>
 </root>

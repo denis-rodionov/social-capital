@@ -8,13 +8,15 @@
 			<TableView>
 				<TableView.Root>
 					<TableRoot>
-						<TableSection Title="{i18n:Translate BasicSettings}">
+						<TableSection Title="{i18n:Translate BackupSectionHeader}">
 							<ViewCell>
 								<StackLayout Orientation="Horizontal">
 									<Image Source="dropbox_logo_36dp.png" />
-									<Label Text="{i18n:Translate DropBoxSyncEnabled}" />
+									<Label Text="{i18n:Translate DropBoxSyncEnabled}" YAlign="Center" />
 									<Switch IsVisible="{Binding IsDropboxAccountLinked}" 
-											Toggled="OnDropboxSwitchToggled" />
+											Toggled="OnDropboxSwitchToggled"
+											HorizontalOptions="End"
+											IsToggled="{Binding DropboxBackupEnabled}" />
 									<Label Text="{i18n:Translate DropboxNotLinked}" 
 										   IsVisible="{Binding Path=IsDropboxAccountLinked, Converter={StaticResource not}}" />
 								</StackLayout>

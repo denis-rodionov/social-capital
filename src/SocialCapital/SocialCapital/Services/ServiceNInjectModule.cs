@@ -4,6 +4,7 @@ using SocialCapital.Services.DropboxSync;
 using Xamarin.Forms;
 using SocialCapital.Common.EventProviders;
 using SocialCapital.Services.FileService;
+using Ninject;
 
 namespace SocialCapital.Services
 {
@@ -19,8 +20,13 @@ namespace SocialCapital.Services
 		{
 			Bind<IDropboxSync> ().ToMethod (ctx => DependencyService.Get<IDropboxSync> ());
 			Bind<IFileService> ().ToMethod (ctx => DependencyService.Get<IFileService> ());
-			Bind<DropboxBackupService> ().ToSelf ().InSingletonScope ();
-			Bind<IEventProvider> ().To<TimerEventProvider> ();
+
+			Bind<DropboxBackupService> ().ToSelf ().InSingletonScope ().WithConstructorArgument (
+				typeof(IEventProvider),
+				ctx => ctx.Kernel.Get<IEventProvider> ("BackupTimer"));
+
+			Bind<IEventProvider> ().To<TimerEventProvider> ().Named("BackupTimer")
+				.WithConstructorArgument (typeof(TimeSpan), TimeSpan.FromSeconds (20));
 		}
 
 		#endregion

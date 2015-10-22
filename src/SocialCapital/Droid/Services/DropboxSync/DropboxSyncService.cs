@@ -63,7 +63,13 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			try
 			{
 				var filesystem = GetFileSystem();
-				var file = filesystem.Create (new DBPath (dropboxFileName));
+				var path = new DBPath (dropboxFileName);
+				DBFile file;
+
+				if (filesystem.Exists(path))
+					filesystem.Delete(path);
+				
+				file = filesystem.Create (path);
 
 				if (file == null)
 					throw new DropboxException ("Cannot create file!");
