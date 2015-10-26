@@ -204,6 +204,7 @@ namespace SocialCapital.ViewModels
 		{
 			Database.SaveContactInfo (SourceContact);
 			App.Container.Get<ContactTagsManager>().SaveContactTags (Tags.Tags, SourceContact.Id);
+			Tags = null;
 		}
 
 		public void Reload()

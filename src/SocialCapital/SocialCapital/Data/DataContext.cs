@@ -20,8 +20,6 @@ namespace SocialCapital.Data
 		private static SQLiteConnection connection;
 		private static Mutex mutex;
 
-		public SQLiteConnection Connection { get { return connection; } }
-
 		#region Init
 
 		public DataContext ()
@@ -31,6 +29,10 @@ namespace SocialCapital.Data
 				if (connection == null)
 				{					
 					connection = DependencyService.Get<ISQLite> ().GetConnection ();
+				}
+
+				if (mutex == null)
+				{
 					mutex = new Mutex(false);
 				}
 
@@ -45,7 +47,20 @@ namespace SocialCapital.Data
 			}
 		}
 
+		#endregion
 
+		#region IDataContext implementation
+
+		public SQLiteConnection Connection { get { return connection; } }
+
+		public void CloseConnection()
+		{
+			if (connection != null)
+			{
+				connection.Close ();
+				connection = null;
+			}
+		}
 
 		#endregion
 

@@ -15,6 +15,7 @@
         	<converters:BoolToImageConverter x:Key="BoolToImageConverter" />
         	<converters:FrequencyConverter x:Key="FrequencyConverter" />
         	<converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+        	<converters:CommaSeparatedConverter x:Key="CommaSeparatedConverter" />
 
         	<Style x:Key="TextCellStyle" TargetType="TextCell">
         		<Setter Property="TextColor" Value="Black" />

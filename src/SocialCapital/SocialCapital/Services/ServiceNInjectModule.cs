@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using SocialCapital.Common.EventProviders;
 using SocialCapital.Services.FileService;
 using Ninject;
+using SocialCapital.Data;
 
 namespace SocialCapital.Services
 {
@@ -18,15 +19,27 @@ namespace SocialCapital.Services
 
 		public override void Load ()
 		{
-			Bind<IDropboxSync> ().ToMethod (ctx => DependencyService.Get<IDropboxSync> ());
 			Bind<IFileService> ().ToMethod (ctx => DependencyService.Get<IFileService> ());
+
+			LoadDropboxBackupService ();
+		}
+
+		#endregion
+
+		#region Implementation
+
+		private void LoadDropboxBackupService()
+		{
+			Bind<IDropboxSync> ().ToMethod (ctx => DependencyService.Get<IDropboxSync> ());
 
 			Bind<DropboxBackupService> ().ToSelf ().InSingletonScope ().WithConstructorArgument (
 				typeof(IEventProvider),
 				ctx => ctx.Kernel.Get<IEventProvider> ("BackupTimer"));
 
-			Bind<IEventProvider> ().To<TimerEventProvider> ().Named("BackupTimer")
-				.WithConstructorArgument (typeof(TimeSpan), TimeSpan.FromSeconds (20));
+			Bind<IEventProvider> ().To<TimerEventProvider> ().Named ("BackupTimer")
+				.WithConstructorArgument (typeof(TimeSpan), TimeSpan.FromSeconds (20))
+				.WithConstructorArgument (typeof(DateTime), 
+					ctx => ctx.Kernel.Get<Settings> ().GetConfigValue<DateTime> (DropboxBackupService.SettingsLastBackupKey));
 		}
 
 		#endregion

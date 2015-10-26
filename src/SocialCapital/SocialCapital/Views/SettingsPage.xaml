@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			x:Class="SocialCapital.Views.SettingsPage">
+			x:Class="SocialCapital.Views.SettingsPage"
+			Title="{i18n:Translate SettingsMenuItemTitle}">
 	<ContentPage.Content>
 		<StackLayout>
 			<TableView>
@@ -11,14 +12,17 @@
 						<TableSection Title="{i18n:Translate BackupSectionHeader}">
 							<ViewCell>
 								<StackLayout Orientation="Horizontal">
-									<Image Source="dropbox_logo_36dp.png" />
-									<Label Text="{i18n:Translate DropBoxSyncEnabled}" YAlign="Center" />
-									<Switch IsVisible="{Binding IsDropboxAccountLinked}" 
-											Toggled="OnDropboxSwitchToggled"
-											HorizontalOptions="End"
+									<!--<Image Source="dropbox_logo_36dp.png" />-->
+									<Label Text="{i18n:Translate DropBoxSyncEnabled}" 
+										   YAlign="Center" />
+									<Switch HorizontalOptions="EndAndExpand"
 											IsToggled="{Binding DropboxBackupEnabled}" />
+									<ActivityIndicator IsVisible="{Binding DropboxSync}" IsRunning="true" />
+
+									<!--
 									<Label Text="{i18n:Translate DropboxNotLinked}" 
-										   IsVisible="{Binding Path=IsDropboxAccountLinked, Converter={StaticResource not}}" />
+										   IsVisible="{Binding Path=IsDropboxAccountLinked, Converter={StaticResource not}}"
+										   YAlign="Center" /> -->
 								</StackLayout>
 							</ViewCell>
 						</TableSection>

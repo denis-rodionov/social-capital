@@ -305,7 +305,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Синхронизировать с Dropbox.
+        ///   Ищет локализованную строку, похожую на Dropbox.
         /// </summary>
         internal static string DropBoxSyncEnabled {
             get {
@@ -634,6 +634,24 @@ namespace SocialCapital {
         internal static string RestoreBackup {
             get {
                 return ResourceManager.GetString("RestoreBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Восстановить данные.
+        /// </summary>
+        internal static string RestoreBackupQuestion {
+            get {
+                return ResourceManager.GetString("RestoreBackupQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы уверены, что хотите восстановить резервную копию, созданную.
+        /// </summary>
+        internal static string RestoreBackupQuestionDetails {
+            get {
+                return ResourceManager.GetString("RestoreBackupQuestionDetails", resourceCulture);
             }
         }
         

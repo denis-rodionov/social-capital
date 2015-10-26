@@ -113,17 +113,15 @@ namespace SocialCapital.Droid.Services.DropboxSync
 				var path = new DBPath(fileName);
 
 				if (!filesystem.Exists(path))
-					return null;	// file not created yet
+					throw new DropboxException("Backup file not found in dropbox");
 				else
 				{
 					var file = filesystem.Open (new DBPath (fileName));
 
 					if (file == null)
 						throw new DropboxException ("Cannot open file!");
-
-					var length = file.ReadStream.Length;
-					byte[] buffer = new byte[length];
-					file.ReadStream.Read(buffer, 0, (int)length);
+					
+					byte[] buffer = ReadFully(file.ReadStream);
 
 					file.Close();
 
@@ -166,7 +164,7 @@ namespace SocialCapital.Droid.Services.DropboxSync
 
 				var files = filesystem.ListFolder(DBPath.Root);
 
-				var res = files.Select(f => new DropboxFile() { Name = f.Path.ToString(), Modified = ToDateTime(f.ModifiedTime) }).ToList();
+				var res = files.Select(f => new DropboxFile() { Name = ToFileName(f.Path), Modified = ToDateTime(f.ModifiedTime) }).ToList();
 
 				return res;
 			}
@@ -183,6 +181,27 @@ namespace SocialCapital.Droid.Services.DropboxSync
 		#endregion
 
 		#region Implementation
+
+		public static byte[] ReadFully (Stream stream)
+		{
+			byte[] buffer = new byte[32768];
+			using (MemoryStream ms = new MemoryStream())
+			{
+				while (true)
+				{
+					int read = stream.Read (buffer, 0, buffer.Length);
+					if (read <= 0)
+						return ms.ToArray();
+					ms.Write (buffer, 0, read);
+				}
+			}
+		}
+
+		private string ToFileName(DBPath path)
+		{
+			var res = path.ToString ().Replace ("/", "");
+			return res;
+		}
 
 		private DateTime ToDateTime(Java.Util.Date date)
 		{

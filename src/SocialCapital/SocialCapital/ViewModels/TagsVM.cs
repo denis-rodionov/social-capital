@@ -8,10 +8,11 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.Common.Interfaces;
 
 namespace SocialCapital.ViewModels
 {
-	public class TagsVM : ViewModelBase
+	public class TagsVM : ViewModelBase, IStringList
 	{
 		public ICommand Add { get; private set; }
 
@@ -36,6 +37,15 @@ namespace SocialCapital.ViewModels
 
 			Delete = new Command (
 				execute: (obj) => DeleteTag(obj));
+		}
+
+		#endregion
+
+		#region IStringList implementation
+
+		public IEnumerable<string> GetStrings ()
+		{
+			return Tags.Select (t => t.Name).ToList ();
 		}
 
 		#endregion

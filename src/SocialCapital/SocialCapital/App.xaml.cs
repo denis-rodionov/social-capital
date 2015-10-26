@@ -8,6 +8,8 @@ using Ninject;
 using SocialCapital.ViewModels;
 using SocialCapital.Common.FormsMVVM;
 using SocialCapital.Services;
+using SocialCapital.Services.DropboxSync;
+using SocialCapital.Common.EventProviders;
 
 namespace SocialCapital 
 {
@@ -35,6 +37,8 @@ namespace SocialCapital
 			//Container.Get<DatabaseService>().ClearDatabase ();
 			Container.Get<DatabaseService>().InitDatabase ();
 
+			RunBackgroundServices ();
+
 			MainPage = new RootPage();
 		}
 
@@ -52,6 +56,15 @@ namespace SocialCapital
 		{
 			// Handle when your app resumes
 		}
+
+		#region Implementation
+
+		void RunBackgroundServices()
+		{			
+			Container.Get<DropboxBackupService> ();
+		}
+
+		#endregion
 	}
 }
 

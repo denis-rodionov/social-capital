@@ -1,17 +1,24 @@
 ﻿using System;
 using Xamarin.Forms;
+using SocialCapital.Data;
 
 namespace SocialCapital.Common.EventProviders
 {
 	public class TimerEventProvider : IEventProvider
 	{
-		public TimeSpan Interval;
+		readonly TimeSpan StdInterval = TimeSpan.FromMinutes(1);
+
+		readonly TimeSpan interval;
 
 		public bool IsEnabled = false;
+		public DateTime LastEventTime;
 
-		public TimerEventProvider (TimeSpan interval)
+		public TimerEventProvider (TimeSpan interval, DateTime lastEventTime)
 		{
-			Interval = interval;
+			this.interval = interval;
+
+			if (lastEventTime != null)
+				this.LastEventTime = DateTime.Now;
 		}
 
 		#region IEventProvider implementation
@@ -33,19 +40,33 @@ namespace SocialCapital.Common.EventProviders
 
 		#region Implementation
 
+		private void RaiseEvent()
+		{
+			LastEventTime = DateTime.Now;
+			var handle = Raised;
+			if (handle != null)
+				Raised ();
+		}
+
 		private bool Callback()
 		{
+			try
+			{
 			if (IsEnabled)
 			{
-				var handle = Raised;
-				if (handle != null)
-					Raised ();
+				if (DateTime.Now - LastEventTime > interval)
+					RaiseEvent ();
 
 				return true;
 			} else
 			{
 				deviceTimerStarted = false;
 				return false;
+			}
+			}
+			catch (Exception ex)
+			{
+				throw new EventProviderException ("Exception in event consumers", ex);
 			}
 		}
 
@@ -58,7 +79,10 @@ namespace SocialCapital.Common.EventProviders
 				if (!deviceTimerStarted)
 				{
 					deviceTimerStarted = true;
-					Device.StartTimer (Interval, Callback);
+
+					var concreetInterval = interval > StdInterval ? StdInterval : interval;
+
+					Device.StartTimer (concreetInterval, Callback);
 				}
 			}
 		}

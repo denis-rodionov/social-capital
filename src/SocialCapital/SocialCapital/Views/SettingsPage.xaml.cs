@@ -21,11 +21,11 @@ namespace SocialCapital.Views
 			InitializeComponent ();
 		}
 
-		private void OnDropboxSwitchToggled(object sender, ToggledEventArgs args)
-		{
-			var vm = (SettingsVM)BindingContext;
-			vm.SyncEnable (args.Value);
-		}
+//		private void OnDropboxSwitchToggled(object sender, ToggledEventArgs args)
+//		{
+//			var vm = (SettingsVM)BindingContext;
+//			vm.SyncEnable (args.Value);
+//		}
 
 		private void OnShowLogs(object sender, EventArgs args)
 		{		

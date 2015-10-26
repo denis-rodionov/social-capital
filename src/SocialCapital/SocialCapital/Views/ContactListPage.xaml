@@ -14,12 +14,22 @@
 				      RowHeight="60">
 				<ListView.ItemTemplate>
 					<DataTemplate>
+					<!--
 						<ImageCell  Tapped="OnItemSelected"
 								    ImageSource="{Binding PhotoImage}" 
 								    Text="{Binding FullName}" 
-								    Detail="{Binding Tags.TagList}"
+								    Detail="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}"
 								    TextColor="Black"
-								    DetailColor="Gray" />
+								    DetailColor="Gray" /> -->
+						<ViewCell Tapped="OnItemSelected">
+							<StackLayout Orientation="Horizontal">
+								<Image Source="{Binding PhotoImage}" />
+								<StackLayout Orientation="Vertical">
+									<Label Text="{Binding FullName}" />
+									<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" />
+								</StackLayout>
+							</StackLayout>
+						</ViewCell>
 					<!--
 						<ViewCell>
 

@@ -6,6 +6,8 @@ namespace SocialCapital.Data
 	public interface IDataContext : IDisposable
 	{
 		SQLiteConnection Connection { get; }
+
+		void CloseConnection();
 	}
 }
 

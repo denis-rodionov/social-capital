@@ -331,7 +331,7 @@
 		<comment>Заголовок раздела с основными настройками</comment>
 	</data>
 	<data name="DropBoxSyncEnabled" xml:space="preserve">
-		<value>Синхронизировать с Dropbox</value>
+		<value>Dropbox</value>
 		<comment>Пункт настроек, включающий и выключающий синхронизацию с Dropbox</comment>
 	</data>
 	<data name="BackupSectionHeader" xml:space="preserve">
@@ -341,5 +341,13 @@
 	<data name="RestoreBackup" xml:space="preserve">
 		<value>Восстановить</value>
 		<comment>Кнопка/Действие</comment>
+	</data>
+	<data name="RestoreBackupQuestion" xml:space="preserve">
+		<value>Восстановить данные</value>
+		<comment>Заголовок всплывающего подтверждения восстановления данных из копии</comment>
+	</data>
+	<data name="RestoreBackupQuestionDetails" xml:space="preserve">
+		<value>Вы уверены, что хотите восстановить резервную копию, созданную</value>
+		<comment>Заголовок всплывающего подтверждения восстановления данных из копии</comment>
 	</data>
 </root>

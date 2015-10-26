@@ -179,7 +179,6 @@
     <Compile Include="Data\Model\Enums\ILabel.cs" />
     <Compile Include="Views\Converters\StringToBoolConverter.cs" />
     <Compile Include="Data\Migrator.cs" />
-    <Compile Include="Data\DatabaseService.cs" />
     <Compile Include="Views\ViewNInjectModule.cs" />
     <Compile Include="Data\Migrations\Migration_0_1.cs" />
     <Compile Include="Data\IMigration.cs" />
@@ -199,6 +198,10 @@
     <Compile Include="Services\DropboxSync\DropboxBackupService.cs" />
     <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\DropboxSync\DropboxFile.cs" />
+    <Compile Include="Common\Interfaces\IStringList.cs" />
+    <Compile Include="Views\Converters\CommaSeparatedConverter.cs" />
+    <Compile Include="Data\DatabaseService.cs" />
+    <Compile Include="Common\EventProviders\EventProviderException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.0.6447\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -249,6 +252,7 @@
     <Folder Include="Services\DropboxSync\" />
     <Folder Include="Common\EventProviders\" />
     <Folder Include="Services\FileService\" />
+    <Folder Include="Common\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">
