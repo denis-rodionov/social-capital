@@ -127,6 +127,25 @@ namespace SocialCapital.Tests.Data
 			// assert
 			Assert.IsTrue(migrations.Single().Done, "If migration version greater then device version: migrate");
 		}
+
+		[Test]
+		public void GreaterMigrationVersionTest2()
+		{
+			// arrange
+			var settings = new SettingsMock ();
+			settings.Dict.Add (Migrator.DatabaseVersionConfig, "0.2");
+
+			var migrations = new List<MigrationMock> () {
+				new MigrationMock("1.0")
+			};
+			var migrator = new Migrator (settings, "1.0", migrations.Cast<IMigration>()) ;
+
+			// act
+			migrator.Migrate(new DataContextMock());
+
+			// assert
+			Assert.IsTrue(migrations.Single().Done, "If migration version greater then device version: migrate");
+		}
 	}
 }
 

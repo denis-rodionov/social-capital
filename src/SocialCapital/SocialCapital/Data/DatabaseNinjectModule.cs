@@ -43,13 +43,12 @@ namespace SocialCapital.Data
 
 		private void MigratorInit()
 		{
-			this.Bind<Migrator> ().ToSelf ().InSingletonScope ().WithConstructorArgument ("databaseVersion", DatabaseService.DatabaseVersion);
-
-			this.Bind<IEnumerable<IMigration>>().ToMethod(ctx => 
-				new List<IMigration> () {
+			this.Bind<Migrator> ().ToSelf ().InSingletonScope ()
+				.WithConstructorArgument ("databaseVersion", DatabaseService.DatabaseVersion)
+				.WithConstructorArgument ("migrations", ctx => new List<IMigration> () {
 					new Migration_0_1 (),
-					new Migration_0_2 ()
-				});
+					new Migration_1_0 ()
+			});
 			
 		}
 

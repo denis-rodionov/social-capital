@@ -2,9 +2,9 @@
 
 namespace SocialCapital.Data.Migrations
 {
-	public class Migration_0_2 : IMigration
+	public class Migration_1_0 : IMigration
 	{
-		public Migration_0_2 ()
+		public Migration_1_0 ()
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace SocialCapital.Data.Migrations
 
 		public string Version {
 			get {
-				return "0.2";
+				return "1.0";
 			}
 		}
 
