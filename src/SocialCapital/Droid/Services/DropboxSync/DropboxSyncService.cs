@@ -205,7 +205,7 @@ namespace SocialCapital.Droid.Services.DropboxSync
 
 		private DateTime ToDateTime(Java.Util.Date date)
 		{
-			return new DateTime (date.Year, date.Month, date.Day, date.Hours, date.Minutes, date.Seconds);
+			return new DateTime (date.Year + 1900, date.Month + 1, date.GetDate(), date.Hours, date.Minutes, date.Seconds);
 		}
 
 		private DBFileSystem GetFileSystem()

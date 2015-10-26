@@ -91,6 +91,19 @@ namespace SocialCapital.Services.DropboxSync
 			return null;
 		}
 
+		public DropboxFile GetBackupFromAnotherDevice()
+		{
+			var backup = GetBackupFile ();
+			var lastBackupTime = settings.GetConfigValue<DateTime> (SettingsLastBackupKey);
+
+			var diff = backup.Modified - lastBackupTime;
+
+			if (diff.TotalMinutes >= 1)
+				return backup;
+			else
+				return null;
+		}
+
 		public bool HasDropboxAccount()
 		{
 			return dropboxService.HasDropboxAccount ();

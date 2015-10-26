@@ -62,7 +62,7 @@ namespace SocialCapital.ViewModels
 					return;
 				}
 				
-				var backup = dropboxSyncker.GetBackupFile ();
+				var backup = dropboxSyncker.GetBackupFromAnotherDevice ();
 
 				// if backup already exists
 				if (backup != null)
