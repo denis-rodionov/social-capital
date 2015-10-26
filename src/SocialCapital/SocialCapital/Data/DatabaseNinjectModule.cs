@@ -1,6 +1,8 @@
 ﻿using System;
 using Ninject.Modules;
 using SocialCapital.Data.Managers;
+using System.Collections.Generic;
+using SocialCapital.Data.Migrations;
 
 namespace SocialCapital.Data
 {
@@ -30,10 +32,25 @@ namespace SocialCapital.Data
 			this.Bind<TagManager> ().To<TagManager> ().InSingletonScope ();
 
 			this.Bind<Settings> ().ToSelf ();
+			this.Bind<ISettings> ().To<Settings> ();
 
-			this.Bind<Migrator> ().ToSelf ().InSingletonScope ();
+
 
 			this.Bind<DatabaseService> ().ToSelf ().InSingletonScope ();
+
+			MigratorInit ();
+		}
+
+		private void MigratorInit()
+		{
+			this.Bind<Migrator> ().ToSelf ().InSingletonScope ().WithConstructorArgument ("databaseVersion", DatabaseService.DatabaseVersion);
+
+			this.Bind<IEnumerable<IMigration>>().ToMethod(ctx => 
+				new List<IMigration> () {
+					new Migration_0_1 (),
+					new Migration_0_2 ()
+				});
+			
 		}
 
 		#endregion

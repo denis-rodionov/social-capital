@@ -59,6 +59,8 @@ namespace SocialCapital.ViewModels
 					return new GroupsPage(new ContactGroupListVM());
 				case "PriorityContactList":
 					return new PriorityContactListPage (new PriorityContactListVM ());
+				case "Summary":
+					return App.Container.Get<SummaryPage> (); 
 				default:
 					return new ContentPage ();
 			}

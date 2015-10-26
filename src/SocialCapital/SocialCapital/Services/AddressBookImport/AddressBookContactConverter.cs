@@ -36,6 +36,7 @@ namespace SocialCapital.Services.AddressBookImport
 				AddressBookId = BookContact.Id,
 				DisplayName = BookContact.DisplayName,
 				Thumbnail = BookContact.Thumbnail,
+				GroupId = null,
 				//AddressBookUpdateTime = SyncTime,
 				WorkPlace = string.Join(", ", BookContact.Organizations.Select(o => o.Name))
 			};

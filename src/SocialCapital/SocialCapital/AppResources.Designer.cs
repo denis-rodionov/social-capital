@@ -530,6 +530,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Не обработано контактов.
+        /// </summary>
+        internal static string NotProcessedContactsLabel {
+            get {
+                return ResourceManager.GetString("NotProcessedContactsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Раз в месяц.
         /// </summary>
         internal static string OnceAMonth {
@@ -598,6 +607,15 @@ namespace SocialCapital {
         internal static string PriorityContactListPageTitle {
             get {
                 return ResourceManager.GetString("PriorityContactListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Обработано контактов.
+        /// </summary>
+        internal static string ProcessedContactsLabel {
+            get {
+                return ResourceManager.GetString("ProcessedContactsLabel", resourceCulture);
             }
         }
         
@@ -724,6 +742,15 @@ namespace SocialCapital {
         internal static string TotalContactCount {
             get {
                 return ResourceManager.GetString("TotalContactCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Общее количество контактов.
+        /// </summary>
+        internal static string TotalContactsCountLabel {
+            get {
+                return ResourceManager.GetString("TotalContactsCountLabel", resourceCulture);
             }
         }
         

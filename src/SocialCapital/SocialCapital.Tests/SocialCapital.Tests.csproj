@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{62436711-5530-451A-A16F-CE84AE8A2BAE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SocialCapital.Tests</RootNamespace>
+    <AssemblyName>SocialCapital.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Portable.Ninject.3.3.1\lib\net40-client\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Net.Platform.Win32">
+      <HintPath>..\packages\SQLite.Net-PCL.3.0.5\lib\net4\SQLite.Net.Platform.Win32.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Net">
+      <HintPath>..\packages\SQLite.Net-PCL.3.0.5\lib\net40\SQLite.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Net.Platform.Generic">
+      <HintPath>..\packages\SQLite.Net-PCL.3.0.5\lib\net40\SQLite.Net.Platform.Generic.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Test.cs" />
+    <Compile Include="Data\MigratorFixture.cs" />
+    <Compile Include="Data\Mocks\SettingsMock.cs" />
+    <Compile Include="Data\Mocks\MigrationMock.cs" />
+    <Compile Include="Data\Mocks\DataContextMock.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Data\Mocks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SocialCapital\SocialCapital.csproj">
+      <Project>{304A4C68-E6F9-45AB-8818-A6CE005962F0}</Project>
+      <Name>SocialCapital</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

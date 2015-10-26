@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 x:Class="SocialCapital.Views.SummaryPage">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate Text=TotalContactsCountLabel, Format='{0}:'}" />
+				<Label Text="{Binding TotalContactsCount}" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate Text=ProcessedContactsLabel, Format='{0}:'}" />
+				<Label Text="{Binding ProcessedContacts}" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Label Text="{i18n:Translate Text=NotProcessedContactsLabel, Format='{0}:'}" />
+				<Label Text="{Binding NotProcessedContacts}" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

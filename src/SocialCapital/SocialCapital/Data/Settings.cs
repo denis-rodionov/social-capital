@@ -3,7 +3,7 @@ using SocialCapital.Data.Model;
 
 namespace SocialCapital.Data
 {
-	public class Settings
+	public class Settings : ISettings
 	{
 		private Func<IDataContext> getContext = null;
 		
@@ -85,11 +85,11 @@ namespace SocialCapital.Data
 			set { SaveValue<long?> (MaxUpdatedTimestampConfig, value); }
 		}
 
-		public const string DatabaseVersionConfig = "DatabaseVersion";
-		public string DatabaseVersion {
-			get { return GetConfigValue<string> (DatabaseVersionConfig); }
-			set { SaveValue<string> (DatabaseVersionConfig, value); }
-		}
+
+//		public string DatabaseVersion {
+//			get { return GetConfigValue<string> (DatabaseVersionConfig); }
+//			set { SaveValue<string> (DatabaseVersionConfig, value); }
+//		}
 
 		#endregion
 	}

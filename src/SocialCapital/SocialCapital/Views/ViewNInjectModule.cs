@@ -14,6 +14,7 @@ namespace SocialCapital.Views
 		public override void Load ()
 		{
 			Bind<SettingsPage> ().ToSelf ();
+			Bind<SummaryPage> ().ToSelf ();
 		}
 
 		#endregion

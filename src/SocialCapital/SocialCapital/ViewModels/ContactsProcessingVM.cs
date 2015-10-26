@@ -23,7 +23,7 @@ namespace SocialCapital.ViewModels
 		}
 
 		public int GroupedContactCount {
-			get { return AllContacts.Count (c => c.GroupId != 0); }
+			get { return AllContacts.Count (c => c.GroupId != null); }
 		}
 	}
 }

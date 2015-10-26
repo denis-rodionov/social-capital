@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Reflection;
 using SocialCapital.Data.Migrations;
+using System.Linq;
 
 namespace SocialCapital.Data
 {
 	public class Migrator
 	{
-		const string databaseVersion = "0.2";
+		public const string DatabaseVersionConfig = "DatabaseVersion";
 
-		private Settings settings;
+		private readonly ISettings settings;
+		private readonly string databaseVersion;
+		private readonly List<IMigration> migrations;
 
-		private List<IMigration> migrations;
-
-		public Migrator(Settings settings)
+		public Migrator(ISettings settings, string databaseVersion, IEnumerable<IMigration> migrations)
 		{
 			this.settings = settings;
-
-			migrations = new List<IMigration> () {
-				new Migration_0_1 ()
-			};
+			this.databaseVersion = databaseVersion;
+			this.migrations = migrations.ToList();
 		}
 
 		public void Migrate(IDataContext db)
@@ -27,14 +26,14 @@ namespace SocialCapital.Data
 			if (db == null)
 				throw new ArgumentException ("db is null");
 
-			var deviceVersion = settings.GetConfigValue<string> (Settings.DatabaseVersionConfig, db);
+			var deviceVersion = settings.GetConfigValue<string> (DatabaseVersionConfig, db);
 
 			if (deviceVersion == null)
-				settings.SaveValue (Settings.DatabaseVersionConfig, databaseVersion, db);
+				settings.SaveValue (DatabaseVersionConfig, databaseVersion, db);
 			else if (deviceVersion != databaseVersion)
 			{
 				InnerMigrate (deviceVersion, db);
-				settings.SaveValue (Settings.DatabaseVersionConfig, databaseVersion, db);
+				settings.SaveValue (DatabaseVersionConfig, databaseVersion, db);
 			}
 		}
 

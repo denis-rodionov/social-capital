@@ -350,4 +350,16 @@
 		<value>Вы уверены, что хотите восстановить резервную копию, созданную</value>
 		<comment>Заголовок всплывающего подтверждения восстановления данных из копии</comment>
 	</data>
+	<data name="TotalContactsCountLabel" xml:space="preserve">
+		<value>Общее количество контактов</value>
+		<comment>Надпись на сводке по контактам</comment>
+	</data>
+	<data name="ProcessedContactsLabel" xml:space="preserve">
+		<value>Обработано контактов</value>
+		<comment>Надпись на сводке по контактам</comment>
+	</data>
+	<data name="NotProcessedContactsLabel" xml:space="preserve">
+		<value>Не обработано контактов</value>
+		<comment>Надпись на сводке по контактам</comment>
+	</data>
 </root>

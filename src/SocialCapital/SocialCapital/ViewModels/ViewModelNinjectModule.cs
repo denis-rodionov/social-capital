@@ -13,6 +13,7 @@ namespace SocialCapital.ViewModels
 			this.Bind<ContactListVM> ().To<ContactListVM> ();
 			this.Bind<AddressBookVM> ().To<AddressBookVM> ().InSingletonScope ();
 			this.Bind<SettingsVM> ().ToSelf ();
+			this.Bind<SummaryVM> ().ToSelf ();
 		}
 		#endregion
 	}
