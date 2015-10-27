@@ -362,4 +362,16 @@
 		<value>Не обработано контактов</value>
 		<comment>Надпись на сводке по контактам</comment>
 	</data>
+	<data name="DeletedContactCountLabel" xml:space="preserve">
+		<value>Удалено</value>
+		<comment>Надпись на сводке по контактам</comment>
+	</data>
+	<data name="Delete" xml:space="preserve">
+		<value>Удаление</value>
+		<comment>Перевод</comment>
+	</data>
+	<data name="SureToDeleteContactQuestion" xml:space="preserve">
+		<value>Вы уверены, что хотите удалить контакт</value>
+		<comment>Запрос подтверждения на удаление контакта</comment>
+	</data>
 </root>

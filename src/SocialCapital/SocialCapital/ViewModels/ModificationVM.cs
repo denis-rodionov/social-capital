@@ -2,14 +2,20 @@
 using SocialCapital.Data.Model;
 using System.Linq;
 using System.Threading.Tasks;
+using SocialCapital.Data.Managers;
+using Ninject;
 
 namespace SocialCapital.ViewModels
 {
 	public class ModificationVM : ViewModelBase
 	{
+		readonly ContactManager contactManager;
+
 		public ModificationVM (ContactModification modification)
-		{
-			var contact = Database.GetContact (modification.ContactId);
+		{			
+			this.contactManager = App.Container.Get<ContactManager> ();
+
+			var contact = contactManager.GetContact (modification.ContactId);
 			ContactName = contact.DisplayName;
 			Modification = modification;
 		}

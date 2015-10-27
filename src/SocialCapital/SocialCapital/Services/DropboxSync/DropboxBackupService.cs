@@ -136,9 +136,6 @@ namespace SocialCapital.Services.DropboxSync
 				// download backup file to db path 
 				dropboxService.DownloadFile(backup.Name, dbPath);
 
-				// time to let filesystem save the file correctly
-				//Task.Delay (AfterRestoreDelay);
-
 				databaseService.InitDatabase ();
 
 				settings.SaveValue (SettingsRestoreTime, DateTime.Now);

@@ -56,12 +56,12 @@ namespace SocialCapital
 				// D.
 				// Less than 2 hours ago.
 				if (hourDiff == 1 || hourDiff == 21)
-					return hourDiff + " час";
+					return hourDiff + " час назад";
 				else if (hourDiff == 2 || hourDiff == 3 || hourDiff == 4 ||
 				         hourDiff == 22 || hourDiff == 23)
-					return hourDiff + " часа";
+					return hourDiff + " часа назад";
 				else
-					return hourDiff + " часов";
+					return hourDiff + " часов назад";
 			}
 
 			// 6.

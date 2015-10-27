@@ -260,11 +260,29 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Удаление.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить.
         /// </summary>
         internal static string DeleteButtonText {
             get {
                 return ResourceManager.GetString("DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалено.
+        /// </summary>
+        internal static string DeletedContactCountLabel {
+            get {
+                return ResourceManager.GetString("DeletedContactCountLabel", resourceCulture);
             }
         }
         
@@ -706,6 +724,15 @@ namespace SocialCapital {
         internal static string SummaryMenuItemTitle {
             get {
                 return ResourceManager.GetString("SummaryMenuItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы уверены, что хотите удалить контакт.
+        /// </summary>
+        internal static string SureToDeleteContactQuestion {
+            get {
+                return ResourceManager.GetString("SureToDeleteContactQuestion", resourceCulture);
             }
         }
         

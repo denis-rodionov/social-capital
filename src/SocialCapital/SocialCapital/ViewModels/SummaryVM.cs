@@ -19,9 +19,10 @@ namespace SocialCapital.ViewModels
 
 		private void Init()
 		{
-			NotProcessedContacts = contactManager.GetContacts (c => c.GroupId != null).Count ();
+			NotProcessedContacts = contactManager.GetContacts (c => c.GroupId == null).Count ();
 			TotalContactsCount = contactManager.AllContacts .Count ();
 			ProcessedContacts = TotalContactsCount - NotProcessedContacts;
+			DeletedCount = contactManager.GetDeleted ().Count();
 		}
 
 		#endregion
@@ -33,6 +34,8 @@ namespace SocialCapital.ViewModels
 		public int ProcessedContacts { get; set; }
 
 		public int TotalContactsCount { get; set; }
+
+		public int DeletedCount { get; set; }
 
 		#endregion
 	}

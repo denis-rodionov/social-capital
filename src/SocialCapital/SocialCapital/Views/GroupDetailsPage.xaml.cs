@@ -35,7 +35,7 @@ namespace SocialCapital.Views
 
 			var page = new ContactPickerPage (contactList, OnDone);
 
-			Navigation.PushModalAsync (page);
+			Navigation.PushModalAsync (page, false);
 		}
 
 		private void OnDone(IEnumerable<Contact> seletedContacts)

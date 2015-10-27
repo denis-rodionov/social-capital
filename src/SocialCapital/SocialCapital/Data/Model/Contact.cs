@@ -33,6 +33,8 @@ namespace SocialCapital.Data.Model
 
 		public int? GroupId { get; set; }
 
+		public DateTime? DeleteTime { get; set; }
+
 		#region Navigation Properties
 
 		[Ignore]

@@ -19,7 +19,15 @@ namespace SocialCapital.ViewModels
 {
 	public class ContactVM : ViewModelBase
 	{
+		#region Events
+
+		public event Action<ContactVM> Deleted;
+
+		#endregion
+
 		private static ImageSource anonimusPhoto = null;
+
+		private readonly ContactManager contactManager;
 
 		/// <summary>
 		/// Original copy of the contact
@@ -35,6 +43,8 @@ namespace SocialCapital.ViewModels
 		public ContactVM (Contact contact)
 		{
 			//var timing = Timing.Start ("ContactVM.Constructor");
+
+			contactManager = App.Container.Get<ContactManager> ();
 
 			if (contact == null)
 				throw new ArgumentException ();
@@ -202,15 +212,24 @@ namespace SocialCapital.ViewModels
 
 		public void Save()
 		{
-			Database.SaveContactInfo (SourceContact);
+			contactManager.SaveContactInfo (SourceContact);
 			App.Container.Get<ContactTagsManager>().SaveContactTags (Tags.Tags, SourceContact.Id);
 			Tags = null;
 		}
 
 		public void Reload()
 		{
-			SourceContact = Database.GetContact (SourceContact.Id);
+			SourceContact = contactManager.GetContact (SourceContact.Id);
 			Tags = null;
+		}
+
+		public void DeleteContact()
+		{
+			SourceContact.DeleteTime = DateTime.Now;
+			contactManager.SaveContactInfo (SourceContact);
+			var deletedHandle = Deleted;
+			if (deletedHandle != null)
+				deletedHandle (this);
 		}
 
 		public override string ToString ()

@@ -29,7 +29,7 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		protected ContactManager Database { get { return App.Container.Get<ContactManager> (); 	}}
+
 
 	}
 }

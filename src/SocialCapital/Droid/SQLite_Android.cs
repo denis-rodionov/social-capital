@@ -22,6 +22,8 @@ namespace SocialCapital.Droid
 			string documentsPath = System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal);
 			var path = Path.Combine(documentsPath, sqliteFilename);
 
+			var file = new FileInfo (path);
+
 			var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid ();
 			var connection = new SQLite.Net.SQLiteConnection (platform, path, false);
 

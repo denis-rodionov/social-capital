@@ -23,9 +23,9 @@ namespace SocialCapital.ViewModels
 			var timing = Timing.Start ("ContactListVM constructor");
 
 			var manager = App.Container.Get<ContactManager> ();
-			var contacts = manager.GetContacts(whereClause);
+			var contactModels = manager.GetContacts (whereClause).ToList ();
 
-			FilteredContacts = new ObservableCollection<ContactVM> (contacts.Select(c => new ContactVM(c)));
+			contacts = new List<ContactVM> (contactModels.Select(c => new ContactVM(c)));
 			SelectCommand = new Command (OnSelectCommandExecuted);
 
 			timing.Finish (LogLevel.Trace);
@@ -38,14 +38,13 @@ namespace SocialCapital.ViewModels
 		/// <summary>
 		/// Contact list
 		/// </summary>
-		IEnumerable<ContactVM> contacts;
+		List<ContactVM> contacts;
 		public IEnumerable<ContactVM> AllContacts{
 			get { return contacts; }
 		}
 
 		public IEnumerable<ContactVM> FilteredContacts { 
 			get { return contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(Filter.ToLowerInvariant())); }
-			set { SetProperty (ref contacts, value); }
 		}
 
 		public int ContactsCount {
@@ -89,6 +88,23 @@ namespace SocialCapital.ViewModels
 				if (ids.Contains(contact.SourceContact.Id))
 					contact.Selected = true;
 		}
+
+		#region callbacks
+
+		public void OnDeletedContact(ContactVM contact)
+		{
+			try
+			{
+				contacts.Remove(contact);
+				OnPropertyChanged("FilteredContacts");
+			}
+			catch (Exception ex)
+			{
+				Log.GetLogger ().Log (ex);
+			}
+		}
+
+		#endregion
 
 	}
 }

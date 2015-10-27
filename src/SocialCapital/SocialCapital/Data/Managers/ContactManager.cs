@@ -35,7 +35,12 @@ namespace SocialCapital.Data.Managers
 
 		public IEnumerable<Contact> GetContacts(Func<Contact, bool> whereClause)
 		{
-			return GetList (whereClause);
+			return GetList (c => c.DeleteTime == null).Where (whereClause);
+		}
+
+		public IEnumerable<Contact> GetDeleted()
+		{
+			return GetList (c => c.DeleteTime != null);
 		}
 
 		#endregion

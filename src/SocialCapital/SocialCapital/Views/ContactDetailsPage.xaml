@@ -9,6 +9,7 @@
 			 x:Name="page">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
+		<ToolbarItem Clicked="OnDeleteMenu" Icon="ic_delete_black_36dp.png" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>		

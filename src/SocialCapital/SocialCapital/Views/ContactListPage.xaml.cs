@@ -24,14 +24,15 @@ namespace SocialCapital.Views
 		{
 			var cell = (Cell)sender;
 			var contact = cell.BindingContext as ContactVM;
+			var contactList = BindingContext as ContactListVM;
+
+			contact.Deleted += contactList.OnDeletedContact;
 
 			var detailsContactPage = new ContactDetailsPage () {
 				BindingContext = contact
 			};
 
 			Navigation.PushAsync(detailsContactPage);
-
-			// contact.Reload ();
 		}
 	}
 }
