@@ -29,6 +29,7 @@
 											  Placeholder="{i18n:Translate NoTagsPlaceholder}"/>
 						</ContentView>
 					</ViewCell>
+					<SwitchCell Text="{i18n:Translate FrequentContactLabel}" On="{Binding SourceContact.Frequent}" />
 				</TableSection>
 			</TableRoot>
 		</TableView>

@@ -8,8 +8,8 @@
 			 Title="{Binding FullName}"
 			 x:Name="page">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
 		<ToolbarItem Clicked="OnDeleteMenu" Icon="ic_delete_black_36dp.png" />
+		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>		
@@ -26,7 +26,7 @@
 			</StackLayout>
 
 
-			<!-- Action buttons -->
+			<!-- Communication buttons -->
 
 			<StackLayout Orientation="Horizontal" HorizontalOptions="Center">						
 				<Button Image="ic_phone_black_36dp.png"
@@ -43,6 +43,7 @@
 						CommandParameter="{x:Reference page}" />
 			</StackLayout>
 
+			<!-- Other actions -->
 			<Button Text="{i18n:Translate LogCommunicationAction}"
 					Command="{Binding LogCommunication}"
 					CommandParameter="{x:Reference page}"

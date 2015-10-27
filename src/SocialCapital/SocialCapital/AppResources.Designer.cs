@@ -359,6 +359,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Частый контакт.
+        /// </summary>
+        internal static string FrequentContactLabel {
+            get {
+                return ResourceManager.GetString("FrequentContactLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         internal static string FullNameLabel {

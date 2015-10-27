@@ -374,4 +374,9 @@
 		<value>Вы уверены, что хотите удалить контакт</value>
 		<comment>Запрос подтверждения на удаление контакта</comment>
 	</data>
+	<data name="FrequentContactLabel" xml:space="preserve">
+		<value>Частый контакт</value>
+		<comment>Частый контакт - человек, с кем контактируешь регулярно. Не трубуются напоминания.</comment>
+	</data>
+
 </root>

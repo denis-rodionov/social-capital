@@ -13,6 +13,8 @@ namespace SocialCapital.Data.Model
 {
 	public class Contact : IHaveId, IEquatable<Contact>
 	{
+		#region DB properties
+
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
@@ -31,9 +33,36 @@ namespace SocialCapital.Data.Model
 		/// </summary>
 		public string AddressBookId { get; set; }
 
+		/// <summary>
+		/// Null - no group assigned.
+		/// 0 - incorrect value
+		/// </summary>
+		/// <value>The group identifier.</value>
 		public int? GroupId { get; set; }
 
+		/// <summary>
+		/// If not null - contact is deleted: non show in contact list.
+		/// But still it is stored in db
+		/// </summary>
+		/// <value>The delete time.</value>
 		public DateTime? DeleteTime { get; set; }
+
+		/// <summary>
+		/// Means that you see the person often so you do not need to log meeting him or her
+		/// </summary>
+		public bool Frequent { get; set; }
+
+		/// <summary>
+		/// Time of the last update from device address book (or create)
+		/// </summary>
+		//public DateTime AddressBookUpdateTime { get; set; }
+
+		/// <summary>
+		/// CreateTime
+		/// </summary>
+		public DateTime CreateTime { get; set; } 
+
+		#endregion
 
 		#region Navigation Properties
 
@@ -68,21 +97,6 @@ namespace SocialCapital.Data.Model
 		public CommunicationHistory LastCommunication {
 			get { return App.Container.Get<CommunicationManager> ().GetLastCommunication (Id); }
 		}
-
-		#endregion
-
-		/// <summary>
-		/// Time of the last update from device address book (or create)
-		/// </summary>
-		//public DateTime AddressBookUpdateTime { get; set; }
-
-		/// <summary>
-		/// CreateTime
-		/// </summary>
-		public DateTime CreateTime { get; set; } 
-
-		#region No database properties
-
 
 		#endregion
 
