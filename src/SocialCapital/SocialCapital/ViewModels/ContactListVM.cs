@@ -44,7 +44,13 @@ namespace SocialCapital.ViewModels
 		}
 
 		public IEnumerable<ContactVM> FilteredContacts { 
-			get { return contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(Filter.ToLowerInvariant())); }
+			get { 
+				var filter = Filter.ToLowerInvariant ();
+				var byName = contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(filter));
+				var byTags = contacts.Where (c => c.Tags.TagList.ToLowerInvariant ().Contains (filter));
+
+				return byName.Union(byTags);
+			}
 		}
 
 		public int ContactsCount {

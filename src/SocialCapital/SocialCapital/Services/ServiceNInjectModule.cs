@@ -37,7 +37,7 @@ namespace SocialCapital.Services
 				ctx => ctx.Kernel.Get<IEventProvider> ("BackupTimer"));
 
 			Bind<IEventProvider> ().To<TimerEventProvider> ().Named ("BackupTimer")
-				.WithConstructorArgument (typeof(TimeSpan), TimeSpan.FromSeconds (20))
+				.WithConstructorArgument (typeof(TimeSpan), TimeSpan.FromSeconds (60))
 				.WithConstructorArgument (typeof(DateTime), 
 					ctx => ctx.Kernel.Get<Settings> ().GetConfigValue<DateTime> (DropboxBackupService.SettingsLastBackupKey));
 		}
