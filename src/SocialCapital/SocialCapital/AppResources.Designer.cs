@@ -152,6 +152,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Назначить группу.
+        /// </summary>
+        internal static string AssignGroupAction {
+            get {
+                return ResourceManager.GetString("AssignGroupAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Резервное копирование.
         /// </summary>
         internal static string BackupSectionHeader {
@@ -184,6 +193,15 @@ namespace SocialCapital {
         internal static string CancelButton {
             get {
                 return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выберите группу.
+        /// </summary>
+        internal static string ChooseGroup {
+            get {
+                return ResourceManager.GetString("ChooseGroup", resourceCulture);
             }
         }
         
@@ -260,15 +278,6 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Удаление.
-        /// </summary>
-        internal static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Удалить.
         /// </summary>
         internal static string DeleteButtonText {
@@ -283,6 +292,24 @@ namespace SocialCapital {
         internal static string DeletedContactCountLabel {
             get {
                 return ResourceManager.GetString("DeletedContactCountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удаление.
+        /// </summary>
+        internal static string DeleteNoun {
+            get {
+                return ResourceManager.GetString("DeleteNoun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалить.
+        /// </summary>
+        internal static string DeleteVerb {
+            get {
+                return ResourceManager.GetString("DeleteVerb", resourceCulture);
             }
         }
         

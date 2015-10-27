@@ -14,6 +14,7 @@ using SocialCapital.Common;
 using Ninject;
 using SocialCapital.Data.Managers;
 using SocialCapital.Common.FormsMVVM;
+using System.Threading.Tasks;
 
 namespace SocialCapital.ViewModels
 {
@@ -227,9 +228,28 @@ namespace SocialCapital.ViewModels
 		{
 			SourceContact.DeleteTime = DateTime.Now;
 			contactManager.SaveContactInfo (SourceContact);
+
 			var deletedHandle = Deleted;
 			if (deletedHandle != null)
 				deletedHandle (this);
+		}
+
+		public ICommand AssignToGroup { get { return new Command (AssignToGroupExecute); } }
+		public async void AssignToGroupExecute ()
+		{
+			var groupManager = App.Container.Get<GroupsManager> ();
+			var dialogService = App.Container.Get<DialogService> ();
+
+			var groupList = groupManager.GetAllGroups (g => true);
+			var groupName = await dialogService.DisplayActionSheet (AppResources.ChooseGroup, AppResources.CancelButton, null, groupList.Select (g => g.Name).ToArray());
+
+			if (groupName != null)
+			{
+				var group = groupList.Single (g => g.Name == groupName);
+
+				SourceContact.GroupId = group.Id;
+				contactManager.SaveContactInfo (SourceContact);
+			}
 		}
 
 		public override string ToString ()

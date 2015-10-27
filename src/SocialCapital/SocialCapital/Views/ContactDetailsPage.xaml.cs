@@ -29,7 +29,7 @@ namespace SocialCapital.Views
 
 			var dialogService = App.Container.Get<IDialogProvider> ();
 
-			var yes = await dialogService.DisplayAlert (AppResources.Delete, AppResources.SureToDeleteContactQuestion, AppResources.Yes, AppResources.No);
+			var yes = await dialogService.DisplayAlert (AppResources.DeleteNoun, AppResources.SureToDeleteContactQuestion, AppResources.Yes, AppResources.No);
 
 			if (yes)
 			{

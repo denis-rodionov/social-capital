@@ -366,9 +366,13 @@
 		<value>Удалено</value>
 		<comment>Надпись на сводке по контактам</comment>
 	</data>
-	<data name="Delete" xml:space="preserve">
+	<data name="DeleteNoun" xml:space="preserve">
 		<value>Удаление</value>
-		<comment>Перевод</comment>
+		<comment>Существительное: удаление</comment>
+	</data>
+	<data name="DeleteVerb" xml:space="preserve">
+		<value>Удалить</value>
+		<comment>Глагол: удалить</comment>
 	</data>
 	<data name="SureToDeleteContactQuestion" xml:space="preserve">
 		<value>Вы уверены, что хотите удалить контакт</value>
@@ -377,6 +381,14 @@
 	<data name="FrequentContactLabel" xml:space="preserve">
 		<value>Частый контакт</value>
 		<comment>Частый контакт - человек, с кем контактируешь регулярно. Не трубуются напоминания.</comment>
+	</data>
+	<data name="AssignGroupAction" xml:space="preserve">
+		<value>Назначить группу</value>
+		<comment>Кнопка или меню для перемещения контакта в группу</comment>
+	</data>
+	<data name="ChooseGroup" xml:space="preserve">
+		<value>Выберите группу</value>
+		<comment>Кнопка или меню для перемещения контакта в группу</comment>
 	</data>
 
 </root>
