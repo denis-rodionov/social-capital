@@ -81,6 +81,20 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		string groupName;
+		public string GroupName { 
+			get {
+				if (groupName == null)
+				{
+					var group = SourceContact.Group;
+					if (group != null)
+						groupName = SourceContact.Group.Name;
+				}
+				return groupName;
+			}
+			set { SetProperty (ref groupName, value); }
+		}
+
 		public ImageSource PhotoImage {
 			get {
 				if (SourceContact.Thumbnail == null || SourceContact.Thumbnail.Length == 0)
@@ -249,6 +263,7 @@ namespace SocialCapital.ViewModels
 
 				SourceContact.GroupId = group.Id;
 				contactManager.SaveContactInfo (SourceContact);
+				GroupName = groupName;
 			}
 		}
 

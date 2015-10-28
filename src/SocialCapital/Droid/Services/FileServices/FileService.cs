@@ -17,6 +17,9 @@ namespace SocialCapital.Droid.Services.FileServices
 
 		public void Delete (string path)
 		{
+//			var dirPath = Path.GetDirectoryName (path);
+//			var files = Directory.EnumerateFiles (dirPath);
+
 			System.IO.File.Delete (path);
 		}
 

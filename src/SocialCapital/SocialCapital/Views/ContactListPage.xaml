@@ -11,7 +11,7 @@
 			<SearchBar Text="{Binding Filter}" />
 			<ListView x:Name="contactListView" 
 				      ItemsSource = "{Binding FilteredContacts}"
-				      RowHeight="60">
+				      RowHeight="70">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 					<!--
@@ -23,9 +23,9 @@
 								    DetailColor="Gray" /> -->
 						<ViewCell Tapped="OnItemSelected">
 							<ViewCell.ContextActions>
-								<MenuItem Text="{Binding FullName}"
+								<MenuItem Text="{i18n:Translate AssignGroupAction}"
 										  Icon="ic_people_black_36dp.png"
-										  Command="{Binding AssignToGroup}"
+										  Command="{Binding Path=AssignToGroup}"
 										  IsDestructive="false" />
 								<!--
 								<MenuItem Text="{i18n:Translate DeleteVerb}"
@@ -38,6 +38,7 @@
 								<Image Source="{Binding PhotoImage}" />
 								<StackLayout Orientation="Vertical">
 									<Label Text="{Binding FullName}" />
+									<Label Text="{Binding SourceContact.Group.Name}" />
 									<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" />
 								</StackLayout>
 							</StackLayout>

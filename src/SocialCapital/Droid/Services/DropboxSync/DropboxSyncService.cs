@@ -26,7 +26,9 @@ namespace SocialCapital.Droid.Services.DropboxSync
 			get 
 			{ 
 				if (manager == null)
+				{
 					manager = DBAccountManager.GetInstance (Forms.Context.ApplicationContext, AppKey, AppSecrect); 
+				}
 
 				return manager;
 			}
@@ -217,6 +219,8 @@ namespace SocialCapital.Droid.Services.DropboxSync
 
 			if (filesystem == null)
 				throw new DropboxException ("Filesystem is unavailable");
+
+			filesystem.MaxFileCacheSize = 0;
 
 			return filesystem;
 		}

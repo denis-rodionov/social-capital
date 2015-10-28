@@ -48,8 +48,9 @@ namespace SocialCapital.ViewModels
 				var filter = Filter.ToLowerInvariant ();
 				var byName = contacts.Where(c => c.SourceContact.DisplayName.ToLowerInvariant().Contains(filter));
 				var byTags = contacts.Where (c => c.Tags.TagList.ToLowerInvariant ().Contains (filter));
+				var byGroups = contacts.Where (c => c.GroupName != null && c.GroupName.ToLowerInvariant ().Contains (filter));
 
-				return byName.Union(byTags);
+				return byName.Union (byTags).Union (byGroups);
 			}
 		}
 
