@@ -35,8 +35,9 @@
 								-->
 							</ViewCell.ContextActions>
 							<StackLayout Orientation="Horizontal">
-								<Image Source="{Binding PhotoImage}" />
-								<StackLayout Orientation="Vertical">
+								<Image Source="{Binding PhotoImage}"
+									   WidthRequest="60" />
+								<StackLayout Orientation="Vertical" >
 									<Label Text="{Binding FullName}" />
 									<Label Text="{Binding SourceContact.Group.Name}" />
 									<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" />

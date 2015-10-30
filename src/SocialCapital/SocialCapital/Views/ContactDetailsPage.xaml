@@ -32,15 +32,20 @@
 				<Button Image="ic_phone_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBool}}"
 						Command="{Binding CallCommand}"
-						CommandParameter="{x:Reference page}" />
+						CommandParameter="{x:Reference page}"
+						WidthRequest="60" />
 				<Button Image="ic_textsms_black_36dp.png"
 						IsVisible="{Binding Path=Phones, Converter={StaticResource ListToBool}}"	
 						Command="{Binding SmSWriteCommand}"
-						CommandParameter="{x:Reference page}" />
+						CommandParameter="{x:Reference page}"
+						HorizontalOptions="Center"
+						WidthRequest="60" />
 				<Button Image="ic_email_black_36dp.png" 
 						IsVisible="{Binding Path=Emails, Converter={StaticResource ListToBool}}"
 						Command="{Binding WriteEmailCommand}"
-						CommandParameter="{x:Reference page}" />
+						CommandParameter="{x:Reference page}"
+						HorizontalOptions="Center"
+						WidthRequest="60" />
 			</StackLayout>
 
 			<!-- Other actions -->
