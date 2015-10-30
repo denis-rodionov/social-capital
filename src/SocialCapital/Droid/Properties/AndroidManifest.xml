@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.rodionov.soccap" android:installLocation="internalOnly">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
 
-	<application android:label="SocialCapital" android:icon="@drawable/icon">
+	<application android:label="SocialCapital" android:icon="@drawable/icon" android:theme="@style/MyTheme">
 		<activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
 		<activity
 		  android:name="com.dropbox.client2.android.AuthActivity"

@@ -13,7 +13,6 @@ namespace SocialCapital.Droid
 {
 	[Activity (Label = "@string/app_name", 
 			   Icon = "@drawable/icon", 
-		Theme = "@android:style/Theme.Material.Light",
 			   MainLauncher = true, 
 			   ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity :  global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
