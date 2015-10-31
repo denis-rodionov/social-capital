@@ -106,6 +106,7 @@
     <Compile Include="Services\DropboxSync\NotLinkedDropboxException.cs" />
     <Compile Include="Services\DropboxSync\DropboxException.cs" />
     <Compile Include="Services\FileServices\FileService.cs" />
+    <Compile Include="Renderers\ImageCircleRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -119,6 +120,7 @@
     <Folder Include="Services\DropboxSync\" />
     <Folder Include="Services\FileServices\" />
     <Folder Include="Resources\values-v21\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

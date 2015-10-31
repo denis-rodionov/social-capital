@@ -35,7 +35,7 @@
 								-->
 							</ViewCell.ContextActions>
 							<StackLayout Orientation="Horizontal">
-								<Image Source="{Binding PhotoImage}"
+								<controls:ImageCircle Source="{Binding PhotoImage}"
 									   WidthRequest="60" />
 								<StackLayout Orientation="Vertical" >
 									<Label Text="{Binding FullName}" />
