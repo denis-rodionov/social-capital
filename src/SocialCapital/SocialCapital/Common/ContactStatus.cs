@@ -11,8 +11,8 @@ namespace SocialCapital.Common
 	public class ContactStatus 
 	{
 		readonly Color InactiveColor = Color.Silver;
-		readonly Color GreenColor = new Color(0, 100, 0);
-		readonly Color RedColor = new Color(100, 0, 0);
+		readonly Color GreenColor;
+		readonly Color RedColor;
 		const double InactiveStatus = -1;
 		const double RedStatus = 0;
 		const double GreenStatus = 1;
@@ -20,6 +20,8 @@ namespace SocialCapital.Common
 		public ContactStatus (Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
 		{
 			RawStatus = CalculateRawStatus (contact, frequency, lastCommunication);
+			GreenColor = Color.FromHex ("#33CC33");
+			RedColor = new Color (100, 0, 0);
 		}
 
 		protected virtual double CalculateRawStatus(Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
@@ -66,9 +68,9 @@ namespace SocialCapital.Common
 				if (RawStatus == InactiveStatus)
 					return InactiveColor;
 
-				var r = RedColor.R + (int)((GreenColor.R - RedColor.R) * RawStatus);
-				var g = RedColor.G + (int)((GreenColor.G - RedColor.G) * RawStatus);
-				var b = RedColor.B + (int)((GreenColor.B - RedColor.B) * RawStatus);
+				var r = RedColor.R + ((GreenColor.R - RedColor.R) * RawStatus);
+				var g = RedColor.G + ((GreenColor.G - RedColor.G) * RawStatus);
+				var b = RedColor.B + ((GreenColor.B - RedColor.B) * RawStatus);
 
 				return Color.FromRgb(r, g, b);
 			}

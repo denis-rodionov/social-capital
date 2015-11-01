@@ -14,7 +14,7 @@
 
 			<!-- Source="{Binding PhotoImage}" -->
 			<controls:ImageCircle x:Name = "ContactPhoto"
-				   				  WidthRequest="60" />
+				   				  WidthRequest="70" />
 
 			<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" >
 				<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
