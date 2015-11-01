@@ -10,7 +10,7 @@ namespace SocialCapital.Common
 	/// </summary>
 	public class ContactStatus 
 	{
-		readonly Color InactiveColor = new Color (50, 50, 50);
+		readonly Color InactiveColor = Color.Silver;
 		readonly Color GreenColor = new Color(0, 100, 0);
 		readonly Color RedColor = new Color(100, 0, 0);
 		const double InactiveStatus = -1;

@@ -11,18 +11,13 @@
 			<SearchBar Text="{Binding Filter}" />
 			<ListView x:Name="contactListView" 
 				      ItemsSource = "{Binding FilteredContacts}"
-				      RowHeight="70">
+				      RowHeight="70"
+				      SeparatorVisibility="None"
+				      SelectedItem="OnListViewSelected">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-					<!--
-						<ImageCell  Tapped="OnItemSelected"
-								    ImageSource="{Binding PhotoImage}" 
-								    Text="{Binding FullName}" 
-								    Detail="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}"
-								    TextColor="Black"
-								    DetailColor="Gray" /> -->
-						<ViewCell Tapped="OnItemSelected">
-							<ViewCell.ContextActions>
+						<controls:ContactCell Tapped="OnItemSelected">
+							<controls:ContactCell.ContextActions>
 								<MenuItem Text="{i18n:Translate AssignGroupAction}"
 										  Icon="ic_people_black_36dp.png"
 										  Command="{Binding Path=AssignToGroup}"
@@ -33,17 +28,33 @@
 										  Command="{DeleteContact}"
 										  IsDestructive="true" />
 								-->
-							</ViewCell.ContextActions>
-							<StackLayout Orientation="Horizontal">
-								<controls:ImageCircle Source="{Binding PhotoImage}"
-									   WidthRequest="60" />
-								<StackLayout Orientation="Vertical" >
-									<Label Text="{Binding FullName}" />
-									<Label Text="{Binding SourceContact.Group.Name}" />
-									<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" />
+							</controls:ContactCell.ContextActions>
+
+							<ContentView Padding="5,2,5,2">
+								<StackLayout Orientation="Horizontal" BackgroundColor="White">
+									<BoxView Color="{Binding ContactStatus.Color}" 
+											 VerticalOptions="FillAndExpand"
+											 WidthRequest="8" />
+									<controls:ImageCircle Source="{Binding PhotoImage}"
+										   WidthRequest="60" />
+									<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" >
+										<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+											<Label Text="{Binding FullName}" FontSize="16" />
+											<ContentView Padding="2,2,2,2">
+												<Label Text="{Binding SourceContact.Group.Name}" 
+													   BackgroundColor="#1696FF"
+													   HorizontalOptions="EndAndExpand"
+													   TextColor="White" />
+											</ContentView>
+										</StackLayout>
+										<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" 
+											   TextColor="Gray" />
+											   
+									</StackLayout>
 								</StackLayout>
-							</StackLayout>
-						</ViewCell>
+							</ContentView>
+
+						</controls:ContactCell>
 					<!--
 						<ViewCell>
 

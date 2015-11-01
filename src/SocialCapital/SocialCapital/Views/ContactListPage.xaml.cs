@@ -26,6 +26,8 @@ namespace SocialCapital.Views
 			var contact = cell.BindingContext as ContactVM;
 			var contactList = BindingContext as ContactListVM;
 
+			contactListView.SelectedItem = null;
+
 			contact.Deleted += contactList.OnDeletedContact;
 
 			var detailsContactPage = new ContactDetailsPage () {
@@ -33,6 +35,13 @@ namespace SocialCapital.Views
 			};
 
 			Navigation.PushAsync(detailsContactPage);
+		}
+
+		public void OnListViewSelected(object sender, SelectedItemChangedEventArgs args)
+		{
+			if (args.SelectedItem == null) return; // don't do anything if we just de-selected the row
+			// do something with e.SelectedItem
+			((ListView)sender).SelectedItem = null; // de-select the row
 		}
 	}
 }
