@@ -24,7 +24,7 @@
 					<!-- Text="{Binding FullName}" -->
 					<Label x:Name="ContactName" FontSize="16" />
 					<ContentView x:Name = "GroupNameElement"
-								 Padding="2,1,2,1"
+								 Padding="2,0,2,0"
 								 BackgroundColor="#1696FF"
 								 IsVisible="false">
 
@@ -40,6 +40,10 @@
 					   TextColor="Gray" />
 					   
 			</StackLayout>
+
+			<!-- Icon for event: Birthday, ToDo -->
+			<Image Source="ic_insert_chart_black_36dp.png" IsVisible="true" VerticalOptions="CenterAndExpand" />
+
 		</StackLayout>
 	</ContentView>
 </controls:FastCell>

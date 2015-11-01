@@ -33,7 +33,7 @@ namespace SocialCapital.Common
 				return InactiveStatus;
 
 			if (lastCommunication == null)
-				return (GreenStatus - RedStatus) / 2;
+				return (GreenStatus - RedStatus) / 2;	// initial status
 
 			var passedSinceCommunication = (DateTime.Now - lastCommunication.Time).TotalDays;
 			var middlePoint = frequency.Period / 2;
