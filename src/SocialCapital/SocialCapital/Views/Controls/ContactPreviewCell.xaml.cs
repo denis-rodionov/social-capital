@@ -27,9 +27,17 @@ namespace SocialCapital.Views.Controls
 				{
 					GroupName.Text = vm.GroupName;
 					GroupNameElement.IsVisible = true;
-				}
+				} else
+					GroupNameElement.IsVisible = false;
 				
-				TagList.Text = vm.Tags.TagList;
+				//TagList.Text = vm.Tags.TagList;
+				if (vm.Tags != null && vm.Tags.Tags.Count != 0)
+				{
+					TagsControl.Tags = vm.Tags.Tags;
+					TagsControl.IsVisible = true;
+				} else
+					TagsControl.IsVisible = false;
+
 			}
 		}
 	}

@@ -35,9 +35,10 @@
 					</ContentView>
 				</StackLayout>
 
+				<!-- Tag List -->
 				<!-- Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" -->
-				<Label x:Name = "TagList"
-					   TextColor="Gray" />
+				<!--<Label x:Name = "TagList" TextColor="Gray" />-->
+				<controls:TagList x:Name="TagsControl" LayoutType="HorizontalGrid" IsVisible="false" />
 					   
 			</StackLayout>
 
