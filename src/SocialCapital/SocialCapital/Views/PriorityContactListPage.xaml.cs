@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using SocialCapital.Data.Model;
+using SocialCapital.Logging;
+using SocialCapital.Common;
 
 namespace SocialCapital.Views
 {
@@ -11,8 +13,12 @@ namespace SocialCapital.Views
 	{
 		public PriorityContactListPage (PriorityContactListVM vm)
 		{
+			var timing = Timing.Start ("Priority list init");
+
 			InitializeComponent ();
 			BindingContext = vm;
+
+			timing.Finish (LogLevel.Debug);
 		}
 
 		private void OnItemAppearing(object sender, ItemVisibilityEventArgs args)
@@ -28,6 +34,13 @@ namespace SocialCapital.Views
 			var contact = (sender as Cell).BindingContext;
 			var page = new ContactDetailsPage() { BindingContext = contact };
 			Navigation.PushAsync(page);
+		}
+
+		public void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+		{
+			if (args.SelectedItem == null) return; // don't do anything if we just de-selected the row
+			// do something with e.SelectedItem
+			((ListView)sender).SelectedItem = null; // de-select the row
 		}
 	}
 }

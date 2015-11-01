@@ -2,19 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.PriorityContactListPage">
 	<ContentPage.Content>
-		<ListView ItemsSource="{Binding Items}" ItemAppearing="OnItemAppearing">
+		<ListView ItemsSource="{Binding Items}" 
+				  ItemAppearing="OnItemAppearing"
+				  RowHeight="60"
+				  ItemSelected="OnItemSelected">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell Tapped="OnItemTapped">
-						<StackLayout Orientation="Horizontal">
-							<BoxView Color="{Binding ContactStatus.Color}" />
-							<StackLayout Orientation="Vertical">
-								<Label Text="{Binding FullName}" />
-								<!--<Label Text="{Binding Tags.TagList}" />-->
-							</StackLayout>
-						</StackLayout>
+						<controls:ContactPreview />
 					</ViewCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>

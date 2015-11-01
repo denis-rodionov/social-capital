@@ -3,7 +3,6 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 			 x:Class="SocialCapital.Views.ContactListPage"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
-			 xmlns:xlab="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			 Title = "{i18n:Translate ContactListTitle}">
 	<ContentPage.Content>
@@ -30,29 +29,7 @@
 								-->
 							</controls:ContactCell.ContextActions>
 
-							<ContentView Padding="5,2,5,2">
-								<StackLayout Orientation="Horizontal" BackgroundColor="White">
-									<BoxView Color="{Binding ContactStatus.Color}" 
-											 VerticalOptions="FillAndExpand"
-											 WidthRequest="8" />
-									<controls:ImageCircle Source="{Binding PhotoImage}"
-										   WidthRequest="60" />
-									<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" >
-										<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-											<Label Text="{Binding FullName}" FontSize="16" />
-											<ContentView Padding="2,2,2,2">
-												<Label Text="{Binding SourceContact.Group.Name}" 
-													   BackgroundColor="#1696FF"
-													   HorizontalOptions="EndAndExpand"
-													   TextColor="White" />
-											</ContentView>
-										</StackLayout>
-										<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" 
-											   TextColor="Gray" />
-											   
-									</StackLayout>
-								</StackLayout>
-							</ContentView>
+							<controls:ContactPreview />
 
 						</controls:ContactCell>
 					<!--
