@@ -1,31 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<controls:FastCell xmlns="http://xamarin.com/schemas/2014/forms" 
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			 x:Class="SocialCapital.Views.Controls.ContactPreview"
-			 Padding="5,2,5,2">
-	<ContentView.Content>
+			 x:Class="SocialCapital.Views.Controls.ContactPreviewCell"
+			 >
+	<ContentView Padding="5,2,5,2">
 		<StackLayout Orientation="Horizontal" BackgroundColor="White">
-			<BoxView Color="{Binding ContactStatus.Color}" 
+			<!-- Color="{Binding ContactStatus.Color}" -->
+			<BoxView x:Name = "ColorStatus"					 
 					 VerticalOptions="FillAndExpand"
 					 WidthRequest="8" />
-			<controls:ImageCircle Source="{Binding PhotoImage}"
-				   WidthRequest="60" />
+
+			<!-- Source="{Binding PhotoImage}" -->
+			<controls:ImageCircle x:Name = "ContactPhoto"
+				   				  WidthRequest="60" />
+
 			<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" >
 				<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-					<Label Text="{Binding FullName}" FontSize="16" />
+
+					<!-- Text="{Binding FullName}" -->
+					<Label x:Name="ContactName" FontSize="16" />
 					<ContentView Padding="2,2,2,2">
-						<Label Text="{Binding SourceContact.Group.Name}" 
+
+						<!-- Text="{Binding SourceContact.Group.Name}"  -->
+						<Label x:Name = "GroupName"
 							   BackgroundColor="#1696FF"
 							   HorizontalOptions="EndAndExpand"
 							   TextColor="White" />
 					</ContentView>
 				</StackLayout>
-				<Label Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" 
+
+				<!-- Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" -->
+				<Label x:Name = "TagList"
 					   TextColor="Gray" />
 					   
 			</StackLayout>
 		</StackLayout>
-	</ContentView.Content>
-</ContentView>
+	</ContentView>
+</controls:FastCell>

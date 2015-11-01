@@ -8,12 +8,11 @@
 		<ListView ItemsSource="{Binding Items}" 
 				  ItemAppearing="OnItemAppearing"
 				  RowHeight="60"
-				  ItemSelected="OnItemSelected">
+				  ItemSelected="OnItemSelected"
+				  SeparatorVisibility="None">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<ViewCell Tapped="OnItemTapped">
-						<controls:ContactPreview />
-					</ViewCell>
+					<controls:ContactPreviewCell Tapped="OnItemTapped" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

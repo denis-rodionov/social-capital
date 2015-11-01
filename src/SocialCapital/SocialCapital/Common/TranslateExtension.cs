@@ -11,11 +11,12 @@ namespace SocialCapital.Common
 	[ContentProperty ("Text")]
 	public class TranslateExtension : IMarkupExtension
 	{
-		readonly CultureInfo ci;
+		static CultureInfo ci;
 		const string ResourceId = "SocialCapital.AppResources";
 
 		public TranslateExtension() {
-			ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo ();
+			if (ci == null)
+				ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo ();
 		}
 
 		public string Text { get; set; }
