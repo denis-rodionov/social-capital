@@ -22,7 +22,13 @@ namespace SocialCapital.Views.Controls
 				ContactName.Text = vm.FullName;
 				ColorStatus.Color = vm.ContactStatus.Color;
 				ContactPhoto.Source = vm.PhotoImage;
-				GroupName.Text = vm.GroupName;
+
+				if (!string.IsNullOrEmpty (vm.GroupName))
+				{
+					GroupName.Text = vm.GroupName;
+					GroupNameElement.IsVisible = true;
+				}
+				
 				TagList.Text = vm.Tags.TagList;
 			}
 		}

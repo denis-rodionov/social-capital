@@ -6,7 +6,9 @@
 			 x:Class="SocialCapital.Views.Controls.ContactPreviewCell"
 			 >
 	<ContentView Padding="5,2,5,2">
-		<StackLayout Orientation="Horizontal" BackgroundColor="White">
+		<StackLayout Orientation="Horizontal" 
+					 BackgroundColor="White">
+
 			<!-- Color="{Binding ContactStatus.Color}" -->
 			<BoxView x:Name = "ColorStatus"					 
 					 VerticalOptions="FillAndExpand"
@@ -16,16 +18,18 @@
 			<controls:ImageCircle x:Name = "ContactPhoto"
 				   				  WidthRequest="70" />
 
-			<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" >
+			<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
 				<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
 
 					<!-- Text="{Binding FullName}" -->
 					<Label x:Name="ContactName" FontSize="16" />
-					<ContentView Padding="2,2,2,2">
+					<ContentView x:Name = "GroupNameElement"
+								 Padding="2,1,2,1"
+								 BackgroundColor="#1696FF"
+								 IsVisible="false">
 
 						<!-- Text="{Binding SourceContact.Group.Name}"  -->
 						<Label x:Name = "GroupName"
-							   BackgroundColor="#1696FF"
 							   HorizontalOptions="EndAndExpand"
 							   TextColor="White" />
 					</ContentView>
