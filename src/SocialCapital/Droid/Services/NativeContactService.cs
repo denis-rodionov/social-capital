@@ -95,6 +95,11 @@ namespace SocialCapital.Droid.Services
 			return res;
 		}
 
+		private bool FilterServicePhones(string phoneNumber)
+		{
+			return !phoneNumber.Contains ("*");
+		}
+
 		private string[] GetProjections()
 		{
 			string[] projection = {
@@ -260,7 +265,8 @@ namespace SocialCapital.Droid.Services
 						break;
 					case ContactsContract.CommonDataKinds.Phone.ContentItemType:
 						var phone = GetPhone (cursor, resources);
-						Bind ("Phones", phone, contacts, contactId, forContact);
+						if (FilterServicePhones(phone))
+							Bind ("Phones", phone, contacts, contactId, forContact);
 						break;
 					case ContactsContract.CommonDataKinds.Email.ContentItemType:
 						var email = GetEmail (cursor, resources);
