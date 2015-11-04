@@ -38,6 +38,11 @@ namespace SocialCapital.Views.Controls
 				} else
 					TagsControl.IsVisible = false;
 
+				// event icon
+				if (vm.BirthdateToday)
+					EventIcon.Source = ImageSource.FromFile ("dropbox_logo_36dp.png");
+				else
+					EventIcon.Source = null;
 			}
 		}
 	}

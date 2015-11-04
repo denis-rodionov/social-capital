@@ -172,6 +172,20 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref contactStatus, value); }
 		}
 
+		public bool BirthdateToday {
+			get { 
+				if (SourceContact.Birthdate.HasValue)
+				{
+					var month = SourceContact.Birthdate.Value.Month;
+					var day = SourceContact.Birthdate.Value.Day;
+					var today = DateTime.Now;
+					return month == today.Month && day == today.Day;
+				}
+				else
+					return false;
+			}
+		}
+
         #endregion
 
 		#region Commands

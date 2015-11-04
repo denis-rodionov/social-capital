@@ -43,7 +43,7 @@
 			</StackLayout>
 
 			<!-- Icon for event: Birthday, ToDo -->
-			<Image Source="ic_insert_chart_black_36dp.png" IsVisible="true" VerticalOptions="CenterAndExpand" />
+			<Image x:Name="EventIcon" VerticalOptions="CenterAndExpand" />
 
 		</StackLayout>
 	</ContentView>
