@@ -26,7 +26,7 @@ namespace SocialCapital.ViewModels
 			var contactModels = manager.GetContacts (whereClause).ToList ();
 
 			contacts = new List<ContactVM> (contactModels.Select(c => new ContactVM(c)));
-			SelectCommand = new Command (OnSelectCommandExecuted);
+			//SelectCommand = new Command (OnSelectCommandExecuted);
 
 			timing.Finish (LogLevel.Trace);
 		}
@@ -77,13 +77,13 @@ namespace SocialCapital.ViewModels
 			get { return contacts.Where (c => c.Selected).Count(); }
 		}
 
-		public ICommand SelectCommand { get; set; }
-		private void OnSelectCommandExecuted(object item)
-		{
-			var contact = (ContactVM)item;
-			contact.Selected = !contact.Selected;
-			OnPropertyChanged ("SelectedCount");
-		}
+//		public ICommand SelectCommand { get; set; }
+//		private void OnSelectCommandExecuted(object item)
+//		{
+//			var contact = (ContactVM)item;
+//			contact.Selected = !contact.Selected;
+//			OnPropertyChanged ("SelectedCount");
+//		}
 			
 		#endregion
 

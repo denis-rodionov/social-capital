@@ -160,7 +160,10 @@ namespace SocialCapital.ViewModels
 		private bool selected = false;
 		public bool Selected {
 			get { return selected; }
-			set { SetProperty (ref selected, value); }
+			set { 
+				SetProperty (ref selected, value); 
+				//App.Container.Get<IDialogProvider> ().DisplayAlert ("Alert", FullName, "Ok");
+			}
 		}
 
 		private BaseContactStatus contactStatus;

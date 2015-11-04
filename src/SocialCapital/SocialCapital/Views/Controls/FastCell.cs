@@ -18,7 +18,6 @@ namespace SocialCapital.Views.Controls
 	{
 		public FastCell()
 		{
-			//PrepareCell ();
 		}
 
 		public bool IsInitialized {

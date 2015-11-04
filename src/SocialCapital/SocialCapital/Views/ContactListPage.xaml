@@ -28,7 +28,6 @@
 										  IsDestructive="true" />
 								-->
 							</controls:ContactPreviewCell.ContextActions>
-
 						</controls:ContactPreviewCell>
 					<!--
 						<ViewCell>

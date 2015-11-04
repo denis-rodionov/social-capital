@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<controls:FastCell xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"	
+			 x:Class="SocialCapital.Views.Controls.ChoosableContactCell"
+			 >
+	<ContentView Padding="5,2,5,2">
+		<Image.GestureRecognizers>
+        	<TapGestureRecognizer Tapped="OnTapped"/>
+      	</Image.GestureRecognizers>
+		<StackLayout Orientation="Horizontal" 
+					 BackgroundColor="White">
+
+			<Image x:Name = "CheckBoxImage"
+				   WidthRequest="24" 
+				   HeightRequest="24"  />
+
+			<!-- Source="{Binding PhotoImage}" -->
+			<controls:ImageCircle x:Name = "ContactPhoto"
+				   				  WidthRequest="70" />
+
+			<StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+				<Label x:Name="ContactName" FontSize="16" />
+
+				<!-- Tag List -->
+				<!-- Text="{Binding Path=Tags, Converter={StaticResource CommaSeparatedConverter}}" -->
+				<!--<Label x:Name = "TagList" TextColor="Gray" />-->
+				<controls:TagList x:Name="TagsControl" LayoutType="HorizontalGrid" IsVisible="false" />
+					   
+			</StackLayout>
+
+		</StackLayout>
+	</ContentView>
+</controls:FastCell>

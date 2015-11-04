@@ -3,6 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
 			 xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.ContactPickerPage"
 			 Title="">
 	<!--<ContentPage.ToolbarItems>
@@ -11,23 +12,26 @@
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-				<Label Text="{Binding Path=SelectedCount, StringFormat='Selected count: {0}'}"
+				<!--<Label Text="{Binding Path=SelectedCount, StringFormat='Selected count: {0}'}"
 					   HorizontalOptions="Center"
-					   FontAttributes="Bold" />
+					   FontAttributes="Bold" />-->
 				<Button Text="Done" Clicked="OnDoneClicked" />
 			</StackLayout>
 			<SearchBar Text="{Binding Filter}" />
 
 			<libs:ListViewEx ItemsSource="{Binding FilteredContacts}"
-					  		 ItemClickCommand="{Binding SelectCommand}">
+					  		 RowHeight="60"
+				      		 SeparatorVisibility="None">
 				<libs:ListViewEx.ItemTemplate>
 					<DataTemplate>
-						<ViewCell>
-							<StackLayout Orientation="Horizontal">								
-								<Image Source="{Binding Path=Selected, Converter={StaticResource BoolToImageConverter}" WidthRequest="24" HeightRequest="24"  />
-								<Label Text="{Binding FullName}" />
-							</StackLayout>
-						</ViewCell>
+						<controls:ChoosableContactCell >
+							<controls:ChoosableContactCell.ContextActions>
+								<MenuItem Text="{i18n:Translate AssignGroupAction}"
+										  Icon="ic_people_black_36dp.png"
+										  Command="{Binding Path=AssignToGroup}"
+										  IsDestructive="false" />
+							</controls:ChoosableContactCell.ContextActions>
+						</controls:ChoosableContactCell>
 					</DataTemplate>
 				</libs:ListViewEx.ItemTemplate>
 			</libs:ListViewEx>
