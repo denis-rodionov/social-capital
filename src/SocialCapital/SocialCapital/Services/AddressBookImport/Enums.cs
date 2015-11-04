@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SocialCapital.Data.Synchronization
+namespace SocialCapital.Services.AddressBookImport
 {
 	/// <summary>
 	/// Source of a contact modifications

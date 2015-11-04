@@ -5,10 +5,10 @@ using System.Linq;
 using SocialCapital.Data.Model;
 using SocialCapital.Data;
 using SocialCapital.Common;
-using SocialCapital.Data.Synchronization;
 using SocialCapital.ViewModels;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.Services.AddressBookImport.Converters;
 
 namespace SocialCapital.Services.AddressBookImport
 {

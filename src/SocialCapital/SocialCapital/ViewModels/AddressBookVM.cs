@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using SocialCapital.Data;
 using SocialCapital.Data.Model;
-using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;
 using SocialCapital.Data.Managers;
 using Ninject;

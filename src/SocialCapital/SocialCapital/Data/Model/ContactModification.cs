@@ -1,8 +1,8 @@
 ﻿using System;
 using SQLite.Net.Attributes;
-using SocialCapital.Data.Synchronization;
 using System.Collections.Generic;
 using SocialCapital.Data.Model.Enums;
+using SocialCapital.Services.AddressBookImport;
 
 namespace SocialCapital.Data.Model
 {

@@ -95,10 +95,6 @@
     <Compile Include="Data\ISQLite.cs" />
     <Compile Include="PhoneServices\IPhoneService.cs" />
     <Compile Include="Views\Converters\ListToBoolConverter.cs" />
-    <Compile Include="Data\Model\Converters\ConverterException.cs" />
-    <Compile Include="Data\Model\Converters\BaseContactConverter.cs" />
-    <Compile Include="Data\Model\Synchronization\Syncker.cs" />
-    <Compile Include="Data\Model\Synchronization\Enums.cs" />
     <Compile Include="Data\Model\ContactModification.cs" />
     <Compile Include="ViewModels\ModificationVM.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
@@ -188,7 +184,6 @@
     <Compile Include="Common\FormsMVVM\DialogService.cs" />
     <Compile Include="Common\FormsMVVM\MvvmPattenNinjectModule.cs" />
     <Compile Include="Services\AddressBookImport\AddressBookContact.cs" />
-    <Compile Include="Services\AddressBookImport\AddressBookContactConverter.cs" />
     <Compile Include="Services\AddressBookImport\AddressBookService.cs" />
     <Compile Include="Services\AddressBookImport\IAddressBookInformation.cs" />
     <Compile Include="Services\DropboxSync\IDropboxSync.cs" />
@@ -215,6 +210,11 @@
     </Compile>
     <Compile Include="Views\Controls\FastCell.cs" />
     <Compile Include="ViewModels\ContactEditVM.cs" />
+    <Compile Include="Services\AddressBookImport\Converters\BaseContactConverter.cs" />
+    <Compile Include="Services\AddressBookImport\Converters\ConverterException.cs" />
+    <Compile Include="Services\AddressBookImport\Syncker.cs" />
+    <Compile Include="Services\AddressBookImport\Enums.cs" />
+    <Compile Include="Services\AddressBookImport\Converters\AddressBookContactConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -253,10 +253,8 @@
     <Folder Include="Views\Libs\" />
     <Folder Include="Views\Libs\RepeaterViewLib\" />
     <Folder Include="Common\" />
-    <Folder Include="Data\Model\Converters\" />
     <Folder Include="Views\Converters\" />
     <Folder Include="PhoneServices\" />
-    <Folder Include="Data\Model\Synchronization\" />
     <Folder Include="ViewModels\Commands\" />
     <Folder Include="Data\Managers\" />
     <Folder Include="Data\Migrations\" />

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SocialCapital.Data.Model.Converters
+namespace SocialCapital.Services.AddressBookImport.Converters
 {
 	public class ConverterException : Exception
 	{

@@ -6,11 +6,10 @@ using SocialCapital.Data.Model;
 using System.Linq;
 using System.Linq.Expressions;
 using SocialCapital.Services.AddressBookImport;
-using SocialCapital.Data.Model.Converters;
-using SocialCapital.Data.Synchronization;
 using SocialCapital.Common;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.Services.AddressBookImport.Converters;
 
 namespace SocialCapital.Data.Managers
 {

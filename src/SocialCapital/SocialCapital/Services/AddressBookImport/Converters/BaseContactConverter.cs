@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SocialCapital.Data.Synchronization;
 using System.Linq.Expressions;
+using SocialCapital.Data.Model;
 
-namespace SocialCapital.Data.Model.Converters
+namespace SocialCapital.Services.AddressBookImport.Converters
 {
 	/// <summary>
 	/// Tasks:
@@ -43,7 +43,7 @@ namespace SocialCapital.Data.Model.Converters
 		/// <summary>
 		/// Delegate which helps to determin if the contact already copied in the device database
 		/// </summary>
-		public abstract Expression<Func<Contact, bool>> IsContactExistsInDatabase ();
+		public abstract Func<Contact, bool> IsContactExistsInDatabase ();
 
 		/// <summary>
 		/// Returns contact information stored in the Contact class

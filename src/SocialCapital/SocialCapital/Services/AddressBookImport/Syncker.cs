@@ -1,16 +1,14 @@
 ﻿using System;
-using SocialCapital.Data.Model.Converters;
 using System.Linq;
 using System.Collections.Generic;
 using SocialCapital.Data.Model;
 using SocialCapital.Common;
 using SocialCapital.Data.Managers;
 using Ninject;
+using SocialCapital.Services.AddressBookImport.Converters;
 
-namespace SocialCapital.Data.Synchronization
+namespace SocialCapital.Services.AddressBookImport
 {
-	
-
 	public class Syncker
 	{
 		static TimeSpan update = new TimeSpan (0);
@@ -28,15 +26,17 @@ namespace SocialCapital.Data.Synchronization
 		{
 			ContactModification res;
 
-			var dbContact = App.Container.Get<ContactManager>()
-				.GetContacts (contactConverter.IsContactExistsInDatabase().Compile()).SingleOrDefault ();
+			var dbContacts = App.Container.Get<ContactManager> ()
+				.GetContacts (contactConverter.IsContactExistsInDatabase ());
 
-			if (dbContact == null) {
+			if (!dbContacts.Any()) {
 				SaveNewContact (contactConverter);
 
 				res = SaveModification (contactConverter, GetAllFields(), true);
 			}
 			else {
+				var dbContact = dbContacts.First ();
+
 				contactConverter.DatabaseContactId = dbContact.Id;
 
 				var fieldsToUpdate = GetFieldsToUpdate (contactConverter, dbContact);

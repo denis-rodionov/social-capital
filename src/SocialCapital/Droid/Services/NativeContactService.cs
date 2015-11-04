@@ -37,7 +37,8 @@ namespace SocialCapital.Droid.Services
 		// Populate the contact list based on account currently selected in the account spinner.
 		private List<AddressBookContact> GetAllContacts (long lastTimeStamp)
 		{
-			var uri = ContactsContract.Contacts.ContentUri;
+			var uri = ContactsContract.Contacts.ContentUri.BuildUpon ()
+				.AppendQueryParameter (ContactsContract.RemoveDuplicateEntries, "1").Build ();
 
 			string[] projection = GetProjections ();
 

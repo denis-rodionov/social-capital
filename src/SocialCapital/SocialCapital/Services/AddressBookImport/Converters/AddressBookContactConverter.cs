@@ -2,12 +2,10 @@
 using SocialCapital.Services.AddressBookImport;
 using System.Collections.Generic;
 using System.Linq;
-using SocialCapital.Data.Model.Converters;
 using SocialCapital.Data.Model;
-using SocialCapital.Data.Synchronization;
 using System.Linq.Expressions;
 
-namespace SocialCapital.Services.AddressBookImport
+namespace SocialCapital.Services.AddressBookImport.Converters
 {
 	public class AddressBookContactConverter : BaseContactConverter
 	{
@@ -45,9 +43,16 @@ namespace SocialCapital.Services.AddressBookImport
 		/// <summary>
 		/// Delegate which helps to determin if the contact already copied in the device database
 		/// </summary>
-		public override Expression<Func<Contact, bool>> IsContactExistsInDatabase ()
+		public override Func<Contact, bool> IsContactExistsInDatabase ()
 		{
-			return (contact) => contact.AddressBookId == BookContact.Id;
+			return (contact) => {
+				if (contact.AddressBookId == BookContact.Id)
+					return true;
+				else if (contact.DisplayName == BookContact.DisplayName)
+					return true;
+				else
+					return false;
+			};
 		}
 
 		/// <summary>
