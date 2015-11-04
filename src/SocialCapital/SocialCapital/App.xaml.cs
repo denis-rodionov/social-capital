@@ -10,6 +10,8 @@ using SocialCapital.Common.FormsMVVM;
 using SocialCapital.Services;
 using SocialCapital.Services.DropboxSync;
 using SocialCapital.Common.EventProviders;
+using SocialCapital.Data.Managers;
+using System.Linq;
 
 namespace SocialCapital 
 {
@@ -62,6 +64,42 @@ namespace SocialCapital
 		void RunBackgroundServices()
 		{			
 			Container.Get<DropboxBackupService> ();
+		}
+
+		// just in case
+		void RemoveDuplicates(IDataContext db)
+		{
+			var contactManager = App.Container.Get<ContactManager> ();
+			var emailManager= App.Container.Get<EmailManager> ();
+			var phoneManager = App.Container.Get<PhonesManager> ();
+
+			var groups = contactManager.AllContacts.GroupBy (
+				c => c.DisplayName,
+				c => c,
+				(key, g) => new {
+					Name = key,
+					Contacts = g.ToList ()
+				}).Where (g => g.Contacts.Count () > 1).ToList ();
+
+
+			foreach (var g in groups)
+			{
+				var saveOne = g.Contacts.First ();
+
+				foreach (var c in g.Contacts)
+					if (c != saveOne)
+					{
+						var emails = emailManager.GetContactEmails (c.Id);
+						var phones = phoneManager.GetContactPhones (c.Id);
+
+						db.Connection.Delete (c);
+
+						foreach (var e in emails)
+							db.Connection.Delete (e);
+						foreach (var p in phones)
+							db.Connection.Delete (p);
+					}
+			}
 		}
 
 		#endregion

@@ -47,7 +47,8 @@ namespace SocialCapital.Data
 				.WithConstructorArgument ("databaseVersion", DatabaseService.DatabaseVersion)
 				.WithConstructorArgument ("migrations", ctx => new List<IMigration> () {
 					new Migration_0_1 (),
-					new Migration_1_0 ()
+					new Migration_1_0 (),
+					new Migration_2_1 ()
 			});
 			
 		}

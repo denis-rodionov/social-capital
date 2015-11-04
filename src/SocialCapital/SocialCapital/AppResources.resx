@@ -282,6 +282,10 @@
 		<value>Раз в год</value>
 		<comment>Частота комменикаций с контактом</comment>
 	</data>
+	<data name="OnceATwoYear" xml:space="preserve">
+		<value>Два раза в год</value>
+		<comment>Частота комменикаций с контактом</comment>
+	</data>
 	<data name="TwiceAYear" xml:space="preserve">
 		<value>Два раза в год</value>
 		<comment>Частота комменикаций с контактом</comment>

@@ -9,7 +9,7 @@ namespace SocialCapital.Data
 {
 	public class DatabaseService
 	{
-		public const string DatabaseVersion = "1.0";
+		public const string DatabaseVersion = "2.1";
 
 		private Func<IDataContext> contextFactory;
 		private Migrator migrator;

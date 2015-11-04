@@ -629,6 +629,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Два раза в год.
+        /// </summary>
+        internal static string OnceATwoYear {
+            get {
+                return ResourceManager.GetString("OnceATwoYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Раз в год.
         /// </summary>
         internal static string OnceAYear {

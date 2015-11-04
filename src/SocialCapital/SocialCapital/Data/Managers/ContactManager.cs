@@ -32,9 +32,9 @@ namespace SocialCapital.Data.Managers
 			}
 		}
 
-		public IEnumerable<Contact> GetContacts(Func<Contact, bool> whereClause)
+		public IEnumerable<Contact> GetContacts(Func<Contact, bool> whereClause, IDataContext db = null)
 		{
-			return GetList (c => c.DeleteTime == null).Where (whereClause);
+			return GetList (c => c.DeleteTime == null, db).Where (whereClause);
 		}
 
 		public IEnumerable<Contact> GetDeleted()
