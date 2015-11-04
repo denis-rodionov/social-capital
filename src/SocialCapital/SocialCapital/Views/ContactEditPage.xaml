@@ -14,14 +14,19 @@
 
 			<TableRoot Title="{i18n:Translate ContactEditTitle}">
 				<TableSection Title="{i18n:Translate BaseContactInfo}">
+					<!-- FullName -->
 					<EntryCell Label="{i18n:Translate Text=FullNameLabel, Format='{0}:'}"
 							   Text="{Binding FullName}"
 							   Placeholder="{i18n:Translate InputFullNamePlaceholder}"
 							   Keyboard="Text" />
+
+					<!-- WorkPlace -->
 					<EntryCell Label="{i18n:Translate Text=WorkplaceLabel, Format='{0}:'}"
 							   Text="{Binding WorkPlace}"
 							   Placeholder="{i18n:Translate InputWorkplacePlaceholder}"
 							   Keyboard="Text" />
+
+					<!-- Tags -->
 					<ViewCell Tapped="OnTagsTaped">
 						<ContentView Padding="5, 25, 5, 25">
 							<controls:TagList LayoutType="Wrap" 
@@ -29,7 +34,28 @@
 											  Placeholder="{i18n:Translate NoTagsPlaceholder}"/>
 						</ContentView>
 					</ViewCell>
-					<SwitchCell Text="{i18n:Translate FrequentContactLabel}" On="{Binding SourceContact.Frequent}" />
+
+					<!-- Birthdate -->
+					<ViewCell>	
+						<StackLayout Orientation="Horizontal" Padding="20,10,20,10">
+							<Label Text="{i18n:Translate Birthdate}" YAlign="Center" />
+							<Label Text="{i18n:Translate BirthdateUndefined}" 
+								   IsVisible="{Binding Path=HasBirthdate, Converter={StaticResource not}}"
+								   HorizontalOptions="EndAndExpand" >
+								   <Label.GestureRecognizers>
+								   		<TapGestureRecognizer Tapped="OnShowBirthdatePicker" />
+								   </Label.GestureRecognizers>
+							</Label>
+							<DatePicker	Date="{Binding Birthdate}"
+										HorizontalOptions="EndAndExpand" 
+										IsVisible="{Binding HasBirthdate}"
+										Format="m"
+										WidthRequest="100" />
+						</StackLayout>
+					</ViewCell>
+
+					<!-- Frequent -->
+					<SwitchCell Text="{i18n:Translate FrequentContactLabel}" On="{Binding Frequent}" />
 				</TableSection>
 			</TableRoot>
 		</TableView>

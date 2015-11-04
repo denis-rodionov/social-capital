@@ -265,7 +265,7 @@ namespace SocialCapital.Droid.Services
 						break;
 					case ContactsContract.CommonDataKinds.Phone.ContentItemType:
 						var phone = GetPhone (cursor, resources);
-						if (FilterServicePhones(phone))
+						if (FilterServicePhones(phone.Number))
 							Bind ("Phones", phone, contacts, contactId, forContact);
 						break;
 					case ContactsContract.CommonDataKinds.Email.ContentItemType:

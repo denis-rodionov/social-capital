@@ -8,32 +8,37 @@ namespace SocialCapital.Views
 {
 	public partial class ContactEditPage : ContentPage
 	{
-		public ContactEditPage ()
+		ContactEditVM vm;
+
+		public ContactEditPage (ContactEditVM vm)
 		{
+			this.vm = vm;
 			InitializeComponent ();
+			BindingContext = vm;
 		}
 
 		private void OnSubmitButtonClicked(object sender, EventArgs args)
 		{
-			var contact = (ContactVM)BindingContext;
-			contact.Save ();
+			vm.Save ();
 
 			Navigation.PopModalAsync ();
 		}
 
 		private void OnCancelButtonClicked(object sender, EventArgs args)
 		{
-			var contact = (ContactVM)BindingContext;
-			contact.Reload ();
-
 			Navigation.PopModalAsync ();
 		}
 
 		protected void OnTagsTaped(object sender, EventArgs args)
 		{
-			var tags = (BindingContext as ContactVM).Tags;
+			var tags = vm.Tags;
 
 			Navigation.PushAsync (new TagsSelectPage () { BindingContext = tags });
+		}
+
+		private void OnShowBirthdatePicker(object sender, EventArgs args)
+		{
+			vm.HasBirthdate = true;
 		}
 	}
 }

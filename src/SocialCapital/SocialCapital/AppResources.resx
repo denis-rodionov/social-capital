@@ -390,5 +390,14 @@
 		<value>Выберите группу</value>
 		<comment>Кнопка или меню для перемещения контакта в группу</comment>
 	</data>
+	<data name="Birthdate" xml:space="preserve">
+		<value>День рождения</value>
+		<comment>Перевод</comment>
+	</data>
+	<data name="BirthdateUndefined" xml:space="preserve">
+		<value>Не указан</value>
+		<comment>Краткая надпись: день рождения не указан в настройках</comment>
+	</data>
+
 
 </root>

@@ -188,6 +188,24 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на День рождения.
+        /// </summary>
+        internal static string Birthdate {
+            get {
+                return ResourceManager.GetString("Birthdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не указан.
+        /// </summary>
+        internal static string BirthdateUndefined {
+            get {
+                return ResourceManager.GetString("BirthdateUndefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отменить.
         /// </summary>
         internal static string CancelButton {

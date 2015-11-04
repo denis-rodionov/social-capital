@@ -29,6 +29,7 @@ namespace SocialCapital.ViewModels
 		private static ImageSource anonimusPhoto = null;
 
 		private readonly ContactManager contactManager;
+		private readonly ContactTagsManager contactTagManager;
 
 		/// <summary>
 		/// Original copy of the contact
@@ -46,6 +47,7 @@ namespace SocialCapital.ViewModels
 			//var timing = Timing.Start ("ContactVM.Constructor");
 
 			contactManager = App.Container.Get<ContactManager> ();
+			contactTagManager = App.Container.Get<ContactTagsManager> ();
 
 			if (contact == null)
 				throw new ArgumentException ();
@@ -112,7 +114,7 @@ namespace SocialCapital.ViewModels
 		public TagsVM Tags {
 			get {
 				if (tags == null)
-					tags = new TagsVM (App.Container.Get<ContactTagsManager>().GetContactTags (SourceContact.Id));
+					tags = new TagsVM (contactTagManager.GetContactTags (SourceContact.Id));
 				return tags;
 			}
 			set 
@@ -225,19 +227,14 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
-		public void Save()
-		{
-			contactManager.SaveContactInfo (SourceContact);
-			App.Container.Get<ContactTagsManager>().SaveContactTags (Tags.Tags, SourceContact.Id);
-			Tags = null;
-		}
 
-		public void Reload()
-		{
-			SourceContact = contactManager.GetContact (SourceContact.Id);
-			Tags = null;
-		}
 
+//		public void Reload()
+//		{
+//			SourceContact = contactManager.GetContact (SourceContact.Id);
+//			Tags = null;
+//		}
+//
 		public void DeleteContact()
 		{
 			SourceContact.DeleteTime = DateTime.Now;
@@ -275,6 +272,14 @@ namespace SocialCapital.ViewModels
 		#endregion
 
 		#region Implementation
+
+		public ContactEditVM CreateEditVM()
+		{
+			var res = new ContactEditVM (SourceContact, Tags.Tags, 
+				          contactManager, contactTagManager);
+
+			return res;
+		}
 
 		private void OnCommunicationCommandExecuted()
 		{

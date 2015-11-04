@@ -53,6 +53,11 @@ namespace SocialCapital.Data.Model
 		public bool Frequent { get; set; }
 
 		/// <summary>
+		/// Birthdate of the person. Null if unknown date
+		/// </summary>
+		public DateTime? Birthdate { get; set; }
+
+		/// <summary>
 		/// Time of the last update from device address book (or create)
 		/// </summary>
 		//public DateTime AddressBookUpdateTime { get; set; }

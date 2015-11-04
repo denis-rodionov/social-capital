@@ -6,6 +6,7 @@ using SocialCapital.ViewModels;
 using SocialCapital.Data.Model;
 using SocialCapital.Logging;
 using SocialCapital.Common;
+using System.Threading.Tasks;
 
 namespace SocialCapital.Views
 {
@@ -16,7 +17,8 @@ namespace SocialCapital.Views
 			var timing = Timing.Start ("Priority list init");
 
 			InitializeComponent ();
-			BindingContext = vm;
+
+			Task.Run (() => BindingContext = vm);
 
 			timing.Finish (LogLevel.Debug);
 		}
@@ -32,7 +34,7 @@ namespace SocialCapital.Views
 		private void OnItemTapped(object sender, EventArgs args)
 		{
 			var contact = (sender as Cell).BindingContext;
-			var page = new ContactDetailsPage() { BindingContext = contact };
+			var page = new ContactDetailsPage((ContactVM)contact);
 			Navigation.PushAsync(page);
 		}
 

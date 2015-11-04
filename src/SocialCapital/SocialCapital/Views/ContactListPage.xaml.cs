@@ -30,9 +30,7 @@ namespace SocialCapital.Views
 
 			contact.Deleted += contactList.OnDeletedContact;
 
-			var detailsContactPage = new ContactDetailsPage () {
-				BindingContext = contact
-			};
+			var detailsContactPage = new ContactDetailsPage (contact);
 
 			Navigation.PushAsync(detailsContactPage);
 		}

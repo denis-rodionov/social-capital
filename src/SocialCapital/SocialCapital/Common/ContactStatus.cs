@@ -20,7 +20,7 @@ namespace SocialCapital.Common
 		public ContactStatus (Contact contact, Frequency frequency, CommunicationHistory lastCommunication)
 		{
 			RawStatus = CalculateRawStatus (contact, frequency, lastCommunication);
-			GreenColor = Color.FromHex ("#33CC33");
+			GreenColor = Color.FromHex ("#43DB3B");
 			RedColor = new Color (100, 0, 0);
 		}
 
