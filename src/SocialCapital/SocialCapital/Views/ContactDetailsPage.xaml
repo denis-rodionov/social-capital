@@ -25,6 +25,8 @@
 				</StackLayout>
 			</StackLayout>
 
+			<!-- Contact status -->
+			<Label Text="{Binding Path=ContactStatus.RawStatus, StringFormat='RawStatus: {0}'}" FontSize="Small" />
 
 			<!-- Communication buttons -->
 

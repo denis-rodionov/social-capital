@@ -162,7 +162,6 @@
       <DependentUpon>PriorityContactListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PriorityContactListVM.cs" />
-    <Compile Include="Common\ContactStatus.cs" />
     <Compile Include="Data\Managers\CommunicationManager.cs" />
     <Compile Include="Data\Managers\ModificationManager.cs" />
     <Compile Include="Views\Converters\FrequencyConverter.cs" />
@@ -215,7 +214,10 @@
     <Compile Include="Services\AddressBookImport\Syncker.cs" />
     <Compile Include="Services\AddressBookImport\Enums.cs" />
     <Compile Include="Services\AddressBookImport\Converters\AddressBookContactConverter.cs" />
-    <Compile Include="Data\Migrations\Migration_2_1.cs" />
+    <Compile Include="Data\Migrations\Migration_2_2.cs" />
+    <Compile Include="Data\ContactStatuses\GradientContactStatus.cs" />
+    <Compile Include="Data\ContactStatuses\ThreeColorStatus.cs" />
+    <Compile Include="Data\ContactStatuses\BaseContactStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -265,6 +267,7 @@
     <Folder Include="Common\EventProviders\" />
     <Folder Include="Services\FileService\" />
     <Folder Include="Common\Interfaces\" />
+    <Folder Include="Data\ContactStatuses\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ContactListPage.xaml">

@@ -9,9 +9,9 @@ namespace SocialCapital.Views.Converters
 		public object Convert (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			if ((bool)value)
-				return "ic_check_box_black_24dp.png";
+				return "ic_check_circle_black_24dp.png";
 			else
-				return "ic_check_box_outline_blank_black_24dp.png";
+				return "ic_radio_button_unchecked_black_24dp.png";
 		}
 		public object ConvertBack (object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{

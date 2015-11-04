@@ -15,6 +15,7 @@ using Ninject;
 using SocialCapital.Data.Managers;
 using SocialCapital.Common.FormsMVVM;
 using System.Threading.Tasks;
+using SocialCapital.Data.ContactStatuses;
 
 namespace SocialCapital.ViewModels
 {
@@ -162,11 +163,11 @@ namespace SocialCapital.ViewModels
 			set { SetProperty (ref selected, value); }
 		}
 
-		private ContactStatus contactStatus;
-		public ContactStatus ContactStatus {
-			get {
+		private BaseContactStatus contactStatus;
+		public BaseContactStatus ContactStatus {
+			get {				
 				if (contactStatus == null)
-					contactStatus = new ContactStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
+					contactStatus = new ThreeColorStatus (SourceContact, SourceContact.Frequency, SourceContact.LastCommunication);
 				return contactStatus;
 			}
 			set { SetProperty (ref contactStatus, value); }

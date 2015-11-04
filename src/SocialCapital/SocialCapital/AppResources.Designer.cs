@@ -629,7 +629,7 @@ namespace SocialCapital {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Два раза в год.
+        ///   Ищет локализованную строку, похожую на Раз в два года.
         /// </summary>
         internal static string OnceATwoYear {
             get {

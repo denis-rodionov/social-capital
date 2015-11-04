@@ -6,9 +6,9 @@ using System.Threading;
 
 namespace SocialCapital.Data.Migrations
 {
-	public class Migration_2_1 : IMigration
+	public class Migration_2_2 : IMigration
 	{
-		public Migration_2_1 ()
+		public Migration_2_2 ()
 		{
 			
 		}
@@ -29,7 +29,7 @@ namespace SocialCapital.Data.Migrations
 
 		public string Version {
 			get {
-				return "2.1";
+				return "2.2";
 			}
 		}
 
