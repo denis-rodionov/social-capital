@@ -6,6 +6,7 @@ using SocialCapital.Views.Converters;
 using System.ComponentModel;
 using SocialCapital.Common.FormsMVVM;
 using Ninject;
+using System.Threading.Tasks;
 
 namespace SocialCapital.Views.Controls
 {
@@ -54,13 +55,15 @@ namespace SocialCapital.Views.Controls
 			}
 		}
 
-		private void OnEditMenuClicked(object sender, EventArgs e)
+		private async void OnEditMenuClicked(object sender, EventArgs e)
 		{
 			var vm = (ContactVM)BindingContext;
 			if (vm != null)
 			{
 				var page = new ContactDetailsPage (vm);
 				var parentPage = PageProxy.GetCurrentPage ();
+
+				await Task.Yield ();
 				parentPage.Navigation.PushAsync (page);
 			}
 		}

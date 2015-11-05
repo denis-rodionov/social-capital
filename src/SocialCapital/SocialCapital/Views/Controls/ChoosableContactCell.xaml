@@ -5,14 +5,14 @@
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"	
 			 x:Class="SocialCapital.Views.Controls.ChoosableContactCell"
 			 Tapped="OnTapped">
-			 <!--
+
 	<controls:FastCell.ContextActions>
 		<MenuItem Text="{i18n:Translate EditMenu}"
 				  Icon="ic_edit_black_36dp.png"
 				  Clicked="OnEditMenuClicked"
 				  IsDestructive="false" />
 	</controls:FastCell.ContextActions>
-	-->
+
 	<ContentView Padding="5,2,5,2">		
 <!--		<Image.GestureRecognizers>
         	<TapGestureRecognizer Tapped="OnTapped"/>

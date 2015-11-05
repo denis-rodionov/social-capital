@@ -25,12 +25,12 @@
 				<libs:ListViewEx.ItemTemplate>
 					<DataTemplate>
 						<controls:ChoosableContactCell >
-							<controls:FastCell.ContextActions>
+<!--							<controls:FastCell.ContextActions>
 								<MenuItem Text="{i18n:Translate EditMenu}"
 										  Icon="ic_edit_black_36dp.png"
 										  Clicked="OnEditMenuClicked"
 										  IsDestructive="false" />
-							</controls:FastCell.ContextActions>
+							</controls:FastCell.ContextActions>-->
 						</controls:ChoosableContactCell>
 					</DataTemplate>
 				</libs:ListViewEx.ItemTemplate>
