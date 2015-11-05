@@ -4,6 +4,8 @@ using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using SocialCapital.Views.Converters;
 using System.ComponentModel;
+using SocialCapital.Common.FormsMVVM;
+using Ninject;
 
 namespace SocialCapital.Views.Controls
 {
@@ -49,6 +51,17 @@ namespace SocialCapital.Views.Controls
 			{
 				vm.Selected = !vm.Selected;
 				UpdateCheckBox (vm.Selected);
+			}
+		}
+
+		private void OnEditMenuClicked(object sender, EventArgs e)
+		{
+			var vm = (ContactVM)BindingContext;
+			if (vm != null)
+			{
+				var page = new ContactDetailsPage (vm);
+				var parentPage = PageProxy.GetCurrentPage ();
+				parentPage.Navigation.PushAsync (page);
 			}
 		}
 

@@ -17,9 +17,10 @@ namespace SocialCapital.Views
 		public ContactDetailsPage (ContactVM contactModel)
 		{
 			this.vm = contactModel;
-			BindingContext = vm;
 
 			InitializeComponent ();
+
+			BindingContext = vm;
 		}
 
 		public void OnEditMenu(object sender, EventArgs EventArgs)

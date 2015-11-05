@@ -402,6 +402,9 @@
 		<value>Не указан</value>
 		<comment>Краткая надпись: день рождения не указан в настройках</comment>
 	</data>
-
+	<data name="EditMenu" xml:space="preserve">
+		<value>Редактирование</value>
+		<comment>Пункт меню</comment>
+	</data>
 
 </root>

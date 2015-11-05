@@ -25,12 +25,12 @@
 				<libs:ListViewEx.ItemTemplate>
 					<DataTemplate>
 						<controls:ChoosableContactCell >
-							<controls:ChoosableContactCell.ContextActions>
-								<MenuItem Text="{i18n:Translate AssignGroupAction}"
-										  Icon="ic_people_black_36dp.png"
-										  Command="{Binding Path=AssignToGroup}"
+							<controls:FastCell.ContextActions>
+								<MenuItem Text="{i18n:Translate EditMenu}"
+										  Icon="ic_edit_black_36dp.png"
+										  Clicked="OnEditMenuClicked"
 										  IsDestructive="false" />
-							</controls:ChoosableContactCell.ContextActions>
+							</controls:FastCell.ContextActions>
 						</controls:ChoosableContactCell>
 					</DataTemplate>
 				</libs:ListViewEx.ItemTemplate>

@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using SocialCapital.ViewModels;
 using SocialCapital.Data.Model;
 using System.Linq;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.Views
 {
@@ -26,6 +27,28 @@ namespace SocialCapital.Views
 				DelegateOnDone (vm.AllContacts.Where(c => c.Selected).Select(c => c.SourceContact).ToList());
 			
 			Navigation.PopModalAsync ();
+		}
+
+		private void OnEditMenuClicked(object sender, EventArgs args)
+		{
+			var vm = (ContactVM)BindingContext;
+			if (vm != null)
+			{
+				var page = new ContactDetailsPage (vm);
+				var parentPage = PageProxy.GetCurrentPage ();
+				parentPage.Navigation.PushAsync (page);
+			}
+		}
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+		}
+
+		protected override void OnDisappearing ()
+		{
+			Content = null;
+			base.OnDisappearing ();
 		}
 	}
 }

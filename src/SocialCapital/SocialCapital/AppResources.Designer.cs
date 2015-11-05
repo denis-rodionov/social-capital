@@ -386,6 +386,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактирование.
+        /// </summary>
+        internal static string EditMenu {
+            get {
+                return ResourceManager.GetString("EditMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Email.
         /// </summary>
         internal static string Email {
