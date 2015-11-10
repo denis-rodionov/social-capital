@@ -20,7 +20,8 @@
 													ColorStatus="{Binding ContactStatus.Color}"
 													ContactImage="{Binding Photo}"
 													GroupName = "{Binding GroupName}"
-													Tags = "{Binding Tags.Tags}">
+													Tags = "{Binding Tags.Tags}" 
+													Icon = "{Binding EventIcon}">
 													<!--
 							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate AssignGroupAction}"

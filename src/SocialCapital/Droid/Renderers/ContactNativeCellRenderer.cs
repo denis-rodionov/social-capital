@@ -53,6 +53,7 @@ namespace SocialCapital.Droid.Renderers
 			view.FindViewById<TextView> (Resource.Id.GroupName).Visibility = cell.GroupName != null ? ViewStates.Visible : ViewStates.Invisible;
 			view.FindViewById<TextView> (Resource.Id.GroupName).Text = cell.GroupName;
 
+			// tags
 			if (cell.Tags == null || cell.Tags.Count () == 0)
 				view.FindViewById<TextView> (Resource.Id.Tags).Visibility = ViewStates.Invisible;
 			else
@@ -60,6 +61,14 @@ namespace SocialCapital.Droid.Renderers
 				view.FindViewById<TextView> (Resource.Id.Tags).Visibility = ViewStates.Visible;
 				view.FindViewById<TextView> (Resource.Id.Tags).Text = string.Join (", ", cell.Tags.Select (t => t.Name));
 			}
+
+			// icon
+			if (cell.Icon != null)
+			{
+				var bitmap = BitmapFactory.DecodeFile(cell.Icon);
+				view.FindViewById<ImageView> (Resource.Id.Icon).SetImageBitmap (bitmap);
+			} else
+				view.FindViewById<ImageView> (Resource.Id.Icon).SetImageBitmap (null);
 
 			// Contact Image
 			if (cell.ContactImage != null)

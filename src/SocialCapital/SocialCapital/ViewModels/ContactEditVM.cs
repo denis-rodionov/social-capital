@@ -48,7 +48,7 @@ namespace SocialCapital.ViewModels
 
 		DateTime? birthdate;
 		public DateTime Birthdate {
-			get { return birthdate.HasValue ? birthdate.Value : new DateTime (1985, 1, 1); }
+			get { return birthdate.HasValue ? birthdate.Value : DateTime.Now.AddYears(-30); }
 			set { 
 				birthdate = value;
 				OnPropertyChanged ();
