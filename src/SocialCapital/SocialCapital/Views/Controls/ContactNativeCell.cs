@@ -35,9 +35,9 @@ namespace SocialCapital.Views.Controls
 		/// Null if empty
 		/// </summary>
 		public static readonly BindableProperty ContactImageProperty =
-			BindableProperty.Create<ContactNativeCell, ImageSource> (t => t.ContactImage, null);
-		public ImageSource ContactImage {
-			get { return (ImageSource)GetValue (ContactImageProperty); }
+			BindableProperty.Create<ContactNativeCell, byte[]> (t => t.ContactImage, null);
+		public byte[] ContactImage {
+			get { return (byte[])GetValue (ContactImageProperty); }
 			set { SetValue (ContactImageProperty, value); }
 		}
 	}

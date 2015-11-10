@@ -10,6 +10,10 @@ using Android.Graphics;
 using System.Threading.Tasks;
 using Android.Views;
 using Xamarin.Forms;
+using Android.Media;
+using SocialCapital.Common;
+using Android.Graphics.Drawables;
+using System.Security.Cryptography;
 
 [assembly: ExportRenderer(typeof(ContactNativeCell), typeof(ContactNativeCellRenderer))]
 
@@ -29,49 +33,27 @@ namespace SocialCapital.Droid.Renderers
 
 			var view = convertView;
 
-			if (view == null) {// no view to re-use, create new
-				view = (context as Activity).LayoutInflater.Inflate (Resource.Layout.ContactNativeCell	, null);
-			} else { 
+			if (view == null)
+			{// no view to re-use, create new
+				view = (context as Activity).LayoutInflater.Inflate (Resource.Layout.ContactNativeCell, null);
+			} else
+			{ 
 				// re-use, clear image
 				// doesn't seem to help
 				//view.FindViewById<ImageView> (Resource.Id.Image).Drawable.Dispose ();
 			}
 
 			view.FindViewById<TextView> (Resource.Id.FullName).Text = cell.FullName;
-			view.FindViewById<Android.Views.View> (Resource.Id.Stripe).SetBackgroundColor (cell.ColorStatus.ToAndroid());
+			view.FindViewById<Android.Views.View> (Resource.Id.Stripe).SetBackgroundColor (cell.ColorStatus.ToAndroid ());
 
 			if (cell.ContactImage != null)
 			{
-				var bitmap = GetImageFromImageSource (cell.ContactImage).Result;
+				var bitmap = BitmapFactory.DecodeByteArray (cell.ContactImage, 0, cell.ContactImage.Length);
 				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageBitmap (bitmap);
-			}
+			} else
+				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageResource (Resource.Drawable.avatar_placeholder);
 
 			return view;
-		}
-
-		private async Task<Bitmap> GetImageFromImageSource(ImageSource imageSource)
-		{
-			var context = Forms.Context;
-			IImageSourceHandler handler;
-
-			if (imageSource is FileImageSource)
-			{
-				handler = new FileImageSourceHandler();
-			}
-			else if (imageSource is StreamImageSource)
-			{
-				handler = new StreamImagesourceHandler(); // sic
-			}
-			else if (imageSource is UriImageSource)
-			{
-				handler = new ImageLoaderSourceHandler(); // sic
-			}
-			else
-			{
-				throw new NotImplementedException();
-			}
-
-			return await handler.LoadImageAsync(imageSource, context);
 		}
 	}
 }

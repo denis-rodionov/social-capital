@@ -101,7 +101,7 @@ namespace SocialCapital.ViewModels
 		public ImageSource PhotoImage {
 			get {
 				if (SourceContact.Thumbnail == null || SourceContact.Thumbnail.Length == 0)
-					return anonimusPhoto;
+					return null;
 
 				var res = ImageSource.FromStream(() => 
 					{
@@ -110,6 +110,14 @@ namespace SocialCapital.ViewModels
 				return res;
 			}
 		}
+
+		public byte[] Photo { get { return SourceContact.Thumbnail; } }
+
+//		public Memory PhotoImageStream {
+//			get {
+//				return new Bitmap ();
+//			}
+//		}
 
 		TagsVM tags = null;
 		public TagsVM Tags {
