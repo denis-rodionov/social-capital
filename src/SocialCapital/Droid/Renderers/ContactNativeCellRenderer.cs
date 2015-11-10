@@ -14,6 +14,8 @@ using Android.Media;
 using SocialCapital.Common;
 using Android.Graphics.Drawables;
 using System.Security.Cryptography;
+using System.Linq;
+using Android.Transitions;
 
 [assembly: ExportRenderer(typeof(ContactNativeCell), typeof(ContactNativeCellRenderer))]
 
@@ -43,9 +45,23 @@ namespace SocialCapital.Droid.Renderers
 				//view.FindViewById<ImageView> (Resource.Id.Image).Drawable.Dispose ();
 			}
 
+			// Contact fields
 			view.FindViewById<TextView> (Resource.Id.FullName).Text = cell.FullName;
 			view.FindViewById<Android.Views.View> (Resource.Id.Stripe).SetBackgroundColor (cell.ColorStatus.ToAndroid ());
 
+			// group
+			view.FindViewById<TextView> (Resource.Id.GroupName).Visibility = cell.GroupName != null ? ViewStates.Visible : ViewStates.Invisible;
+			view.FindViewById<TextView> (Resource.Id.GroupName).Text = cell.GroupName;
+
+			if (cell.Tags == null || cell.Tags.Count () == 0)
+				view.FindViewById<TextView> (Resource.Id.Tags).Visibility = ViewStates.Invisible;
+			else
+			{
+				view.FindViewById<TextView> (Resource.Id.Tags).Visibility = ViewStates.Visible;
+				view.FindViewById<TextView> (Resource.Id.Tags).Text = string.Join (", ", cell.Tags.Select (t => t.Name));
+			}
+
+			// Contact Image
 			if (cell.ContactImage != null)
 			{
 				var bitmap = BitmapFactory.DecodeByteArray (cell.ContactImage, 0, cell.ContactImage.Length);

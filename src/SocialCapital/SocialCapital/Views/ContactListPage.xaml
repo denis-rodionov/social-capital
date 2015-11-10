@@ -18,7 +18,9 @@
 						<controls:ContactNativeCell Tapped="OnItemSelected"
 													FullName="{Binding FullName}"
 													ColorStatus="{Binding ContactStatus.Color}"
-													ContactImage="{Binding Photo}">
+													ContactImage="{Binding Photo}"
+													GroupName = "{Binding GroupName}"
+													Tags = "{Binding Tags.Tags}">
 													<!--
 							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate AssignGroupAction}"

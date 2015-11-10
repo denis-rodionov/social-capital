@@ -24,12 +24,33 @@
             android:src="@drawable/avatar_placeholder"
             app:civ_border_width="1dp"
             app:civ_border_color="#00000000" />
-        <TextView
-            android:id="@+id/FullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dip"
-            android:text="123" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/FullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dip"
+                android:text="Ivanov Ivan" />
+            <TextView
+                android:id="@+id/GroupName"
+                android:text="group"
+                android:background="@color/group_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:layout_toRightOf="@id/FullName" />
+            <TextView
+                android:id="@+id/Tags"
+                android:text="sample-tag"
+                android:textColor="@color/secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/FullName" />
+        </RelativeLayout>
     </LinearLayout>
 <!--
     <ImageView

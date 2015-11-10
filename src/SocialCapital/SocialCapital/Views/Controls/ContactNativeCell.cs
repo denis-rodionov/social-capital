@@ -1,6 +1,10 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Dynamic;
+using SocialCapital.ViewModels;
+using System.Collections;
+using SocialCapital.Data.Model.Enums;
+using System.Collections.Generic;
 
 namespace SocialCapital.Views.Controls
 {
@@ -39,6 +43,36 @@ namespace SocialCapital.Views.Controls
 		public byte[] ContactImage {
 			get { return (byte[])GetValue (ContactImageProperty); }
 			set { SetValue (ContactImageProperty, value); }
+		}
+
+		/// <summary>
+		/// Group
+		/// </summary>
+		public static readonly BindableProperty GroupNameProperty =
+			BindableProperty.Create<ContactNativeCell, string> (t => t.GroupName, null);
+		public string GroupName {
+			get { return (string)GetValue (GroupNameProperty); }
+			set { SetValue (GroupNameProperty, value); }
+		}
+
+		/// <summary>
+		/// Tags
+		/// </summary>
+		public static readonly BindableProperty TagsProperty =
+			BindableProperty.Create<ContactNativeCell, IEnumerable<ILabel>> (t => t.Tags, null);
+		public IEnumerable<ILabel> Tags {
+			get { return (IEnumerable<ILabel>)GetValue (TagsProperty); }
+			set { SetValue (TagsProperty, value); }
+		}
+
+		/// <summary>
+		/// Icon
+		/// </summary>
+		public static readonly BindableProperty IconProperty =
+			BindableProperty.Create<ContactNativeCell, string> (t => t.Icon, null);
+		public string Icon {
+			get { return (string)GetValue (IconProperty); }
+			set { SetValue (IconProperty, value); }
 		}
 	}
 }
