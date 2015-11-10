@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/Stripe"
+            android:layout_width="8dip"
+            android:layout_height="match_parent"
+            android:background="#0000ff" />
+        <refractored.controls.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ContactImage"
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/avatar_placeholder"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+        <TextView
+            android:id="@+id/FullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dip"
+            android:text="123" />
+    </LinearLayout>
+<!--
+    <ImageView
+        android:id="@+id/Image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="5dp"
+        android:src="@drawable/icon"
+        android:layout_alignParentRight="true" /> -->
+</LinearLayout>

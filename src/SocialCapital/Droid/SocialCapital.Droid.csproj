@@ -96,6 +96,9 @@
     <Reference Include="Xamarin.Android.Support.Design">
       <HintPath>..\packages\Xamarin.Android.Support.Design.23.0.1.3\lib\MonoAndroid403\Xamarin.Android.Support.Design.dll</HintPath>
     </Reference>
+    <Reference Include="Refractored.Controls.CircleImageView">
+      <HintPath>..\packages\Refractored.Controls.CircleImageView.1.0.1\lib\MonoAndroid10\Refractored.Controls.CircleImageView.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SocialCapital\SocialCapital.csproj">
@@ -122,6 +125,7 @@
     <Compile Include="Renderers\FastCellNs\FastCellRenderer.cs" />
     <Compile Include="Renderers\FastCellNs\FastCellCache.cs" />
     <Compile Include="Renderers\FastCellNs\NativeCell.cs" />
+    <Compile Include="Renderers\ContactNativeCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -210,6 +214,8 @@
     <AndroidResource Include="Resources\values\Colors.xml" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_check_circle_black_24dp.png" />
     <AndroidResource Include="Resources\drawable-hdpi\ic_radio_button_unchecked_black_24dp.png" />
+    <AndroidResource Include="Resources\layout\ContactNativeCell.axml" />
+    <AndroidResource Include="Resources\drawable\Stripe.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
