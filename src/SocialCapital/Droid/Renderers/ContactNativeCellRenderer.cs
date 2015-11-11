@@ -63,14 +63,23 @@ namespace SocialCapital.Droid.Renderers
 			}
 
 			// icon
-			if (cell.Icon != null)
-			{
-				var bitmap = BitmapFactory.DecodeFile(cell.Icon);
-				view.FindViewById<ImageView> (Resource.Id.Icon).SetImageBitmap (bitmap);
-			} else
+			// TODO: grab images
+			if (!String.IsNullOrWhiteSpace (cell.Icon)) {
+				context.Resources.GetBitmapAsync (cell.Icon).ContinueWith ((t) => {
+					var bitmap = t.Result;
+					if (bitmap != null) {
+						view.FindViewById<ImageView> (Resource.Id.Icon).SetImageBitmap (bitmap);
+						bitmap.Dispose ();
+					}
+				}, TaskScheduler.FromCurrentSynchronizationContext() );
+
+			} else {
+				// clear the image
 				view.FindViewById<ImageView> (Resource.Id.Icon).SetImageBitmap (null);
+			}
 
 			// Contact Image
+			// TODO: grab images
 			if (cell.ContactImage != null)
 			{
 				var bitmap = BitmapFactory.DecodeByteArray (cell.ContactImage, 0, cell.ContactImage.Length);

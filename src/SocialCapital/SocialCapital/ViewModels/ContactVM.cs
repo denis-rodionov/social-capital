@@ -201,7 +201,7 @@ namespace SocialCapital.ViewModels
 		public string EventIcon {
 			get {
 				if (BirthdateToday)
-					return "dropbox_logo_36dp.png";
+					return "birthday_32dp.png";
 				else
 					return null;
 			}
