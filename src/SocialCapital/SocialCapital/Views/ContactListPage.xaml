@@ -22,19 +22,19 @@
 													GroupName = "{Binding GroupName}"
 													Tags = "{Binding Tags.Tags}" 
 													Icon = "{Binding EventIcon}">
-													<!--
+
 							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate AssignGroupAction}"
 										  Icon="ic_people_black_36dp.png"
 										  Command="{Binding Path=AssignToGroup}"
 										  IsDestructive="false" />
-								
+								<!--
 								<MenuItem Text="{i18n:Translate DeleteVerb}"
 										  Icon="ic_delete_black_36dp.png"
 										  Command="{DeleteContact}"
 										  IsDestructive="true" />
-								
-							</controls:ContactNativeCell.ContextActions> -->
+								-->
+							</controls:ContactNativeCell.ContextActions> 
 						</controls:ContactNativeCell>
 					<!--
 						<ViewCell>

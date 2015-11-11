@@ -13,7 +13,13 @@
 				  SeparatorVisibility="None">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<controls:ContactPreviewCell Tapped="OnItemTapped" />
+					<controls:ContactNativeCell Tapped="OnItemTapped"
+													FullName="{Binding FullName}"
+													ColorStatus="{Binding ContactStatus.Color}"
+													ContactImage="{Binding Photo}"
+													GroupName = "{Binding GroupName}"
+													Tags = "{Binding Tags.Tags}" 
+													Icon = "{Binding EventIcon}" />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

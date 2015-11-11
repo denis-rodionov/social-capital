@@ -113,12 +113,6 @@ namespace SocialCapital.ViewModels
 
 		public byte[] Photo { get { return SourceContact.Thumbnail; } }
 
-//		public Memory PhotoImageStream {
-//			get {
-//				return new Bitmap ();
-//			}
-//		}
-
 		TagsVM tags = null;
 		public TagsVM Tags {
 			get {
@@ -289,7 +283,7 @@ namespace SocialCapital.ViewModels
 			var groupList = groupManager.GetAllGroups (g => true);
 			var groupName = await dialogService.DisplayActionSheet (AppResources.ChooseGroup, AppResources.CancelButton, null, groupList.Select (g => g.Name).ToArray());
 
-			if (groupName != null)
+			if (groupName != AppResources.CancelButton)
 			{
 				var group = groupList.Single (g => g.Name == groupName);
 
