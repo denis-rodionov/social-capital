@@ -87,6 +87,8 @@ namespace SocialCapital.ViewModels
 			
 		#endregion
 
+		#region action
+
 		public void SelectContacts(IEnumerable<Contact> contacts)
 		{
 			var ids = contacts.Select (c => c.Id).ToList ();
@@ -95,6 +97,16 @@ namespace SocialCapital.ViewModels
 				if (ids.Contains(contact.SourceContact.Id))
 					contact.Selected = true;
 		}
+
+		public ICommand DeleteContact { get { return new Command (p => DeleteContactExecute((ContactVM)p)); } }
+		public void DeleteContactExecute(ContactVM contact)
+		{
+			contact.DeleteContact ();
+			contacts.Remove (contact);
+			OnPropertyChanged ("FilteredContacts");
+		}
+
+		#endregion
 
 		#region callbacks
 

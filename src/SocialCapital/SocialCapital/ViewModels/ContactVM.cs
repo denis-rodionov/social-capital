@@ -255,15 +255,7 @@ namespace SocialCapital.ViewModels
 				return logCommunication;
 			}
 		}
-
-
-
-//		public void Reload()
-//		{
-//			SourceContact = contactManager.GetContact (SourceContact.Id);
-//			Tags = null;
-//		}
-//
+			
 		public void DeleteContact()
 		{
 			SourceContact.DeleteTime = DateTime.Now;

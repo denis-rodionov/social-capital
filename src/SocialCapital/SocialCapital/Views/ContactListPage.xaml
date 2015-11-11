@@ -4,7 +4,8 @@
 			 x:Class="SocialCapital.Views.ContactListPage"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
-			 Title = "{i18n:Translate ContactListTitle}">
+			 Title = "{i18n:Translate ContactListTitle}"
+			 x:Name = "page">
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			<SearchBar Text="{Binding Filter}" />
@@ -28,12 +29,14 @@
 										  Icon="ic_people_black_36dp.png"
 										  Command="{Binding Path=AssignToGroup}"
 										  IsDestructive="false" />
-								<!--
+								
 								<MenuItem Text="{i18n:Translate DeleteVerb}"
 										  Icon="ic_delete_black_36dp.png"
-										  Command="{DeleteContact}"
+										  Command="{Binding Path=BindingContext.DeleteContact,
+										  					Source={x:Reference Name=page}}"
+										  CommandParameter = "{Binding .}"
 										  IsDestructive="true" />
-								-->
+								
 							</controls:ContactNativeCell.ContextActions> 
 						</controls:ContactNativeCell>
 					<!--

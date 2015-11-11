@@ -41,6 +41,10 @@ namespace SocialCapital.Views
 			// do something with e.SelectedItem
 			((ListView)sender).SelectedItem = null; // de-select the row
 		}
+
+		private void OnDeleteMenuClicked(object sender, EventArgs args)
+		{
+		}
 	}
 }
 
