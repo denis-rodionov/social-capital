@@ -26,7 +26,7 @@ namespace SocialCapital.Views
 			if (DelegateOnDone != null)
 				DelegateOnDone (vm.AllContacts.Where(c => c.Selected).Select(c => c.SourceContact).ToList());
 			
-			Navigation.PopModalAsync ();
+			Navigation.PopAsync ();
 		}
 
 		private void OnEditMenuClicked(object sender, EventArgs args)

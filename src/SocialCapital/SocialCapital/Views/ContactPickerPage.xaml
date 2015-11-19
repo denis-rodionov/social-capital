@@ -12,26 +12,33 @@
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-				<!--<Label Text="{Binding Path=SelectedCount, StringFormat='Selected count: {0}'}"
+				<Label Text="{Binding Path=SelectedCount, StringFormat='Selected count: {0}'}"
 					   HorizontalOptions="Center"
-					   FontAttributes="Bold" />-->
+					   FontAttributes="Bold" />
 				<Button Text="Done" Clicked="OnDoneClicked" />
 			</StackLayout>
 			<SearchBar Text="{Binding Filter}" />
 
 			<libs:ListViewEx ItemsSource="{Binding FilteredContacts}"
+							 ItemClickCommand="{Binding SelectCommand}"
 					  		 RowHeight="60"
 				      		 SeparatorVisibility="None">
 				<libs:ListViewEx.ItemTemplate>
 					<DataTemplate>
-						<controls:ChoosableContactCell >
-<!--							<controls:FastCell.ContextActions>
+						<controls:ContactNativeCell FullName="{Binding FullName}"
+													ColorStatus="{Binding ContactStatus.Color}"
+													ContactImage="{Binding Photo}"
+													GroupName = "{Binding GroupName}"
+													Tags = "{Binding Tags.Tags}" 
+													Icon = "{Binding EventIcon}"
+													Selected = "{Binding Selected}">
+							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate EditMenu}"
 										  Icon="ic_edit_black_36dp.png"
 										  Clicked="OnEditMenuClicked"
 										  IsDestructive="false" />
-							</controls:FastCell.ContextActions>-->
-						</controls:ChoosableContactCell>
+							</controls:ContactNativeCell.ContextActions>
+						</controls:ContactNativeCell>
 					</DataTemplate>
 				</libs:ListViewEx.ItemTemplate>
 			</libs:ListViewEx>

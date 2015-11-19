@@ -15,6 +15,13 @@ namespace SocialCapital.Views.Controls
 		}
 
 		/// <summary>
+		/// Horrible piece of shit. But it need for event change handling. 
+		/// </summary>
+		/// <value></value>
+		/// <remarks></remarks>
+		public object View { get; set; }
+
+		/// <summary>
 		/// Full name of the contact
 		/// </summary>
 		public static readonly BindableProperty FullNameProperty = 
@@ -73,6 +80,16 @@ namespace SocialCapital.Views.Controls
 		public string Icon {
 			get { return (string)GetValue (IconProperty); }
 			set { SetValue (IconProperty, value); }
+		}
+
+		/// <summary>
+		/// Selected: null - no select checkbox.
+		/// </summary>
+		public static readonly BindableProperty SelectedProperty =
+			BindableProperty.Create<ContactNativeCell, bool?> (t => t.Selected, null);
+		public bool? Selected {
+			get { return (bool?)GetValue (SelectedProperty); }
+			set { SetValue (SelectedProperty, value); }
 		}
 	}
 }
