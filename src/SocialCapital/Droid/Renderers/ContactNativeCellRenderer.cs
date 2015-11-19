@@ -64,6 +64,7 @@ namespace SocialCapital.Droid.Renderers
 			var view = (Android.Views.View)cell.View;
 
 			UpdateView (view, cell, null);
+			view.Invalidate ();
 		}
 
 		private void UpdateView(Android.Views.View view, ContactNativeCell cell, Android.Content.Context context)
