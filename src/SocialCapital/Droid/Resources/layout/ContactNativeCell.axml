@@ -13,8 +13,8 @@
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/CheckboxImage"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="4dp"
             android:gravity="center"
             android:layout_centerVertical="true"
