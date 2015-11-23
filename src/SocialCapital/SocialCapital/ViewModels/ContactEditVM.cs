@@ -13,6 +13,8 @@ namespace SocialCapital.ViewModels
 		private ContactTagsManager tagManager;
 		private Contact sourceContact;
 
+		public event Action<Contact> Saved;
+
 		public ContactEditVM (Contact contactModel, IEnumerable<Tag> tags, ContactManager contactManager, ContactTagsManager tagManager)
 		{
 			this.contactManager = contactManager;
@@ -84,7 +86,14 @@ namespace SocialCapital.ViewModels
 			contactManager.SaveContactInfo (resContact);
 
 			tagManager.SaveContactTags (Tags.Tags, resContact.Id);
-			Tags = null;
+			RaiseSaved (resContact);
+		}
+
+		private void RaiseSaved(Contact contact)
+		{
+			var handle = Saved;
+			if (handle != null)
+				handle (contact);
 		}
 
 		private Contact ToModel()

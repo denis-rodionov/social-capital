@@ -54,20 +54,30 @@ namespace SocialCapital.Droid.Renderers
 			UpdateView (view, cell, context);
 			cell.View = view;
 
+			cell.PropertyChanged -= InnerOnCellPropertyChanged;
+			cell.PropertyChanged += InnerOnCellPropertyChanged;
+
 			return view;
+		}
+
+		private static void InnerOnCellPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName != "Renderer" && e.PropertyName != "IsSelected")
+			{
+				var cell = (ContactNativeCell)sender;
+				var view = (Android.Views.View)cell.View;
+
+				UpdateView (view, cell, null);
+				view.Invalidate ();
+			}
 		}
 
 		protected override void OnCellPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			base.OnCellPropertyChanged (sender, e);
-			var cell = (ContactNativeCell)Cell;
-			var view = (Android.Views.View)cell.View;
-
-			UpdateView (view, cell, null);
-			view.Invalidate ();
+			
 		}
 
-		private void UpdateView(Android.Views.View view, ContactNativeCell cell, Android.Content.Context context)
+		private static void UpdateView(Android.Views.View view, ContactNativeCell cell, Android.Content.Context context)
 		{
 			// Contact fields
 			view.FindViewById<TextView> (Resource.Id.FullName).Text = cell.FullName;
@@ -124,7 +134,7 @@ namespace SocialCapital.Droid.Renderers
 			}
 		}
 
-		private ViewStates ToVisibility(bool isVisible)
+		private static ViewStates ToVisibility(bool isVisible)
 		{
 			if (isVisible)
 				return ViewStates.Visible;

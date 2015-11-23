@@ -27,6 +27,11 @@ namespace SocialCapital.Views
 		{			
 			var editVM = vm.CreateEditVM ();
 
+			editVM.Saved += c => {
+				vm.Tags = null;
+				vm.FullName = c.DisplayName;
+			};
+
 			var editPage = new ContactEditPage (editVM);
 
 			Navigation.PushModalAsync (new NavigationPage(editPage));
