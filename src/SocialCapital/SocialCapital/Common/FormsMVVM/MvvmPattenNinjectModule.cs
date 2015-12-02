@@ -13,6 +13,15 @@ namespace SocialCapital.Common.FormsMVVM
 
 			this.Bind<IDialogProvider> ().To<DialogService> ().InSingletonScope ();
 			this.Bind<IPage> ().To<PageProxy> ().InSingletonScope ();
+
+			this.Bind<IViewFactory> ().To<ViewFactory> ().InSingletonScope ();
+
+			this.Bind<INavigator> ().To<Navigator> ().InSingletonScope ();
+
+			this.Bind<Func<INavigation>> ().ToMethod (ctx => () => App.Current.MainPage.Navigation);
+
+			Bind(typeof (Lazy<INavigation>)).ToMethod(
+				ctx => new Lazy<INavigation>(() => PageProxy.GetCurrentPage().Navigation));
 		}
 		#endregion
 	}

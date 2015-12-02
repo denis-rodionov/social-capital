@@ -2,6 +2,7 @@
 
 using Xamarin.Forms;
 using Ninject.Modules;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.ViewModels
 {
@@ -14,6 +15,7 @@ namespace SocialCapital.ViewModels
 			this.Bind<AddressBookVM> ().To<AddressBookVM> ().InSingletonScope ();
 			this.Bind<SettingsVM> ().ToSelf ();
 			this.Bind<SummaryVM> ().ToSelf ();
+			this.Bind<TagsVM> ().ToSelf ();
 		}
 		#endregion
 	}

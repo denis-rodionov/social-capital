@@ -20,6 +20,11 @@ namespace SocialCapital.ViewModels
 
 		#region Init
 
+		public TagsVM ()
+		{
+			Init ();
+		}
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -27,6 +32,11 @@ namespace SocialCapital.ViewModels
 		public TagsVM (IEnumerable<Tag> tags)
 		{
 			Tags = new ObservableCollection<Tag> (tags);
+			Init ();
+		}
+
+		private void Init()
+		{
 			CandidateTags = new List<Tag> ();
 
 			Add = new Command (
@@ -55,7 +65,7 @@ namespace SocialCapital.ViewModels
 		private ObservableCollection<Tag> tags;
 		public ObservableCollection<Tag> Tags { 
 			get { return tags; }
-			private set { 
+			set { 
 				SetProperty (ref tags, value); 
 				OnPropertyChanged ("TagList");
 			}

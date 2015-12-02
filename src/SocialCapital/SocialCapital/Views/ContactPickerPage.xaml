@@ -5,7 +5,8 @@
 			 xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.ContactPickerPage"
-			 Title="">
+			 Title=""
+			 x:Name = "page">
 	<!--<ContentPage.ToolbarItems>
 		<ToolbarItem Clicked="OnDoneClicked" Icon="ic_edit_black_36dp.png" />
 	</ContentPage.ToolbarItems>-->
@@ -35,8 +36,14 @@
 							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate EditMenu}"
 										  Icon="ic_edit_black_36dp.png"
-										  Clicked="OnEditMenuClicked"
+										  Command="{Binding ModifyTags}"
 										  IsDestructive="false" />
+								<MenuItem Text="{i18n:Translate DeleteVerb}"
+										  Icon="ic_delete_black_36dp.png"
+										  Command="{Binding Path=BindingContext.DeleteContact,
+										  					Source={x:Reference Name=page}}"
+										  CommandParameter = "{Binding .}"
+										  IsDestructive="true" />
 							</controls:ContactNativeCell.ContextActions>
 						</controls:ContactNativeCell>
 					</DataTemplate>

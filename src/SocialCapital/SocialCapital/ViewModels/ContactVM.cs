@@ -285,6 +285,18 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		public ICommand ModifyTags { get { return new Command (ModifyTagsExec); }}
+		public void ModifyTagsExec()
+		{
+			var navigator = App.Container.Get<INavigator> ();
+
+			navigator.PushAsync<TagsVM> (vm => 
+				{
+					vm.Tags = null;
+					vm.PropertyChanged += SaveTags;
+				});
+		}
+
 		public override string ToString ()
 		{
 			return string.Format ("[ContactVM: {0}]", SourceContact);
@@ -293,6 +305,11 @@ namespace SocialCapital.ViewModels
 		#endregion
 
 		#region Implementation
+
+		private void SaveTags(object sender, EventArgs e)
+		{
+			
+		}
 
 		public ContactEditVM CreateEditVM()
 		{

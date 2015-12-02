@@ -105,6 +105,8 @@ namespace SocialCapital.ViewModels
 			OnDeletedContact (contact);
 		}
 
+
+
 		#endregion
 
 		#region callbacks

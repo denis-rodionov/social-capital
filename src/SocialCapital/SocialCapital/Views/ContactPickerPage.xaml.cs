@@ -29,16 +29,16 @@ namespace SocialCapital.Views
 			Navigation.PopAsync ();
 		}
 
-		private void OnEditMenuClicked(object sender, EventArgs args)
-		{
-			var vm = (ContactVM)BindingContext;
-			if (vm != null)
-			{
-				var page = new ContactDetailsPage (vm);
-				var parentPage = PageProxy.GetCurrentPage ();
-				parentPage.Navigation.PushAsync (page);
-			}
-		}
+//		private void OnEditMenuClicked(object sender, EventArgs args)
+//		{
+//			var vm = (ContactVM)BindingContext;
+//			if (vm != null)
+//			{
+//				var page = new ContactDetailsPage (vm);
+//				var parentPage = PageProxy.GetCurrentPage ();
+//				parentPage.Navigation.PushAsync (page);
+//			}
+//		}
 
 		protected override void OnAppearing ()
 		{
