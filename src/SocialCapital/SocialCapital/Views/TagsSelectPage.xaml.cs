@@ -15,6 +15,11 @@ namespace SocialCapital.Views
 		{
 			InitializeComponent ();
 		}
+
+		public void OnPop(object sender, EventArgs e)
+		{
+			Navigation.PopAsync ();
+		}
 	}
 }
 

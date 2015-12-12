@@ -10,6 +10,8 @@ namespace SocialCapital.Views
 {
 	public partial class ContactPickerPage : ContentPage
 	{
+		public static Page Instance;
+
 		Action<IEnumerable<Contact>> DelegateOnDone = null;
 
 		public ContactPickerPage (ContactListVM vm, Action<IEnumerable<Contact>> OnDone)
@@ -17,6 +19,7 @@ namespace SocialCapital.Views
 			InitializeComponent ();
 			BindingContext = vm;
 			DelegateOnDone = OnDone;
+			Instance = this;
 		}
 
 		protected void OnDoneClicked(object sender, EventArgs args)
@@ -47,7 +50,7 @@ namespace SocialCapital.Views
 
 		protected override void OnDisappearing ()
 		{
-			Content = null;
+			//Content = null;
 			base.OnDisappearing ();
 		}
 	}

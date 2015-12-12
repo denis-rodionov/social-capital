@@ -18,7 +18,7 @@ namespace SocialCapital.Common.FormsMVVM
 
 			this.Bind<INavigator> ().To<Navigator> ().InSingletonScope ();
 
-			this.Bind<Func<INavigation>> ().ToMethod (ctx => () => App.Current.MainPage.Navigation);
+			this.Bind<Func<INavigation>> ().ToMethod (ctx => () => PageProxy.GetCurrentPage().Navigation);
 
 			Bind(typeof (Lazy<INavigation>)).ToMethod(
 				ctx => new Lazy<INavigation>(() => PageProxy.GetCurrentPage().Navigation));

@@ -17,6 +17,7 @@
 
 	<ContentPage.Content>
 		<StackLayout>
+			<Button Clicked="OnPop" Text="Back" />
 			<StackLayout Orientation="Horizontal">
 				<Entry  x:Name = "searchTagEntry"
 						Text = "{Binding SearchTag}"

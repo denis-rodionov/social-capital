@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SocialCapital.Views;
+using SocialCapital.ViewModels;
 
 namespace SocialCapital.Common.FormsMVVM
 {
@@ -42,7 +44,10 @@ namespace SocialCapital.Common.FormsMVVM
 		{
 			TViewModel viewModel;
 			var view = _viewFactory.Resolve<TViewModel>(out viewModel, setStateAction);
+
 			await Navigation.PushAsync(view);
+			//ContactPickerPage.Instance.Navigation.PushAsync(new LogPage(new LogViewModel()));
+
 			return viewModel;
 		}
 
