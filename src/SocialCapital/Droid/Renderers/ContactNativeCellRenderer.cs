@@ -62,14 +62,14 @@ namespace SocialCapital.Droid.Renderers
 
 		private static void InnerOnCellPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-//			if (e.PropertyName != "Renderer" && e.PropertyName != "IsSelected")
-//			{
-//				var cell = (ContactNativeCell)sender;
-//				var view = (Android.Views.View)cell.View;
-//
-//				UpdateView (view, cell, null);
-//				view.Invalidate ();
-//			}
+			if (e.PropertyName != "Renderer" && e.PropertyName != "IsSelected")
+			{
+				var cell = (ContactNativeCell)sender;
+				var view = (Android.Views.View)cell.View;
+
+				UpdateView (view, cell, null);
+				view.Invalidate ();
+			}
 		}
 
 		protected override void OnCellPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -84,8 +84,8 @@ namespace SocialCapital.Droid.Renderers
 			view.FindViewById<Android.Views.View> (Resource.Id.Stripe).SetBackgroundColor (cell.ColorStatus.ToAndroid ());
 
 			// group
-			//view.FindViewById<TextView> (Resource.Id.GroupName).Visibility = cell.GroupName != null ? ViewStates.Visible : ViewStates.Invisible;
-			//view.FindViewById<TextView> (Resource.Id.GroupName).Text = cell.GroupName;
+			view.FindViewById<TextView> (Resource.Id.GroupName).Visibility = cell.GroupName != null ? ViewStates.Visible : ViewStates.Invisible;
+			view.FindViewById<TextView> (Resource.Id.GroupName).Text = cell.GroupName;
 
 			// tags
 			if (cell.Tags == null || cell.Tags.Count () == 0)
@@ -114,12 +114,12 @@ namespace SocialCapital.Droid.Renderers
 
 			// Contact Image
 			// TODO: grab images
-//			if (cell.ContactImage != null)
-//			{
-//				var bitmap = BitmapFactory.DecodeByteArray (cell.ContactImage, 0, cell.ContactImage.Length);
-//				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageBitmap (bitmap);
-//			} else
-//				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageResource (Resource.Drawable.avatar_placeholder);
+			if (cell.ContactImage != null)
+			{
+				var bitmap = BitmapFactory.DecodeByteArray (cell.ContactImage, 0, cell.ContactImage.Length);
+				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageBitmap (bitmap);
+			} else
+				view.FindViewById<CircleImageView> (Resource.Id.ContactImage).SetImageResource (Resource.Drawable.avatar_placeholder);
 
 			// checkbox
 			view.FindViewById<Android.Views.View> (Resource.Id.Stripe).Visibility = ToVisibility (!cell.Selected.HasValue);

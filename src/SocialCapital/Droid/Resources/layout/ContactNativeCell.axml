@@ -44,6 +44,17 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dip"
                 android:text="Ivanov Ivan" />
+            <TextView
+                android:id="@+id/GroupName"
+                android:text="group sdf sdf"
+                android:background="@color/group_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:layout_marginLeft="2dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:layout_toRightOf="@id/FullName" />
             <ImageView
                 android:id="@+id/Icon"
                 android:layout_width="32dp"
