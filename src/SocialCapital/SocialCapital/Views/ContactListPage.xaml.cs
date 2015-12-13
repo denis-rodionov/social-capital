@@ -23,13 +23,13 @@ namespace SocialCapital.Views
 		public void OnItemSelected (object sender,  EventArgs args)
 		{
 			var cell = (Cell)sender;
-			var contact = cell.BindingContext as ContactVM;
+			var contact = new ContactDetailsVM (cell.BindingContext as ContactVM);
 			var contactList = BindingContext as ContactListVM;
 
 			contactListView.SelectedItem = null;
 
 			contact.Deleted += contactList.OnDeletedContact;
-
+		
 			var detailsContactPage = new ContactDetailsPage (contact);
 
 			Navigation.PushAsync(detailsContactPage);

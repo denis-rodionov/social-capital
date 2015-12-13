@@ -11,7 +11,7 @@
 			<SearchBar Text="{Binding Filter}" />
 			<ListView x:Name="contactListView" 
 				      ItemsSource = "{Binding FilteredContacts}"
-				      RowHeight="70"
+				      RowHeight="60"
 				      SeparatorVisibility="None"
 				      SelectedItem="OnListViewSelected">
 				<ListView.ItemTemplate>

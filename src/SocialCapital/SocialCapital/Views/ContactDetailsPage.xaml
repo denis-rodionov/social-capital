@@ -5,7 +5,8 @@
 			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
 			 xmlns:converters="clr-namespace:SocialCapital.Views.Converters;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.ContactDetailsPage"
-			 Title="{Binding FullName}"
+			 Title="{i18n:Translate Contact}"
+			 BackgroundColor="White"
 			 x:Name="page">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Clicked="OnDeleteMenu" Icon="ic_delete_black_36dp.png" />
@@ -16,9 +17,18 @@
 		<StackLayout Orientation="Vertical">
 			<!-- Header -->
 			<StackLayout Orientation="Horizontal">
-				<Image WidthRequest="100" Source="{Binding PhotoImage}" />
+				<controls:ImageCircle x:Name = "ContactPhoto"
+				   				  	  WidthRequest="70"
+				   				  	  Source="{Binding ContactPhoto}" />
 				<StackLayout Orientation="Vertical">
-					<Label Text="{Binding WorkPlace}" />
+					<Label Text="{Binding FullName}" FontSize="Large" />
+					<Label Text="{Binding WorkPlace}" 
+						   IsVisible="{Binding Path=WorkPlace, Converter={StaticResource StringToBoolConverter}"/>
+					<Label Text="Test" FontSize="Small" />
+
+<!--					<ContentView Padding="2, 0, 2, 0" BackgroundColor="#ff9900" HorizontalOptions="Start">
+						<Label Text="Test" FontSize="Small" />
+					</ContentView>-->
 					<controls:TagList LayoutType="Wrap" 
 									  Tags="{Binding Tags.Tags}" 
 									  Placeholder="{i18n:Translate NoTagsPlaceholder}" />

@@ -29,8 +29,8 @@ namespace SocialCapital.ViewModels
 
 		private static ImageSource anonimusPhoto = null;
 
-		private readonly ContactManager contactManager;
-		private readonly ContactTagsManager contactTagManager;
+		private ContactManager contactManager;
+		private ContactTagsManager contactTagManager;
 
 		/// <summary>
 		/// Original copy of the contact
@@ -45,21 +45,39 @@ namespace SocialCapital.ViewModels
 		/// <param name="contact">Contact model</param>
 		public ContactVM (Contact contact)
 		{
+			Init (contact);
+		}
+
+		/// <summary>
+		/// Copy constructor
+		/// </summary>
+		/// <param name="contact">Contact.</param>
+		public ContactVM(ContactVM contact)
+		{
+			Init (contact.SourceContact);
+		}
+
+		/// <summary>
+		/// General init code
+		/// </summary>
+		/// <param name="contact">Contact.</param>
+		private void Init(Contact contact)
+		{
 			//var timing = Timing.Start ("ContactVM.Constructor");
 
 			contactManager = App.Container.Get<ContactManager> ();
 			contactTagManager = App.Container.Get<ContactTagsManager> ();
 
 			if (contact == null)
-				throw new ArgumentException ();
+				throw new ArgumentException ("Cannot create VM from null model 'Contact'");
 
 			if (contact.Id < 1)
 				throw new ArgumentException ();
 
 			SourceContact = contact;
 
-			if (anonimusPhoto == null)
-				anonimusPhoto = GetAnonimusPhoto ();
+			//if (anonimusPhoto == null)
+			//	anonimusPhoto = GetAnonimusPhoto ();
 
 			//timing.Finish (LogLevel.Trace);
 		}
@@ -292,7 +310,7 @@ namespace SocialCapital.ViewModels
 
 			navigator.PushAsync<TagsVM> (vm => 
 				{
-					vm.Tags = null;
+					vm.Tags = Tags.Tags;
 					vm.PropertyChanged += SaveTags;
 				});
 		}
@@ -308,7 +326,7 @@ namespace SocialCapital.ViewModels
 
 		private void SaveTags(object sender, EventArgs e)
 		{
-			
+			App.Container.Get<ContactTagsManager> ().SaveContactTags (Tags.Tags, SourceContact.Id);
 		}
 
 		public ContactEditVM CreateEditVM()

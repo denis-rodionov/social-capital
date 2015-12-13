@@ -14,7 +14,7 @@ namespace SocialCapital.Views
 	{
 		ContactVM vm;
 
-		public ContactDetailsPage (ContactVM contactModel)
+		public ContactDetailsPage (ContactDetailsVM contactModel)
 		{
 			this.vm = contactModel;
 

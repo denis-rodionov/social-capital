@@ -57,7 +57,7 @@ namespace SocialCapital.Views.Controls
 
 		private async void OnEditMenuClicked(object sender, EventArgs e)
 		{
-			var vm = (ContactVM)BindingContext;
+			var vm = new ContactDetailsVM ((ContactVM)BindingContext);
 			if (vm != null)
 			{
 				var page = new ContactDetailsPage (vm);

@@ -406,5 +406,9 @@
 		<value>Редактирование</value>
 		<comment>Пункт меню</comment>
 	</data>
+	<data name="Contact" xml:space="preserve">
+		<value>Контакт</value>
+		<comment>Перевод слова Контакт</comment>
+	</data>
 
 </root>

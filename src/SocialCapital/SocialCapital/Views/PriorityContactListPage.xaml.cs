@@ -34,7 +34,8 @@ namespace SocialCapital.Views
 		private void OnItemTapped(object sender, EventArgs args)
 		{
 			var contact = (sender as Cell).BindingContext;
-			var page = new ContactDetailsPage((ContactVM)contact);
+			var vm = new ContactDetailsVM (contact as ContactVM);
+			var page = new ContactDetailsPage(vm);
 			Navigation.PushAsync(page);
 		}
 
