@@ -37,6 +37,11 @@ namespace SocialCapital.Data.Managers
 			return GetList (c => c.DeleteTime == null, db).Where (whereClause);
 		}
 
+		public IEnumerable<Contact> GetContactsIncDeleted(Func<Contact, bool> whereClause, IDataContext db = null)
+		{
+			return GetList (whereClause, db);
+		}
+
 		public IEnumerable<Contact> GetDeleted()
 		{
 			return GetList (c => c.DeleteTime != null);
@@ -145,6 +150,12 @@ namespace SocialCapital.Data.Managers
 
 				RefreshCache (db);
 			}
+		}
+
+		public void RestoreContact(Contact contact)
+		{
+			contact.DeleteTime = null;
+			SaveContactInfo (contact);
 		}
 
 		#endregion

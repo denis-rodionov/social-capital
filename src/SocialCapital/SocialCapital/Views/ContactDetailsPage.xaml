@@ -9,8 +9,8 @@
 			 BackgroundColor="White"
 			 x:Name="page">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Clicked="OnDeleteMenu" Icon="ic_delete_black_36dp.png" />
-		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_black_36dp.png" />
+		<ToolbarItem Clicked="OnDeleteMenu" Icon="ic_delete_white_36dp.png" />
+		<ToolbarItem Clicked="OnEditMenu" Icon="ic_edit_white_36dp.png" />
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>		
@@ -21,7 +21,7 @@
 				   				  	  WidthRequest="70"
 				   				  	  Source="{Binding ContactPhoto}" />
 				<StackLayout Orientation="Vertical">
-					<Label Text="{Binding FullName}" FontSize="Large" />
+					<Label Text="{Binding FullName}" FontSize="Large " />
 					<Label Text="{Binding WorkPlace}" 
 						   IsVisible="{Binding Path=WorkPlace, Converter={StaticResource StringToBoolConverter}"/>
 					<Label Text="Test" FontSize="Small" />

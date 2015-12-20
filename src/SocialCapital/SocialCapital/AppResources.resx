@@ -410,5 +410,14 @@
 		<value>Контакт</value>
 		<comment>Перевод слова Контакт</comment>
 	</data>
+	<data name="RestoreVerb" xml:space="preserve">
+		<value>Восстановить</value>
+		<comment>Вызвать действие Восстановить</comment>
+	</data>
+	<data name="DeletedContacts" xml:space="preserve">
+		<value>Удалённые контакты</value>
+		<comment>Название страницы с удалёнными контактами</comment>
+	</data>
+
 
 </root>

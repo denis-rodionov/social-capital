@@ -16,6 +16,7 @@ namespace SocialCapital.Views
 			Bind<SettingsPage> ().ToSelf ();
 			Bind<SummaryPage> ().ToSelf ();
 			Bind<TagsSelectPage> ().ToSelf ();
+			Bind<DeleteContactsPage> ().ToSelf ();
 		}
 
 		#endregion

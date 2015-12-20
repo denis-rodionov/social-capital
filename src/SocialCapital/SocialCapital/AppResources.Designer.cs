@@ -323,6 +323,15 @@ namespace SocialCapital {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалённые контакты.
+        /// </summary>
+        internal static string DeletedContacts {
+            get {
+                return ResourceManager.GetString("DeletedContacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Удаление.
         /// </summary>
         internal static string DeleteNoun {
@@ -769,6 +778,15 @@ namespace SocialCapital {
         internal static string RestoreBackupQuestionDetails {
             get {
                 return ResourceManager.GetString("RestoreBackupQuestionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Восстановить.
+        /// </summary>
+        internal static string RestoreVerb {
+            get {
+                return ResourceManager.GetString("RestoreVerb", resourceCulture);
             }
         }
         

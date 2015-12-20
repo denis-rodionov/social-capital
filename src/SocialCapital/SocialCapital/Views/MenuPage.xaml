@@ -6,7 +6,7 @@
 			 xmlns:libs="clr-namespace:SocialCapital.Views.Libs;assembly=SocialCapital"
 			 x:Class="SocialCapital.Views.MenuPage"
 			 Title = "{i18n:Translate MainMenuTitle}"
-			 Icon = "ic_menu_black_24dp.png"
+			 Icon = "ic_menu_white_24dp.png"
 			 x:Name = "page">
 	<ContentPage.Content>
 		<libs:ListViewEx RowHeight="60"

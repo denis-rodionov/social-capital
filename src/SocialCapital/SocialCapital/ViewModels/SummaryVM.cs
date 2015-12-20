@@ -2,10 +2,14 @@
 using SocialCapital.Data.Managers;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
+using Ninject;
+using SocialCapital.Common.FormsMVVM;
 
 namespace SocialCapital.ViewModels
 {
-	public class SummaryVM
+	public class SummaryVM : ViewModelBase
 	{
 		#region Init
 
@@ -35,7 +39,27 @@ namespace SocialCapital.ViewModels
 
 		public int TotalContactsCount { get; set; }
 
-		public int DeletedCount { get; set; }
+		private int deletedCount;
+		public int DeletedCount { 
+			get { return deletedCount; } 
+			set { SetProperty (ref deletedCount, value); } 
+		}
+
+		#endregion
+
+		#region actions
+
+		public ICommand ShowDeletedList { get { return new Command (ShowDeletedListExecute); } }
+		private void ShowDeletedListExecute()
+		{
+			var navigator = App.Container.Get<INavigator> ();
+
+			navigator.PushAsync<DeleteContactsVM> (vm => {
+				vm.PropertyChanged += (s, e) => { 
+					contactManager.GetDeleted ().Count();
+				};
+			});
+		}
 
 		#endregion
 	}

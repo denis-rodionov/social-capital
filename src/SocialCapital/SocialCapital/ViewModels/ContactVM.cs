@@ -16,6 +16,7 @@ using SocialCapital.Data.Managers;
 using SocialCapital.Common.FormsMVVM;
 using System.Threading.Tasks;
 using SocialCapital.Data.ContactStatuses;
+using System.ServiceModel;
 
 namespace SocialCapital.ViewModels
 {
@@ -43,9 +44,9 @@ namespace SocialCapital.ViewModels
 		/// VM Constructor
 		/// </summary>
 		/// <param name="contact">Contact model</param>
-		public ContactVM (Contact contact)
+		public ContactVM (Contact contact, ContactListVM container = null)
 		{
-			Init (contact);
+			Init (contact, container);
 		}
 
 		/// <summary>
@@ -61,10 +62,11 @@ namespace SocialCapital.ViewModels
 		/// General init code
 		/// </summary>
 		/// <param name="contact">Contact.</param>
-		private void Init(Contact contact)
+		private void Init(Contact contact, ContactListVM container = null)
 		{
 			//var timing = Timing.Start ("ContactVM.Constructor");
 
+			Container = container;
 			contactManager = App.Container.Get<ContactManager> ();
 			contactTagManager = App.Container.Get<ContactTagsManager> ();
 
@@ -219,6 +221,8 @@ namespace SocialCapital.ViewModels
 			}
 		}
 
+		public ContactListVM Container { get; set; }
+
         #endregion
 
 		#region Commands
@@ -313,6 +317,14 @@ namespace SocialCapital.ViewModels
 					vm.Tags = Tags.Tags;
 					vm.PropertyChanged += SaveTags;
 				});
+		}
+
+		public ICommand Restore { get { return new Command (RestoreExecute); } }
+		private void RestoreExecute()
+		{
+			contactManager.RestoreContact (SourceContact);
+			if (Container != null)
+				Container.OnDeletedContact (this);
 		}
 
 		public override string ToString ()

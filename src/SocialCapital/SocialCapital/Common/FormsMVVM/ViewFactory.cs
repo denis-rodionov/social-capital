@@ -32,6 +32,8 @@ namespace SocialCapital.Common.FormsMVVM
 		public Page Resolve<TViewModel>(out TViewModel viewModel, Action<TViewModel> setStateAction = null) 
 			where TViewModel : class, IViewModel 
 		{
+			try
+			{
 			viewModel = _componentContext.Get<TViewModel>();
 
 			var viewType = _map[typeof(TViewModel)];
@@ -42,6 +44,12 @@ namespace SocialCapital.Common.FormsMVVM
 
 			view.BindingContext = viewModel;
 			return view;
+			}
+			catch (Exception ex)
+			{
+				Log.GetLogger ().Log (ex);
+				throw;
+			}
 		}
 
 		public Page Resolve<TViewModel>(TViewModel viewModel) 

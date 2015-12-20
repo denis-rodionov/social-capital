@@ -29,8 +29,10 @@ namespace SocialCapital
 				new ServiceNInjectModule()
 			);
 
+			// view registration
 			var viewFactory = Container.Get<IViewFactory> ();
 			viewFactory.Register<TagsVM, TagsSelectPage> ();
+			viewFactory.Register<DeleteContactsVM, DeleteContactsPage> ();
 
 			InitializeComponent();
 			//Log.GetLogger ().Log ("Application starting......");

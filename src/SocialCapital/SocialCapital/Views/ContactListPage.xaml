@@ -26,12 +26,12 @@
 
 							<controls:ContactNativeCell.ContextActions>
 								<MenuItem Text="{i18n:Translate AssignGroupAction}"
-										  Icon="ic_people_black_36dp.png"
+										  Icon="ic_people_white_36dp.png"
 										  Command="{Binding Path=AssignToGroup}"
 										  IsDestructive="false" />
 								
 								<MenuItem Text="{i18n:Translate DeleteVerb}"
-										  Icon="ic_delete_black_36dp.png"
+										  Icon="ic_delete_white_36dp.png"
 										  Command="{Binding Path=BindingContext.DeleteContact,
 										  					Source={x:Reference Name=page}}"
 										  CommandParameter = "{Binding .}"

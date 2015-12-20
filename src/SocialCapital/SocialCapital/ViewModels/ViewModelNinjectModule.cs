@@ -17,6 +17,7 @@ namespace SocialCapital.ViewModels
 			this.Bind<SummaryVM> ().ToSelf ();
 			this.Bind<TagsVM> ().ToSelf ();
 			this.Bind<ContactDetailsVM> ().ToSelf ();
+			this.Bind<DeleteContactsVM> ().ToSelf ();
 		}
 		#endregion
 	}

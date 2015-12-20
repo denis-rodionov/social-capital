@@ -18,14 +18,17 @@ namespace SocialCapital.ViewModels
 	{
 		#region Init
 
-		public ContactListVM (Func<Contact, bool> whereClause)
+		public ContactListVM (Func<Contact, bool> whereClause, bool includeDeleted = false)
 		{
 			var timing = Timing.Start ("ContactListVM constructor");
 
 			var manager = App.Container.Get<ContactManager> ();
-			var contactModels = manager.GetContacts (whereClause).ToList ();
 
-			contacts = new List<ContactVM> (contactModels.Select(c => new ContactVM(c)));
+			var contactModels = includeDeleted ?
+				manager.GetContactsIncDeleted(whereClause).ToList() :
+				manager.GetContacts (whereClause).ToList ();
+
+			contacts = new List<ContactVM> (contactModels.Select(c => new ContactVM(c, this)));
 			SelectCommand = new Command (OnSelectCommandExecuted);
 
 			timing.Finish (LogLevel.Trace);
@@ -104,8 +107,6 @@ namespace SocialCapital.ViewModels
 			contact.DeleteContact ();
 			OnDeletedContact (contact);
 		}
-
-
 
 		#endregion
 

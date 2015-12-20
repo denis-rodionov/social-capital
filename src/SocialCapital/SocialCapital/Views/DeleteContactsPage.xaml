@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:i18n="clr-namespace:SocialCapital.Common;assembly=SocialCapital"
+			 xmlns:controls="clr-namespace:SocialCapital.Views.Controls;assembly=SocialCapital"
+			 x:Class="SocialCapital.Views.DeleteContactsPage"
+			 Title="{i18n:Translate DeletedContacts}">
+	<ContentPage.Content>
+		<StackLayout>
+			<SearchBar Text="{Binding Filter}" />
+
+			<ListView ItemsSource="{Binding FilteredContacts}"
+				  SeparatorVisibility="None">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<controls:ContactNativeCell FullName="{Binding FullName}"
+													ColorStatus="{Binding ContactStatus.Color}"
+													ContactImage="{Binding Photo}"
+													GroupName = "{Binding GroupName}"
+													Tags = "{Binding Tags.Tags}" 
+													Icon = "{Binding EventIcon}">
+								<controls:ContactNativeCell.ContextActions>
+									<MenuItem Text="{i18n:Translate RestoreVerb}"
+											  Icon="ic_restore_white_36dp.png"
+											  Command="{Binding Restore}" />
+								</controls:ContactNativeCell.ContextActions>
+							</controls:ContactNativeCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</StackLayout>
+
+	</ContentPage.Content>
+</ContentPage>

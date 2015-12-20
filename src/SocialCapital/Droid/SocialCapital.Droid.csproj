@@ -217,6 +217,11 @@
     <AndroidResource Include="Resources\layout\ContactNativeCell.axml" />
     <AndroidResource Include="Resources\drawable\Stripe.axml" />
     <AndroidResource Include="Resources\drawable\birthday_32dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_restore_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_menu_white_24dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_delete_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_edit_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_people_white_36dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.0.0.6490\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

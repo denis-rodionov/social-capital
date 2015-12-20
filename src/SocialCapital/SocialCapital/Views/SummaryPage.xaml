@@ -18,6 +18,9 @@
 				<Label Text="{Binding NotProcessedContacts}" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer Command="{Binding ShowDeletedList}" />
+				</StackLayout.GestureRecognizers>
 				<Label Text="{i18n:Translate Text=DeletedContactCountLabel, Format='{0}:'}" />
 				<Label Text="{Binding DeletedCount}" />
 			</StackLayout>
