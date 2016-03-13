@@ -57,6 +57,9 @@ namespace SocialCapital.Data.Managers
 
 		protected Type Insert(Type item, IDataContext db = null)
 		{
+			if (item == null)
+				throw new ArgumentException ("Item to insert is null");
+
 			if (db == null)
 				using (var innerDb = CreateContext())
 					innerDb.Connection.Insert (item);

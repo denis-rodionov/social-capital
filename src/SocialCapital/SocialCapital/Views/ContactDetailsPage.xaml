@@ -24,7 +24,7 @@
 					<Label Text="{Binding FullName}" FontSize="Large " />
 					<Label Text="{Binding WorkPlace}" 
 						   IsVisible="{Binding Path=WorkPlace, Converter={StaticResource StringToBoolConverter}"/>
-					<Label Text="Test" FontSize="Small" />
+					<Label Text="{Binding GroupName}" />
 
 <!--					<ContentView Padding="2, 0, 2, 0" BackgroundColor="#ff9900" HorizontalOptions="Start">
 						<Label Text="Test" FontSize="Small" />

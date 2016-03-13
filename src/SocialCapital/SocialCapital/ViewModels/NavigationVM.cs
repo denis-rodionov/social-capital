@@ -43,7 +43,10 @@ namespace SocialCapital.ViewModels
 		}
 
 		public Page DefaultPage {
-			get { return new ContactListPage () { BindingContext = new ContactListVM (c => true) }; }
+			get { 
+				//return new ContactListPage () { BindingContext = new ContactListVM (c => true) }; 
+				return new PriorityContactListPage (new PriorityContactListVM ());
+			}
 		}
 
 		private Page GetPageByName(string name)
